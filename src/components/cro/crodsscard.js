@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TransformerCard = () => {
+const Crodsscard = () => {
     return (
         <div className="row">
         <div className="col-md-6 col-lg-3 grid-margin stretch-card">
@@ -9,7 +9,7 @@ const TransformerCard = () => {
               <div className="d-flex align-items-center">
                 <i className="icon-user icon-lg"></i>
                 <div className="ml-4">
-                  <h4 className="font-weight-light">11kva Transformers(DT)</h4>
+                  <h4 className="font-weight-light">All CROs</h4>
                   <h3 className="font-weight-light mb-3">95,650</h3>
                 </div>
               </div>
@@ -23,7 +23,7 @@ const TransformerCard = () => {
               <div className="d-flex align-items-center">
                 <i className="link-icon icon-book-open icon-user icon-lg"></i>
                 <div className="ml-4">
-                  <h4 className="font-weight-light">33kv Transformers(DT)</h4>
+                  <h4 className="font-weight-light">All DSS</h4>
                   <h3 className="font-weight-light mb-3">37, 650</h3>
                 </div>
               </div>
@@ -37,7 +37,7 @@ const TransformerCard = () => {
               <div className="d-flex align-items-center">
                 <i className="icon-screen-desktop icon-lg"></i>
                 <div className="ml-4">
-                  <h4 className="font-weight-light">DT By Business Hubs</h4>
+                  <h4 className="font-weight-light">Total DSS Assigned</h4>
                   <h3 className="font-weight-light mb-3">13,149</h3>
                 </div>
               </div>
@@ -51,7 +51,7 @@ const TransformerCard = () => {
               <div className="d-flex align-items-center">
                 <i className="icon-screen-desktop icon-lg"></i>
                 <div className="ml-4">
-                  <h4 className="font-weight-light">Total</h4>
+                  <h4 className="font-weight-light">Unassiged DSS</h4>
                   <h3 className="font-weight-light mb-3">13,149</h3>
                 </div>
               </div>
@@ -63,4 +63,4 @@ const TransformerCard = () => {
     );
 }
 
-export default TransformerCard;
+export default Crodsscard;

@@ -125,11 +125,11 @@ const Header  = () => {
               <div className="submenu">
                 <ul className="submenu-item">
                   <li className="nav-item"><NavLink className="nav-link" to="/transformers">DSS Information</NavLink></li>
-                  <li className="nav-item"><a className="nav-link" href="pages/forms/advanced_elements.html">Feeders</a></li>
-                  <li className="nav-item"><a className="nav-link" href="pages/forms/validation.html">Injection Sub Stations</a></li>
-                  <li className="nav-item"><a className="nav-link" href="pages/forms/wizard.html">Transmission Sub Stations</a></li>
-                  <li className="nav-item"><a className="nav-link" href="pages/forms/text_editor.html">Power Transformer</a></li>
-                  <li className="nav-item"><a className="nav-link" href="pages/forms/code_editor.html">Poles</a></li>
+                  <li className="nav-item"><NavLink className="nav-link" to="/feeders">Feeders</NavLink></li>
+                  <li className="nav-item"><NavLink className="nav-link" to="/injectionsubstation">Injection Sub Stations</NavLink></li>
+                  <li className="nav-item"><NavLink className="nav-link" to="/transmission">Transmission Sub Stations</NavLink></li>
+                  <li className="nav-item"><NavLink className="nav-link" to="/powertransformer">Power Transformer</NavLink></li>
+                  <li className="nav-item"><NavLink className="nav-link" to="/poles">Poles</NavLink></li>
                 </ul>
               </div>
             </li>
@@ -139,9 +139,8 @@ const Header  = () => {
               <a href="#" className="nav-link"><i className="link-icon icon-pie-chart"></i><span className="menu-title">Customer Complaint</span><i className="menu-arrow"></i></a>
               <div className="submenu">
                 <ul className="submenu-item">
-                  <li className="nav-item"><a className="nav-link" href="pages/forms/basic_elements.html">Complaint</a></li>
-                  <li className="nav-item"><a className="nav-link" href="pages/forms/advanced_elements.html">Ticket Executors</a></li>
-                  <li className="nav-item"><a className="nav-link" href="pages/forms/validation.html">Nerc Report</a></li>
+                  <li className="nav-item"><NavLink className="nav-link" to="/tickets">Complaint</NavLink></li>
+                  <li className="nav-item"><NavLink className="nav-link" to="/nerc">Nerc Report</NavLink></li>
                 </ul>
               </div>
             </li>
@@ -150,9 +149,10 @@ const Header  = () => {
               <a href="#" className="nav-link"><i className="link-icon icon-wallet"></i><span className="menu-title">DSS-CRO</span><i className="menu-arrow"></i></a>
               <div className="submenu">
                 <ul className="submenu-item">
-                  <li className="nav-item"><a className="nav-link" href="pages/forms/basic_elements.html">CRO-DSS Alignment</a></li>
-                  <li className="nav-item"><a className="nav-link" href="pages/forms/advanced_elements.html">Bill Distribution/Meter Reading</a></li>
-                  <li className="nav-item"><a className="nav-link" href="pages/forms/validation.html">Report</a></li>
+                  <li className="nav-item"><NavLink className="nav-link" to="/crodss">CRO-DSS Alignment</NavLink></li>
+                  <li className="nav-item"><NavLink className="nav-link" to="/billdistribution">Bill Distribution</NavLink></li>
+                  <li className="nav-item"><NavLink className="nav-link" to="/metereading">Meter Reading</NavLink></li>
+                  <li className="nav-item"><NavLink className="nav-link" to="/tracker">Utilization Report</NavLink></li>
                 </ul>
               </div>
             </li>
@@ -162,10 +162,10 @@ const Header  = () => {
               <a href="#" className="nav-link"><i className="link-icon icon-calculator"></i><span className="menu-title">Staff</span><i className="menu-arrow"></i></a>
               <div className="submenu">
                 <ul className="submenu-item">
-                  <li className="nav-item"><a className="nav-link" href="pages/apps/email.html">IBEDC Staff</a></li>
-                  <li className="nav-item"><a className="nav-link" href="pages/apps/calendar.html">Outsourced Staff</a></li>
-                  <li className="nav-item"><a className="nav-link" href="pages/apps/todo.html">Leave Management</a></li>
-                  <li className="nav-item"><a className="nav-link" href="pages/apps/gallery.html">Reports</a></li>
+                  <li className="nav-item"><NavLink className="nav-link" to="/ibedcstaff">IBEDC Staff</NavLink></li>
+                  <li className="nav-item"><NavLink className="nav-link" to="/ibedcstaff">Outsourced Staff</NavLink></li>
+                  <li className="nav-item"><NavLink className="nav-link" to="/ibedcstaff">Leave Management</NavLink></li>
+                  <li className="nav-item"><NavLink className="nav-link" to="/ibedcstaff">Reports</NavLink></li>
                 </ul>
               </div>
             </li>

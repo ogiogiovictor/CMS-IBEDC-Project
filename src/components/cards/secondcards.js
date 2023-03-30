@@ -25,32 +25,32 @@ const SecondCard = () => {
             </div>
 
 
-            <div class="col-md-3 d-flex align-items-stretch">
-              <div class="row">
-                <div class="col-12 grid-margin stretch-card">
-                  <div class="card">
-                    <div class="card-body d-flex flex-column justify-content-between">
+            <div className="col-md-3 d-flex align-items-stretch">
+              <div className="row">
+                <div className="col-12 grid-margin stretch-card">
+                  <div className="card">
+                    <div className="card-body d-flex flex-column justify-content-between">
                       <div>
-                        <p class="mb-1"><span class="h4 mb-0 mr-2">Metered </span>Customers.</p>
-                        <p class="mb-0 text-muted font-weight-light">Total Customers metered on </p>                        
+                        <p className="mb-1"><span className="h4 mb-0 mr-2">Metered </span>Customers.</p>
+                        <p className="mb-0 text-muted font-weight-light">Total Customers metered on </p>                        
                       </div>
                       <div>
-                        <h6 class="font-weight-normal">MSMS</h6>
-                        <span class="badge badge-primary">34,590</span>
+                        <h6 className="font-weight-normal">MSMS</h6>
+                        <span className="badge badge-primary">34,590</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-12 grid-margin stretch-card">
-                  <div class="card">
-                    <div class="card-body d-flex flex-column justify-content-between">
+                <div className="col-12 grid-margin stretch-card">
+                  <div className="card">
+                    <div className="card-body d-flex flex-column justify-content-between">
                       <div>
-                        <p class="mb-1"><span class="h4 mb-0 mr-2">IBEDC</span>Approved</p>                        
-                        <p class="mb-0 text-muted font-weight-light">Service Centers</p>
+                        <p className="mb-1"><span className="h4 mb-0 mr-2">IBEDC</span>Approved</p>                        
+                        <p className="mb-0 text-muted font-weight-light">Service Centers</p>
                       </div>
                       <div>
-                        <h6 class="font-weight-normal">By Business Hub</h6>
-                        <span class="badge badge-primary">11,000</span>
+                        <h6 className="font-weight-normal">By Business Hub</h6>
+                        <span className="badge badge-primary">11,000</span>
                       </div>
                     </div>
                   </div>

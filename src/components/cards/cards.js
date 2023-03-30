@@ -1,6 +1,7 @@
 import React from 'react';
 
-const Cards = () => {
+const Cards = ({ stats }) => {
+
     return (
         <div className="row">
         <div className="col-md-6 col-lg-3 grid-margin stretch-card">
@@ -10,13 +11,14 @@ const Cards = () => {
                 <i className="icon-user icon-lg"></i>
                 <div className="ml-4">
                   <h4 className="font-weight-light">Total Customers</h4>
-                  <h3 className="font-weight-light mb-3">3,895, 650</h3>
+                  <h3 className="font-weight-light mb-3">{ stats.total_customers }</h3>
                   <p className="mb-0 font-weight-light">39 today's customers </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
         <div className="col-md-6 col-lg-3 grid-margin stretch-card">
           <div className="card bg-primary text-white border-0">
             <div className="card-body">

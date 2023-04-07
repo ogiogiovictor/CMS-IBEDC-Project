@@ -2,6 +2,10 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import './cards.css'
 
+const changeColor = {
+  color: 'black',
+}
+
 const CustomerCard = () => {
 
     return (
@@ -12,7 +16,7 @@ const CustomerCard = () => {
                   <h4 className="card-title">Customers By Region</h4>
                   <div className="mb-3">
                     <p className="d-flex mb-2">
-                      <Link to="#" className="noLink" >Ibadan</Link>
+                      <Link to="#" style={changeColor} >Ibadan</Link>
                       <span className="ml-auto font-weight-bold">70,0000</span>
                     </p>
                     <div className="progress progress-xs">
@@ -21,7 +25,7 @@ const CustomerCard = () => {
                   </div>
                   <div className="mb-3">
                     <p className="d-flex mb-2">
-                    <Link to="#" className="noLink" >Kwara</Link>
+                    <Link to="#" style={changeColor} >Kwara</Link>
                       <span className="ml-auto font-weight-bold">116,920</span>
                     </p>
                     <div className="progress progress-xs">
@@ -30,7 +34,7 @@ const CustomerCard = () => {
                   </div>
                   <div className="mb-3">
                     <p className="d-flex mb-2">
-                    <Link to="#" className="noLink" >Ogun</Link>
+                    <Link to="#" style={changeColor}>Ogun</Link>
                       <span className="ml-auto font-weight-bold">10,000</span>
                     </p>
                     <div className="progress progress-xs">
@@ -39,7 +43,7 @@ const CustomerCard = () => {
                   </div>
                   <div className="mb-3">
                     <p className="d-flex mb-2">
-                    <Link to="#" className="noLink" >Oyo</Link>
+                    <Link to="#" style={changeColor}>Oyo</Link>
                       <span className="ml-auto font-weight-bold">30,000</span>
                     </p>
                     <div className="progress progress-xs">
@@ -48,7 +52,7 @@ const CustomerCard = () => {
                   </div>
                   <div className="mb-3">
                     <p className="d-flex mb-2">
-                    <Link to="#" className="noLink" >Osun</Link>
+                    <Link to="#" style={changeColor} >Osun</Link>
                       <span className="ml-auto font-weight-bold">1999</span>
                     </p>
                     <div className="progress progress-xs">

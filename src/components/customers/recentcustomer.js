@@ -20,12 +20,12 @@ const RecentCustomer = () => {
                     <table className="table">
                       <thead>
                         <tr>
-                          <th>Customer Name</th>
-                          <th>Account Number.</th>
-                          <th>Customer Type</th>
+                          <th>AccountNo</th>
+                          <th>Surname</th>
+                          <th>Firstname</th>
+                          <th>Account Type</th>
                           <th>Business Hub</th>
                           <th>Service Center</th>
-                          <th>DSS ID</th>
                           <th>Status</th>
                           <th>Action</th>
                         </tr>
@@ -33,23 +33,34 @@ const RecentCustomer = () => {
                       <tbody>
                         <tr>
                           <td>Jacob</td>
-                          <td>53275531</td>
+                          <td>
+                          
+                            53275531</td>
                           <td>12 May 2017</td>
                           <td>Jacob</td>
                           <td>53275531</td>
-                          <td>12 May 2017</td>
+                          <td>
+                          <i class="remove icon-close"></i>
+                          </td>
                           <td><label className="badge badge-danger">Active</label></td>
-                          <td><button className="btn btn-xs btn-outline-primary">View</button></td>
+                          <td><button className="btn btn-xs btn-outline-success">
+                         <i class="icon-user"></i>
+                            View</button>
+                            </td>
                         </tr>
                         <tr>
                           <td>Jacob</td>
                           <td>53275531</td>
                           <td>12 May 2017</td>
                           <td>Jacob</td>
-                          <td>53275531</td>
-                          <td>12 May 2017</td>
+                          <td>Jacob</td>
+                          <td>
+                          <input class="checkbox" type="checkbox" checked=""/>
+                          </td>
                           <td><label className="badge badge-warning">Suspended</label></td>
-                          <td><button className="btn btn-xs btn-outline-primary">View</button></td>
+                          <td><button className="btn btn-xs btn-outline-danger">
+                          <i class="icon-user"></i>
+                            View</button></td>
                         </tr>
                         <tr>
                           <td>Jacob</td>

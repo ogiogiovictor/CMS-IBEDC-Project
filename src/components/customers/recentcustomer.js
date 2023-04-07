@@ -58,7 +58,7 @@ const RecentCustomer = () => {
                           <input class="checkbox" type="checkbox" checked=""/>
                           </td>
                           <td><label className="badge badge-warning">Suspended</label></td>
-                          <td><button className="btn btn-xs btn-outline-danger">
+                          <td><button className="btn btn-xs btn-danger">
                           <i class="icon-user"></i>
                             View</button></td>
                         </tr>
@@ -70,7 +70,9 @@ const RecentCustomer = () => {
                           <td>53275531</td>
                           <td>12 May 2017</td>
                           <td><label className="badge badge-info">Inactive</label></td>
-                          <td><button className="btn btn-xs btn-outline-primary">View</button></td>
+                          <td><button className="btn btn-xs btn-outline-success">
+                          <i class="icon-user"></i>
+                            View</button></td>
                         </tr>
                         <tr>
                           <td>Jacob</td>
@@ -80,7 +82,9 @@ const RecentCustomer = () => {
                           <td>53275531</td>
                           <td>12 May 2017</td>
                           <td><label className="badge badge-success">Active</label></td>
-                          <td><button className="btn btn-xs btn-outline-primary">View</button></td>
+                          <td><button className="btn btn-xs btn-outline-success">
+                          <i class="icon-user"></i>
+                            View</button></td>
                         </tr>
                         <tr>
                           <td>Jacob</td>
@@ -90,7 +94,9 @@ const RecentCustomer = () => {
                           <td>53275531</td>
                           <td>12 May 2017</td>
                           <td><label className="badge badge-warning">Closed</label></td>
-                          <td><button className="btn btn-xs btn-outline-primary">View</button></td>
+                          <td><button className="btn btn-xs btn-danger">
+                          <i class="icon-user"></i>
+                            View</button></td>
                         </tr>
                       </tbody>
                     </table>

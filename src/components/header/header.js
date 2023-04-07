@@ -83,7 +83,7 @@ const Header  = () => {
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#">
-                  <i className="icon-equalizer"></i>
+                  <i className="icon-logout" title="Logout"></i>
                 </a>
               </li>
               <li className="nav-item nav-profile">
@@ -140,6 +140,7 @@ const Header  = () => {
               <div className="submenu">
                 <ul className="submenu-item">
                   <li className="nav-item"><NavLink className="nav-link" to="/tickets">Complaint</NavLink></li>
+                  <li className="nav-item"><NavLink className="nav-link" to="/ccuperformance">CCU Performance Report</NavLink></li>
                   <li className="nav-item"><NavLink className="nav-link" to="/nerc">Nerc Report</NavLink></li>
                 </ul>
               </div>

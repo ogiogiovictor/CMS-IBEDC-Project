@@ -3,7 +3,7 @@ import fetchDashboardStats from "./dashboard_data";
 const initialState = [];
 
 //Create action constants - Theses are called action types
-const GET_DASHBOARD_STATS = 'dash/GET_DASHBOARD_STATS';
+const GET_DASHBOARD_STATS = 'GET_DASHBOARD_STATS';
 
 
 //Action creators for the action constant
@@ -13,6 +13,14 @@ const getDashboardStats = () => async (dispatch) => {
         type: GET_DASHBOARD_STATS,
         payload: dashboard_data,
     });
+}
+
+const getDashboardRegion = () => async (dispatch) => {
+
+}
+
+const getRecentCustomers = () => async (dispatch) => {
+
 }
 
 //Reducers that recievees the actions and updates the states

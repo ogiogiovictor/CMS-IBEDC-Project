@@ -7,7 +7,9 @@ const SecondCard = () => {
         <div className="row">
             <div className="col-md-6 grid-margin stretch-card">
               <div className="card text-white border-0">
-                <img className="card-img h-100 rounded-0" src="http://via.placeholder.com/545x363" alt="Card image" />
+                <img className="card-img h-100 rounded-0" src="https://energy-utilities.com/53/pdcnewsitem/08/47/31/shutterstock_255080140.jpg2.jpg" alt="Card image" />
+                {/* <img className="card-img h-100 rounded-0" src="http://via.placeholder.com/545x363" alt="Card image" /> */}
+                
                 <div className="card-img-overlay d-flex flex-column justify-content-between">
                   <h4 className="font-weight-light">
                       10 Oct 2018

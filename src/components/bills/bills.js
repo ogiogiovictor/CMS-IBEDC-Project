@@ -11,6 +11,11 @@ const Bills = () => {
            <div className="card-body">
              <h4 className="card-title">Latest Bills</h4>
            
+             <div class="form-group d-flex">
+                          <input type="text" class="form-control" placeholder="Search Bills(s)..." />
+                          <button type="submit" class="btn btn-primary ml-3">Search</button>
+                    </div>
+
              <div className="table-responsive">
                <table className="table">
                  <thead>

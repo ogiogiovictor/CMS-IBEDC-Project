@@ -9,6 +9,11 @@ const Poles = () => {
          <div className="card">
            <div className="card-body">
              <h4 className="card-title">All Poles</h4>
+
+             <div className="form-group d-flex">
+                          <input type="text" className="form-control" placeholder="Search Poles(s)..." />
+                          <button type="submit" className="btn btn-primary ml-3">Search</button>
+                    </div>
            
              <div className="table-responsive">
                <table className="table">
@@ -73,6 +78,20 @@ const Poles = () => {
                </table>
              </div>
            </div>
+
+           <div className="col-md-12">
+                <nav>
+                    <ul className="pagination rounded-flat pagination-success">
+                      <li className="page-item"><a className="page-link" href="#"><i className="icon-arrow-left"></i></a></li>
+                      <li className="page-item active"><a className="page-link" href="#">1</a></li>
+                      <li className="page-item"><a className="page-link" href="#">2</a></li>
+                      <li className="page-item"><a className="page-link" href="#">3</a></li>
+                      <li className="page-item"><a className="page-link" href="#">4</a></li>
+                      <li className="page-item"><a className="page-link" href="#"><i className="icon-arrow-right"></i></a></li>
+                    </ul>
+                  </nav>
+                </div>
+
          </div>
        </div>
        

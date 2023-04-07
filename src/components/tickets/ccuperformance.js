@@ -1,32 +1,33 @@
 import React, {Fragment} from 'react';
-import CardsCustomers from '../cards/cardscustomer';
+import TicketCard from './ticketcard';
 
-const PostpaidCustomer = () => {
+const CcuPerformance = () => {
     return (
         <Fragment>
-            <CardsCustomers />
+        {/* <TicketCard /> */}
         <div className="row">
        <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">
          <div className="card">
            <div className="card-body">
-             <h4 className="card-title">Postpaid Customers</h4>
+             <h4 className="card-title">CCU Performance Report</h4>
            
-             <div class="form-group d-flex">
-                          <input type="text" class="form-control" placeholder="Search Customer(s)..." />
-                          <button type="submit" class="btn btn-primary ml-3">Search</button>
-                    </div>
+             <div className="form-group d-flex">
+             <button type="button" class="btn btn-info btn-fw">
+                  <i class="icon-cloud-upload"></i>Download Report
+                  </button>
+            </div>
 
              <div className="table-responsive">
                <table className="table">
                  <thead>
                    <tr>
-                     <th>Customer Name</th>
-                     <th>Account Number.</th>
-                     <th>Customer Type</th>
-                     <th>Business Hub</th>
-                     <th>Service Center</th>
-                     <th>DSS ID</th>
-                     <th>Status</th>
+                     <th>Full Name</th>
+                     <th>Email</th>
+                     <th>Account Type</th>
+                     <th>Total Tickets</th>
+                     <th>Closed Tickets</th>
+                     <th>Open Tickets</th>
+                     <th>Action</th>
                    </tr>
                  </thead>
                  <tbody>
@@ -78,22 +79,23 @@ const PostpaidCustomer = () => {
                  </tbody>
                </table>
              </div>
-
            </div>
 
-           <div class="col-md-12">
+           <div className="col-md-12">
                 <nav>
-                    <ul class="pagination rounded-flat pagination-success">
-                      <li class="page-item"><a class="page-link" href="#"><i class="icon-arrow-left"></i></a></li>
-                      <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">4</a></li>
-                      <li class="page-item"><a class="page-link" href="#"><i class="icon-arrow-right"></i></a></li>
+                    <ul className="pagination rounded-flat pagination-success">
+                      <li className="page-item"><a className="page-link" href="#"><i className="icon-arrow-left"></i></a></li>
+                      <li className="page-item active"><a className="page-link" href="#">1</a></li>
+                      <li className="page-item"><a className="page-link" href="#">2</a></li>
+                      <li className="page-item"><a className="page-link" href="#">3</a></li>
+                      <li className="page-item"><a className="page-link" href="#">4</a></li>
+                      <li className="page-item"><a className="page-link" href="#"><i className="icon-arrow-right"></i></a></li>
                     </ul>
                   </nav>
-                </div>
-                
+            </div>
+
+
+
          </div>
        </div>
        
@@ -102,4 +104,4 @@ const PostpaidCustomer = () => {
     );
 }
 
-export default PostpaidCustomer;
+export default CcuPerformance;

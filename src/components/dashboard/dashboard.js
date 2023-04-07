@@ -19,9 +19,6 @@ const Dashboard = () => {
         }
     }, [dashboardData.length]);
 
-    console.log("This is dashboard");
-    console.log(dashboardData);
-
     return (
        
         <Fragment>

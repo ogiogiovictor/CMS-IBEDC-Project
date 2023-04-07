@@ -16,6 +16,7 @@ import Transmission from './components/transmission/transmission';
 import PowerTransformer from './components/powertransformer/powertransformer';
 import Poles from './components/poles/poles';
 import Tickets from './components/tickets/complaints';
+import CcuPerformance from './components/tickets/ccuperformance';
 import Nerc from './components/tickets/nercreport';
 import Crodss from './components/cro/crodss';
 import Billdistribution from './components/billdistribution/billdistribution';
@@ -46,6 +47,7 @@ const App = () =>  {
           <Route path="/powertransformer" element={<PowerTransformer />} />
           <Route path="/poles" element={<Poles />} />
           <Route path="/tickets" element={<Tickets />} />
+          <Route path="/ccuperformance" element={<CcuPerformance/>} />
           <Route path="/nerc" element={<Nerc/>} />
           <Route path="/crodss" element={<Crodss/>} />
           <Route path="/billdistribution" element={<Billdistribution/>} />

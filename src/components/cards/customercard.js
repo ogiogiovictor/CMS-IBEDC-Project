@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import './cards.css'
 
 const CustomerCard = () => {
@@ -11,7 +12,7 @@ const CustomerCard = () => {
                   <h4 className="card-title">Customers By Region</h4>
                   <div className="mb-3">
                     <p className="d-flex mb-2">
-                      Ibadan
+                      <Link to="#" className="noLink" >Ibadan</Link>
                       <span className="ml-auto font-weight-bold">70,0000</span>
                     </p>
                     <div className="progress progress-xs">
@@ -20,7 +21,7 @@ const CustomerCard = () => {
                   </div>
                   <div className="mb-3">
                     <p className="d-flex mb-2">
-                      Kwara
+                    <Link to="#" className="noLink" >Kwara</Link>
                       <span className="ml-auto font-weight-bold">116,920</span>
                     </p>
                     <div className="progress progress-xs">
@@ -29,7 +30,7 @@ const CustomerCard = () => {
                   </div>
                   <div className="mb-3">
                     <p className="d-flex mb-2">
-                     Ogun
+                    <Link to="#" className="noLink" >Ogun</Link>
                       <span className="ml-auto font-weight-bold">10,000</span>
                     </p>
                     <div className="progress progress-xs">
@@ -38,7 +39,7 @@ const CustomerCard = () => {
                   </div>
                   <div className="mb-3">
                     <p className="d-flex mb-2">
-                     Oyo
+                    <Link to="#" className="noLink" >Oyo</Link>
                       <span className="ml-auto font-weight-bold">30,000</span>
                     </p>
                     <div className="progress progress-xs">
@@ -47,7 +48,7 @@ const CustomerCard = () => {
                   </div>
                   <div className="mb-3">
                     <p className="d-flex mb-2">
-                      Osun
+                    <Link to="#" className="noLink" >Osun</Link>
                       <span className="ml-auto font-weight-bold">1999</span>
                     </p>
                     <div className="progress progress-xs">
@@ -56,7 +57,7 @@ const CustomerCard = () => {
                   </div>
                   <div>
                     <p className="d-flex mb-2">
-                      Total
+                      <b>Total</b>
                       <span className="ml-auto font-weight-bold">12,000</span>
                     </p>
                     <div className="progress progress-xs">

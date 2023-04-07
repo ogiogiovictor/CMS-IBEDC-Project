@@ -10,6 +10,11 @@ const RecentCustomer = () => {
               <div className="card">
                 <div className="card-body">
                   <h4 className="card-title">Recent Customer</h4>
+
+                  <div class="form-group d-flex">
+                          <input type="text" class="form-control" placeholder="Search Customers(s)..." />
+                          <button type="submit" class="btn btn-primary ml-3">Search</button>
+                  </div>
                 
                   <div className="table-responsive">
                     <table className="table">

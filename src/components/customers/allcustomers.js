@@ -20,6 +20,11 @@ const AllCustomers = () => {
               <div className="card">
                 <div className="card-body">
                   <h4 className="card-title">All Customer</h4>
+
+                  <div class="form-group d-flex">
+                          <input type="text" class="form-control" placeholder="Search Customers(s)..." />
+                          <button type="submit" className="btn btn-primary ml-3">Search</button>
+                  </div>
                 
                   <div className="table-responsive">
                     <table className="table">

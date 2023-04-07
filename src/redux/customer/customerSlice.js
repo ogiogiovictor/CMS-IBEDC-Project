@@ -1,31 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialCustomerState = [];
-
 
 // This is the initial state of the customerinfo slice of the store
 // Every slice need a name and an initial state
 const customerSlice = createSlice({
-    name: "customerinfo",
-    initialCustomerState,
+    name: "customer",
+    initialState: {
+        customer: []
+    },
     reducers: {
        
-        customercardslist(state) {
-            return state;
+        customercardslist(state, action) {
+            return state.customer = action.payload;
         },
 
-        prepaidCustomers(state) {
-            return state;
+        prepaidCustomers(state, action) {
+            return state.customer = action.payload
         },
-        postpaidCustomers(state) {
-            return state;
+
+        allcustomers(state, action) {
+            return state.customer = action.payload.data
         },
-        customerbills(state) {
-            return state;
+
+        postpaidCustomers(state, action) {
+            return state.customer = action.payload
         },
-        customerpayment(state) {
-            return state;
+        customerbills(state, action) {
+            return state.customer = action.payload
         },
+
+        customerpayment(state, action) {
+            return state.customer =action.payload
+        },
+        
        
 
     }

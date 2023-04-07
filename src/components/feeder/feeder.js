@@ -10,6 +10,11 @@ const Feeder = () => {
          <div className="card">
            <div className="card-body">
              <h4 className="card-title">All Feeders</h4>
+
+             <div class="form-group d-flex">
+                          <input type="text" class="form-control" placeholder="Search Feeders(s)..." />
+                          <button type="submit" class="btn btn-primary ml-3">Search</button>
+                    </div>
            
              <div className="table-responsive">
                <table className="table">
@@ -74,6 +79,19 @@ const Feeder = () => {
                </table>
              </div>
            </div>
+
+           <div class="col-md-12">
+                <nav>
+                    <ul class="pagination rounded-flat pagination-success">
+                      <li class="page-item"><a class="page-link" href="#"><i class="icon-arrow-left"></i></a></li>
+                      <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item"><a class="page-link" href="#">4</a></li>
+                      <li class="page-item"><a class="page-link" href="#"><i class="icon-arrow-right"></i></a></li>
+                    </ul>
+                  </nav>
+                </div>
          </div>
        </div>
        

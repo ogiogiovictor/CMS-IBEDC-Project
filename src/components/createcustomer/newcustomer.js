@@ -13,6 +13,20 @@ const NewCustomer = () => {
     state: '',
     lga: '',
     serviceCenter: '',
+    // errorMessgae: '',
+  });
+
+  //Blur Event
+  const [touched, setTouched] = useState({
+    surname: false,
+    firstname: false,
+    middlename: false,
+    phoneNumber: false,
+    email: false,
+    fullAddress: false,
+    state: false,
+    lga: false,
+    serviceCenter: false,
   });
 
 
@@ -22,6 +36,11 @@ const NewCustomer = () => {
 
   const onChangeHandler = (e) => {
     setValues({...values, [e.target.name]: e.target.value})
+  }
+
+  const onBlurHandler = (e) => {
+    setTouched({...touched, [e.target.name]: true})
+    //setTouched(true)
   }
 
   console.log(values);
@@ -49,8 +68,14 @@ const NewCustomer = () => {
                       name="surname"
                       value={values.surname}
                       onChange={onChangeHandler}
-                      placeholder="Enter Account No" />
+                      onBlur={onBlurHandler}
+                      touched={touched.surname.toString()}
+                      placeholder="Enter Account No" required
+                      pattern='^[A-Za-z0-9]{3,25}$'
+                      />
+                      <small>Surname should be between 3 -25 characters with no special characters</small>
                     </div>
+                    
 
                     <div className="form-group">
                       <label for="firstname">Firstname</label>
@@ -59,7 +84,12 @@ const NewCustomer = () => {
                       name="firstname" 
                       value={values.firstname}
                       onChange={onChangeHandler}
-                      placeholder="Enter Firstname" />
+                      onBlur={onBlurHandler}
+                      placeholder="Enter Firstname" required 
+                      pattern='^[A-Za-z0-9]{3,25}$'
+                      touched={touched.firstname.toString()}
+                      />
+                       <small>Firstname should be between 3 -25 characters with no special characters</small>
                     </div>
 
                     <div className="form-group">
@@ -69,17 +99,27 @@ const NewCustomer = () => {
                       name="middlename" 
                       value={values.middlename}
                       onChange={onChangeHandler}
-                      placeholder="Enter Middlename" />
+                      onBlur={onBlurHandler}
+                      placeholder="Enter Middlename"
+                      pattern='^[A-Za-z0-9]{3,25}$'
+                      touched={touched.middlename.toString()}
+                       />
+                       <small>Middlename should be between 3 -25 characters with no special characters</small>
                     </div>
 
                     <div className="form-group">
                       <label for="phoneNumber">Phone Number</label>
-                      <input type="email" 
+                      <input type="phone" 
                       className="form-control" 
                       name="phoneNumber" 
                       value={values.phoneNumber}
                       onChange={onChangeHandler}
-                      placeholder="Enter Phone Number" />
+                      onBlur={onBlurHandler}
+                      placeholder="Enter Phone Number" required 
+                      pattern='^[0-9]{11}$'
+                      touched={touched.phoneNumber.toString()}
+                      />
+                      <small>Should be a valid phone number 247 704 560 7871</small>
                     </div>
                     <div className="form-group">
                       <label for="email">Email Address</label>
@@ -87,27 +127,36 @@ const NewCustomer = () => {
                       className="form-control" 
                       value={values.email}
                       onChange={onChangeHandler}
-                      name="email" placeholder="Enter Email" />
+                      onBlur={onBlurHandler}
+                      name="email" placeholder="Enter Email" 
+                      touched={touched.email.toString()}
+                      />
+                       <small>Should be a valid email address adeyanjo@gmail.com</small>
                     </div>
                     <div className="form-group">
                       <label for="fullAddress">Customer Address</label>
-                      <input type="password" className="form-control" 
+                      <input type="text" className="form-control" 
                       name="fullAddress" 
                       value={values.fullAddress}
                       onChange={onChangeHandler}
-                      placeholder="Enter Address" />
+                      onBlur={onBlurHandler}
+                      touched={touched.fullAddress.toString()}
+                      placeholder="Enter Address" required />
+                        <small>Cannot be empty</small>
                     </div>
 
                     <div className="form-group">
-                    <label for="stae">State</label>
+                    <label for="state">State</label>
                     <select className="form-control" name="state" 
                     values={values.state}
                     onChange={onChangeHandler}
+                    required
                     >
                           <option value=''>Select State</option>
                           <option>Lagos</option>
                           <option>Benin</option>
                         </select>
+                        <small>Cannot be empty</small>
                     </div>
 
                     <div className="form-group">
@@ -115,11 +164,13 @@ const NewCustomer = () => {
                     <select className="form-control" name="lga"
                      value={values.state}
                      onChange={onChangeHandler}
+                     required
                      >
                           <option value=''>Select State</option>
                           <option>Lagos</option>
                           <option>Benin</option>
                         </select>
+                        <small>Select State is required</small>
                     </div>
 
                     <div className="form-group">
@@ -127,11 +178,13 @@ const NewCustomer = () => {
                     <select className="form-control" name="serviceCenter"
                      value={values.serviceCenter}
                      onChange={onChangeHandler}
+                     required
                      >
                           <option value=''>Select Service Center</option>
                           <option>Male</option>
                           <option>Female</option>
                         </select>
+                        <small>Select Service Centre</small>
                     </div>
                    
                     <button type="submit" className="btn btn-primary mr-2">Proceed</button>

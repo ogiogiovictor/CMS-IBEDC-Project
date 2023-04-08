@@ -40419,6 +40419,18 @@ div.tagsinput span.tag a {
     text-decoration: underline;
     color:whitesmoke;
 }
+
+small {
+    color:red;
+    display: none;
+}
+
+input:invalid[touched="true"] {
+    border: 1px solid var(--red);
+}
+input:invalid[touched="true"] ~ small {
+    display: block;
+}
 /*-------------------------------------------------------------------*/
 /* === Layouts === */
 /*-------------------------------------------------------------------*/

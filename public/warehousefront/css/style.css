@@ -40326,7 +40326,8 @@ div.tagsinput span.tag a {
 }
 
 .profile-page .profile-body {
-    padding-top: 50px;
+    /* padding-top: 50px; */
+    padding-top: 10px;
 }
 
 .profile-page .profile-body .tab-switch {

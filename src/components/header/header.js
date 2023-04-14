@@ -103,7 +103,7 @@ const Header  = () => {
         <div className="container">
           <ul className="nav page-navigation">
             <li className="nav-item">
-              <NavLink to="/" className="nav-link"><i className="link-icon icon-screen-desktop"></i><span className="menu-title">Dashboard</span></NavLink>
+              <NavLink to="/dashboard" className="nav-link"><i className="link-icon icon-screen-desktop"></i><span className="menu-title">Dashboard</span></NavLink>
             </li>
          
             <li className="nav-item">

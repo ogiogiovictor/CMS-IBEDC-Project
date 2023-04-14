@@ -82,7 +82,7 @@ const Header  = () => {
                 </div>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <a className="nav-link" href="/">
                   <i className="icon-logout" title="Logout"></i>
                 </a>
               </li>

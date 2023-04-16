@@ -10,8 +10,8 @@ export const authApi = createApi({
       if (token) {
         // include token in req header
         headers.set("authorization", `Bearer ${token}`);
-        headers.set("app-secret", "daniel");
-        headers.set("app-Token", "daniel");
+        headers.set("app-secret", `${process.env.REACT_APP_API_APP_SECRET}`);
+        headers.set("app-Token", `${process.env.REACT_APP_API_APP_TOKEN}`);
         return headers;
       }
     },

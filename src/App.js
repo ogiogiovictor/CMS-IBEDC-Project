@@ -25,7 +25,7 @@ import CustomerInfo from "./components/createcustomer/customerinfo";
 import Login from "./pages/auth/login";
 import { LoginLayout, AdminLayout } from "./components/layout/index";
 import ProtectedRoute from "./components/auth/protectedroute";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {

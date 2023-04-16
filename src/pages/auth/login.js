@@ -4,19 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { userLogin } from "../../redux/auth/authActions";
 import LoadingSpinner from "../../components/spinner";
-import { useGetUserDetailsQuery } from "../../redux/services/auth/authService";
 
 const Login = () => {
   const { loading, userToken } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
-  const { isFetching } = useGetUserDetailsQuery();
-  // useEffect(() => {
-  //   if (userToken) {
-  //     navigate("/dashboard");
-  //   }
-  // }, [navigate, userToken]);
 
   const navigateToDashboard = useCallback(() => {
     if (userToken) {

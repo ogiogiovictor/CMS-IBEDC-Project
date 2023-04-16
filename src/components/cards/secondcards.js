@@ -38,7 +38,7 @@ const SecondCard = ({stats}) => {
                       </div>
                       <div>
                         <h6 className="font-weight-normal">MSMS</h6>
-                        <span className="badge badge-primary">34,590</span>
+                        <span className="badge badge-primary">{stats.msms_meters}</span>
                       </div>
                     </div>
                   </div>
@@ -52,7 +52,7 @@ const SecondCard = ({stats}) => {
                       </div>
                       <div>
                         <h6 className="font-weight-normal">By Business Hub</h6>
-                        <span className="badge badge-primary">11,000</span>
+                        <span className="badge badge-primary">{stats.service_centers}</span>
                       </div>
                     </div>
                   </div>

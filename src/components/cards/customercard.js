@@ -36,7 +36,11 @@ const CustomerCard = ({ cstats }) => {
             <div>
               <p className="d-flex mb-2">
                 <b>Total</b>
-                <span className="ml-auto font-weight-bold">12,000</span>
+                <span className="ml-auto font-weight-bold">
+                  {cstats
+                    ?.map((x) => x.total * 1)
+                    .reduce((acc, curr) => acc + curr)}
+                </span>
               </p>
               <div className="progress progress-xs">
                 <div

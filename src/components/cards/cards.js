@@ -66,8 +66,8 @@ const Cards = ({ stats }) => {
                 <Link to="" className="linkCards">
                   <h4 className="font-weight-light">Total Staff</h4>
                 </Link>
-                <h3 className="font-weight-light mb-3">0</h3>
-                <p className="mb-0 font-weight-light">0 outsourced </p>
+                <h3 className="font-weight-light mb-3">{stats.outsourced_staff}</h3>
+                <p className="mb-0 font-weight-light">{stats.outsourced_staff} outsourced </p>
               </div>
             </div>
           </div>

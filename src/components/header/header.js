@@ -8,9 +8,8 @@ import "./header.css";
 import LoadingSpinner from "../spinner";
 
 const Header = () => {
-  const { userInfo, userToken } = useSelector((state) => state.auth);
+  const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   // automatically authenticate user if token is found
   const { data, isFetching } = useGetUserDetailsQuery("userDetails", {

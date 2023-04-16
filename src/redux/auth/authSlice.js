@@ -12,6 +12,7 @@ const initialState = {
   userToken,
   error: null,
   success: false,
+  dashboardStats: [],
 };
 
 const authSlice = createSlice({
@@ -27,6 +28,9 @@ const authSlice = createSlice({
     },
     setCredentials: (state, { payload }) => {
       state.userInfo = payload;
+    },
+    setDashboardStats: (state, { payload }) => {
+      state.dashboardStats = payload;
     },
   },
   extraReducers: {
@@ -46,5 +50,5 @@ const authSlice = createSlice({
     },
   },
 });
-export const { logout, setCredentials } = authSlice.actions;
+export const { logout, setCredentials, setDashboardStats } = authSlice.actions;
 export default authSlice.reducer;

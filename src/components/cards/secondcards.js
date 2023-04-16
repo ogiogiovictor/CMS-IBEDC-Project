@@ -2,7 +2,7 @@ import React from 'react';
 import CustomerCard from './customercard';
 
 
-const SecondCard = () => {
+const SecondCard = ({stats}) => {
     return (
         <div className="row">
             <div className="col-md-6 grid-margin stretch-card">
@@ -60,7 +60,7 @@ const SecondCard = () => {
               </div>
             </div>
 
-            <CustomerCard />
+            <CustomerCard cstats={stats?.customer_by_region} />
 
           
            

@@ -21,9 +21,14 @@ export const authApi = createApi({
       query: () => ({
         url: "/v2/get_user",
         method: "GET",
+      })
+    }),
+    getDashboardStats: builder.query({
+      query: () => ({
+        url: '/v2/get_dashboard_stats',
       }),
     }),
   }),
 });
 
-export const { useGetUserDetailsQuery } = authApi;
+export const { useGetUserDetailsQuery, useGetDashboardStatsQuery } = authApi;

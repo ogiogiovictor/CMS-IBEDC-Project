@@ -1,8 +1,39 @@
-import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
+import React, { Fragment, useEffect, useCallback } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { userLogin } from "../../redux/auth/authActions";
+import LoadingSpinner from "../../components/spinner";
+import { useGetUserDetailsQuery } from "../../redux/services/auth/authService";
 
-const login = () => {
-  return (
+const Login = () => {
+  const { loading, userToken } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
+  const { isFetching } = useGetUserDetailsQuery();
+  // useEffect(() => {
+  //   if (userToken) {
+  //     navigate("/dashboard");
+  //   }
+  // }, [navigate, userToken]);
+
+  const navigateToDashboard = useCallback(() => {
+    if (userToken) {
+      navigate("/dashboard");
+    }
+  }, [userToken, navigate]);
+
+  useEffect(() => {
+    navigateToDashboard();
+  }, [navigateToDashboard]);
+
+  const submitForm = (data) => {
+    dispatch(userLogin(data));
+  };
+  return userToken ? (
+    <LoadingSpinner />
+  ) : (
     <Fragment>
       <div className="container-scroller">
         <div className="container-fluid page-body-wrapper full-page-wrapper">
@@ -13,20 +44,23 @@ const login = () => {
               </div>
               <div className="col-12 col-md-8 h-100 bg-white">
                 <div className="auto-form-wrapper d-flex align-items-center justify-content-center flex-column">
-                  <form action="#">
+                  <form onSubmit={handleSubmit(submitForm)}>
                     <h3 className="mr-auto">Hello! let's get started</h3>
                     <p className="mb-5 mr-auto">Enter your details below.</p>
+                    {/* <p> {error && <Error>{error}</Error>}</p> */}
                     <div className="form-group">
                       <div className="input-group">
                         <div className="input-group-prepend">
                           <span className="input-group-text">
-                            <i className="icon-user-outline"></i>
+                            <i className="icon-user"></i>
                           </span>
                         </div>
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Username"
+                          placeholder="E-mail"
+                          {...register("email")}
+                          required
                         />
                       </div>
                     </div>
@@ -41,16 +75,19 @@ const login = () => {
                           type="password"
                           className="form-control"
                           placeholder="Password"
+                          {...register("password")}
+                          required
                         />
                       </div>
                     </div>
                     <div className="form-group">
-                      <Link
-                        to="/dashboard"
+                      <button
+                        type="submit"
                         className="btn btn-primary submit-btn"
+                        disabled={loading}
                       >
-                        SIGN IN
-                      </Link>
+                        {loading ? "Loading..." : "Login"}
+                      </button>
                     </div>
                     <div className="wrapper mt-5 text-gray">
                       <p className="footer-text">
@@ -68,4 +105,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

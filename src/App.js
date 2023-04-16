@@ -24,6 +24,9 @@ import Ibedcstaff from "./components/staff/ibedcstaff";
 import CustomerInfo from "./components/createcustomer/customerinfo";
 import Login from "./pages/auth/login";
 import { LoginLayout, AdminLayout } from "./components/layout/index";
+import ProtectedRoute from "./components/auth/protectedroute";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
@@ -33,35 +36,53 @@ const App = () => {
           <Route element={<LoginLayout />}>
             <Route path="/" element={<Login />} />
           </Route>
-          <Route element={<AdminLayout />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/createcustomer" element={<NewCustomer />} />
-            <Route path="/postpaid_customers" element={<PostpaidCustomer />} />
-            <Route path="prepaid_customers" element={<PrepaidCustomer />} />
-            <Route path="/payments" element={<Payments />} />
-            <Route path="/bills" element={<Bills />} />
-            <Route path="/allcustomers" element={<AllCustomers />} />
-            <Route path="/transformers" element={<Transformer />} />
-            <Route path="/feeders" element={<Feeder />} />
-            <Route
-              path="/injectionsubstation"
-              element={<InjectionSubStation />}
-            />
-            <Route path="/transmission" element={<Transmission />} />
-            <Route path="/powertransformer" element={<PowerTransformer />} />
-            <Route path="/poles" element={<Poles />} />
-            <Route path="/tickets" element={<Tickets />} />
-            <Route path="/ccuperformance" element={<CcuPerformance />} />
-            <Route path="/nerc" element={<Nerc />} />
-            <Route path="/crodss" element={<Crodss />} />
-            <Route path="/billdistribution" element={<Billdistribution />} />
-            <Route path="/metereading" element={<Metereading />} />
-            <Route path="/tracker" element={<Tracker />} />
-            <Route path="/ibedcstaff" element={<Ibedcstaff />} />
-            <Route path="/customerinfo" element={<CustomerInfo />} />
+
+          <Route element={<ProtectedRoute />}>
+            <Route element={<AdminLayout />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/createcustomer" element={<NewCustomer />} />
+              <Route
+                path="/postpaid_customers"
+                element={<PostpaidCustomer />}
+              />
+              <Route path="prepaid_customers" element={<PrepaidCustomer />} />
+              <Route path="/payments" element={<Payments />} />
+              <Route path="/bills" element={<Bills />} />
+              <Route path="/allcustomers" element={<AllCustomers />} />
+              <Route path="/transformers" element={<Transformer />} />
+              <Route path="/feeders" element={<Feeder />} />
+              <Route
+                path="/injectionsubstation"
+                element={<InjectionSubStation />}
+              />
+              <Route path="/transmission" element={<Transmission />} />
+              <Route path="/powertransformer" element={<PowerTransformer />} />
+              <Route path="/poles" element={<Poles />} />
+              <Route path="/tickets" element={<Tickets />} />
+              <Route path="/ccuperformance" element={<CcuPerformance />} />
+              <Route path="/nerc" element={<Nerc />} />
+              <Route path="/crodss" element={<Crodss />} />
+              <Route path="/billdistribution" element={<Billdistribution />} />
+              <Route path="/metereading" element={<Metereading />} />
+              <Route path="/tracker" element={<Tracker />} />
+              <Route path="/ibedcstaff" element={<Ibedcstaff />} />
+              <Route path="/customerinfo" element={<CustomerInfo />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 };

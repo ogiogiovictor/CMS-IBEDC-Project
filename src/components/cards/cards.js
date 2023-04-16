@@ -16,7 +16,7 @@ const Cards = ({ stats }) => {
                 <h3 className="font-weight-light mb-3">
                   {stats.total_customers}
                 </h3>
-                <p className="mb-0 font-weight-light">39 today's customers </p>
+                <p className="mb-0 font-weight-light">All customers </p>
               </div>
             </div>
           </div>
@@ -34,7 +34,7 @@ const Cards = ({ stats }) => {
                 </Link>
                 <h3 className="font-weight-light mb-3">{stats.total_dss}</h3>
                 <p className="mb-0 font-weight-light">
-                  {stats.feeder_11 + stats.feeder_33} total feeders
+                  total feeders - {stats.feeder_11 + stats.feeder_33} 
                 </p>
               </div>
             </div>

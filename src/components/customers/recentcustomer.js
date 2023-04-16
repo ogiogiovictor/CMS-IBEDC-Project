@@ -56,7 +56,7 @@ const RecentCustomer = ({ recentCustomer }) => {
                           </button> */}
                           <Link
                             className="btn btn-xs btn-success"
-                            to={`/customerinfo/${customer?.AccountNo}`}
+                            to={`/customerinfo/${customer?.FAccountNo}/${customer?.DistributionID}`}
                           >
                             <i class="icon-user"></i>
                             View

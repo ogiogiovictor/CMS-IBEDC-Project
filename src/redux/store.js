@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import customerSlice from "./customer/customerSlice";
 import authReducer from "./auth/authSlice";
 import { authApi } from "./services/auth/authService";
+import { customerService } from "./services/customer/customerService";
 
 
 const store = configureStore({
@@ -10,9 +11,10 @@ const store = configureStore({
         customer: customerSlice.reducer,
         auth: authReducer,
         [authApi.reducerPath]: authApi.reducer,
+        [customerService.reducerPath]: customerService.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware),
+    getDefaultMiddleware().concat(authApi.middleware, customerService.middleware),
 });
   
 

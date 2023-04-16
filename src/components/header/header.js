@@ -19,7 +19,9 @@ const Header = () => {
   });
 
   useEffect(() => {
-    if (data) dispatch(setCredentials(data.data));
+    if (data) {
+      dispatch(setCredentials(data?.data));
+    }
   }, [data, dispatch]);
 
   console.log(data);
@@ -142,8 +144,8 @@ const Header = () => {
                 <li className="nav-item nav-profile">
                   <a className="nav-link" href="#">
                     {/* <span className="nav-profile-text">
-                      Hello {userInfo?.name}
-                    </span> */}
+                        Hello {userInfo?.name}
+                      </span> */}
                     <span>
                       {isFetching
                         ? `Fetching your profile...`

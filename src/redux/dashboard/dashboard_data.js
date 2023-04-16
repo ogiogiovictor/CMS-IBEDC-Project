@@ -2,7 +2,7 @@ import { URL } from "../helpers";
 
 //const url = "http://localhost:8000/api/get_dashboard_stats";
 
-const url = URL + "get_dashboard_stats";
+const url = URL + "/v2/get_dashboard_stats";
 
 const fetchDashboardStats = async () => {
     const response = await fetch(url);

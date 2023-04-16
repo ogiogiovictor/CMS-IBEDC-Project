@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+const API_VERSION = `${process.env.REACT_APP_API_VERSION}`;
+
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
@@ -19,13 +21,13 @@ export const authApi = createApi({
   endpoints: (builder) => ({
     getUserDetails: builder.query({
       query: () => ({
-        url: "/v2/get_user",
+        url: `/${API_VERSION}/get_user`,
         method: "GET",
       })
     }),
     getDashboardStats: builder.query({
       query: () => ({
-        url: '/v2/get_dashboard_stats',
+        url: `/${API_VERSION}/get_dashboard_stats`,
       }),
     }),
   }),

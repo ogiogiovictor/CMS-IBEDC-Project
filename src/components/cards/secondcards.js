@@ -2,7 +2,7 @@ import React from 'react';
 import CustomerCard from './customercard';
 
 
-const SecondCard = () => {
+const SecondCard = ({stats}) => {
     return (
         <div className="row">
             <div className="col-md-6 grid-margin stretch-card">
@@ -38,7 +38,7 @@ const SecondCard = () => {
                       </div>
                       <div>
                         <h6 className="font-weight-normal">MSMS</h6>
-                        <span className="badge badge-primary">34,590</span>
+                        <span className="badge badge-primary">{stats.msms_meters}</span>
                       </div>
                     </div>
                   </div>
@@ -52,7 +52,7 @@ const SecondCard = () => {
                       </div>
                       <div>
                         <h6 className="font-weight-normal">By Business Hub</h6>
-                        <span className="badge badge-primary">11,000</span>
+                        <span className="badge badge-primary">{stats.service_centers}</span>
                       </div>
                     </div>
                   </div>
@@ -60,7 +60,7 @@ const SecondCard = () => {
               </div>
             </div>
 
-            <CustomerCard />
+            <CustomerCard cstats={stats?.customer_by_region} />
 
           
            

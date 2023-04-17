@@ -1,14 +1,20 @@
 //import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { configureStore } from "@reduxjs/toolkit";
-import DashboardReducer from "./dashboard/dashboardSlice";
 import customerSlice from "./customer/customerSlice";
+import authReducer from "./auth/authSlice";
+import { authApi } from "./services/auth/authService";
+import { customerService } from "./services/customer/customerService";
 
 
 const store = configureStore({
     reducer: {
-        dashboard: DashboardReducer,
-        customer: customerSlice.reducer,
-    }
+        customer: customerSlice,
+        auth: authReducer,
+        [authApi.reducerPath]: authApi.reducer,
+        [customerService.reducerPath]: customerService.reducer,
+    },
+    middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(authApi.middleware, customerService.middleware),
 });
   
 

@@ -40198,13 +40198,13 @@ div.tagsinput span.tag a {
 }
 
 .auth.theme-two .banner-section .slide-content.bg-1 {
-    background: url("http://via.placeholder.com/1000x1000") no-repeat center
+    background: url("../images/capital_building.png") no-repeat center
         center;
     background-size: cover;
 }
 
 .auth.theme-two .banner-section .slide-content.bg-2 {
-    background: url("http://via.placeholder.com/1000x1000") no-repeat center
+    background: url("../images/capital_building.png") no-repeat center
         center;
     background-size: cover;
 }

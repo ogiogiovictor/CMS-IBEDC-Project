@@ -9,7 +9,6 @@ const customerSlice = createSlice({
         customer: []
     },
     reducers: {
-       
         customercardslist(state, action) {
             return state.customer = action.payload;
         },

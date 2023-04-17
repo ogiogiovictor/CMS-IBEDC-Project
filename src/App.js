@@ -23,6 +23,7 @@ import Billdistribution from './components/billdistribution/billdistribution';
 import Metereading from './components/metereading/metereading';
 import Tracker from './components/tracker/tracker';
 import Ibedcstaff from './components/staff/ibedcstaff';
+import CustomerInfo from './components/createcustomer/customerinfo';
 
 const App = () =>  {
   return (
@@ -54,6 +55,7 @@ const App = () =>  {
           <Route path="/metereading" element={<Metereading/>} />
           <Route path="/tracker" element={<Tracker />} />
           <Route path="/ibedcstaff" element={<Ibedcstaff/>} />
+          <Route path="/customerinfo" element={<CustomerInfo/>} />
 
         </Routes>
         <Footer/>

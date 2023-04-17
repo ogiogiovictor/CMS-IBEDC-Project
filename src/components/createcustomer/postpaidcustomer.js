@@ -1,10 +1,9 @@
 import React, {Fragment} from 'react';
-import CardsCustomers from '../cards/cardscustomer';
+import { Link } from 'react-router-dom';
 
 const PostpaidCustomer = () => {
     return (
         <Fragment>
-            <CardsCustomers />
         <div className="row">
        <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">
          <div className="card">
@@ -20,13 +19,14 @@ const PostpaidCustomer = () => {
                <table className="table">
                  <thead>
                    <tr>
-                     <th>Customer Name</th>
-                     <th>Account Number.</th>
-                     <th>Customer Type</th>
+                     <th>Account No</th>
+                     <th>Surname</th>
+                     <th>FirstName</th>
                      <th>Business Hub</th>
                      <th>Service Center</th>
-                     <th>DSS ID</th>
+                     <th>DSS Name</th>
                      <th>Status</th>
+                     <th>Action</th>
                    </tr>
                  </thead>
                  <tbody>
@@ -38,6 +38,7 @@ const PostpaidCustomer = () => {
                      <td>53275531</td>
                      <td>12 May 2017</td>
                      <td><label className="badge badge-danger">Active</label></td>
+                     <td><Link to="/customerinfo"><button class="btn btn-xs btn-success"><i class="icon-user"></i>View</button></Link></td>
                    </tr>
                    <tr>
                      <td>Jacob</td>
@@ -47,6 +48,7 @@ const PostpaidCustomer = () => {
                      <td>53275531</td>
                      <td>12 May 2017</td>
                      <td><label className="badge badge-warning">Suspended</label></td>
+                     <td><Link to="/customerinfo"><button class="btn btn-xs btn-success"><i class="icon-user"></i>View</button></Link></td>
                    </tr>
                    <tr>
                      <td>Jacob</td>
@@ -56,6 +58,7 @@ const PostpaidCustomer = () => {
                      <td>53275531</td>
                      <td>12 May 2017</td>
                      <td><label className="badge badge-info">Inactive</label></td>
+                     <td><Link to="/customerinfo"><button class="btn btn-xs btn-success"><i class="icon-user"></i>View</button></Link></td>
                    </tr>
                    <tr>
                      <td>Jacob</td>
@@ -65,6 +68,8 @@ const PostpaidCustomer = () => {
                      <td>53275531</td>
                      <td>12 May 2017</td>
                      <td><label className="badge badge-success">Active</label></td>
+                     <td>
+                      <Link to="/customerinfo"><button class="btn btn-xs btn-success"><i class="icon-user"></i>View</button></Link></td>
                    </tr>
                    <tr>
                      <td>Jacob</td>
@@ -74,6 +79,7 @@ const PostpaidCustomer = () => {
                      <td>53275531</td>
                      <td>12 May 2017</td>
                      <td><label className="badge badge-warning">Closed</label></td>
+                     <td><Link to="/customerinfo"><button class="btn btn-xs btn-success"><i class="icon-user"></i>View</button></Link></td>
                    </tr>
                  </tbody>
                </table>

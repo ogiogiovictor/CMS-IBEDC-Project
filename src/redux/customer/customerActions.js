@@ -39,7 +39,6 @@ export const addCustomer = (customerData) => {
     return async (dispatch) => {
 
         const sendCustomer = async () => {
-
         const response = await fetch('https://apiengine.ibedc.com:7443/api/create_customer', {
             method: 'POST',
             headers: {

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-//import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CustomerCard from '../cards/customercard';
+import { addCustomer } from '../../redux/customer/customerActions';
 
 const NewCustomer = () => {
+  const dispatch = useDispatch(); //This is the hook that allows us to dispatch actions to the store
   const [values, setValues] = useState({
     surname: '',
     firstname: '',
@@ -13,7 +15,7 @@ const NewCustomer = () => {
     state: '',
     lga: '',
     serviceCenter: '',
-    // errorMessgae: '',
+    errorMessage: '',
   });
 
   //Blur Event
@@ -29,21 +31,49 @@ const NewCustomer = () => {
     serviceCenter: false,
   });
 
-
-  const postCustomer = (e) => {
-    e.preventDefault();
-  }
-
   const onChangeHandler = (e) => {
     setValues({...values, [e.target.name]: e.target.value})
   }
 
   const onBlurHandler = (e) => {
     setTouched({...touched, [e.target.name]: true})
-    //setTouched(true)
   }
 
-  console.log(values);
+
+  const postCustomer = (e) => {
+    e.preventDefault();
+
+    if (!values.phoneNumber || !values.fullAddress || !values.state || !values.serviceCenter
+      || !values.surname || !values.firstname || !values.middlename || !values.email) {
+
+       setValues({...values, errorMessage: 'Please fill all fields'});
+       return;
+    }else {
+    
+      //Collect data from the form
+      const data = { 
+        surname: values.surname,
+        firstname: values.firstname,
+        middlename: values.middlename,
+        phoneNumber: values.phoneNumber,
+        email: values.email,
+        fullAddress: values.fullAddress,
+        state: values.state,
+        lga: values.lga,
+        serviceCenter: values.serviceCenter,
+      }
+
+      dispatch(addCustomer(data));
+
+    }
+
+    
+
+
+
+  }
+
+ 
 
 
     return (
@@ -60,7 +90,9 @@ const NewCustomer = () => {
 
                  
                    <form className="forms-sample" onSubmit={postCustomer}>
-
+                    
+                   { values.errorMessage && <div className="alert alert-danger" role="alert"> {values.errorMessage} </div> }
+                      
                     <div className="form-group">
                       <label for="surname">Surname</label>
                       <input type="text" 

@@ -8,13 +8,22 @@ export const customerService = createApi({
   baseQuery,
   endpoints: (builder) => ({
     getCustomerDetailsByID: builder.query({
-      query: ({id, dss}) => ({
+      query: ({ id, dss }) => ({
         url: `/${API_VERSION}/get_customer_details/${id}/${dss}`,
         method: "GET",
-      })
+      }),
     }),
-   
+
+    getCustomerDetailsByType: builder.query({
+      query: ({ userQuery, pageNo }) => ({
+        url: `/${API_VERSION}/grap_customers?type=${userQuery}&page=${pageNo}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useGetCustomerDetailsByIDQuery } = customerService;
+export const {
+  useGetCustomerDetailsByIDQuery,
+  useGetCustomerDetailsByTypeQuery,
+} = customerService;

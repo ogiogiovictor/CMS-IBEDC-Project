@@ -1,111 +1,116 @@
-import React, {Fragment} from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useMemo, Fragment, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import Pagination from "../pagination";
+import { useGetCustomerDetailsByTypeQuery } from "../../redux/services/customer/customerService";
+import { setPostpaidCustomers } from "../../redux/customer/customerSlice";
 
 const PostpaidCustomer = () => {
-    return (
-        <Fragment>
-        <div className="row">
-       <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">
-         <div className="card">
-           <div className="card-body">
-             <h4 className="card-title">Postpaid Customers</h4>
-           
-             <div class="form-group d-flex">
-                          <input type="text" class="form-control" placeholder="Search Customer(s)..." />
-                          <button type="submit" class="btn btn-primary ml-3">Search</button>
-                    </div>
+  let PageSize = 20;
+  const [currentPage, setCurrentPage] = useState(1);
+  const dispatch = useDispatch();
+  let postpaidCustomers = useSelector(state => state.customer.postpaidCustomers);
+  const { data, isFetching } = useGetCustomerDetailsByTypeQuery(
+    "postpaid",
+    "",
+    {
+      pollingInterval: 900000,
+    }
+  );
 
-             <div className="table-responsive">
-               <table className="table">
-                 <thead>
-                   <tr>
-                     <th>Account No</th>
-                     <th>Surname</th>
-                     <th>FirstName</th>
-                     <th>Business Hub</th>
-                     <th>Service Center</th>
-                     <th>DSS Name</th>
-                     <th>Status</th>
-                     <th>Action</th>
-                   </tr>
-                 </thead>
-                 <tbody>
-                   <tr>
-                     <td>Jacob</td>
-                     <td>53275531</td>
-                     <td>12 May 2017</td>
-                     <td>Jacob</td>
-                     <td>53275531</td>
-                     <td>12 May 2017</td>
-                     <td><label className="badge badge-danger">Active</label></td>
-                     <td><Link to="/customerinfo"><button class="btn btn-xs btn-success"><i class="icon-user"></i>View</button></Link></td>
-                   </tr>
-                   <tr>
-                     <td>Jacob</td>
-                     <td>53275531</td>
-                     <td>12 May 2017</td>
-                     <td>Jacob</td>
-                     <td>53275531</td>
-                     <td>12 May 2017</td>
-                     <td><label className="badge badge-warning">Suspended</label></td>
-                     <td><Link to="/customerinfo"><button class="btn btn-xs btn-success"><i class="icon-user"></i>View</button></Link></td>
-                   </tr>
-                   <tr>
-                     <td>Jacob</td>
-                     <td>53275531</td>
-                     <td>12 May 2017</td>
-                     <td>Jacob</td>
-                     <td>53275531</td>
-                     <td>12 May 2017</td>
-                     <td><label className="badge badge-info">Inactive</label></td>
-                     <td><Link to="/customerinfo"><button class="btn btn-xs btn-success"><i class="icon-user"></i>View</button></Link></td>
-                   </tr>
-                   <tr>
-                     <td>Jacob</td>
-                     <td>53275531</td>
-                     <td>12 May 2017</td>
-                     <td>Jacob</td>
-                     <td>53275531</td>
-                     <td>12 May 2017</td>
-                     <td><label className="badge badge-success">Active</label></td>
-                     <td>
-                      <Link to="/customerinfo"><button class="btn btn-xs btn-success"><i class="icon-user"></i>View</button></Link></td>
-                   </tr>
-                   <tr>
-                     <td>Jacob</td>
-                     <td>53275531</td>
-                     <td>12 May 2017</td>
-                     <td>Jacob</td>
-                     <td>53275531</td>
-                     <td>12 May 2017</td>
-                     <td><label className="badge badge-warning">Closed</label></td>
-                     <td><Link to="/customerinfo"><button class="btn btn-xs btn-success"><i class="icon-user"></i>View</button></Link></td>
-                   </tr>
-                 </tbody>
-               </table>
-             </div>
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+    return postpaidCustomers?.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, postpaidCustomers, PageSize]);
 
-           </div>
+  useEffect(() => {
+    if (data) {
+      dispatch(setPostpaidCustomers(data?.data?.customers?.data));
+    } else {
+      dispatch(setPostpaidCustomers([]));
+    }
+  }, [data, dispatch]);
 
-           <div class="col-md-12">
-                <nav>
-                    <ul class="pagination rounded-flat pagination-success">
-                      <li class="page-item"><a class="page-link" href="#"><i class="icon-arrow-left"></i></a></li>
-                      <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">4</a></li>
-                      <li class="page-item"><a class="page-link" href="#"><i class="icon-arrow-right"></i></a></li>
-                    </ul>
-                  </nav>
-                </div>
-                
-         </div>
-       </div>
-       
-     </div>
-   </Fragment>
-    );
-}
+  console.log(data);
+  return (
+    <Fragment>
+      <div className="row">
+        <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">
+          <div className="card">
+            <div className="card-body">
+              <h4 className="card-title">Postpaid Customers</h4>
+
+              <div class="form-group d-flex">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Search Customer(s)..."
+                />
+                <button type="submit" class="btn btn-primary ml-3">
+                  Search
+                </button>
+              </div>
+
+              <div className="table-responsive">
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Customer Name</th>
+                      <th>Account Number.</th>
+                      <th>Customer Type</th>
+                      <th>Business Hub</th>
+                      <th>Service Center</th>
+                      <th>DSS ID</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {currentTableData?.map((pCustomer, i) => (
+                      <tr key={i}>
+                        <td>{pCustomer?.FirstName}</td>
+                        <td>{pCustomer?.AccountNo}</td>
+                        <td>{pCustomer?.AccountType}</td>
+                        <td>{pCustomer?.BusinessHub}</td>
+                        <td>{pCustomer?.service_center}</td>
+                        <td>{pCustomer?.UTID}</td>
+                        <td>
+                          <label className="badge badge-info">
+                            {pCustomer?.StatusCode}
+                          </label>
+                        </td>
+                        <td>
+                          <Link
+                            className="btn btn-xs btn-success"
+                            to={`/customerinfo/${pCustomer?.FAccountNo}/${pCustomer?.DistributionID}`}
+                          >
+                            <i class="icon-user"></i>
+                            View
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <Pagination
+                currentPage={currentPage}
+                totalCount={
+                  postpaidCustomers?.length > 1 ? postpaidCustomers?.length : 0
+                }
+                pageSize={PageSize}
+                onPageChange={(page) => setCurrentPage(page)}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </Fragment>
+  );
+};
 
 export default PostpaidCustomer;

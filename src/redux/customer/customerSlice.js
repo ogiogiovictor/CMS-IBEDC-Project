@@ -1,57 +1,41 @@
 import { createSlice } from "@reduxjs/toolkit";
-//import { customerAction } from "./customerActions";
 
-const initialState = { 
-    customer: [],
-    loading: false,
-    error: null,
-    success: false,
-}
+const initialState = {
+  customers: [],
+  postpaidCustomers: [],
+  prepaidCustomers: [],
+  customerInfo: null,
+  loading: false,
+  error: null,
+  success: false,
+};
 
-
-// Every slice need a name and an initial state
 const customerSlice = createSlice({
-    name: "customer",
-    initialState,
-    reducers: {
-      
-        SetpPrepaidCustomers(state, action) {
-            return state.customer = action.payload
-        },
+  name: "customer",
+  initialState,
+  reducers: {
+    setPrepaidCustomers: (state, { payload }) => {
+      state.prepaidCustomers = payload;
+    },
 
-        SetAllcustomers(state, action) {
-            return state.customer = action.payload
-        },
+    setAllCustomers: (state, { payload }) => {
+      state.customers = payload;
+    },
 
-        SetPostpaidCustomers(state, action) {
-            return state.customer = action.payload
-        },
+    setPostpaidCustomers: (state, action) => {
+      state.postpaidCustomers = action.payload;
+    },
 
-        setCustomerInfo(state, { payload }) {
-            return state.customer = payload
-        },
-
-        /*
-        //This will happen when want to post customer. We will add this for later
-        extraReducers: { 
-            [customerAction.pending]: (state) => {
-                state.loading = true;
-                state.error = null;
-            },
-            [customerAction.fulfilled]: (state, { payload }) => {
-                state.loading = false;
-                state.customer = payload;
-            },
-            [customerAction.rejected]: (state, { payload }) => {
-                state.loading = false;
-                state.error = payload;
-            },
-        }
-        */
-
-    }
-
+    setCustomerInfo: (state, action) => {
+      state.customerInfo = action.payload;
+    },
+  },
 });
 
-export const customerActions = customerSlice.actions;
-export default customerSlice;
+export const {
+  setAllCustomers,
+  setPostpaidCustomers,
+  setPrepaidCustomers,
+  setCustomerInfo,
+} = customerSlice.actions;
+export default customerSlice.reducer;

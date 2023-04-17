@@ -6,7 +6,7 @@ import SecondCard from "../cards/secondcards";
 import RecentCustomer from "../customers/recentcustomer";
 import { useGetDashboardStatsQuery } from "../../redux/services/auth/authService";
 import { setDashboardStats } from "../../redux/auth/authSlice";
-import LoadingSpinner from "../spinner";
+import PageLoader from "../spinner/loader";
 
 const Dashboard = () => {
   const { data, isFetching } = useGetDashboardStatsQuery("dashboardStats", {
@@ -26,7 +26,7 @@ const Dashboard = () => {
   console.log(data);
 
   return isFetching ? (
-    <LoadingSpinner />
+    <PageLoader />
   ) : (
     <Fragment>
       <Cards stats={dashboardStats} />

@@ -1,21 +1,21 @@
 import React, { useEffect, Fragment } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetUserDetailsQuery } from "../../redux/services/auth/authService";
 import { logout, setCredentials } from "../../redux/auth/authSlice";
 
 import "./header.css";
-import LoadingSpinner from "../spinner";
+import PageLoader from "../spinner/loader";
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   // automatically authenticate user if token is found
-  const { data, isFetching } = useGetUserDetailsQuery("userDetails", {
-    // perform a refetch every 15mins
-    pollingInterval: 900000,
-  });
+  const { data, isFetching, error, isError } = useGetUserDetailsQuery(
+    "userDetails",
+    { pollingInterval: 900000 }
+  );
 
   useEffect(() => {
     if (data) {
@@ -23,10 +23,8 @@ const Header = () => {
     }
   }, [data, dispatch]);
 
-  console.log(data);
-
   return isFetching ? (
-    <LoadingSpinner />
+    <PageLoader />
   ) : (
     <Fragment>
       <nav className="navbar horizontal-layout col-lg-12 col-12 p-0">

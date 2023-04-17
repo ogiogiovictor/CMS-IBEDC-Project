@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { userLogin } from "../../redux/auth/authActions";
-import LoadingSpinner from "../../components/spinner";
+import PageLoader from "../../components/spinner/loader";
 
 const Login = () => {
   const { loading, userToken } = useSelector((state) => state.auth);
@@ -25,7 +25,7 @@ const Login = () => {
     dispatch(userLogin(data));
   };
   return userToken ? (
-    <LoadingSpinner />
+    <PageLoader />
   ) : (
     <Fragment>
       <div className="container-scroller">

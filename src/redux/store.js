@@ -8,7 +8,7 @@ import { customerService } from "./services/customer/customerService";
 
 const store = configureStore({
     reducer: {
-        customer: customerSlice.reducer,
+        customer: customerSlice,
         auth: authReducer,
         [authApi.reducerPath]: authApi.reducer,
         [customerService.reducerPath]: customerService.reducer,

@@ -12,13 +12,13 @@ const Header = () => {
   const dispatch = useDispatch();
 
   // automatically authenticate user if token is found
-  const { data, isFetching, error, isError } = useGetUserDetailsQuery(
+  const { data, isFetching } = useGetUserDetailsQuery(
     "userDetails",
     { pollingInterval: 900000 }
   );
 
   useEffect(() => {
-    if (data) {
+    if (data && data?.data?.name) {
       dispatch(setCredentials(data?.data));
     }
   }, [data, dispatch]);
@@ -144,11 +144,7 @@ const Header = () => {
                         Hello {userInfo?.name}
                       </span> */}
                     <span>
-                      {isFetching
-                        ? `Fetching your profile...`
-                        : userInfo !== null
-                        ? `Hello ${userInfo?.name}`
-                        : "You are not Logged In"}
+                      {`Hello ${userInfo?.name}`}
                     </span>
                     <img
                       src="http://via.placeholder.com/36x36"

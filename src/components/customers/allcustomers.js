@@ -1,4 +1,4 @@
-import React, { useState, useMemo, Fragment, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Pagination from "../pagination";
@@ -27,9 +27,9 @@ const AllCustomers = () => {
       refetch();
       dispatch(setAllCustomers(data?.data?.customers.data));
     }
-  }, [data, dispatch, currentPage]);
+  }, [data, dispatch, currentPage, refetch]);
 
-  console.log(currentPage);
+  console.log(customers);
 
   return (
     <>

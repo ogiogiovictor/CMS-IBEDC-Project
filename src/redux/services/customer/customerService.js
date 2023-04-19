@@ -20,10 +20,18 @@ export const customerService = createApi({
         method: "GET",
       }),
     }),
+
+    getCustomerInfo: builder.query({
+      query: ({ FAccount, DistributionID }) => ({
+        url: `/${API_VERSION}/customer360/${FAccount}/${DistributionID}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
 export const {
   useGetCustomerDetailsByIDQuery,
   useGetCustomerDetailsByTypeQuery,
+  useGetCustomerInfoQuery,
 } = customerService;

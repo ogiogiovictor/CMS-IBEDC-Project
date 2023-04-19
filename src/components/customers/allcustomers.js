@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import Pagination from "../pagination";
+import { useNavigate } from "react-router-dom";
 import { useGetCustomerDetailsByTypeQuery } from "../../redux/services/customer/customerService";
 import { setAllCustomers } from "../../redux/customer/customerSlice";
 import PageLoader from "../spinner/loader";
+import DataTable from "../datatable";
+
 
 const AllCustomers = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchText, setSearchText] = useState("");
   const dispatch = useDispatch();
   const { customers } = useSelector((state) => state.customer) || [];
+  const navigate = useNavigate();
 
   const { data, isFetching, refetch } = useGetCustomerDetailsByTypeQuery(
     { userQuery: "postpaid", pageNo: currentPage },
@@ -29,7 +32,24 @@ const AllCustomers = () => {
     }
   }, [data, dispatch, currentPage, refetch]);
 
-  console.log(customers);
+  const handleActionClick = ({ FAccountNo, DistributionID }) => {
+    navigate(`/customerinfo/${FAccountNo}/${DistributionID}`);
+    window.scrollTo(0, 0);
+  };
+
+  const columns = [
+    { title: "Customer Name", field: "FirstName" },
+    { title: "Account Number", field: "AccountNo" },
+    { title: "Customer Type", field: "AcctTypeDesc" },
+    { title: "Business Hub", field: "BusinessHub" },
+    { title: "Service Center", field: "service_center" },
+    { title: "DSS ID", field: "UTID" },
+    { title: "Status", field: "StatusCode" },
+  ];
+
+  const filteredCustomers = customers?.filter((customer) =>
+    customer.FirstName.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   return (
     <>
@@ -53,6 +73,8 @@ const AllCustomers = () => {
                   type="text"
                   class="form-control"
                   placeholder="Search Customers(s)..."
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
                 />
                 <button type="submit" className="btn btn-primary ml-3">
                   Search
@@ -61,59 +83,20 @@ const AllCustomers = () => {
 
               {isFetching ? (
                 <PageLoader />
+              ) : filteredCustomers?.length > 1 ? (
+                <DataTable
+                  data={filteredCustomers}
+                  columns={columns}
+                  pagination
+                  currentPage={currentPage}
+                  totalCount={data?.data?.customers?.total || 1}
+                  pageSize={data?.data?.customers?.per_page || 1}
+                  onPageChange={(page) => setCurrentPage(page)}
+                  onActionClick={handleActionClick}
+                />
               ) : (
-                <div className="table-responsive">
-                  <table className="table">
-                    <thead>
-                      <tr>
-                        <th>Customer Name</th>
-                        <th>Account Number.</th>
-                        <th>Customer Type</th>
-                        <th>Business Hub</th>
-                        <th>Service Center</th>
-                        <th>DSS ID</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {customers?.map((c, i) => (
-                        <tr key={i}>
-                          <td>{c?.FirstName}</td>
-                          <td>{c?.AccountNo}</td>
-                          <td>{c?.AcctTypeDesc}</td>
-                          <td>{c?.BusinessHub}</td>
-                          <td>{c?.service_center}</td>
-                          <td>{c?.UTID}</td>
-                          <td>
-                            <label className="badge badge-info">
-                              {c?.StatusCode}
-                            </label>
-                          </td>
-                          <td>
-                            <Link
-                              className="btn btn-xs btn-success"
-                              to={`/customerinfo/${c?.FAccountNo}/${c?.DistributionID}`}
-                            >
-                              <i class="icon-user"></i>
-                              View
-                            </Link>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                <h4>No Customer Found</h4>
               )}
-            </div>
-
-            <div className="col-md-12">
-              <Pagination
-                currentPage={currentPage}
-                totalCount={data?.data?.customers?.total || 1}
-                pageSize={data?.data?.customers?.per_page || 1}
-                onPageChange={(page) => setCurrentPage(page)}
-              />
             </div>
           </div>
         </div>

@@ -66,7 +66,7 @@ const App = () => {
               <Route path="/metereading" element={<Metereading />} />
               <Route path="/tracker" element={<Tracker />} />
               <Route path="/ibedcstaff" element={<Ibedcstaff />} />
-              <Route path="/customerinfo" element={<CustomerInfo />} />
+              <Route path="/customerinfo/:FAccount/:DistributionID" element={<CustomerInfo />} />
             </Route>
           </Route>
         </Routes>

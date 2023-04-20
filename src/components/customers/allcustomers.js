@@ -63,7 +63,7 @@ const AllCustomers = () => {
   ];
 
   const filteredCustomers = customers?.filter((customer) =>
-    customer.FirstName.toLowerCase().includes(searchText.toLowerCase())
+    customer?.FirstName.toLowerCase().includes(searchText.toLowerCase())
   );
 
   return (

@@ -23,6 +23,7 @@ import CustomerInfo from "./components/createcustomer/customerinfo";
 import Login from "./pages/auth/login";
 import { LoginLayout, AdminLayout } from "./components/layout/index";
 import ProtectedRoute from "./components/auth/protectedroute";
+import CustomerRecord from "./components/createcustomer/crmd";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -61,6 +62,8 @@ const App = () => {
               <Route path="/metereading" element={<Metereading />} />
               <Route path="/tracker" element={<Tracker />} />
               <Route path="/ibedcstaff" element={<Ibedcstaff />} />
+              <Route path="/crmd" element={<CustomerRecord />} />
+              
               <Route
                 path="/customerinfo/:FAccount/:DistributionID"
                 element={<CustomerInfo />}

@@ -273,11 +273,7 @@ const Header = () => {
                         CCU Performance Report
                       </NavLink>
                     </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link" to="/nerc">
-                        Nerc Report
-                      </NavLink>
-                    </li>
+                   
                   </ul>
                 </div>
               </li>
@@ -314,7 +310,7 @@ const Header = () => {
                 </div>
               </li>
 
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <a href="#" className="nav-link">
                   <i className="link-icon icon-calculator"></i>
                   <span className="menu-title">Staff</span>
@@ -344,7 +340,7 @@ const Header = () => {
                     </li>
                   </ul>
                 </div>
-              </li>
+              </li> */}
 
               <li className="nav-item">
                 <a href="#" className="nav-link">

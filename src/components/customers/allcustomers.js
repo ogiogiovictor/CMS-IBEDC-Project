@@ -1,21 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetCustomerDetailsByTypeQuery } from "../../redux/services/customer/customerService";
-import { setAllCustomers } from "../../redux/customer/customerSlice";
+import {
+  setAllCustomers,
+  setPostpaidCards,
+  setPrepaidCards,
+} from "../../redux/customer/customerSlice";
 import PageLoader from "../spinner/loader";
 import DataTable from "../datatable";
-
+import CustomerCard from "../createcustomer/customercard";
 
 const AllCustomers = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchText, setSearchText] = useState("");
   const dispatch = useDispatch();
-  const { customers } = useSelector((state) => state.customer) || [];
+  const { customers, postpaidCards, prepaidCards } =
+    useSelector((state) => state.customer) || [];
   const navigate = useNavigate();
+  const { customerType } = useParams();
+  const stringType =
+    customerType &&
+    `${customerType.charAt(0).toUpperCase()}${customerType
+      .slice(1)
+      .toLowerCase()}`;
 
+  console.log(stringType);
   const { data, isFetching, refetch } = useGetCustomerDetailsByTypeQuery(
-    { userQuery: "postpaid", pageNo: currentPage },
+    { userQuery: stringType, pageNo: currentPage },
     "",
     {
       pollingInterval: 900000,
@@ -23,14 +35,17 @@ const AllCustomers = () => {
   );
 
   useEffect(() => {
-    if (data) {
-      dispatch(setAllCustomers(data?.data?.customers.data));
-    }
-    if (currentPage) {
+    if (currentPage && data) {
       refetch();
-      dispatch(setAllCustomers(data?.data?.customers.data));
+      dispatch(setAllCustomers(data?.data?.customers?.data));
+      customerType === "prepaid" &&
+        dispatch(setPrepaidCards(data?.data?.prepaid));
+      customerType === "postpaid" &&
+        dispatch(setPostpaidCards(data?.data?.postpaid));
     }
-  }, [data, dispatch, currentPage, refetch]);
+  }, [data, dispatch, currentPage, refetch, customerType]);
+
+  console.log(data);
 
   const handleActionClick = ({ FAccountNo, DistributionID }) => {
     navigate(`/customerinfo/${FAccountNo}/${DistributionID}`);
@@ -53,22 +68,39 @@ const AllCustomers = () => {
 
   return (
     <>
-      <div className="row">
-        <div class="col-lg-12 grid-margin stretch-card">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">Customer Summary</h4>
-              <canvas id="barChart"></canvas>
+      {customerType ? (
+        customerType === "postpaid" ? (
+          <CustomerCard statusCard={postpaidCards} />
+        ) : customerType === "prepaid" ? (
+          <CustomerCard statusCard={prepaidCards} />
+        ) : (
+          ""
+        )
+      ) : (
+        <div className="row">
+          <div className="col-lg-12 grid-margin stretch-card">
+            <div className="card">
+              <div className="card-body">
+                <h4 className="card-title">Customer Summary</h4>
+                <canvas id="barChart"></canvas>
+              </div>
             </div>
           </div>
         </div>
-
+      )}
+      <div className="row">
         <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">
           <div className="card">
             <div className="card-body">
-              <h4 className="card-title">All Customer</h4>
+              <h4 className="card-title">
+                {customerType
+                  ? `${customerType.charAt(0).toUpperCase()}${customerType
+                      .slice(1)
+                      .toLowerCase()} customers`
+                  : "All customer"}
+              </h4>
 
-              <div class="form-group d-flex">
+              <div className="form-group d-flex">
                 <input
                   type="text"
                   class="form-control"
@@ -83,19 +115,19 @@ const AllCustomers = () => {
 
               {isFetching ? (
                 <PageLoader />
-              ) : filteredCustomers?.length > 1 ? (
+              ) : filteredCustomers?.length !== 0 ? (
                 <DataTable
                   data={filteredCustomers}
                   columns={columns}
                   pagination
                   currentPage={currentPage}
-                  totalCount={data?.data?.customers?.total || 1}
-                  pageSize={data?.data?.customers?.per_page || 1}
+                  totalCount={data?.data?.customers?.meta?.total || 1}
+                  pageSize={data?.data?.customers?.meta?.per_page || 1}
                   onPageChange={(page) => setCurrentPage(page)}
                   onActionClick={handleActionClick}
                 />
               ) : (
-                <h4>No Customer Found</h4>
+                <p className="text-center">No Customer Found</p>
               )}
             </div>
           </div>

@@ -12,10 +12,9 @@ const Header = () => {
   const dispatch = useDispatch();
 
   // automatically authenticate user if token is found
-  const { data, isFetching } = useGetUserDetailsQuery(
-    "userDetails",
-    { pollingInterval: 900000 }
-  );
+  const { data, isFetching } = useGetUserDetailsQuery("userDetails", {
+    pollingInterval: 900000,
+  });
 
   useEffect(() => {
     if (data && data?.data?.name) {
@@ -143,9 +142,7 @@ const Header = () => {
                     {/* <span className="nav-profile-text">
                         Hello {userInfo?.name}
                       </span> */}
-                    <span>
-                      {`Hello ${userInfo?.name}`}
-                    </span>
+                    <span>{`Hello ${userInfo?.name}`}</span>
                     <img
                       src="http://via.placeholder.com/36x36"
                       className="rounded-circle"
@@ -188,12 +185,12 @@ const Header = () => {
                       </NavLink>
                     </li>
                     <li className="nav-item">
-                      <NavLink className="nav-link" to="/postpaid_customers">
+                      <NavLink className="nav-link" to="/customers/postpaid">
                         Postpaid
                       </NavLink>
                     </li>
                     <li className="nav-item">
-                      <NavLink className="nav-link" to="prepaid_customers">
+                      <NavLink className="nav-link" to="/customers/prepaid">
                         Prepaid
                       </NavLink>
                     </li>
@@ -208,7 +205,7 @@ const Header = () => {
                       </NavLink>
                     </li>
                     <li className="nav-item">
-                      <NavLink className="nav-link" to="/allcustomers">
+                      <NavLink className="nav-link" to="/customers">
                         All Customers
                       </NavLink>
                     </li>

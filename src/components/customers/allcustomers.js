@@ -2,11 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetCustomerDetailsByTypeQuery } from "../../redux/services/customer/customerService";
-import {
-  setAllCustomers,
-  setPostpaidCards,
-  setPrepaidCards,
-} from "../../redux/customer/customerSlice";
+import { setAllCustomers, setPostpaidCards, setPrepaidCards } from "../../redux/customer/customerSlice";
 import PageLoader from "../spinner/loader";
 import DataTable from "../datatable";
 import CustomerCard from "../createcustomer/customercard";
@@ -63,8 +59,9 @@ const AllCustomers = () => {
   ];
 
   const filteredCustomers = customers?.filter((customer) =>
-    customer.FirstName.toLowerCase().includes(searchText.toLowerCase())
+    customer?.FirstName?.toLowerCase().includes(searchText.toLowerCase())
   );
+
 
   return (
     <>
@@ -117,7 +114,7 @@ const AllCustomers = () => {
                 <PageLoader />
               ) : filteredCustomers?.length !== 0 ? (
                 <DataTable
-                  data={filteredCustomers}
+                  data={customers}
                   columns={columns}
                   pagination
                   currentPage={currentPage}

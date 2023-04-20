@@ -4,6 +4,7 @@ import customerSlice from "./customer/customerSlice";
 import authReducer from "./auth/authSlice";
 import { authApi } from "./services/auth/authService";
 import { customerService } from "./services/customer/customerService";
+import { billService } from "./services/bill/billService";
 
 
 const store = configureStore({
@@ -12,9 +13,10 @@ const store = configureStore({
         auth: authReducer,
         [authApi.reducerPath]: authApi.reducer,
         [customerService.reducerPath]: customerService.reducer,
+        [billService.reducerPath]: billService.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware, customerService.middleware),
+    getDefaultMiddleware().concat(authApi.middleware, customerService.middleware, billService.middleware),
 });
   
 

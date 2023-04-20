@@ -40,7 +40,7 @@ export const useGetUserDetailsQuery = () => {
       console.error("An error occurred while fetching user details:", error);
       notify("error", error?.data?.message || "An error occured");
       error?.status === 401 && dispatch(logout());
-      // error?.status === "FETCH_ERROR" && dispatch(logout());
+      error?.status === "FETCH_ERROR" && notify("error", error?.error);
     } catch (err) {
       // Handle any exceptions that may occur while logging the error
       console.error("An error occurred while handling the error:", err);

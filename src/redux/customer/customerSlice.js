@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   customers: [],
-  postpaidCustomers: [],
-  prepaidCustomers: [],
+  postpaidCards: [],
+  prepaidCards: [],
   customerInfo: null,
   loading: false,
   error: null,
@@ -14,16 +14,16 @@ const customerSlice = createSlice({
   name: "customer",
   initialState,
   reducers: {
-    setPrepaidCustomers: (state, { payload }) => {
-      state.prepaidCustomers = payload;
+    setPrepaidCards: (state, action) => {
+      state.prepaidCards = action.payload;
     },
 
     setAllCustomers: (state, { payload }) => {
       state.customers = payload;
     },
 
-    setPostpaidCustomers: (state, action) => {
-      state.postpaidCustomers = action.payload;
+    setPostpaidCards: (state, action) => {
+      state.postpaidCards = action.payload;
     },
 
     setCustomerInfo: (state, action) => {
@@ -34,8 +34,8 @@ const customerSlice = createSlice({
 
 export const {
   setAllCustomers,
-  setPostpaidCustomers,
-  setPrepaidCustomers,
+  setPostpaidCards,
+  setPrepaidCards,
   setCustomerInfo,
 } = customerSlice.actions;
 export default customerSlice.reducer;

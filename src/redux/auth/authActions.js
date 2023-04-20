@@ -12,8 +12,8 @@ export const userLogin = createAsyncThunk(
       const config = {
         headers: {
           "Content-Type": "application/json",
-          "app-secret": "daniel",
-          "app-token": "daniel",
+          "app-secret": `${process.env.REACT_APP_API_APP_SECRET}`,
+          "app-Token": `${process.env.REACT_APP_API_APP_TOKEN}`,
         },
       };
       const { data } = await axios.post(
@@ -23,10 +23,9 @@ export const userLogin = createAsyncThunk(
       );
       // store user's token in local storage
       localStorage.setItem("userToken", data.data.Authorization);
+      localStorage.setItem("userInfo", JSON.stringify(data.data.user));
       notify("success", "Login successful");
-      if(data.data.user){
-        return data.data.user;
-      }
+      return data.data.user;
     } catch (error) {
       // return custom error message from API if any
       if (error.response && error.response.data.message) {

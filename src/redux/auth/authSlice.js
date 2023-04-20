@@ -5,10 +5,13 @@ import { userLogin } from "./authActions";
 const userToken = localStorage.getItem("userToken")
   ? localStorage.getItem("userToken")
   : null;
+const userInfo = JSON.parse(localStorage.getItem("userInfo"))
+  ? JSON.parse(localStorage.getItem("userInfo"))
+  : null;
 
 const initialState = {
   loading: false,
-  userInfo: null,
+  userInfo,
   userToken,
   error: null,
   success: false,
@@ -21,6 +24,7 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       localStorage.removeItem("userToken"); // deletes token from storage
+      localStorage.removeItem("userInfo"); // deletes token from storage
       state.loading = false;
       state.userInfo = null;
       state.userToken = null;
@@ -41,7 +45,7 @@ const authSlice = createSlice({
     },
     [userLogin.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.userInfo = payload;
+      state.userInfo = JSON.parse(localStorage.getItem("userInfo"));
       state.userToken = localStorage.getItem("userToken");
     },
     [userLogin.rejected]: (state, { payload }) => {

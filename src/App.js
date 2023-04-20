@@ -2,8 +2,6 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./components/dashboard/dashboard";
 import NewCustomer from "./components/createcustomer/newcustomer";
-import PostpaidCustomer from "./components/createcustomer/postpaidcustomer";
-import PrepaidCustomer from "./components/createcustomer/prepaidcustomer";
 import Payments from "./components/payments/payments";
 import Bills from "./components/bills/bills";
 import AllCustomers from "./components/customers/allcustomers";
@@ -41,14 +39,11 @@ const App = () => {
             <Route element={<AdminLayout />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/createcustomer" element={<NewCustomer />} />
-              <Route
-                path="/postpaid_customers"
-                element={<PostpaidCustomer />}
-              />
-              <Route path="prepaid_customers" element={<PrepaidCustomer />} />
+              <Route path="/customers/:customerType" element={<AllCustomers />} />
+              <Route path="customers/:customerType" element={<AllCustomers />} />
               <Route path="/payments" element={<Payments />} />
               <Route path="/bills" element={<Bills />} />
-              <Route path="/allcustomers" element={<AllCustomers />} />
+              <Route path="/customers" element={<AllCustomers />} />
               <Route path="/transformers" element={<Transformer />} />
               <Route path="/feeders" element={<Feeder />} />
               <Route
@@ -66,7 +61,10 @@ const App = () => {
               <Route path="/metereading" element={<Metereading />} />
               <Route path="/tracker" element={<Tracker />} />
               <Route path="/ibedcstaff" element={<Ibedcstaff />} />
-              <Route path="/customerinfo" element={<CustomerInfo />} />
+              <Route
+                path="/customerinfo/:FAccount/:DistributionID"
+                element={<CustomerInfo />}
+              />
             </Route>
           </Route>
         </Routes>

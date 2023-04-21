@@ -68,7 +68,7 @@ const NewCustomer = () => {
                    { values.errorMessage && <div className="alert alert-danger" role="alert"> {values.errorMessage} </div> }
                       
                     <div className="form-group">
-                      <label for="surname">Enter TicketID</label>
+                      <label htmlFor="surname">Enter TicketID</label>
                       <input type="text" 
                       className="form-control" 
                       name="ticketid"

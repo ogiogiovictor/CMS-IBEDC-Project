@@ -112,7 +112,7 @@ const AllCustomers = () => {
 
               {isFetching ? (
                 <PageLoader />
-              ) : filteredCustomers?.length !== 0 ? (
+              ) : customers?.length !== 0 ? (
                 <DataTable
                   data={customers}
                   columns={columns}

@@ -1,14 +1,28 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { CustomerInfoTable } from "./customerinfotable";
+import DataTable from "../datatable";
 
 const CustomerWidget = ({ customerInfo }) => {
   const navigate = useNavigate();
-
   const goBack = () => {
     navigate(-1);
   };
 
-  console.log(customerInfo);
+  const handleActionClick = ({ FAccountNo, DistributionID }) => {
+    navigate(`/customerinfo/${FAccountNo}/${DistributionID}`);
+    window.scrollTo(0, 0);
+  };
+
+  const customePaymentsColumns = [
+    { title: "Trans ID", field: "FirstName" },
+    { title: "Surname", field: "AccountNo" },
+    { title: "Firstname", field: "AcctTypeDesc" },
+    { title: "Amount", field: "BusinessHub" },
+    { title: "Business Hub", field: "service_center" },
+    { title: "TransRef", field: "UTID" },
+    { title: "Status", field: "StatusCode" },
+  ];
 
   return (
     <>
@@ -144,84 +158,7 @@ const CustomerWidget = ({ customerInfo }) => {
                         role="tabpanel"
                         aria-labelledby="user-profile-info-tab"
                       >
-                        <table class="table table-borderless w-100 mt-4">
-                          <tr>
-                            <td>
-                              <strong>Account No : </strong>
-                              {customerInfo?.AccountNo}
-                            </td>
-                            <td>
-                              <strong>Meter No :</strong> {customerInfo?.MeterNo}
-                            </td>
-                            <td>
-                              <strong>Business Hub:</strong> {customerInfo?.BusinessHub}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <strong>Customer Type :</strong>{" "}
-                              {customerInfo?.AccountType}
-                            </td>
-                            <td>
-                              <strong>Customer Class :</strong>{" "}
-                              Richard@staradmin.com
-                            </td>
-                            <td>
-                              <strong>Service Band :</strong> Johnathan Deo
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <strong>Languages :</strong> English, German,
-                              Spanish.
-                            </td>
-                            <td>
-                              <strong>Phone :</strong> +73646 4563
-                            </td>
-                            <td>
-                              <strong>Phone Number :</strong> Johnathan Deo
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <strong>Customer Address :</strong> English,
-                              German, Spanish.
-                            </td>
-                            <td>
-                              <strong>DSS ID :</strong> +73646 4563
-                            </td>
-                            <td>
-                              <strong>DSS Name:</strong> Johnathan Deo
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td>
-                              <strong>Feeder :</strong> English, German,
-                              Spanish.
-                            </td>
-                            <td>
-                              <strong>Injection Sub Station :</strong> +73646
-                              4563
-                            </td>
-                            <td>
-                              <strong>Transmission:</strong> Johnathan Deo
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td>
-                              <strong>Latitude :</strong> English, German,
-                              Spanish.
-                            </td>
-                            <td>
-                              <strong>Longitude</strong> +73646 4563
-                            </td>
-                            <td>
-                              <strong>Meter No:</strong> Johnathan Deo
-                            </td>
-                          </tr>
-                        </table>
+                        <CustomerInfoTable customerInfo={customerInfo} />
 
                         <div class="row">
                           <div class="col-12 mt-5">
@@ -234,7 +171,7 @@ const CustomerWidget = ({ customerInfo }) => {
                                 <div class="d-flex align-items-center mb-2 justify-content-between">
                                   <h5 class="mb-0">Date Added</h5>
                                 </div>
-                                <p>2023-10-19</p>
+                                <p>{customerInfo?.SetupDate}</p>
                               </div>
                               <div class="stages border-left pl-5 pb-4">
                                 <div class="btn btn-icons btn-rounded stage-badge btn-inverse-danger">
@@ -261,7 +198,7 @@ const CustomerWidget = ({ customerInfo }) => {
                                 <div class="d-flex align-items-center mb-2 justify-content-between">
                                   <h5 class="mb-0">Old Account No</h5>
                                 </div>
-                                <p>69/10/20349/-01</p>
+                                <p>{customerInfo?.OldAccountNo}</p>
                               </div>
                             </div>
                           </div>
@@ -288,127 +225,19 @@ const CustomerWidget = ({ customerInfo }) => {
                           </button>
                         </div>
 
-                        <div className="table-responsive">
-                          <table className="table">
-                            <thead>
-                              <tr>
-                                <th>TransID</th>
-                                <th>Surname</th>
-                                <th>Firstname</th>
-                                <th>Amount</th>
-                                <th>Business Hub</th>
-                                <th>TransRef</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>Jacob</td>
-                                <td>53275531</td>
-                                <td>12 May 2017</td>
-                                <td>Jacob</td>
-                                <td>53275531</td>
-                                <td>
-                                  <i class="remove icon-close"></i>
-                                </td>
-                                <td>
-                                  <label className="badge badge-danger">
-                                    Active
-                                  </label>
-                                </td>
-                                <td>
-                                  <button className="btn btn-xs btn-outline-success">
-                                    <i class="icon-user"></i>
-                                    View
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Jacob</td>
-                                <td>53275531</td>
-                                <td>12 May 2017</td>
-                                <td>Jacob</td>
-                                <td>Jacob</td>
-                                <td>
-                                  <input
-                                    class="checkbox"
-                                    type="checkbox"
-                                    checked=""
-                                  />
-                                </td>
-                                <td>
-                                  <label className="badge badge-warning">
-                                    Suspended
-                                  </label>
-                                </td>
-                                <td>
-                                  <button className="btn btn-xs btn-danger">
-                                    <i class="icon-user"></i>
-                                    View
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Jacob</td>
-                                <td>53275531</td>
-                                <td>12 May 2017</td>
-                                <td>Jacob</td>
-                                <td>53275531</td>
-                                <td>12 May 2017</td>
-                                <td>
-                                  <label className="badge badge-info">
-                                    Inactive
-                                  </label>
-                                </td>
-                                <td>
-                                  <button className="btn btn-xs btn-outline-success">
-                                    <i class="icon-user"></i>
-                                    View
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Jacob</td>
-                                <td>53275531</td>
-                                <td>12 May 2017</td>
-                                <td>Jacob</td>
-                                <td>53275531</td>
-                                <td>12 May 2017</td>
-                                <td>
-                                  <label className="badge badge-success">
-                                    Active
-                                  </label>
-                                </td>
-                                <td>
-                                  <button className="btn btn-xs btn-outline-success">
-                                    <i class="icon-user"></i>
-                                    View
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Jacob</td>
-                                <td>53275531</td>
-                                <td>12 May 2017</td>
-                                <td>Jacob</td>
-                                <td>53275531</td>
-                                <td>12 May 2017</td>
-                                <td>
-                                  <label className="badge badge-warning">
-                                    Closed
-                                  </label>
-                                </td>
-                                <td>
-                                  <button className="btn btn-xs btn-danger">
-                                    <i class="icon-user"></i>
-                                    View
-                                  </button>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
+                        {customerInfo?.payments?.length !== 0 ? (
+                          <DataTable
+                            data={customerInfo?.payments}
+                            columns={customePaymentsColumns}
+                            pagination
+                            currentPage={1}
+                            totalCount={1}
+                            pageSize={1}
+                            onActionClick={handleActionClick}
+                          />
+                        ) : (
+                          <p className="text-center">No Payments Found</p>
+                        )}
                       </div>
 
                       <div

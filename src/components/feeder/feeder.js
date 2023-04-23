@@ -5,6 +5,31 @@ const Feeder = () => {
     return (
         <Fragment>
             <FeederCard />
+
+            
+            <div className="col-lg-12 grid-margin stretch-card">
+              <div className="card">
+                <div className="card-body">
+                  <h4 className="card-title">Asset Summary &nbsp;&nbsp;
+                  
+                  <button type="button" className="btn btn-secondary btn-fw">
+                  <i class="icon-cloud-upload"></i>Add Feeders
+                  </button>
+                 
+                  <div className="btn  btn-fw">
+                  <select className="form-control">
+                    <option value="">Select Feeder Type</option>
+                    <option value="Feeder 11KV_415V">Feeder 11KV_415V</option>
+                    <option value="Feeder 33KV_415V">Feeder 33KV_415V</option>
+                  </select>
+                  </div>
+                  
+                  </h4>
+                </div>
+              </div>
+            </div>
+
+
         <div className="row">
        <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">
          <div className="card">

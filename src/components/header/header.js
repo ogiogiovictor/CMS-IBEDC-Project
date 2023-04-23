@@ -231,11 +231,7 @@ const Header = () => {
                         Power Transformer
                       </NavLink>
                     </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link" to="/poles">
-                        Poles
-                      </NavLink>
-                    </li>
+                  
                   </ul>
                 </div>
               </li>

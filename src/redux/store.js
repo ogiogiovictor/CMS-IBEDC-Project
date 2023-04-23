@@ -10,6 +10,7 @@ import { customerService } from "./services/customer/customerService";
 import { billService } from "./services/bill/billService";
 import { ticketService } from "./services/ticket/ticketService";
 import { dtService } from "./services/dss/dtService";
+import { fderService } from "./services/feeder/feederService";
 
 
 
@@ -25,6 +26,7 @@ const store = configureStore({
         [billService.reducerPath]: billService.reducer,
         [ticketService.reducerPath]: ticketService.reducer,
         [dtService.reducerPath]: dtService.reducer,
+        [fderService.reducerPath]: fderService.reducer,
     },
     middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -33,6 +35,7 @@ const store = configureStore({
         billService.middleware,
         ticketService.middleware,
         dtService.middleware,
+        fderService.middleware,
         ),
 });
   

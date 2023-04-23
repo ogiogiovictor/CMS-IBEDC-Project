@@ -59,18 +59,22 @@ const Transformer = () => {
             {isFetching ? <PageLoader /> : 
 
         <div>
-            <div class="col-lg-12 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Asset Summary &nbsp;&nbsp;
+            <div className="col-lg-12 grid-margin stretch-card">
+              <div className="card">
+                <div className="card-body">
+                  <h4 className="card-title">Asset Summary &nbsp;&nbsp;
                   
-                  <button type="button" class="btn btn-info btn-fw">
-                  <i class="icon-cloud-upload"></i>Add Distribution Station(DT)
+                  <button type="button" className="btn btn-info btn-fw">
+                  <i className="icon-cloud-upload"></i>Add Distribution Station(DT)
                   </button>
-                  &nbsp;&nbsp;
-                  <button type="button" class="btn btn-secondary btn-fw">
-                  <i class="icon-cloud-upload"></i>Add Feeders
-                  </button>
+                 
+                  <div className="btn  btn-fw">
+                  <select className="form-control">
+                    <option value="">Select Distribution Station Type</option>
+                    <option value="Distribution Sub Station 11KV_415V">Distribution Sub Station 11KV_415V</option>
+                    <option value="Distribution Sub Station 33KV_415V">Distribution Sub Station 33KV_415V</option>
+                  </select>
+                  </div>
                   
                   </h4>
                 </div>

@@ -1,13 +1,64 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import TransformerCard from './transformercards';
+import { useGetAllDistributionQuery } from '../../redux/services/dss/dtService';
+import { setDss, setDataDss } from './transformerSlice';
+import PageLoader from "../spinner/loader";
+import DataTable from "../datatable";
 
 const Transformer = () => {
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const { dss, dssData } = useSelector((state) => state.dss) || [];
+  const dispatch = useDispatch();
+  
+  const { type } = useParams();
+  const { data, isFetching, isUninitialized, refetch } = useGetAllDistributionQuery(
+    { userQuery: type, pageNo: currentPage }
+  );
+  const navigate = useNavigate();
+
+
+    useEffect(() => {
+      if (currentPage && data) {
+        refetch();
+        dispatch(setDss(data?.data));
+        type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
+        type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
+      }
+    }, [data, dispatch, currentPage, refetch, type]);
+    
+   
+    // console.log("...................checking here.............");
+    //console.log(data);
+    //console.log(data.data.allDt)
+
+    const handleActionClick = ({ DistributionID }) => {
+      navigate(`dss`);
+      window.scrollTo(0, 0);
+    };
+
+    const columns = [
+      { title: "Asset ID", field: "Assetid" },
+      { title: "Asset Type", field: "assettype" },
+      { title: "DSS Name", field: "DSS_11KV_415V_Name" },
+      { title: "Service Center", field: "DSS_11KV_415V_Owner" },
+      { title: "Longitude", field: "longitude" },
+      { title: "Latitude", field: "latitude" },
+      { title: "Status", field: "DSS_11KV_415V_cus_profile" },
+    ];
 
     return (
 
         <Fragment>
-            <TransformerCard />
+            <TransformerCard dssCard={dss} />
 
+            {isUninitialized ? <PageLoader /> : ''}
+
+            {isFetching ? <PageLoader /> : 
+
+        <div>
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
@@ -30,8 +81,6 @@ const Transformer = () => {
                   </button>
                   
                   </h4>
-                  
-                  <canvas id="barChart"></canvas>
                 </div>
               </div>
             </div>
@@ -48,72 +97,24 @@ const Transformer = () => {
                     </div>
                       
                   <div className="table-responsive">
-                    <table className="table">
-                      <thead>
-                        <tr>
-                          <th>Customer Name</th>
-                          <th>Account Number.</th>
-                          <th>Customer Type</th>
-                          <th>Business Hub</th>
-                          <th>Service Center</th>
-                          <th>DSS ID</th>
-                          <th>Status</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Jacob</td>
-                          <td>53275531</td>
-                          <td>12 May 2017</td>
-                          <td>Jacob</td>
-                          <td>53275531</td>
-                          <td>12 May 2017</td>
-                          <td><label className="badge badge-danger">Active</label></td>
-                        </tr>
-                        <tr>
-                          <td>Jacob</td>
-                          <td>53275531</td>
-                          <td>12 May 2017</td>
-                          <td>Jacob</td>
-                          <td>53275531</td>
-                          <td>12 May 2017</td>
-                          <td><label className="badge badge-warning">Suspended</label></td>
-                        </tr>
-                        <tr>
-                          <td>Jacob</td>
-                          <td>53275531</td>
-                          <td>12 May 2017</td>
-                          <td>Jacob</td>
-                          <td>53275531</td>
-                          <td>12 May 2017</td>
-                          <td><label className="badge badge-info">Inactive</label></td>
-                        </tr>
-                        <tr>
-                          <td>Jacob</td>
-                          <td>53275531</td>
-                          <td>12 May 2017</td>
-                          <td>Jacob</td>
-                          <td>53275531</td>
-                          <td>12 May 2017</td>
-                          <td><label className="badge badge-success">Active</label></td>
-                        </tr>
-                        <tr>
-                          <td>Jacob</td>
-                          <td>53275531</td>
-                          <td>12 May 2017</td>
-                          <td>Jacob</td>
-                          <td>53275531</td>
-                          <td>12 May 2017</td>
-                          <td><label className="badge badge-warning">Closed</label></td>
-                        </tr>
-                      </tbody>
-                    </table>
+                  <DataTable 
+                    data={data?.data?.allDt?.data}
+                    columns={columns}
+                    pagination
+                    currentPage={currentPage}
+                    totalCount={data?.data?.allDt?.total || 1}
+                    pageSize={data?.data?.allDt?.per_page || 1}
+                    onPageChange={(page) => setCurrentPage(page)}
+                    onActionClick={handleActionClick}
+                    />
                   </div>
                 </div>
               </div>
             </div>
             
-          </div>
+            </div>
+        </div>
+        }
         </Fragment>
     );
 }

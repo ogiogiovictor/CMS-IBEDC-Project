@@ -1,7 +1,9 @@
 import React, {Fragment, useState, useEffect} from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
 import BillCard from './billcards';
 import { useGetAllBillsQuery } from '../../redux/services/bill/billService';
+import { setBills, setDataBills } from './billSlice';
 import PageLoader from "../spinner/loader";
 import DataTable from '../datatable';
 
@@ -9,17 +11,25 @@ import DataTable from '../datatable';
 const Bills = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
+  const { bills, billData } = useSelector((state) => state.bills) || [];
+  const dispatch = useDispatch();
   const { data, isFetching, isUninitialized, refetch } = useGetAllBillsQuery( 
-    { pageNo: currentPage });
+    { pageNo: currentPage },  //{ cacheTime: 0 }
+    );
 
   const navigate = useNavigate();
+
+
   useEffect(() => {
     if (currentPage && data) {
       refetch();
+      //dispatch(setBills(data?.data?.bills?.data)); //You are only dispatching the bills
+      dispatch(setBills(data?.data));
+      dispatch(setDataBills(data?.data?.bills?.data));
     }
-  }, [data, refetch, currentPage])
+  }, [data, refetch, currentPage, dispatch]);
 
-  console.log(data);
+  console.log(billData);
 
   const columns = [
     { title: "Bill Month", field: "BillMonthName" },
@@ -30,14 +40,14 @@ const Bills = () => {
     { title: "Current Charge", field: "CurrentChgTotal" },
   ];
 
-  const handleActionClick = ({ FAccountNo, DistributionID }) => {
+  const handleActionClick = () => {
     navigate(`/testing`);
     window.scrollTo(0, 0);
   };
   
     return (
         <Fragment>
-            <BillCard cardData={data}/>
+            <BillCard cardData={bills}/>
 
             {isUninitialized ? <PageLoader /> : ''}
 
@@ -56,7 +66,7 @@ const Bills = () => {
 
              <div className="table-responsive">
              <DataTable 
-                 data={data?.data?.bills?.data}
+                 data={billData}
                  columns={columns}
                  pagination
                  currentPage={currentPage}
@@ -65,37 +75,6 @@ const Bills = () => {
                  onPageChange={(page) => setCurrentPage(page)}
                  onActionClick={handleActionClick}
                 />
-             {/* {data ? (
-               <table className="table">
-                 <thead>
-                   <tr>
-                    <th>Bill Month</th>
-                     <th>Bill Year</th>
-                     <th>Account Number</th>
-                     <th>Customer Name</th>
-                     <th>Business Hub</th>
-                     <th>Current Charge</th>
-                     <th>Status</th>
-                   </tr>
-                 </thead>
-                 <tbody>
-                 {data.data.bills.data.map((bill) => (
-              <tr key={bill.id}>
-                <td>{bill.BillMonthName}</td>
-                <td>{bill.BillYear}</td>
-                <td>{bill.AccountNo}</td>
-                <td>{bill.CustomerName}</td>
-                <td>{bill.BUName1}</td>
-                <td>{bill.CurrentChgTotal}</td>
-                <td><Link className="btn btn-xs btn-success"><i class="icon-user"></i>View</Link></td>
-              </tr>
-            ))}
-                
-                 </tbody>
-               </table>
-               ) : (
-                <div>No data available</div>
-              )} */}
 
              </div>
            </div>

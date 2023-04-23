@@ -1,0 +1,21 @@
+import { createApi } from "@reduxjs/toolkit/query/react";
+import baseQuery from "../../../utils/baseHeader";
+
+const API_VERSION = `${process.env.REACT_APP_API_VERSION}`;
+
+export const dtService = createApi({
+    reducerPath: "dtService",
+    baseQuery,
+    endpoints: (builder) => ({
+        getAllDistribution: builder.query({
+            query: ({ userQuery, pageNo }) => ({
+              url: `/${API_VERSION}/grap_asset?type=${userQuery}&page=${pageNo}`,
+              method: "GET",
+            }),
+            pollingInterval: 900000, // 15 minutes
+          }),
+
+    }),
+});
+
+export const { useGetAllDistributionQuery } = dtService;

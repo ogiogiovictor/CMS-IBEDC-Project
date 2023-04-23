@@ -1,10 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomerCard from '../cards/customercard';
 import { addCustomer } from '../../redux/customer/customerActions';
+import { useGetDashboardStatsQuery } from "../../redux/services/auth/authService";
+import { setDashboardStats } from "../../redux/auth/authSlice";
 
 const NewCustomer = () => {
+  const { data, isFetching } = useGetDashboardStatsQuery("dashboardStats", {
+    // perform a refetch every 15mins
+    pollingInterval: 900000,
+  });
+
+  const { dashboardStats } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch(); //This is the hook that allows us to dispatch actions to the store
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setDashboardStats(data?.data));
+    }
+  }, [data, dispatch]);
+
+  console.log(dashboardStats?.customer_by_region)
+
+
   const [values, setValues] = useState({
     ticketid: '',
   });
@@ -33,11 +52,11 @@ const NewCustomer = () => {
     }else {
     
       //Collect data from the form
-      const data = { 
+      const idata = { 
         ticketid: values.ticketid,
       }
 
-      dispatch(addCustomer(data));
+      dispatch(addCustomer(idata));
 
     }
 
@@ -91,7 +110,7 @@ const NewCustomer = () => {
               </div>
             </div>
 
-            <CustomerCard />
+            <CustomerCard cstats={dashboardStats?.customer_by_region} />
 
         </div>
     );

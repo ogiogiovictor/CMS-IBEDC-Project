@@ -4,10 +4,13 @@ import customerSlice from "./customer/customerSlice";
 import billSlice from "../components/bills/billSlice";
 import authReducer from "./auth/authSlice";
 import ticketSlice from "../components/tickets/ticketSlice";
+import dssSlice from "../components/dss/transformerSlice";
 import { authApi } from "./services/auth/authService";
 import { customerService } from "./services/customer/customerService";
 import { billService } from "./services/bill/billService";
 import { ticketService } from "./services/ticket/ticketService";
+import { dtService } from "./services/dss/dtService";
+
 
 
 const store = configureStore({
@@ -16,10 +19,12 @@ const store = configureStore({
         auth: authReducer,
         bills: billSlice,
         tickets: ticketSlice,
+        dss: dssSlice,
         [authApi.reducerPath]: authApi.reducer,
         [customerService.reducerPath]: customerService.reducer,
         [billService.reducerPath]: billService.reducer,
         [ticketService.reducerPath]: ticketService.reducer,
+        [dtService.reducerPath]: dtService.reducer,
     },
     middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -27,19 +32,10 @@ const store = configureStore({
         customerService.middleware, 
         billService.middleware,
         ticketService.middleware,
+        dtService.middleware,
         ),
 });
   
 
 export default store;
 
-
-
-
-
-// const reducer = combineReducers({
-//     dashboard: DashboardReducer,
-//     customer: customerSlice,
-// });
-
-//const store = configureStore({reducer});

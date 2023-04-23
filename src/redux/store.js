@@ -35,7 +35,7 @@ const store = configureStore({
         billService.middleware,
         ticketService.middleware,
         dtService.middleware,
-        fderService
+        fderService.middleware,
         ),
 });
   

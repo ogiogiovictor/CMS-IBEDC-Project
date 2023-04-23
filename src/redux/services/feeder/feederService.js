@@ -4,7 +4,7 @@ import baseQuery from "../../../utils/baseHeader";
 const API_VERSION = `${process.env.REACT_APP_API_VERSION}`;
 
 export const fderService = createApi({
-    reducerPath: "feederService",
+    reducerPath: "fderService",
     baseQuery,
     endpoints: (builder) => ({
         getAllFeeder: builder.query({

@@ -47,7 +47,7 @@ const Header = () => {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="search"
+                      placeholder="search Customer By Accout/Meter No"
                     />
                     <div className="input-group-append">
                       <span className="input-group-text">
@@ -96,22 +96,7 @@ const Header = () => {
                       </div>
                     </a>
                     <div className="dropdown-divider"></div>
-                    <a className="dropdown-item preview-item">
-                      <div className="preview-thumbnail">
-                        <div className="preview-icon bg-inverse-warning">
-                          <i className="icon-bubble mx-0"></i>
-                        </div>
-                      </div>
-                      <div className="preview-item-content">
-                        <h6 className="preview-subject font-weight-normal text-dark mb-1">
-                          Settings
-                        </h6>
-                        <p className="font-weight-light small-text mb-0">
-                          Private message
-                        </p>
-                      </div>
-                    </a>
-                    <div className="dropdown-divider"></div>
+                   
                     <a className="dropdown-item preview-item">
                       <div className="preview-thumbnail">
                         <div className="preview-icon bg-inverse-info">
@@ -292,18 +277,8 @@ const Header = () => {
                       </NavLink>
                     </li>
                     <li className="nav-item">
-                      <NavLink className="nav-link" to="/billdistribution">
-                        Bill Distribution
-                      </NavLink>
-                    </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link" to="/metereading">
-                        Meter Reading
-                      </NavLink>
-                    </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link" to="/tracker">
-                        Utilization Report
+                      <NavLink className="nav-link" to="/crodss">
+                        ALL CRO(s)
                       </NavLink>
                     </li>
                   </ul>

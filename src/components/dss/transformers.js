@@ -71,14 +71,6 @@ const Transformer = () => {
                   <button type="button" class="btn btn-secondary btn-fw">
                   <i class="icon-cloud-upload"></i>Add Feeders
                   </button>
-                  &nbsp;&nbsp;
-                  <button type="button" class="btn btn-danger btn-fw">
-                  <i class="icon-cloud-upload"></i>Add Power Transformer
-                  </button>
-                  &nbsp;&nbsp;
-                  <button type="button" class="btn btn-success btn-fw">
-                  <i class="icon-cloud-upload"></i>Add Poles
-                  </button>
                   
                   </h4>
                 </div>

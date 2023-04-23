@@ -15,13 +15,10 @@ const AllCustomers = () => {
     useSelector((state) => state.customer) || [];
   const navigate = useNavigate();
   const { customerType } = useParams();
-  const stringType =
-    customerType &&
-    `${customerType.charAt(0).toUpperCase()}${customerType
-      .slice(1)
-      .toLowerCase()}`;
 
-  console.log(stringType);
+  const stringType =
+    customerType &&  `${customerType?.charAt(0).toUpperCase()}${customerType?.slice(1).toLowerCase()}`;
+  
   const { data, isFetching, refetch } = useGetCustomerDetailsByTypeQuery(
     { userQuery: stringType, pageNo: currentPage },
     "",
@@ -48,6 +45,7 @@ const AllCustomers = () => {
     window.scrollTo(0, 0);
   };
 
+
   const columns = [
     { title: "Customer Name", field: "FirstName" },
     { title: "Account Number", field: "AccountNo" },
@@ -59,7 +57,7 @@ const AllCustomers = () => {
   ];
 
   const filteredCustomers = customers?.filter((customer) =>
-    customer?.FirstName.toLowerCase().includes(searchText.toLowerCase())
+    customer?.FirstName?.toLowerCase().includes(searchText?.toLowerCase())
   );
 
 
@@ -100,7 +98,7 @@ const AllCustomers = () => {
               <div className="form-group d-flex">
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Search Customers(s)..."
                   value={searchText}
                   onChange={(e) => setSearchText(e.target.value)}

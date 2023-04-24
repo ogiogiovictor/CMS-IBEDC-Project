@@ -1,7 +1,6 @@
 import React from 'react';
 
 const TransformerCard = ({ dssCard }) => {
-  console.log(dssCard);
   const { dtTotal, elevenDt, thirtyDt } = dssCard;
     return (
         <div className="row">

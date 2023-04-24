@@ -11,6 +11,9 @@ import { billService } from "./services/bill/billService";
 import { ticketService } from "./services/ticket/ticketService";
 import { dtService } from "./services/dss/dtService";
 import { fderService } from "./services/feeder/feederService";
+import feederSlice from "../components/feeder/feederSlice";
+import { paymentService } from "./services/payment/paymentService";
+import paymentSlice from "../components/payments/paymentSlice";
 
 
 
@@ -21,12 +24,15 @@ const store = configureStore({
         bills: billSlice,
         tickets: ticketSlice,
         dss: dssSlice,
+        feeder: feederSlice,
+        payment: paymentSlice,
         [authApi.reducerPath]: authApi.reducer,
         [customerService.reducerPath]: customerService.reducer,
         [billService.reducerPath]: billService.reducer,
         [ticketService.reducerPath]: ticketService.reducer,
         [dtService.reducerPath]: dtService.reducer,
         [fderService.reducerPath]: fderService.reducer,
+        [paymentService.reducerPath]: paymentService.reducer,
     },
     middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -36,6 +42,7 @@ const store = configureStore({
         ticketService.middleware,
         dtService.middleware,
         fderService.middleware,
+        paymentService.middleware
         ),
 });
   

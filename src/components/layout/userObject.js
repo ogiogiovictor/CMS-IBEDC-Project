@@ -33,7 +33,7 @@ const UserObject = () => {
        <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">
          <div className="card">
            <div className="card-body">
-             <h4 className="card-title">Mr Adeshola Olawora Information (360 Overview)</h4>
+             <h4 className="card-title">{paymentInfo.CustomerName ?? 0}</h4>
              <Link onClick={goBack} class="btn btn-info btn-xs"><i class="icon-action-undo"></i></Link>
                 <div class="profile-body">
                     <ul class="nav tab-switch" role="tablist">
@@ -54,7 +54,7 @@ const UserObject = () => {
                           <div class="tab-pane fade show active pr-3" id="user-profile-info" role="tabpanel" aria-labelledby="user-profile-info-tab">
                         
                             { isUninitialized ? <PageLoader /> : ''}
-                            
+
                            { isFetching ? <PageLoader /> : 
                             <CustomerInfoTable customerInfo={paymentInfo} />
                            }

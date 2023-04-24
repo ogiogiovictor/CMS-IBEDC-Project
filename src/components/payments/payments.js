@@ -26,20 +26,20 @@ const Payments = () => {
     }
   }, [data, dispatch, currentPage, refetch]);
 
-  // console.log(payment);
-
-  const handleActionClick = ({ paymentID }) => {
-    navigate(`payment`);
+  const handleActionClick = ({ FAccount, Token, CSPClientID }) => {
+    navigate(`/paymentDetails/${FAccount}/${Token}/${CSPClientID}`);
     window.scrollTo(0, 0);
   };
 
+  console.log(data);
+
   const columns = [
     { title: "Pay Date", field: "TransactionDateTime" },
-    { title: "TransID", field: "TransactionNo" },
+    { title: "Pay Source", field: "CSPClientID" },
     { title: "AccountNo", field: "AccountNo" },
     { title: "Meter No", field: "MeterNo" },
     { title: "BusinessUnit", field: "BUID" },
-    { title: "RefID", field: "Token" },
+    { title: "Token", field: "Token" },
     { title: "Amount", field: "Amount" },
   ];
 

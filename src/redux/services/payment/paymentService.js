@@ -15,8 +15,15 @@ export const paymentService = createApi({
             pollingInterval: 900000, // 15 minutes
           }),
 
+          getPaymentInfo: builder.query({
+            query: ({ FAccount, Token, CSPClientID }) => ({
+              url: `/${API_VERSION}/paymentDetails/${FAccount}/${Token}/${CSPClientID}`,
+              method: "GET",
+            }),
+          }),
+
     }),
 
 });
 
-export const { useGetAllPaymentQuery } = paymentService;
+export const { useGetAllPaymentQuery, useGetPaymentInfoQuery } = paymentService;

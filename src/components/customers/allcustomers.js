@@ -44,6 +44,7 @@ const AllCustomers = () => {
   console.log(data);
 
   const handleActionClick = ({ FAccountNo, DistributionID }) => {
+    
     navigate(`/customerinfo/${FAccountNo}/${DistributionID}`);
     window.scrollTo(0, 0);
   };

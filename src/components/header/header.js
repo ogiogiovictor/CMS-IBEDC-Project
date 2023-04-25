@@ -231,11 +231,7 @@ const Header = () => {
                         Feeders
                       </NavLink>
                     </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link" to="/injectionsubstation">
-                        Injection Sub Stations
-                      </NavLink>
-                    </li>
+                   
                     <li className="nav-item">
                       <NavLink className="nav-link" to="/transmission">
                         Transmission Sub Stations
@@ -246,11 +242,7 @@ const Header = () => {
                         Power Transformer
                       </NavLink>
                     </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link" to="/poles">
-                        Poles
-                      </NavLink>
-                    </li>
+                    
                   </ul>
                 </div>
               </li>
@@ -293,19 +285,10 @@ const Header = () => {
                     </li>
                     <li className="nav-item">
                       <NavLink className="nav-link" to="/billdistribution">
-                        Bill Distribution
+                        All CRO(s)
                       </NavLink>
                     </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link" to="/metereading">
-                        Meter Reading
-                      </NavLink>
-                    </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link" to="/tracker">
-                        Utilization Report
-                      </NavLink>
-                    </li>
+                    
                   </ul>
                 </div>
               </li>

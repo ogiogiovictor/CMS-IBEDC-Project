@@ -59,37 +59,25 @@ const Transformer = () => {
             {isFetching ? <PageLoader /> : 
 
         <div>
-            <div class="col-lg-12 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Asset Summary &nbsp;&nbsp;
-                  
-                  <button type="button" class="btn btn-info btn-fw">
-                  <i class="icon-cloud-upload"></i>Add Distribution Station(DT)
-                  </button>
-                  &nbsp;&nbsp;
-                  <button type="button" class="btn btn-secondary btn-fw">
-                  <i class="icon-cloud-upload"></i>Add Feeders
-                  </button>
-                  &nbsp;&nbsp;
-                  <button type="button" class="btn btn-danger btn-fw">
-                  <i class="icon-cloud-upload"></i>Add Power Transformer
-                  </button>
-                  &nbsp;&nbsp;
-                  <button type="button" class="btn btn-success btn-fw">
-                  <i class="icon-cloud-upload"></i>Add Poles
-                  </button>
-                  
-                  </h4>
-                </div>
-              </div>
-            </div>
-
+           
              <div className="row">
             <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">
               <div className="card">
                 <div className="card-body">
-                  <h4 className="card-title">All Distribution Sub Stations</h4>
+                  <h4 className="card-title">All Distribution Sub Stations &nbsp;&nbsp;
+                  <button class="btn btn-icons btn-rounded btn-secondary" onClick={() => refetch()}><span class="icon-refresh"></span></button>
+                  &nbsp;&nbsp;
+                  <button type="button" class="btn btn-info btn-fw">
+                  <i class="icon-cloud-upload"></i>Add Distribution Station(DT)
+                  </button>
+                  <div className="btn  btn-fw">
+                  <select className="form-control">
+                    <option value="">Select Distribution Station Type</option>
+                    <option value="Distribution Sub Station 11KV_415V">Distribution Sub Station 11KV_415V</option>
+                    <option value="Distribution Sub Station 33KV_415V">Distribution Sub Station 33KV_415V</option>
+                  </select>
+                  </div>
+                  </h4>
                   
                   <div class="form-group d-flex">
                           <input type="text" class="form-control" placeholder="Search Distribution Station..." />

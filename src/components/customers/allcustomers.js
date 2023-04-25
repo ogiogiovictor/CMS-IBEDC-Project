@@ -44,6 +44,7 @@ const AllCustomers = () => {
   console.log(data);
 
   const handleActionClick = ({ FAccountNo, DistributionID }) => {
+    
     navigate(`/customerinfo/${FAccountNo}/${DistributionID}`);
     window.scrollTo(0, 0);
   };
@@ -59,7 +60,7 @@ const AllCustomers = () => {
   ];
 
   const filteredCustomers = customers?.filter((customer) =>
-    customer?.FirstName.toLowerCase().includes(searchText.toLowerCase())
+    customer?.FirstName?.toLowerCase().includes(searchText?.toLowerCase())
   );
 
 

@@ -231,11 +231,7 @@ const Header = () => {
                         Feeders
                       </NavLink>
                     </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link" to="/injectionsubstation">
-                        Injection Sub Stations
-                      </NavLink>
-                    </li>
+                   
                     <li className="nav-item">
                       <NavLink className="nav-link" to="/transmission">
                         Transmission Sub Stations

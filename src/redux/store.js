@@ -14,6 +14,8 @@ import { fderService } from "./services/feeder/feederService";
 import feederSlice from "../components/feeder/feederSlice";
 import { paymentService } from "./services/payment/paymentService";
 import paymentSlice from "../components/payments/paymentSlice";
+import { transmisionService } from "./services/transmission/transmissionService";
+import transmissionSlice from "../components/transmission/transmissionSlice";
 
 
 
@@ -26,6 +28,7 @@ const store = configureStore({
         dss: dssSlice,
         feeder: feederSlice,
         payment: paymentSlice,
+        transmission: transmissionSlice,
         [authApi.reducerPath]: authApi.reducer,
         [customerService.reducerPath]: customerService.reducer,
         [billService.reducerPath]: billService.reducer,
@@ -33,6 +36,7 @@ const store = configureStore({
         [dtService.reducerPath]: dtService.reducer,
         [fderService.reducerPath]: fderService.reducer,
         [paymentService.reducerPath]: paymentService.reducer,
+        [transmisionService.reducerPath]: transmisionService.reducer,
     },
     middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -42,7 +46,8 @@ const store = configureStore({
         ticketService.middleware,
         dtService.middleware,
         fderService.middleware,
-        paymentService.middleware
+        paymentService.middleware,
+        transmisionService.middleware,
         ),
 });
   

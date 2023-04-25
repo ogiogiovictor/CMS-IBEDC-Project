@@ -10,7 +10,7 @@ const Cards = ({ stats }) => {
             <div className="d-flex align-items-center">
               <i className="icon-user icon-lg"></i>
               <div className="ml-4">
-                <Link to="allcustomers" className="linkCards">
+                <Link to="/customers" className="linkCards">
                   <h4 className="font-weight-light">Total Customers</h4>
                 </Link>
                 <h3 className="font-weight-light mb-3">
@@ -29,12 +29,12 @@ const Cards = ({ stats }) => {
             <div className="d-flex align-items-center">
               <i className="link-icon icon-book-open icon-user icon-lg"></i>
               <div className="ml-4">
-                <Link to="transformers" className="linkCards">
+                <Link to="/transformers" className="linkCards">
                   <h4 className="font-weight-light">Total DT</h4>
                 </Link>
                 <h3 className="font-weight-light mb-3">{stats.total_dss}</h3>
                 <p className="mb-0 font-weight-light">
-                  total feeders - {stats.feeder_11 + stats.feeder_33} 
+                 <Link to="/feeders">total feeders - {stats.feeder_11 + stats.feeder_33} </Link> 
                 </p>
               </div>
             </div>
@@ -47,11 +47,11 @@ const Cards = ({ stats }) => {
             <div className="d-flex align-items-center">
               <i className="icon-screen-desktop icon-lg"></i>
               <div className="ml-4">
-                <Link to="tickets" className="linkCards">
+                <Link to="/tickets" className="linkCards">
                   <h4 className="font-weight-light">Total Complaints</h4>
                 </Link>
                 <h3 className="font-weight-light mb-3">{stats.crm_tickets}</h3>
-                <p className="mb-0 font-weight-light">69 today</p>
+                {/* <p className="mb-0 font-weight-light">69 today</p> */}
               </div>
             </div>
           </div>

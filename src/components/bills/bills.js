@@ -29,7 +29,6 @@ const Bills = () => {
     }
   }, [data, refetch, currentPage, dispatch]);
 
-  console.log(billData);
 
   const columns = [
     { title: "Bill Month", field: "BillMonthName" },
@@ -40,8 +39,8 @@ const Bills = () => {
     { title: "Current Charge", field: "CurrentChgTotal" },
   ];
 
-  const handleActionClick = () => {
-    navigate(`/testing`);
+  const handleActionClick = ({BillID}) => {
+    navigate(`/billDetails/${BillID}`);
     window.scrollTo(0, 0);
   };
   

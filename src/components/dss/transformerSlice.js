@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     dss: [],
     dssData: [],
+    dssInfo: null,
 }
 
 const dssSlice = createSlice({
@@ -17,7 +18,12 @@ const dssSlice = createSlice({
         setDataDss: (state, action) => {
                 state.dssData = action.payload;
             
-        }
+        },
+
+        setDssInfo: (state, action) => {
+            state.dssInfo = action.payload;
+        
+         }
 
     }
 });
@@ -25,5 +31,8 @@ const dssSlice = createSlice({
 export const {
     setDss,
     setDataDss,
+    setDssInfo,
 } = dssSlice.actions;
+
+
 export default dssSlice.reducer;

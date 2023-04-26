@@ -15,8 +15,14 @@ const API_VERSION = `${process.env.REACT_APP_API_VERSION}`;
             pollingInterval: 900000, // 15 minutes
           }),
 
+          getBillInfo: builder.query({
+            query: ({ BillID }) => ({
+              url: `/${API_VERSION}/billDetails/${BillID}`,
+              method: "GET",
+            }),
+          }),
     }),
 });
 
 
-export const { useGetAllBillsQuery } = billService;
+export const { useGetAllBillsQuery, useGetBillInfoQuery } = billService;

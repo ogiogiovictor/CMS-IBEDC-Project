@@ -15,7 +15,14 @@ export const dtService = createApi({
             pollingInterval: 900000, // 15 minutes
           }),
 
+          getDSSInfo: builder.query({
+            query: ({ Assetid }) => ({
+              url: `/${API_VERSION}/assetDetails/${Assetid}`,
+              method: "GET",
+            }),
+          }),
+
     }),
 });
 
-export const { useGetAllDistributionQuery } = dtService;
+export const { useGetAllDistributionQuery, useGetDSSInfoQuery } = dtService;

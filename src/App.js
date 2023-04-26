@@ -25,6 +25,8 @@ import { LoginLayout, AdminLayout } from "./components/layout/index";
 import ProtectedRoute from "./components/auth/protectedroute";
 import CustomerRecord from "./components/createcustomer/crmd";
 import UserObject from "./components/layout/userObject";
+import BillDetails from "./components/bills/billDetails";
+import TransformerDetails from "./components/dss/transformerDetails";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -73,6 +75,18 @@ const App = () => {
                 path="/paymentDetails/:FAccount/:Token/:CSPClientID"
                 element={<UserObject />}
               />
+              <Route
+                path="/billDetails/:BillID"
+                element={<BillDetails />}
+              />
+
+              <Route
+                path="/transformerDetails/:Assetid"
+                element={<TransformerDetails />}
+              />
+
+
+
             </Route>
 
 

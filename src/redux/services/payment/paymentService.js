@@ -13,6 +13,11 @@ export const paymentService = createApi({
               method: "GET",
             }),
             pollingInterval: 900000, // 15 minutes
+            providesTags: (result, error, args) => ['BillService'],
+            cacheOptions: {
+              // cache results for 5 minutes
+              ttl: 3000000,
+            },
           }),
 
           getPaymentInfo: builder.query({
@@ -20,6 +25,11 @@ export const paymentService = createApi({
               url: `/${API_VERSION}/paymentDetails/${FAccount}/${Token}/${CSPClientID}`,
               method: "GET",
             }),
+            providesTags: (result, error, args) => ['BillService'],
+            cacheOptions: {
+              // cache results for 5 minutes
+              ttl: 3000000,
+            },
           }),
 
     }),

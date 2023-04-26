@@ -1,45 +1,48 @@
 import React, {Fragment, useEffect} from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { useGetPaymentInfoQuery } from '../../redux/services/payment/paymentService';
+import { useGetDSSInfoQuery } from '../../redux/services/dss/dtService';
+
+
 import PageLoader from "../spinner/loader";
 import { CustomerInfoTable } from '../createcustomer/customerinfotable';
-import { setPaymentInfo } from '../payments/paymentSlice';
+import { setDssInfo } from './transformerSlice';
 
-const UserObject = () => {
+
+const TransformerDetails = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { FAccount, Token, CSPClientID } = useParams();
-    const { paymentInfo } = useSelector((state) => state.payment) || {};
+    const { Assetid } = useParams();
+    const { dssInfo, isFetching, isUninitialized } = useSelector((state) => state.dss) || [];
 
-    const { data, isFetching, isUninitialized } = useGetPaymentInfoQuery(
-        { FAccount, Token, CSPClientID });
+    const { data, refetch } = useGetDSSInfoQuery({ Assetid }, { cacheTime: 0 });
+
+    console.log(dssInfo);
 
     useEffect(() => {
         if (data) {
-             dispatch(setPaymentInfo(data?.data));
+            refetch();
+            dispatch(setDssInfo(data?.data));
         }
-    }, [data, dispatch]);
-
+    }, [data, dispatch, refetch]);
 
     const goBack = () => {
         navigate(-1);
       };
 
-
-    return (
-        <Fragment>
+      return (
+    <Fragment>
         <div className="row profile-page">
        <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">
          <div className="card">
            <div className="card-body">
-             <h4 className="card-title">{paymentInfo.CustomerName ?? 0}</h4>
+             <h4 className="card-title">{ dssInfo.DSS_11KV_415V_Name ?? ''} </h4>
              <Link onClick={goBack} class="btn btn-info btn-xs"><i class="icon-action-undo"></i></Link>
                 <div class="profile-body">
                     <ul class="nav tab-switch" role="tablist">
                       <li class="nav-item">
                         <a class="nav-link active" id="user-profile-info-tab" data-toggle="pill" href="#user-profile-info" role="tab" aria-controls="user-profile-info" aria-selected="true">
-                           Payment Information
+                           DT Information - { dssInfo.DSS_11KV_415V_Name ?? ''}
                         </a>
                       </li>
                      
@@ -56,18 +59,11 @@ const UserObject = () => {
                             { isUninitialized ? <PageLoader /> : ''}
 
                            { isFetching ? <PageLoader /> : 
-                            <CustomerInfoTable customerInfo={paymentInfo} />
+                            <CustomerInfoTable customerInfo={dssInfo} />
                            }
-
-                           
-                           
-
 
                           </div>
 
-                            
-
-                      
                       </div>
 
 
@@ -84,8 +80,8 @@ const UserObject = () => {
        
      </div>
      </div>
-   </Fragment>
-    );
+    </Fragment>
+      );
 }
 
-export default UserObject;
+export default TransformerDetails;

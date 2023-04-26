@@ -34,11 +34,10 @@ const Transformer = () => {
     //console.log(data);
     //console.log(data.data.allDt)
 
-    const handleActionClick = ({ DistributionID }) => {
-      navigate(`dss`);
+    const handleActionClick = ({Assetid}) => {
+      navigate(`/transformerDetails/${Assetid}`);
       window.scrollTo(0, 0);
     };
-
     const columns = [
       { title: "Asset ID", field: "Assetid" },
       { title: "Asset Type", field: "assettype" },

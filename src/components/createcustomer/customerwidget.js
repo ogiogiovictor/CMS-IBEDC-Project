@@ -9,19 +9,39 @@ const CustomerWidget = ({ customerInfo }) => {
     navigate(-1);
   };
 
+  console.log(customerInfo);
+
   const handleActionClick = ({ FAccountNo, DistributionID }) => {
     navigate(`/customerinfo/${FAccountNo}/${DistributionID}`);
     window.scrollTo(0, 0);
   };
 
+  const handBillClick = ({ FAccountNo, DistributionID }) => {
+    navigate(`/customerinfo/${FAccountNo}/${DistributionID}`);
+    window.scrollTo(0, 0);
+  };
+
+  
+
   const customePaymentsColumns = [
-    { title: "Trans ID", field: "FirstName" },
-    { title: "Surname", field: "AccountNo" },
-    { title: "Firstname", field: "AcctTypeDesc" },
-    { title: "Amount", field: "BusinessHub" },
-    { title: "Business Hub", field: "service_center" },
-    { title: "TransRef", field: "UTID" },
-    { title: "Status", field: "StatusCode" },
+    { title: "Trans ID", field: "receiptnumber" },
+    { title: "AccountNo", field: "AccountNo" },
+    { title: "Pay Year", field: "PayYear" },
+    { title: "Pay Month", field: "PayMonth" },
+    { title: "Business Hub", field: "BusinessUnit" },
+    { title: "Amount", field: "Payments" },
+    { title: "Processed", field: "Processed" },
+  ];
+
+
+  const customerBillsColumns = [
+    { title: "Bill Date", field: "Billdate" },
+    { title: "Bill Year", field: "BillYear" },
+    { title: "Bill Month", field: "BillMonthName" },
+    { title: "Pay Month", field: "PayMonth" },
+    { title: "Business Hub", field: "BUName1" },
+    { title: "Current Charge", field: "CurrentChgTotal" },
+    { title: "Last Payment", field: "LastPayAmount" },
   ];
 
   return (
@@ -178,28 +198,21 @@ const CustomerWidget = ({ customerInfo }) => {
                                   <i class="icon-cloud-download"></i>
                                 </div>
                                 <div class="d-flex align-items-center mb-2 justify-content-between">
-                                  <h5 class="mb-0">Customer Staus</h5>
+                                  <h5 class="mb-0">Customer Adjustment</h5>
                                 </div>
                                 <p>
                                   {" "}
                                   <td>
                                     <Link to="/customerinfo">
                                       <button class="btn btn-xs btn-info">
-                                        <i class="icon-user"></i>Active
+                                        <i class="icon-user"></i>Create CAAD
                                       </button>
                                     </Link>
                                   </td>
                                 </p>
                               </div>
-                              <div class="stages pl-5 pb-4">
-                                <div class="btn btn-icons btn-rounded stage-badge btn-inverse-primary">
-                                  <i class="icon-checkbox-marked-circle-outline"></i>
-                                </div>
-                                <div class="d-flex align-items-center mb-2 justify-content-between">
-                                  <h5 class="mb-0">Old Account No</h5>
-                                </div>
-                                <p>{customerInfo?.OldAccountNo}</p>
-                              </div>
+                            
+
                             </div>
                           </div>
                         </div>
@@ -261,125 +274,21 @@ const CustomerWidget = ({ customerInfo }) => {
                         </div>
 
                         <div className="table-responsive">
-                          <table className="table">
-                            <thead>
-                              <tr>
-                                <th>Bill ID</th>
-                                <th>Surname</th>
-                                <th>Firstname</th>
-                                <th>Amount</th>
-                                <th>Business Hub</th>
-                                <th>TransRef</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>Jacob</td>
-                                <td>53275531</td>
-                                <td>12 May 2017</td>
-                                <td>Jacob</td>
-                                <td>53275531</td>
-                                <td>
-                                  <i class="remove icon-close"></i>
-                                </td>
-                                <td>
-                                  <label className="badge badge-info">
-                                    Active
-                                  </label>
-                                </td>
-                                <td>
-                                  <button className="btn btn-xs btn-outline-success">
-                                    <i class="icon-user"></i>
-                                    View
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Jacob</td>
-                                <td>53275531</td>
-                                <td>12 May 2017</td>
-                                <td>Jacob</td>
-                                <td>Jacob</td>
-                                <td>
-                                  <input
-                                    class="checkbox"
-                                    type="checkbox"
-                                    checked=""
-                                  />
-                                </td>
-                                <td>
-                                  <label className="badge badge-info">
-                                    Suspended
-                                  </label>
-                                </td>
-                                <td>
-                                  <button className="btn btn-xs btn-danger">
-                                    <i class="icon-user"></i>
-                                    View
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Jacob</td>
-                                <td>53275531</td>
-                                <td>12 May 2017</td>
-                                <td>Jacob</td>
-                                <td>53275531</td>
-                                <td>12 May 2017</td>
-                                <td>
-                                  <label className="badge badge-info">
-                                    Inactive
-                                  </label>
-                                </td>
-                                <td>
-                                  <button className="btn btn-xs btn-outline-success">
-                                    <i class="icon-user"></i>
-                                    View
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Jacob</td>
-                                <td>53275531</td>
-                                <td>12 May 2017</td>
-                                <td>Jacob</td>
-                                <td>53275531</td>
-                                <td>12 May 2017</td>
-                                <td>
-                                  <label className="badge badge-info">
-                                    Active
-                                  </label>
-                                </td>
-                                <td>
-                                  <button className="btn btn-xs btn-outline-success">
-                                    <i class="icon-user"></i>
-                                    View
-                                  </button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Jacob</td>
-                                <td>53275531</td>
-                                <td>12 May 2017</td>
-                                <td>Jacob</td>
-                                <td>53275531</td>
-                                <td>12 May 2017</td>
-                                <td>
-                                  <label className="badge badge-info">
-                                    Closed
-                                  </label>
-                                </td>
-                                <td>
-                                  <button className="btn btn-xs btn-danger">
-                                    <i class="icon-user"></i>
-                                    View
-                                  </button>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
+                       
+                        {customerInfo?.bills?.length !== 0 ? (
+                          <DataTable
+                            data={customerInfo?.bills}
+                            columns={customerBillsColumns}
+                            pagination
+                            currentPage={1}
+                            totalCount={1}
+                            pageSize={1}
+                            onActionClick={handBillClick}
+                          />
+                        ) : (
+                          <p className="text-center">No Bills Found</p>
+                        )}
+
                         </div>
                       </div>
 

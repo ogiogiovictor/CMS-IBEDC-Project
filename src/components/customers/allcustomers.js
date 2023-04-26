@@ -45,7 +45,7 @@ const AllCustomers = () => {
 
   const handleActionClick = ({ FAccountNo, DistributionID }) => {
     
-    navigate(`/customerinfo/${FAccountNo}/${DistributionIDGI}`);
+    navigate(`/customerinfo/${FAccountNo}/${DistributionID}`);
     window.scrollTo(0, 0);
   };
 

@@ -29,6 +29,7 @@ import BillDetails from "./components/bills/billDetails";
 import TransformerDetails from "./components/dss/transformerDetails";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DynamicData from "./components/layout/dynamicData";
 
 const App = () => {
   return (
@@ -84,6 +85,12 @@ const App = () => {
                 path="/transformerDetails/:Assetid"
                 element={<TransformerDetails />}
               />
+               <Route
+                path="/details/:Assetid"
+                element={<DynamicData />}
+              />
+
+
 
 
 

@@ -21,6 +21,11 @@ const CustomerWidget = ({ customerInfo }) => {
     window.scrollTo(0, 0);
   };
 
+  const handleTicketBillClick = ({ FAccountNo, DistributionID }) => {
+    navigate(`/customerinfo/${FAccountNo}/${DistributionID}`);
+    window.scrollTo(0, 0);
+  };
+
   
 
   const customePaymentsColumns = [
@@ -38,11 +43,19 @@ const CustomerWidget = ({ customerInfo }) => {
     { title: "Bill Date", field: "Billdate" },
     { title: "Bill Year", field: "BillYear" },
     { title: "Bill Month", field: "BillMonthName" },
-    { title: "Pay Month", field: "PayMonth" },
     { title: "Business Hub", field: "BUName1" },
     { title: "Current Charge", field: "CurrentChgTotal" },
     { title: "Last Payment", field: "LastPayAmount" },
   ];
+
+  const ticketColumns = [
+    { title: "Date Created", field: "opened_at" },
+    { title: "Ticket No", field: "ticket_no" },
+    { title: "Category", field: "category_id" },
+    { title: "Classification", field: "classification" },
+    { title: "Location", field: "location_id" },
+    { title: "Status", field: "status" },
+  ]
 
   return (
     <>
@@ -298,62 +311,7 @@ const CustomerWidget = ({ customerInfo }) => {
                         role="tabpanel"
                         aria-labelledby="user-profile-asset-tab"
                       >
-                        <table class="table table-borderless w-100 mt-4">
-                          <tr>
-                            <td>
-                              <strong>DSS ID :</strong> Johnathan Deo
-                            </td>
-                            <td>
-                              <strong>DSS Name :</strong> staradmin.com
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <strong>Feeder Name :</strong> USA
-                            </td>
-                            <td>
-                              <strong>Injection Substation :</strong> Johnathan
-                              Deo
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <strong>Service Center :</strong> English, German,
-                              Spanish.
-                            </td>
-                            <td>
-                              <strong>Business Hub :</strong> +73646 4563
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <strong>DSS Lat :</strong> English, German,
-                              Spanish.
-                            </td>
-                            <td>
-                              <strong>DSS Long :</strong> +73646 4563
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td>
-                              <strong>Pole :</strong> English, German, Spanish.
-                            </td>
-                            <td>
-                              <strong>Upriser :</strong> +73646 4563
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td>
-                              <strong>Transmission Substation :</strong>{" "}
-                              English, German, Spanish.
-                            </td>
-                            <td>
-                              <strong>Power Transformer</strong> +73646 4563
-                            </td>
-                          </tr>
-                        </table>
+                       <CustomerInfoTable customerInfo={customerInfo?.distribution} />
                       </div>
 
                       <div
@@ -362,7 +320,13 @@ const CustomerWidget = ({ customerInfo }) => {
                         role="tabpanel"
                         aria-labelledby="user-profile-metering-tab"
                       >
-                        Customer Metering Information
+                      
+                        <h4>Customer Metering Information (MSMS)</h4><hr/>
+                        <CustomerInfoTable customerInfo={customerInfo?.msmsCustomerInfo ?? ''} />
+                        <hr/><h4>Customer Metering Information (MSMS)</h4><hr/>
+                        <CustomerInfoTable customerInfo={customerInfo?.msmsCustomerInfo?.customer_meters ?? ''} />
+                        <hr/><h4>Other Relevant Metering Information (MSMS)</h4><hr/>
+                        <CustomerInfoTable customerInfo={customerInfo?.msmsCustomerInfo?.meter_details[0] ?? ''} />
                       </div>
 
                       <div
@@ -371,7 +335,19 @@ const CustomerWidget = ({ customerInfo }) => {
                         role="tabpanel"
                         aria-labelledby="user-profile-ticket-tab"
                       >
-                        Customer Ticket Information
+                         {customerInfo?.tickets?.length !== 0 ? (
+                          <DataTable
+                            data={customerInfo?.tickets}
+                            columns={ticketColumns}
+                            pagination
+                            currentPage={1}
+                            totalCount={1}
+                            pageSize={1}
+                            onActionClick={handleTicketBillClick}
+                          />
+                        ) : (
+                          <p className="text-center">No Tickets Found</p>
+                        )}
                       </div>
 
                       <div

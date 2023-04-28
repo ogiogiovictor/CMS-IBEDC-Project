@@ -1,10 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const CustomerRecord = () => {
   
+  const navigate = useNavigate();
 
+   // Get the data from the store
+   const customerData = useSelector(state => state.customer.ticketInfo);
 
+   console.log(customerData);
+ 
+    // Redirect the user back to the NewCustomer component if there's no data in the store
+  useEffect(() => {
+    if (!customerData.data) {
+      navigate('/createcustomer');
+    }
+  }, [customerData, navigate]);
+
+  
+  // If customerData is null or undefined, return null to prevent errors
+  if (!customerData) {
+    return null;
+  }
+
+  // If customerData.data is not defined, redirect to /createcustomer
+  if (!customerData.data) {
+    navigate('/createcustomer');
+    return null;
+  }
+
+    const{ content, ticket_no } = customerData.data.ticket;
+    const consInfo = customerData.data.customer;
+  
+  
+
+   console.log("from CRMD Form");
+   console.log(customerData);
+
+  
     return (
+      
         <div className="row">
             <div className="col-md-12 grid-margin stretch-card">
               <div className="card">
@@ -12,8 +48,9 @@ const CustomerRecord = () => {
               <div class="card-body">
                   <h4 class="card-title">Customer Record Management Document (CRMD)</h4>
                   <form class="form-sample">
+                  
                     <p class="card-description">
-                      <b>Ticket ID : TK47892000000000238 | Account No: 23/42/43/2839-01</b>
+                      <b>Ticket ID : { ticket_no ?? '' } | Account No: { consInfo.AccountNo ?? ''}</b>
                     </p>
 
                     <div class="row">
@@ -21,7 +58,10 @@ const CustomerRecord = () => {
                         <div class="form-group row">
                           {/* <label class="col-sm-3 col-form-label">Complaint</label> */}
                           <div class="col-sm-12">
-                            <textarea  rows="6" disabled class="form-control"></textarea>
+                        
+                            <textarea  rows="6" disabled class="form-control">
+                              { content }
+                            </textarea>
                           </div>
                         </div>
                       </div>
@@ -32,7 +72,7 @@ const CustomerRecord = () => {
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Firstname</label>
                           <div class="col-sm-9">
-                          <input type="text" class="form-control" disabled />
+                          <input type="text" value={consInfo.FirstName ?? ''} class="form-control" disabled />
                           </div>
                         </div>
                       </div>
@@ -51,7 +91,7 @@ const CustomerRecord = () => {
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Lastname</label>
                           <div class="col-sm-9">
-                          <input type="text" class="form-control" disabled />
+                          <input type="text" class="form-control" disabled value={consInfo.OtherNames ?? ''} />
                           </div>
                         </div>
                       </div>
@@ -71,7 +111,7 @@ const CustomerRecord = () => {
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Account No</label>
                           <div class="col-sm-9">
-                          <input type="text" class="form-control" disabled />
+                          <input type="text" class="form-control" disabled value={consInfo.AccountNo ?? ''} />
                           </div>
                         </div>
                       </div>
@@ -91,7 +131,7 @@ const CustomerRecord = () => {
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Address</label>
                           <div class="col-sm-9">
-                          <input type="text" class="form-control" disabled />
+                          <input type="text" class="form-control" disabled value={consInfo.Address} />
                           </div>
                         </div>
                       </div>
@@ -131,7 +171,7 @@ const CustomerRecord = () => {
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Meter Number</label>
                           <div class="col-sm-9">
-                          <input class="form-control" placeholder="Miniature Circuit Breaker" />
+                          <input class="form-control" value={consInfo.MeterNo} placeholder="Miniature Circuit Breaker" />
                           </div>
                         </div>
                       </div>
@@ -391,7 +431,7 @@ const CustomerRecord = () => {
                       </div>
                     </div>
 
-
+                    <button type="submit" className="btn btn-primary mr-2">Submit</button>
 
 
                   </form>

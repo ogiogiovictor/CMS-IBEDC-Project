@@ -27,6 +27,17 @@ export const customerService = createApi({
         method: "GET",
       }),
     }),
+
+
+     // Create a new endpoint for the POST request
+     postTicketID: builder.mutation({
+      query: (requestData) => ({
+        url: `/${API_VERSION}/tickets`,
+        method: "POST",
+        body: requestData, // the data you want to send in the request body
+      }),
+    }),
+
   }),
 });
 
@@ -34,4 +45,5 @@ export const {
   useGetCustomerDetailsByIDQuery,
   useGetCustomerDetailsByTypeQuery,
   useGetCustomerInfoQuery,
+  usePostTicketIDMutation 
 } = customerService;

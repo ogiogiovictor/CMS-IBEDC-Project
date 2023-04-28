@@ -12,6 +12,8 @@ const Transmission = () => {
   const { transmission, transmissionData } = useSelector((state) => state.transmission) || [];
   const dispatch = useDispatch();
 
+  const [selectedObject, setSelectedObject] = useState(null);
+
   const { data, isFetching, isUninitialized, refetch } = useGetTransmissionQuery();
 
   const navigate = useNavigate();
@@ -24,11 +26,18 @@ const Transmission = () => {
     }
   }, [data, dispatch, currentPage, refetch]);
 
-  console.log(transmission);
+  
 
-  const handleActionClick = ({ AssetId }) => {
-   // navigate(`/transmissionDetails/${AssetId}`);
-    window.scrollTo(0, 0);
+  const handleActionClick = (transmission) => {
+    console.log(transmission);
+    setSelectedObject(transmission);
+    navigate(`/details/${transmission.Assetid}`, { 
+      state: { 
+        rowData: transmission, 
+        rowTitle: 'Transmission Information',
+        rowSubTitle: transmission.TS_132KV_Name,
+        routeName: '/transmission'
+       } });
   };
 
   const columns = [

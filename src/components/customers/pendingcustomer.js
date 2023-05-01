@@ -69,20 +69,23 @@ const PendingCustomer = () => {
                         <td>{customer?.BUID} </td>
                         <td>{datePicker(customer?.created_at)}</td>
                         <td>
-                            <label className="badge badge-info">
+                            <label className={customer?.status == 'pending' ? "badge badge-info" : "badge badge-success" }>
                             {customer?.status}
                             </label>
                             </td>
                         <td>
                        
-                        <button className="btn btn-xs btn-outline-success">
+                        <button className="btn btn-xs btn-outline-primary">
                             <i class="icon-user"></i>
                             View
                           </button>&nbsp;
-                          {/* <input type="text" value={customer?._id} onChange={(e) => setId(e.target.value)} /> */}
                           <button onClick={() => handleButtonClick(customer?._id)} className="btn btn-xs btn-outline-danger">
                             <i class="icon-check"></i>
                             Approve
+                          </button>&nbsp;
+                          <button onClick={() => handleButtonClick(customer?._id)} className="btn btn-xs btn-outline-success">
+                            <i class="icon-check"></i>
+                            Verify
                           </button>
                         </td>
                     </tr>

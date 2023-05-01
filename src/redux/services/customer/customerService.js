@@ -32,7 +32,7 @@ export const customerService = createApi({
     //GET PENDING CRMD CUSTOMERS DETAILS
     getCRMDCustomer: builder.query({
       query: ({ pageNo}) => ({
-        url: `/${API_VERSION}/get_crmd`,
+        url: `/${API_VERSION}/get_crmd/pending`,
         method: "GET",
       }),
       pollingInterval: 900000, // 15 minutes

@@ -6,6 +6,7 @@ import { notify } from '../../utils/notify';
 
 const CustomerRecord = () => {
   const [isProcessing, setIsProcessing] = useState(false);
+  const { userInfo } = useSelector((state) => state.auth);
   const [values, setValues] = useState({
     new_firstname: '',
     new_lastname: '',
@@ -65,7 +66,7 @@ const CustomerRecord = () => {
   
     const processCRMD = async (e) => {
       e.preventDefault();
-      //setIsProcessing(true);
+      setIsProcessing(true);
 
       //Collect data from the form
       const idata = { 
@@ -76,6 +77,7 @@ const CustomerRecord = () => {
         BUID: consInfo.BUID ?? '',
         meterno: consInfo.meterno ?? '',
         created_at: new Date(),
+        created_by: userInfo.id ?? 0,
         new_firstname: values.new_firstname,
         new_lastname: values.new_lastname,
         new_phone: values.new_phone,
@@ -139,6 +141,7 @@ const CustomerRecord = () => {
         }
        
       }catch(err){
+        setIsProcessing(false);
         console.log(err);
       }
 
@@ -180,6 +183,12 @@ const CustomerRecord = () => {
                           <label class="col-sm-3 col-form-label">Firstname</label>
                           <div class="col-sm-9">
                           <input type="text" value={consInfo.FirstName ?? ''} class="form-control" disabled />
+                          <input type="text" 
+                          value={Number(userInfo.id) ?? 0} 
+                          name="created_by"
+                          class="form-control" hidden 
+                          />
+                          
                           </div>
                         </div>
                       </div>

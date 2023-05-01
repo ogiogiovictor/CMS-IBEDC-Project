@@ -334,17 +334,17 @@ const Header = () => {
                 <div className="submenu">
                   <ul className="submenu-item">
                     <li className="nav-item">
-                      <a
+                      <NavLink
                         className="nav-link"
-                        href="pages/forms/basic_elements.html"
+                        to="/crmdetails"
                       >
                         Approve Customer
-                      </a>
+                      </NavLink>
                     </li>
                     <li className="nav-item">
                       <a
                         className="nav-link"
-                        href="pages/forms/basic_elements.html"
+                        to="crmdetails"
                       >
                         CAAD
                       </a>

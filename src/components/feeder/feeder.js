@@ -12,6 +12,7 @@ const Feeder = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { feeder, feederData } = useSelector((state) => state.feeder) || [];
   const dispatch = useDispatch();
+  const [selectedObject, setSelectedObject] = useState(null);
 
   const { type } = useParams();
 
@@ -32,9 +33,15 @@ const Feeder = () => {
 
   console.log(feeder);
 
-  const handleActionClick = ({ feederId }) => {
-    navigate(`feeder`);
-    window.scrollTo(0, 0);
+  const handleActionClick = (feeder) => {
+    setSelectedObject(feeder);
+    navigate(`/details/${feeder.Assetid}`, { 
+      state: { 
+        rowData: feeder, 
+        rowTitle: 'Feeder Information',
+        rowSubTitle: feeder.F11kvFeeder_Name,
+        routeName: '/feeders'
+       } });
   };
 
   const columns = [

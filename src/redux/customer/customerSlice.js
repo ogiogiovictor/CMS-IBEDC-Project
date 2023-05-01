@@ -4,6 +4,8 @@ const initialState = {
   customers: [],
   postpaidCards: [],
   prepaidCards: [],
+  ticketInfo: [], // Set an initial value for ticketInfo
+  crmd: [], // Set an initial value for crmd
   customerInfo: null,
   loading: false,
   error: null,
@@ -29,6 +31,14 @@ const customerSlice = createSlice({
     setCustomerInfo: (state, action) => {
       state.customerInfo = action.payload;
     },
+
+    setTicketInfo: (state, action) => {
+      state.ticketInfo = action.payload;
+    },
+
+    setCrmd: (state, action) => {
+      state.crmd = action.payload;
+    },
   },
 });
 
@@ -37,5 +47,7 @@ export const {
   setPostpaidCards,
   setPrepaidCards,
   setCustomerInfo,
+  setTicketInfo,
+  setCrmd
 } = customerSlice.actions;
 export default customerSlice.reducer;

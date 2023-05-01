@@ -1,24 +1,27 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams  } from "react-router-dom";
 import TransformerCard from './transformercards';
 import { useGetAllDistributionQuery } from '../../redux/services/dss/dtService';
 import { setDss, setDataDss } from './transformerSlice';
 import PageLoader from "../spinner/loader";
 import DataTable from "../datatable";
+import DynamicData from '../layout/dynamicData';
 
 const Transformer = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const { dss, dssData } = useSelector((state) => state.dss) || [];
   const dispatch = useDispatch();
-  
+
+  const [selectedObject, setSelectedObject] = useState(null);
+
   const { type } = useParams();
   const { data, isFetching, isUninitialized, refetch } = useGetAllDistributionQuery(
     { userQuery: type, pageNo: currentPage }
   );
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
 
     useEffect(() => {
       if (currentPage && data) {
@@ -31,13 +34,26 @@ const Transformer = () => {
     
    
     // console.log("...................checking here.............");
-    //console.log(data);
-    //console.log(data.data.allDt)
+    console.log(data);
+    // console.log(data.data.allDt)
+    // const handleActionClick = ({Assetid}) => {
+    //   navigate(`/transformerDetails/${Assetid}`);
+    //   window.scrollTo(0, 0);
+    // };
 
-    const handleActionClick = ({Assetid}) => {
-      navigate(`/transformerDetails/${Assetid}`);
-      window.scrollTo(0, 0);
+    const handleActionClick = (data) => {
+      setSelectedObject(data);
+      //navigate(`/details/${data.Assetid}`);
+      navigate(`/details/${data.Assetid}`, { 
+        state: { 
+          rowData: data, 
+          rowTitle: 'Asset Information',
+          rowSubTitle: data.DSS_11KV_415V_Name,
+          routeName: '/transformers'
+         } });
     };
+
+
     const columns = [
       { title: "Asset ID", field: "Assetid" },
       { title: "Asset Type", field: "assettype" },

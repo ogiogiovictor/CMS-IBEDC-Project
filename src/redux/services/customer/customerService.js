@@ -29,6 +29,16 @@ export const customerService = createApi({
     }),
 
 
+    //GET PENDING CRMD CUSTOMERS DETAILS
+    getCRMDCustomer: builder.query({
+      query: ({ pageNo}) => ({
+        url: `/${API_VERSION}/get_crmd`,
+        method: "GET",
+      }),
+      pollingInterval: 900000, // 15 minutes
+    }),
+
+
      // Create a new endpoint for the POST request
      postTicketID: builder.mutation({
       query: (requestData) => ({
@@ -38,12 +48,41 @@ export const customerService = createApi({
       }),
     }),
 
+    // Create a new endpoint for the POST request for CRMD
+    postCRMD: builder.mutation({
+      query: (requestData) => ({
+        url: `/${API_VERSION}/crmd`,
+        method: "POST",
+        body: requestData, // the data you want to send in the request body
+      }),
+    }),
+
+   // Approve CRMD By Business Hub Manager
+   postUpdateCRMD: builder.mutation({
+    query: ({ id, status, userid }) => ({
+      url: `/${API_VERSION}/updatecrmdstate`,
+      method: "POST",
+      body: {
+        id,
+        status,
+        userid
+      },
+    }),
   }),
+    onError: (error) => {
+      console.error(error);
+    },
+
+  }),
+
 });
 
 export const {
   useGetCustomerDetailsByIDQuery,
   useGetCustomerDetailsByTypeQuery,
   useGetCustomerInfoQuery,
-  usePostTicketIDMutation 
+  usePostTicketIDMutation,
+  usePostCRMDMutation,
+  useGetCRMDCustomerQuery,
+  usePostUpdateCRMDMutation
 } = customerService;

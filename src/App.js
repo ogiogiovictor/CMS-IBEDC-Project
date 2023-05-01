@@ -30,6 +30,7 @@ import TransformerDetails from "./components/dss/transformerDetails";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DynamicData from "./components/layout/dynamicData";
+import PendingCustomer from "./components/customers/pendingcustomer";
 
 const App = () => {
   return (
@@ -89,6 +90,14 @@ const App = () => {
                 path="/details/:Assetid"
                 element={<DynamicData />}
               />
+
+              <Route
+                path="/crmdetails"
+                element={<PendingCustomer />}
+              />
+
+
+
 
 
 

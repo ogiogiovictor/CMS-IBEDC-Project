@@ -6,10 +6,11 @@ import { useGetDashboardStatsQuery } from "../../redux/services/auth/authService
 import { usePostTicketIDMutation } from "../../redux/services/customer/customerService";
 import { setDashboardStats } from "../../redux/auth/authSlice";
 import { setTicketInfo } from "../../redux/customer/customerSlice";
+import { notify  } from '../../utils/notify';
 
 const NewCustomer = () => {
   const { data, isFetching } = useGetDashboardStatsQuery("dashboardStats", {});
-
+  const [isProcessing, setIsProcessing] = useState(false);
   const [addTicket, { isLoading }] = usePostTicketIDMutation();
 
   const { dashboardStats } = useSelector((state) => state.auth);
@@ -58,12 +59,15 @@ const NewCustomer = () => {
       }
 
       try {
+        setIsProcessing(true);
         const result =  await addTicket(idata).unwrap();
-        //console.log(result);
+        console.log(result);
          dispatch(setTicketInfo(result));
          if(result.data.customer){
+          notify("success", "Ticket Successfully Found" || "Process Completed Successfully");
           navigate('/crmd');
          }else{
+          setIsProcessing(false); // Enable the button back
           setValues({...values, errorMessage: 'No Customer was Found With This TicketID. Please contact IT'});
           return;
          }
@@ -71,28 +75,19 @@ const NewCustomer = () => {
       } catch (error) {
         if (error.status === 500) {
           // Handle error 500 here...
+          setIsProcessing(false); // Enable the button back
           setValues({...values, errorMessage: 'We Could not find any ticket ID attached to a customer, Please contact helpdesk.'});
           return;
         }
+        setIsProcessing(false);
         // Handle other errors here...
         setValues({...values, errorMessage: error.message});
         return;
       }
 
-      
-
-     
-
     }
 
-    
-
-
-
   }
-
- 
-
 
     return (
         <div className="row">
@@ -127,7 +122,9 @@ const NewCustomer = () => {
                     
 
                    
-                    <button type="submit" className="btn btn-primary mr-2">Proceed</button>
+                    <button type="submit" className="btn btn-primary mr-2" disabled={isProcessing}>
+                    {isProcessing ? 'Processing...' : 'Proceed'}
+                    </button>
                     {/* <button className="btn btn-light">Cancel</button> */}
                       {/* <button className="btn btn-primary mr-2" disabled={isSubmitting}> {isSubmitting ? 'Submitting..' : 'Save'}</button> */}
                   </form> 

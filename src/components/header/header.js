@@ -273,19 +273,24 @@ const Header = () => {
               <li className="nav-item">
                 <a href="#" className="nav-link">
                   <i className="link-icon icon-wallet"></i>
-                  <span className="menu-title">DSS-CRO</span>
+                  <span className="menu-title">Events</span>
                   <i className="menu-arrow"></i>
                 </a>
                 <div className="submenu">
                   <ul className="submenu-item">
                     <li className="nav-item">
                       <NavLink className="nav-link" to="/crodss">
-                        CRO-DSS Alignment
+                        MDA Customers
                       </NavLink>
                     </li>
                     <li className="nav-item">
                       <NavLink className="nav-link" to="/billdistribution">
-                        All CRO(s)
+                        Event Analysis
+                      </NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <NavLink className="nav-link" to="/billdistribution">
+                       DT Analysis
                       </NavLink>
                     </li>
                     
@@ -359,7 +364,7 @@ const Header = () => {
                   className="nav-link"
                 >
                   <i className="link-icon icon-docs"></i>
-                  <span className="menu-title">API Documentation</span>
+                  <span className="menu-title">MAP Payments</span>
                 </a>
               </li>
             </ul>

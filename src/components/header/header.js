@@ -284,15 +284,15 @@ const Header = () => {
                       </NavLink>
                     </li>
                     <li className="nav-item">
-                      <NavLink className="nav-link" to="/billdistribution">
+                      <NavLink className="nav-link" to="/powerupdown">
                         Event Analysis
                       </NavLink>
                     </li>
-                    <li className="nav-item">
+                    {/* <li className="nav-item">
                       <NavLink className="nav-link" to="/billdistribution">
                        Energy Reading
                       </NavLink>
-                    </li>
+                    </li> */}
                     
                   </ul>
                 </div>

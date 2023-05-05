@@ -33,6 +33,7 @@ import DynamicData from "./components/layout/dynamicData";
 import PendingCustomer from "./components/customers/pendingcustomer";
 import AddFeeder from "./components/feeder/addfeeder";
 import MDACustomers from "./components/ami/mdacustomers";
+import PowerUpDown from "./components/ami/powerupdown";
 
 const App = () => {
   return (
@@ -108,10 +109,10 @@ const App = () => {
                 element={<MDACustomers />}
                 />
 
-
-
-
-
+                <Route
+                path="powerupdown"
+                element={<PowerUpDown />}
+                />
 
 
 

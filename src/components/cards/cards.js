@@ -61,13 +61,13 @@ const Cards = ({ stats }) => {
         <div className="card bg-success text-white border-0">
           <div className="card-body">
             <div className="d-flex align-items-center">
-              <i className="icon-user-following icon-lg"></i>
+              <i className="icon-power icon-lg"></i>
               <div className="ml-4">
                 <Link to="" className="linkCards">
-                  <h4 className="font-weight-light">Total Staff</h4>
+                  <h4 className="font-weight-light">Online Feeders</h4>
                 </Link>
-                <h3 className="font-weight-light mb-3">{stats.outsourced_staff}</h3>
-                <p className="mb-0 font-weight-light">{stats.outsourced_staff} outsourced </p>
+                <h3 className="font-weight-light mb-3">0</h3>
+                <p className="mb-0 font-weight-light">Total Event - 10 </p>
               </div>
             </div>
           </div>

@@ -1,11 +1,12 @@
 import React, {Fragment, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { useGetAllFeederQuery } from '../../redux/services/feeder/feederService';
 import { setFeeder, setDataFeeder } from './feederSlice';
 import FeederCard from './feedercard';
 import PageLoader from "../spinner/loader";
 import DataTable from "../datatable";
+// import AddFeeder from './addfeeder';
 
 const Feeder = () => {
 
@@ -48,7 +49,7 @@ const Feeder = () => {
     { title: "Asset ID", field: "Assetid" },
     { title: "Asset Type", field: "assettype" },
     { title: "Feeder Name", field: "F11kvFeeder_Name" },
-    { title: "Service Center", field: "Biz_Hub" },
+    { title: "Biz Hub", field: "Biz_Hub" },
     { title: "Longitude", field: "longtitude" },
     { title: "Latitude", field: "latitude" },
     { title: "Date Entered", field: "Capture DateTime" },
@@ -71,9 +72,12 @@ const Feeder = () => {
              &nbsp;&nbsp;
              <button class="btn btn-icons btn-rounded btn-secondary" onClick={() => refetch()}><span class="icon-refresh"></span></button>
              &nbsp;&nbsp;
-                  <button type="button" class="btn btn-info btn-fw">
+             <Link to="/add_feeder" class="btn btn-info btn-fw">
+             <i class="icon-cloud-upload"></i>Add Feeder
+             </Link>
+                  {/* <button type="button" class="btn btn-info btn-fw">
                   <i class="icon-cloud-upload"></i>Add Feeder
-                  </button>
+                  </button> */}
                   <div className="btn  btn-fw">
                   <select className="form-control">
                     <option value="">Select Feeder Type</option>

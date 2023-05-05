@@ -17,11 +17,21 @@ const PendingCustomer = () => {
     const { crmd } =  useSelector((state) => state.customer) || [];
  
 
-    const handleButtonClick = async (id) => {
+    const handleButtonApprove = async (id) => {
         try {
             const result = await postUpdateCRMD({ id: id, status: 'approved', userid: userInfo.id });
             refetch();
             notify("success",  "CRMD Completed Approved");
+          } catch (error) {
+            console.error(error);
+          }
+    }
+
+    const handleButtonVerify = async (id) => {
+        try {
+            const result = await postUpdateCRMD({ id: id, status: 'verified', userid: userInfo.id });
+            refetch();
+            notify("success",  "CRMD Completed Verified and Completed");
           } catch (error) {
             console.error(error);
           }
@@ -79,11 +89,11 @@ const PendingCustomer = () => {
                             <i class="icon-user"></i>
                             View
                           </button>&nbsp;
-                          <button onClick={() => handleButtonClick(customer?._id)} className="btn btn-xs btn-outline-danger">
+                          <button onClick={() => handleButtonApprove(customer?._id)} className="btn btn-xs btn-outline-danger">
                             <i class="icon-check"></i>
                             Approve
                           </button>&nbsp;
-                          <button onClick={() => handleButtonClick(customer?._id)} className="btn btn-xs btn-outline-success">
+                          <button onClick={() => handleButtonVerify(customer?._id)} className="btn btn-xs btn-outline-success">
                             <i class="icon-check"></i>
                             Verify
                           </button>

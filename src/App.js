@@ -31,6 +31,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DynamicData from "./components/layout/dynamicData";
 import PendingCustomer from "./components/customers/pendingcustomer";
+import AddFeeder from "./components/feeder/addfeeder";
+import MDACustomers from "./components/ami/mdacustomers";
 
 const App = () => {
   return (
@@ -95,6 +97,16 @@ const App = () => {
                 path="/crmdetails"
                 element={<PendingCustomer />}
               />
+
+              <Route
+                path="add_feeder"
+                element={<AddFeeder />}
+                />
+
+                <Route
+                path="mdacustomers"
+                element={<MDACustomers />}
+                />
 
 
 

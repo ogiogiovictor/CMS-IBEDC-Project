@@ -237,11 +237,11 @@ const Header = () => {
                         Transmission Sub Stations
                       </NavLink>
                     </li>
-                    <li className="nav-item">
+                    {/* <li className="nav-item">
                       <NavLink className="nav-link" to="/powertransformer">
                         Power Transformer
                       </NavLink>
-                    </li>
+                    </li> */}
                     
                   </ul>
                 </div>
@@ -279,7 +279,7 @@ const Header = () => {
                 <div className="submenu">
                   <ul className="submenu-item">
                     <li className="nav-item">
-                      <NavLink className="nav-link" to="/crodss">
+                      <NavLink className="nav-link" to="/mdacustomers">
                         MDA Customers
                       </NavLink>
                     </li>
@@ -290,7 +290,7 @@ const Header = () => {
                     </li>
                     <li className="nav-item">
                       <NavLink className="nav-link" to="/billdistribution">
-                       DT Analysis
+                       Energy Reading
                       </NavLink>
                     </li>
                     

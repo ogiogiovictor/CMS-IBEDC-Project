@@ -10,6 +10,7 @@ const AddFeeder = () => {
         CDateTime: '',
         F11kvFeeder_Name: '',
         Feeder_CBSerial: '',
+        F11kvFeeder_parent: '',
         F11kvFeeder_CBYearofManufacture: '',
         F11kvFeeder_CB_Make: '',
         F11kvFeeder_CB_country_of_Manufacture: '',
@@ -29,7 +30,8 @@ const AddFeeder = () => {
         F11kvFeeder_Manufacture: '',
         F11kvFeeder_Ratedcurrent: '',
         F11kvFeeder_Ratedvoltage: '',
-        F11kvFeeder_CB_Type: ''
+        F11kvFeeder_CB_Type: '',
+        assettype: '',
       });
 
       const [touched, setTouched] = useState({
@@ -41,7 +43,7 @@ const AddFeeder = () => {
         F11kvFeeder_Relay_Make: false,
         F11kvFeeder_Relay_Type: false,
         F11kvFeeder_CTRatio: false,
-
+        F11kvFeeder_parent: false,
         F11kvFeeder_RMUSerial: false,
         F11kvFeeder_RMUYearofManufacture: false,
         F11kvFeeder_RMU_Make: false,
@@ -55,7 +57,12 @@ const AddFeeder = () => {
         F11kvFeeder_Manufacture: false,
         F11kvFeeder_Ratedcurrent: false,
         F11kvFeeder_Ratedvoltage: false,
-        F11kvFeeder_CB_Type: false
+        F11kvFeeder_CB_Type: false,
+        latitude: false,
+        longtitude: false,
+        naccode: false,
+        CDateTime: false,
+        assettype: false,
       });
     
       const onChangeHandler = (e) => {
@@ -68,7 +75,8 @@ const AddFeeder = () => {
 
       const postCustomer = async (e) => {
         e.preventDefault();
-
+        setIsProcessing(true);
+        
       };
 
     return (
@@ -88,6 +96,27 @@ const AddFeeder = () => {
                     
                    { values.errorMessage && <div className="alert alert-danger" role="alert"> {values.errorMessage} </div> }
                       
+                   <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Select AssetType</label>
+                          <div class="col-sm-8">
+                            <select   onChange={onChangeHandler} class="form-control"  name="assettype">
+                            <option value="">Select Feeder</option>
+                            <option value="11kv Feeder">11kv Feeder</option>
+                            <option value="33kv Feeder">33kv Feeder</option>
+                            </select>
+                         
+                          </div>
+                          <small>FeederName Cannot be empty</small>
+                        </div>
+                      </div>
+                     
+                   </div>
+
+
+
+
                    <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
@@ -259,20 +288,30 @@ const AddFeeder = () => {
                    <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Firstname</label>
+                          <label class="col-sm-4 col-form-label">Feedr RMU Make</label>
                           <div class="col-sm-8">
-                          <input type="text" value="" class="form-control" disabled />
+                          <input type="text" class="form-control" 
+                          name="F11kvFeeder_RMU_Make"
+                          value={values.F11kvFeeder_RMU_Make}
+                            onChange={onChangeHandler}
+                            onBlur={onBlurHandler}
+                            touched={touched.F11kvFeeder_RMU_Make.toString()}
+                          
+                          />
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">New Firstname</label>
+                          <label class="col-sm-4 col-form-label">Feeder RMU Country of Manufacture</label>
                           <div class="col-sm-8">
                             <input type="text" 
                             class="form-control"
-                            name="new_firstname"
-                            value=""
+                            name="F11kvFeeder_RMU_country_of_Manufacture"
+                            value={values.F11kvFeeder_RMU_country_of_Manufacture}
+                            onChange={onChangeHandler}
+                            onBlur={onBlurHandler}
+                            touched={touched.F11kvFeeder_RMU_country_of_Manufacture.toString()}
                             />
                           </div>
                         </div>
@@ -283,20 +322,29 @@ const AddFeeder = () => {
                    <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Firstname</label>
+                          <label class="col-sm-4 col-form-label">Feeder RMU Type</label>
                           <div class="col-sm-8">
-                          <input type="text" value="" class="form-control" disabled />
+                          <input type="text" class="form-control"
+                          name="F11kvFeeder_RMU_Type"
+                          value={values.F11kvFeeder_RMU_Type}
+                          onChange={onChangeHandler}
+                          onBlur={onBlurHandler}
+                          touched={touched.F11kvFeeder_RMU_Type.toString()}
+                          />
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">New Firstname</label>
+                          <label class="col-sm-4 col-form-label">Feeder Route Length</label>
                           <div class="col-sm-8">
                             <input type="text" 
                             class="form-control"
-                            name="new_firstname"
-                            value=""
+                            name="F11kvFeeder_Route_Length"
+                            value={values.F11kvFeeder_Route_Length}
+                            onChange={onChangeHandler}
+                            onBlur={onBlurHandler}
+                            touched={touched.F11kvFeeder_Route_Length.toString()}
                             />
                           </div>
                         </div>
@@ -306,45 +354,220 @@ const AddFeeder = () => {
                    <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Firstname</label>
+                          <label class="col-sm-4 col-form-label">Feeder Conductor Size</label>
                           <div class="col-sm-8">
-                          <input type="text" value="" class="form-control" disabled />
+                          <input type="text"  class="form-control"
+                          name="F11kvFeeder_Conductor_Size" 
+                          value={values.F11kvFeeder_Conductor_Size}
+                          onChange={onChangeHandler}
+                          onBlur={onBlurHandler}
+                          touched={touched.F11kvFeeder_Conductor_Size.toString()}
+                          />
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">New Firstname</label>
+                          <label class="col-sm-4 col-form-label">Feeder Aluminium Conduction</label>
                           <div class="col-sm-8">
                             <input type="text" 
                             class="form-control"
-                            name="new_firstname"
-                            value=""
+                            name="F11kvFeeder_Aluminium_Conductor"
+                            value={values.F11kvFeeder_Conductor_Size}
+                            onChange={onChangeHandler}
+                            onBlur={onBlurHandler}
+                            touched={touched.F11kvFeeder_Conductor_Size.toString()}
                             />
                           </div>
                         </div>
                       </div>
                    </div>
-                    
-                    
-                    {/* <div className="form-group">
-                      <label htmlFor="surname">Feeder Name</label>
-                      <input type="text" 
-                      className="form-control" 
-                      name="feederName"
-                      value={values.F11kvFeeder_Name}
-                      onChange={onChangeHandler}
-                      onBlur={onBlurHandler}
-                      touched={touched.F11kvFeeder_Name.toString()}
-                      placeholder="Enter Feeder" required
-                      />
-                      <small>TICKET ID Cannot be empty</small>
-                    </div> */}
-                    
+
 
                    
+               
+
+
+                   <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Feeder Up Type</label>
+                          <div class="col-sm-8">
+                          <input type="text"  class="form-control"
+                          name="F11kvFeeder_UP_Type" 
+                          value={values.F11kvFeeder_UP_Type}
+                          onChange={onChangeHandler}
+                          onBlur={onBlurHandler}
+                          touched={touched.F11kvFeeder_UP_Type.toString()}
+                          />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Feeder Up Length</label>
+                          <div class="col-sm-8">
+                            <input type="text" 
+                            class="form-control"
+                            name="F11kvFeeder_UP_Length"
+                            value={values.F11kvFeeder_UP_Length}
+                            onChange={onChangeHandler}
+                            onBlur={onBlurHandler}
+                            touched={touched.F11kvFeeder_UP_Length.toString()}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                   </div>
+         
+
+
+
+
+
+                   <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Feeder Manufacture</label>
+                          <div class="col-sm-8">
+                          <input type="text"  class="form-control"
+                          name="F11kvFeeder_Manufacture" 
+                          value={values.F11kvFeeder_Manufacture}
+                          onChange={onChangeHandler}
+                          onBlur={onBlurHandler}
+                          touched={touched.F11kvFeeder_Manufacture.toString()}
+                          />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Feeder Rated Current</label>
+                          <div class="col-sm-8">
+                            <input type="text" 
+                            class="form-control"
+                            name="F11kvFeeder_Ratedcurrent"
+                            value={values.F11kvFeeder_Ratedcurrent}
+                            onChange={onChangeHandler}
+                            onBlur={onBlurHandler}
+                            touched={touched.F11kvFeeder_Ratedcurrent.toString()}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                   </div>
+
+
+
+
+
+
+
+                   <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Feeder Rated Voltage</label>
+                          <div class="col-sm-8">
+                          <input type="text"  class="form-control"
+                          name="F11kvFeeder_Ratedvoltage" 
+                          value={values.F11kvFeeder_Ratedvoltage}
+                          onChange={onChangeHandler}
+                          onBlur={onBlurHandler}
+                          touched={touched.F11kvFeeder_Ratedvoltage.toString()}
+                          />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Feeder CB Type</label>
+                          <div class="col-sm-8">
+                            <input type="text" 
+                            class="form-control"
+                            name="F11kvFeeder_CB_Type"
+                            value={values.F11kvFeeder_CB_Type}
+                            onChange={onChangeHandler}
+                            onBlur={onBlurHandler}
+                            touched={touched.F11kvFeeder_CB_Type.toString()}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                   </div>
+
+
+
+                   <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Latitude</label>
+                          <div class="col-sm-8">
+                          <input type="text"  class="form-control"
+                          name="latitude" 
+                          value={values.latitude}
+                          onChange={onChangeHandler}
+                          onBlur={onBlurHandler}
+                          touched={touched.latitude.toString()}
+                          />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Longitude</label>
+                          <div class="col-sm-8">
+                            <input type="text" 
+                            class="form-control"
+                            name="longtitude"
+                            value={values.longtitude}
+                            onChange={onChangeHandler}
+                            onBlur={onBlurHandler}
+                            touched={touched.longtitude.toString()}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                   </div>
+
+
+
+                   <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Naccode</label>
+                          <div class="col-sm-8">
+                          <input type="text"  class="form-control"
+                          name="naccode" 
+                          value={values.naccode}
+                          onChange={onChangeHandler}
+                          onBlur={onBlurHandler}
+                          touched={touched.naccode.toString()}
+                          />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Captured DateTime</label>
+                          <div class="col-sm-8">
+                            <input type="text" 
+                            class="form-control"
+                            name="CDateTime"
+                            readonly
+                            value={new Date()}
+                            onChange={onChangeHandler}
+                            onBlur={onBlurHandler}
+                            touched={touched.CDateTime.toString()}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                   </div>
+      
+                    
+                   
                     <button type="submit" className="btn btn-primary mr-2" disabled={isProcessing}>
-                    {isProcessing ? 'Processing...' : 'Proceed'}
+                    {isProcessing ? 'Processing...' : 'Save'}
                     </button>
                   
                   </form> 

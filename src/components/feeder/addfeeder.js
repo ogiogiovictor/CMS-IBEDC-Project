@@ -75,7 +75,50 @@ const AddFeeder = () => {
 
       const postCustomer = async (e) => {
         e.preventDefault();
-        setIsProcessing(true);
+        if(!values.assettype){
+          setValues({...values, errorMessage: 'Please select Asset Type'});
+          return;
+        }else {
+
+           //Collect data from the form
+          const idata = { 
+            latitude: values.latitude,
+            longtitude: values.longtitude,
+            naccode: values.naccode,
+            CDateTime: values.CDateTime,
+            F11kvFeeder_Name: values.F11kvFeeder_Name,
+            Feeder_CBSerial: values.Feeder_CBSerial,
+            F11kvFeeder_parent: values.F11kvFeeder_parent,
+            F11kvFeeder_CBYearofManufacture: values.F11kvFeeder_CBYearofManufacture,
+            F11kvFeeder_CB_Make: values.F11kvFeeder_CB_Make,
+            F11kvFeeder_CB_country_of_Manufacture: values.F11kvFeeder_CB_country_of_Manufacture,
+            F11kvFeeder_Relay_Make: values.F11kvFeeder_Relay_Make,
+            F11kvFeeder_Relay_Type: values.F11kvFeeder_Relay_Type,
+            F11kvFeeder_CTRatio: values.F11kvFeeder_CTRatio,
+            F11kvFeeder_RMUSerial: values.F11kvFeeder_RMUSerial,
+            F11kvFeeder_RMUYearofManufacture: values.F11kvFeeder_RMUYearofManufacture,
+            F11kvFeeder_RMU_Make: values.F11kvFeeder_RMU_Make,
+            F11kvFeeder_RMU_country_of_Manufacture: values.F11kvFeeder_RMU_country_of_Manufacture,
+            F11kvFeeder_RMU_Type: values.F11kvFeeder_RMU_Type,
+            F11kvFeeder_Route_Length: values.F11kvFeeder_Route_Length,
+            F11kvFeeder_Conductor_Size: values.F11kvFeeder_Conductor_Size,
+            F11kvFeeder_Aluminium_Conductor: values.F11kvFeeder_Aluminium_Conductor,
+            F11kvFeeder_UP_Type: values.F11kvFeeder_UP_Type,
+            F11kvFeeder_UP_Length: values.F11kvFeeder_UP_Length,
+            F11kvFeeder_Manufacture: values.F11kvFeeder_Manufacture,
+            F11kvFeeder_Ratedcurrent: values.F11kvFeeder_Ratedcurrent,
+            F11kvFeeder_Ratedvoltage: values.F11kvFeeder_Ratedvoltage,
+            F11kvFeeder_CB_Type: values.F11kvFeeder_CB_Type,
+            assettype: values.assettype,
+          }
+
+          try {
+            setIsProcessing(true);
+          }catch(e){
+            console.log(e);
+          }
+        }
+      
         
       };
 
@@ -101,14 +144,12 @@ const AddFeeder = () => {
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Select AssetType</label>
                           <div class="col-sm-8">
-                            <select   onChange={onChangeHandler} class="form-control"  name="assettype">
+                            <select  onChange={onChangeHandler} class="form-control"  name="assettype">
                             <option value="">Select Feeder</option>
                             <option value="11kv Feeder">11kv Feeder</option>
                             <option value="33kv Feeder">33kv Feeder</option>
                             </select>
-                         
                           </div>
-                          <small>FeederName Cannot be empty</small>
                         </div>
                       </div>
                      
@@ -128,9 +169,11 @@ const AddFeeder = () => {
                            onChange={onChangeHandler}
                            onBlur={onBlurHandler}
                            touched={touched.F11kvFeeder_Name.toString()}
+                           placeholder='Please enter Feeder Name' required
                            />
+                           <small>Feeder Name Cannot be empty</small>
                           </div>
-                          <small>FeederName Cannot be empty</small>
+                          
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -144,6 +187,7 @@ const AddFeeder = () => {
                            onChange={onChangeHandler}
                            onBlur={onBlurHandler}
                            touched={touched.Feeder_CBSerial.toString()}
+                           placeholder='Please enter Feeder Serial CB' required
                             />
                             <small>Feeder CB Serial Cannot be empty</small>
                           </div>
@@ -164,7 +208,9 @@ const AddFeeder = () => {
                           onChange={onChangeHandler}
                           onBlur={onBlurHandler}
                           touched={touched.F11kvFeeder_CBYearofManufacture.toString()}
+                          placeholder='Please enter Manufacture Year' required
                           />
+                           <small>Feeder CB Serial Cannot be empty</small>
                           </div>
                         </div>
                       </div>
@@ -508,7 +554,9 @@ const AddFeeder = () => {
                           onChange={onChangeHandler}
                           onBlur={onBlurHandler}
                           touched={touched.latitude.toString()}
+                          placeholder='Please enter Latitude' required
                           />
+                          <small>Please enter Latitude</small>
                           </div>
                         </div>
                       </div>
@@ -523,7 +571,9 @@ const AddFeeder = () => {
                             onChange={onChangeHandler}
                             onBlur={onBlurHandler}
                             touched={touched.longtitude.toString()}
+                            placeholder='Please enter Manufacture Year' required
                             />
+                            <small>Please enter Longitude</small>
                           </div>
                         </div>
                       </div>

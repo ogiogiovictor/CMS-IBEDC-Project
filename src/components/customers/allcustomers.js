@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetCustomerDetailsByTypeQuery } from "../../redux/services/customer/customerService";
-import { setAllCustomers, setPostpaidCards, setPrepaidCards } from "../../redux/customer/customerSlice";
+import { setAllCustomers, setPostpaidCards, setPrepaidCards, setFilterStatus, setFilteredCustomers  } from "../../redux/customer/customerSlice";
 import PageLoader from "../spinner/loader";
 import DataTable from "../datatable";
 import CustomerCard from "../createcustomer/customercard";
@@ -14,37 +14,37 @@ const AllCustomers = () => {
   const { customers, postpaidCards, prepaidCards } =
     useSelector((state) => state.customer) || [];
   const navigate = useNavigate();
-  const { customerType } = useParams();
-  const stringType =
-    customerType &&
-    `${customerType.charAt(0).toUpperCase()}${customerType
-      .slice(1)
-      .toLowerCase()}`;
+  const { customerType, type } = useParams();
+  const stringType = customerType &&  `${customerType.charAt(0).toUpperCase()}${customerType.slice(1).toLowerCase()}`;
 
-  console.log(stringType);
+  const filterStatus = useSelector((state) => state.customer.filterStatus);
+
+  const userStatus = type && type.toUpperCase();
+ // console.log(stringType);
   const { data, isFetching, refetch } = useGetCustomerDetailsByTypeQuery(
-    { userQuery: stringType, pageNo: currentPage },
-    "",
-    {
-      pollingInterval: 900000,
-    }
+    { userQuery: stringType, userStatus: filterStatus, pageNo: currentPage }
   );
+
+  const handleFilterStatusChange = (statusCode) => {
+     dispatch(setFilterStatus(statusCode));
+     console.log(filterStatus);
+  };
+
 
   useEffect(() => {
     if (currentPage && data) {
       refetch();
       dispatch(setAllCustomers(data?.data?.customers?.data));
-      customerType === "prepaid" &&
-        dispatch(setPrepaidCards(data?.data?.prepaid));
-      customerType === "postpaid" &&
-        dispatch(setPostpaidCards(data?.data?.postpaid));
+      filterStatus == null && dispatch(setAllCustomers(data?.data?.customers?.data));
+      userStatus && dispatch(setAllCustomers(data?.data?.customers?.data));
+      customerType === "prepaid" && dispatch(setPrepaidCards(data?.data?.prepaid));
+      customerType === "postpaid" && dispatch(setPostpaidCards(data?.data?.postpaid));
     }
-  }, [data, dispatch, currentPage, refetch, customerType]);
+  }, [data, dispatch, currentPage, refetch, customerType, filterStatus]);
 
-  console.log(data);
+ // console.log(data);
 
   const handleActionClick = ({ FAccountNo, DistributionID }) => {
-    
     navigate(`/customerinfo/${FAccountNo}/${DistributionID}`);
     window.scrollTo(0, 0);
   };
@@ -69,9 +69,9 @@ const AllCustomers = () => {
     <>
       {customerType ? (
         customerType === "postpaid" ? (
-          <CustomerCard statusCard={postpaidCards} />
+          <CustomerCard statusCard={postpaidCards} onFilterStatusChange={handleFilterStatusChange} />
         ) : customerType === "prepaid" ? (
-          <CustomerCard statusCard={prepaidCards} />
+          <CustomerCard statusCard={prepaidCards} onFilterStatusChange={handleFilterStatusChange} />
         ) : (
           ""
         )

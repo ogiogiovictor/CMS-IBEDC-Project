@@ -10,6 +10,7 @@ const initialState = {
   loading: false,
   error: null,
   success: false,
+  filterStatus: null,
 };
 
 const customerSlice = createSlice({
@@ -22,6 +23,22 @@ const customerSlice = createSlice({
 
     setAllCustomers: (state, { payload }) => {
       state.customers = payload;
+    },
+
+    setFilterStatus: (state, { payload }) => {
+      state.filterStatus = payload;
+    },
+
+    setFilteredCustomers: (state) => {
+      if (state.filterStatus) {
+        return {
+          ...state,
+          customers: state.customers.filter(
+            (customer) => customer.StatusCode === state.filterStatus
+          )
+        };
+      }
+      return state;
     },
 
     setPostpaidCards: (state, action) => {
@@ -48,6 +65,8 @@ export const {
   setPrepaidCards,
   setCustomerInfo,
   setTicketInfo,
-  setCrmd
+  setCrmd,
+  setFilterStatus,
+  setFilteredCustomers,
 } = customerSlice.actions;
 export default customerSlice.reducer;

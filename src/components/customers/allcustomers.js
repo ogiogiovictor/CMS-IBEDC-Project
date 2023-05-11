@@ -6,10 +6,13 @@ import { setAllCustomers, setPostpaidCards, setPrepaidCards, setFilterStatus, se
 import PageLoader from "../spinner/loader";
 import DataTable from "../datatable";
 import CustomerCard from "../createcustomer/customercard";
+import Popup from "../modal/popup";
 
 const AllCustomers = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchText, setSearchText] = useState("");
+  const [isOpen, setIsOpen] = useState(false); // State for popup
+
   const dispatch = useDispatch();
   const { customers, postpaidCards, prepaidCards } =
     useSelector((state) => state.customer) || [];
@@ -18,6 +21,9 @@ const AllCustomers = () => {
   const stringType = customerType &&  `${customerType.charAt(0).toUpperCase()}${customerType.slice(1).toLowerCase()}`;
 
   const filterStatus = useSelector((state) => state.customer.filterStatus);
+  
+  const openPopup = () => {  setIsOpen(true); };
+  const closePopup = () => { setIsOpen(false); };
 
   const userStatus = type && type.toUpperCase();
  // console.log(stringType);
@@ -63,6 +69,30 @@ const AllCustomers = () => {
   const filteredCustomers = customers?.filter((customer) =>
     customer?.FirstName?.toLowerCase().includes(searchText?.toLowerCase())
   );
+
+
+  const customContent = (handleStartDateChange, handleEndDateChange, handleSubmit) => (
+    <div>
+      <p style={{ marginBottom: '10px' }}>
+        <label>
+          Start Date:
+          <input type="date"  onChange={handleStartDateChange} style={{ marginLeft: '10px' }} />
+        </label>
+      </p>
+      <p style={{ marginBottom: '10px' }}>
+        <label>
+          End Date:
+          <input type="date"  onChange={handleEndDateChange} style={{ marginLeft: '13px' }} />
+        </label>
+      </p>
+      <p>
+        <button  className="btn btn-danger btn-xs"  type="button" onClick={handleSubmit}>
+          Submit
+        </button>
+      </p>
+    </div>
+  );
+  
 
 
   return (
@@ -111,11 +141,13 @@ const AllCustomers = () => {
                 <button type="submit" className="btn btn-primary ml-3">
                   Search
                 </button>
-                <button type="submit" className="btn btn-danger ml-4">
+                <button type="submit" className="btn btn-danger ml-4" onClick={openPopup}>
                   Export(excel)
                 </button>
                
               </div>
+
+              <Popup isOpen={isOpen} onClose={closePopup} title="Advance Search" content={customContent} />
 
               {isFetching ? (
                 <PageLoader />

@@ -35,6 +35,7 @@ import AddFeeder from "./components/feeder/addfeeder";
 import MDACustomers from "./components/ami/mdacustomers";
 import PowerUpDown from "./components/ami/powerupdown";
 import AddThirtyFeeder from "./components/feeder/addthirtyfeeder";
+import AddTransformer from "./components/dss/addtransfomer";
 
 const App = () => {
   return (
@@ -119,6 +120,15 @@ const App = () => {
                   path="add_thirty_feeder"
                   element={<AddThirtyFeeder />}
                   />
+
+                <Route
+                  path="add_transfomer"
+                  element={<AddTransformer />}
+                  />
+
+
+
+
 
 
 

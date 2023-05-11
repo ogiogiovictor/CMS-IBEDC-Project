@@ -1,12 +1,13 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams  } from "react-router-dom";
+import { useNavigate, useParams, Link  } from "react-router-dom";
 import TransformerCard from './transformercards';
 import { useGetAllDistributionQuery } from '../../redux/services/dss/dtService';
 import { setDss, setDataDss, setDssInfo } from './transformerSlice';
 import PageLoader from "../spinner/loader";
 import DataTable from "../datatable";
 import DynamicData from '../layout/dynamicData';
+import Popup from '../modal/popup';
 
 const Transformer = () => {
 
@@ -15,6 +16,7 @@ const Transformer = () => {
   const dispatch = useDispatch();
 
   const [selectedObject, setSelectedObject] = useState(null);
+  const [isOpen, setIsOpen] = useState(false); // State for popup
 
   const dssInfo = useSelector((state) => state.dss.dssInfo);
 
@@ -28,6 +30,9 @@ const Transformer = () => {
   );
 
   const navigate = useNavigate();
+
+  const openPopup = () => {  setIsOpen(true); };
+  const closePopup = () => { setIsOpen(false); };
 
 
   const handleTransformerClick = (elevenDt) => {
@@ -85,6 +90,29 @@ const Transformer = () => {
       { title: "Status", field: "DSS_11KV_415V_cus_profile" },
     ];
 
+
+    const customContent = (handleStartDateChange, handleEndDateChange, handleSubmit) => (
+      <div>
+        <p style={{ marginBottom: '10px' }}>
+          <label>
+            Start Date:
+            <input type="date"  onChange={handleStartDateChange} style={{ marginLeft: '10px' }} />
+          </label>
+        </p>
+        <p style={{ marginBottom: '10px' }}>
+          <label>
+            End Date:
+            <input type="date"  onChange={handleEndDateChange} style={{ marginLeft: '13px' }} />
+          </label>
+        </p>
+        <p>
+          <button  className="btn btn-danger btn-xs"  type="button" onClick={handleSubmit}>
+            Submit
+          </button>
+        </p>
+      </div>
+    );
+
    
 
     return (
@@ -105,16 +133,26 @@ const Transformer = () => {
                   <h4 className="card-title">All Distribution Sub Stations &nbsp;&nbsp;
                   <button class="btn btn-icons btn-rounded btn-secondary" onClick={() => refetch()}><span class="icon-refresh"></span></button>
                   &nbsp;&nbsp;
-                  <button type="button" class="btn btn-info btn-fw">
+
+                  <Link to="/add_transfomer" class="btn btn-danger btn-fw">
+                  <i class="icon-cloud-upload"></i>Add Transformer
+                  </Link>
+                  {/* <button type="button" class="btn btn-info btn-fw">
                   <i class="icon-cloud-upload"></i>Add Distribution Station(DT)
-                  </button>
+                  </button> */}
                  
                   </h4>
                   
                   <div class="form-group d-flex">
                           <input type="text" class="form-control" placeholder="Search Distribution Station..." />
                           <button type="submit" class="btn btn-primary ml-3">Search</button>
+                          <button type="submit" className="btn btn-danger ml-4" onClick={openPopup}>
+                          Export(excel)
+                        </button>
                     </div>
+
+                    <Popup isOpen={isOpen} onClose={closePopup} title="Advance Search" content={customContent} />
+
                       
                   <div className="table-responsive">
                   <DataTable 

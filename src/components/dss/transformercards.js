@@ -58,7 +58,7 @@ const TransformerCard = ({ dssCard, onFilterStatusChange }) => {
                 <i className="icon-screen-desktop icon-lg"></i>
                 <div className="ml-4">
                   <h4 className="font-weight-light">DT By Business Hubs</h4>
-                  <h3 className="font-weight-light mb-3">0</h3>
+                  <h3 className="font-weight-light mb-3"></h3>
                 </div>
               </div>
             </div>

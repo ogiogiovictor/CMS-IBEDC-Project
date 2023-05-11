@@ -73,18 +73,12 @@ const Feeder = () => {
              <button class="btn btn-icons btn-rounded btn-secondary" onClick={() => refetch()}><span class="icon-refresh"></span></button>
              &nbsp;&nbsp;
              <Link to="/add_feeder" class="btn btn-info btn-fw">
-             <i class="icon-cloud-upload"></i>Add Feeder
+             <i class="icon-cloud-upload"></i>Add 11KV Feeder
              </Link>
-                  {/* <button type="button" class="btn btn-info btn-fw">
-                  <i class="icon-cloud-upload"></i>Add Feeder
-                  </button> */}
-                  <div className="btn  btn-fw">
-                  <select className="form-control">
-                    <option value="">Select Feeder Type</option>
-                    <option value="33kv Feeder">11kv Feeder</option>
-                    <option value="11kv Feeder">33kv Feeder</option>
-                  </select>
-                  </div>
+             &nbsp;&nbsp;
+             <Link to="/add_thirty_feeder" class="btn btn-danger btn-fw">
+             <i class="icon-cloud-upload"></i>Add 33KV Feeder
+             </Link>
              </h4>
 
              <div class="form-group d-flex">

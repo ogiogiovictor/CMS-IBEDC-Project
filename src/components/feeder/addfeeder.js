@@ -1,8 +1,30 @@
 import React, { useState, useEffect  } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAddFeederMutation } from '../../redux/services/feeder/feederService';
+import { notify  } from '../../utils/notify';
+
 
 const AddFeeder = () => {
 
     const [isProcessing, setIsProcessing] = useState(false);
+    const [addFeeder, { isLoading }] = useAddFeederMutation();
+
+    const [latitude, setLatitude] = useState(null);
+    const [longitude, setLongitude] = useState(null);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+          setLatitude(position.coords.latitude);
+          setLongitude(position.coords.longitude);
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }, []);
+
     const [values, setValues] = useState({
         latitude: '',
         longtitude: '',
@@ -82,8 +104,8 @@ const AddFeeder = () => {
 
            //Collect data from the form
           const idata = { 
-            latitude: values.latitude,
-            longtitude: values.longtitude,
+            latitude: latitude?? values.latitude,
+            longtitude: longitude?? values.longtitude,
             naccode: values.naccode,
             CDateTime: values.CDateTime,
             F11kvFeeder_Name: values.F11kvFeeder_Name,
@@ -114,8 +136,29 @@ const AddFeeder = () => {
 
           try {
             setIsProcessing(true);
-          }catch(e){
-            console.log(e);
+            const result =  await addFeeder(idata).unwrap();
+            
+            if(result.data){
+              notify("success", "Feeder Successfully Added" || "Process Completed Successfully");
+             navigate('/feeders');
+             }else{
+              setIsProcessing(false); // Enable the button back
+              setValues({...values, errorMessage: 'Error Added Feeder. Please contact IT'});
+              return;
+             }
+
+          }catch(error){
+           // setIsProcessing(false);
+            if (error.status === 500) {
+              // Handle error 500 here...
+              setIsProcessing(false); // Enable the button back
+              setValues({...values, errorMessage: 'Ooh something went wrong, Please contact helpdesk.'});
+              return;
+            }
+            setIsProcessing(false);
+            // Handle other errors here...
+            setValues({...values, errorMessage: error.message});
+            return;
           }
         }
       
@@ -127,7 +170,7 @@ const AddFeeder = () => {
             <div className="col-md-10 grid-margin stretch-card">
               <div className="card">
                 <div className="card-body">
-                  <h4 className="card-title">ADD NEW FEEDER</h4>
+                  <h4 className="card-title">ADD NEW 11KV FEEDER</h4>
                   <p className="card-description">
                   <hr/>
                    IBEDC Feeder Management
@@ -146,8 +189,7 @@ const AddFeeder = () => {
                           <div class="col-sm-8">
                             <select  onChange={onChangeHandler} class="form-control"  name="assettype">
                             <option value="">Select Feeder</option>
-                            <option value="11kv Feeder">11kv Feeder</option>
-                            <option value="33kv Feeder">33kv Feeder</option>
+                            <option value="11KV Feeder">11kv Feeder</option>
                             </select>
                           </div>
                         </div>

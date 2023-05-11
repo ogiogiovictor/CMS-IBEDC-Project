@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams  } from "react-router-dom";
 import TransformerCard from './transformercards';
 import { useGetAllDistributionQuery } from '../../redux/services/dss/dtService';
-import { setDss, setDataDss } from './transformerSlice';
+import { setDss, setDataDss, setDssInfo } from './transformerSlice';
 import PageLoader from "../spinner/loader";
 import DataTable from "../datatable";
 import DynamicData from '../layout/dynamicData';
@@ -16,12 +16,33 @@ const Transformer = () => {
 
   const [selectedObject, setSelectedObject] = useState(null);
 
+  const dssInfo = useSelector((state) => state.dss.dssInfo);
+
   const { type } = useParams();
+
+  const [updatedType, setUpdatedType] = useState(type); 
+
+  console.log("type:", type);
   const { data, isFetching, isUninitialized, refetch } = useGetAllDistributionQuery(
-    { userQuery: type, pageNo: currentPage }
+    { userQuery: updatedType, pageNo: currentPage }
   );
 
   const navigate = useNavigate();
+
+
+  const handleTransformerClick = (elevenDt) => {
+    //perform certian actions
+   dispatch(setDssInfo(elevenDt));
+   const updatedType = elevenDt;
+   setCurrentPage(1); 
+   dispatch(setDataDss([])); 
+   setSelectedObject(null); 
+   setUpdatedType(updatedType);
+   refetch({ userQuery: updatedType }); // refetch the data with the updated type parameter
+  // const updatedType = elevenDt === "Distribution Sub Station 11KV_415V" ? "11KV_415V" : "33KV_415V"; // update the type with your desired format
+   console.log(updatedType);
+   
+ }
 
     useEffect(() => {
       if (currentPage && data) {
@@ -30,7 +51,7 @@ const Transformer = () => {
         type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
         type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
       }
-    }, [data, dispatch, currentPage, refetch, type]);
+    }, [data, dispatch, currentPage, refetch, type, dssInfo]);
     
    
     // console.log("...................checking here.............");
@@ -64,10 +85,12 @@ const Transformer = () => {
       { title: "Status", field: "DSS_11KV_415V_cus_profile" },
     ];
 
+   
+
     return (
 
         <Fragment>
-            <TransformerCard dssCard={dss} />
+            <TransformerCard dssCard={dss} onFilterStatusChange={handleTransformerClick}/>
 
             {isUninitialized ? <PageLoader /> : ''}
 

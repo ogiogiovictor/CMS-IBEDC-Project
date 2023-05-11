@@ -34,6 +34,7 @@ import PendingCustomer from "./components/customers/pendingcustomer";
 import AddFeeder from "./components/feeder/addfeeder";
 import MDACustomers from "./components/ami/mdacustomers";
 import PowerUpDown from "./components/ami/powerupdown";
+import AddThirtyFeeder from "./components/feeder/addthirtyfeeder";
 
 const App = () => {
   return (
@@ -113,6 +114,11 @@ const App = () => {
                 path="powerupdown"
                 element={<PowerUpDown />}
                 />
+
+                <Route
+                  path="add_thirty_feeder"
+                  element={<AddThirtyFeeder />}
+                  />
 
 
 

@@ -97,6 +97,7 @@ const AllCustomers = () => {
                       .slice(1)
                       .toLowerCase()} customers`
                   : "All customer"}
+
               </h4>
 
               <div className="form-group d-flex">
@@ -110,6 +111,10 @@ const AllCustomers = () => {
                 <button type="submit" className="btn btn-primary ml-3">
                   Search
                 </button>
+                <button type="submit" className="btn btn-danger ml-4">
+                  Export(excel)
+                </button>
+               
               </div>
 
               {isFetching ? (

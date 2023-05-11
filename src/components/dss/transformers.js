@@ -79,7 +79,7 @@ const Transformer = () => {
       { title: "Asset ID", field: "Assetid" },
       { title: "Asset Type", field: "assettype" },
       { title: "DSS Name", field: "DSS_11KV_415V_Name" },
-      { title: "Service Center", field: "DSS_11KV_415V_Owner" },
+      { title: "Customers", field: "get_customer_count_count" },
       { title: "Longitude", field: "longitude" },
       { title: "Latitude", field: "latitude" },
       { title: "Status", field: "DSS_11KV_415V_cus_profile" },
@@ -108,13 +108,7 @@ const Transformer = () => {
                   <button type="button" class="btn btn-info btn-fw">
                   <i class="icon-cloud-upload"></i>Add Distribution Station(DT)
                   </button>
-                  <div className="btn  btn-fw">
-                  <select className="form-control">
-                    <option value="">Select Distribution Station Type</option>
-                    <option value="Distribution Sub Station 11KV_415V">Distribution Sub Station 11KV_415V</option>
-                    <option value="Distribution Sub Station 33KV_415V">Distribution Sub Station 33KV_415V</option>
-                  </select>
-                  </div>
+                 
                   </h4>
                   
                   <div class="form-group d-flex">

@@ -358,14 +358,34 @@ const Header = () => {
                 </div>
               </li>
 
+              
+
               <li className="nav-item">
-                <a
-                  href="pages/documentation/documentation.html"
-                  className="nav-link"
-                >
+                <a href="#" className="nav-link">
                   <i className="link-icon icon-docs"></i>
-                  <span className="menu-title">MAP Payments</span>
+                  <span className="menu-title">Administration</span>
+                  <i className="menu-arrow"></i>
                 </a>
+                <div className="submenu">
+                  <ul className="submenu-item">
+                    <li className="nav-item">
+                      <NavLink
+                        className="nav-link"
+                        to="/crmdetails"
+                      >
+                       User
+                      </NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <a
+                        className="nav-link"
+                        to="crmdetails"
+                      >
+                        Locations
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </li>
             </ul>
           </div>

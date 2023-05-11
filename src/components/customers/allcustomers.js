@@ -2,49 +2,55 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetCustomerDetailsByTypeQuery } from "../../redux/services/customer/customerService";
-import { setAllCustomers, setPostpaidCards, setPrepaidCards } from "../../redux/customer/customerSlice";
+import { setAllCustomers, setPostpaidCards, setPrepaidCards, setFilterStatus, setFilteredCustomers  } from "../../redux/customer/customerSlice";
 import PageLoader from "../spinner/loader";
 import DataTable from "../datatable";
 import CustomerCard from "../createcustomer/customercard";
+import Popup from "../modal/popup";
 
 const AllCustomers = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchText, setSearchText] = useState("");
+  const [isOpen, setIsOpen] = useState(false); // State for popup
+
   const dispatch = useDispatch();
   const { customers, postpaidCards, prepaidCards } =
     useSelector((state) => state.customer) || [];
   const navigate = useNavigate();
-  const { customerType } = useParams();
-  const stringType =
-    customerType &&
-    `${customerType.charAt(0).toUpperCase()}${customerType
-      .slice(1)
-      .toLowerCase()}`;
+  const { customerType, type } = useParams();
+  const stringType = customerType &&  `${customerType.charAt(0).toUpperCase()}${customerType.slice(1).toLowerCase()}`;
 
-  console.log(stringType);
+  const filterStatus = useSelector((state) => state.customer.filterStatus);
+  
+  const openPopup = () => {  setIsOpen(true); };
+  const closePopup = () => { setIsOpen(false); };
+
+  const userStatus = type && type.toUpperCase();
+ // console.log(stringType);
   const { data, isFetching, refetch } = useGetCustomerDetailsByTypeQuery(
-    { userQuery: stringType, pageNo: currentPage },
-    "",
-    {
-      pollingInterval: 900000,
-    }
+    { userQuery: stringType, userStatus: filterStatus, pageNo: currentPage }
   );
+
+  const handleFilterStatusChange = (statusCode) => {
+     dispatch(setFilterStatus(statusCode));
+     console.log(filterStatus);
+  };
+
 
   useEffect(() => {
     if (currentPage && data) {
       refetch();
       dispatch(setAllCustomers(data?.data?.customers?.data));
-      customerType === "prepaid" &&
-        dispatch(setPrepaidCards(data?.data?.prepaid));
-      customerType === "postpaid" &&
-        dispatch(setPostpaidCards(data?.data?.postpaid));
+      filterStatus == null && dispatch(setAllCustomers(data?.data?.customers?.data));
+      userStatus && dispatch(setAllCustomers(data?.data?.customers?.data));
+      customerType === "prepaid" && dispatch(setPrepaidCards(data?.data?.prepaid));
+      customerType === "postpaid" && dispatch(setPostpaidCards(data?.data?.postpaid));
     }
-  }, [data, dispatch, currentPage, refetch, customerType]);
+  }, [data, dispatch, currentPage, refetch, customerType, filterStatus]);
 
-  console.log(data);
+ // console.log(data);
 
   const handleActionClick = ({ FAccountNo, DistributionID }) => {
-    
     navigate(`/customerinfo/${FAccountNo}/${DistributionID}`);
     window.scrollTo(0, 0);
   };
@@ -65,13 +71,37 @@ const AllCustomers = () => {
   );
 
 
+  const customContent = (handleStartDateChange, handleEndDateChange, handleSubmit) => (
+    <div>
+      <p style={{ marginBottom: '10px' }}>
+        <label>
+          Start Date:
+          <input type="date"  onChange={handleStartDateChange} style={{ marginLeft: '10px' }} />
+        </label>
+      </p>
+      <p style={{ marginBottom: '10px' }}>
+        <label>
+          End Date:
+          <input type="date"  onChange={handleEndDateChange} style={{ marginLeft: '13px' }} />
+        </label>
+      </p>
+      <p>
+        <button  className="btn btn-danger btn-xs"  type="button" onClick={handleSubmit}>
+          Submit
+        </button>
+      </p>
+    </div>
+  );
+  
+
+
   return (
     <>
       {customerType ? (
         customerType === "postpaid" ? (
-          <CustomerCard statusCard={postpaidCards} />
+          <CustomerCard statusCard={postpaidCards} onFilterStatusChange={handleFilterStatusChange} />
         ) : customerType === "prepaid" ? (
-          <CustomerCard statusCard={prepaidCards} />
+          <CustomerCard statusCard={prepaidCards} onFilterStatusChange={handleFilterStatusChange} />
         ) : (
           ""
         )
@@ -97,6 +127,7 @@ const AllCustomers = () => {
                       .slice(1)
                       .toLowerCase()} customers`
                   : "All customer"}
+
               </h4>
 
               <div className="form-group d-flex">
@@ -110,7 +141,13 @@ const AllCustomers = () => {
                 <button type="submit" className="btn btn-primary ml-3">
                   Search
                 </button>
+                <button type="submit" className="btn btn-danger ml-4" onClick={openPopup}>
+                  Export(excel)
+                </button>
+               
               </div>
+
+              <Popup isOpen={isOpen} onClose={closePopup} title="Advance Search" content={customContent} />
 
               {isFetching ? (
                 <PageLoader />

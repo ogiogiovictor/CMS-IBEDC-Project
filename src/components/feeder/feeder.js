@@ -6,6 +6,7 @@ import { setFeeder, setDataFeeder } from './feederSlice';
 import FeederCard from './feedercard';
 import PageLoader from "../spinner/loader";
 import DataTable from "../datatable";
+import Popup from '../modal/popup';
 // import AddFeeder from './addfeeder';
 
 const Feeder = () => {
@@ -15,12 +16,17 @@ const Feeder = () => {
   const dispatch = useDispatch();
   const [selectedObject, setSelectedObject] = useState(null);
 
+  const [isOpen, setIsOpen] = useState(false); // State for popup
+
   const { type } = useParams();
 
   const { data, isFetching, isUninitialized, refetch } = useGetAllFeederQuery(
     { userQuery: type, pageNo: currentPage });
   
   const navigate = useNavigate();
+
+  const openPopup = () => {  setIsOpen(true); };
+  const closePopup = () => { setIsOpen(false); };
 
   useEffect(() => {
     if (currentPage && data) {
@@ -56,6 +62,28 @@ const Feeder = () => {
   ];
 
 
+  const customContent = (handleStartDateChange, handleEndDateChange, handleSubmit) => (
+    <div>
+      <p style={{ marginBottom: '10px' }}>
+        <label>
+          Start Date:
+          <input type="date"  onChange={handleStartDateChange} style={{ marginLeft: '10px' }} />
+        </label>
+      </p>
+      <p style={{ marginBottom: '10px' }}>
+        <label>
+          End Date:
+          <input type="date"  onChange={handleEndDateChange} style={{ marginLeft: '13px' }} />
+        </label>
+      </p>
+      <p>
+        <button  className="btn btn-danger btn-xs"  type="button" onClick={handleSubmit}>
+          Submit
+        </button>
+      </p>
+    </div>
+  );
+
     return (
         <Fragment>
             <FeederCard feeder={feeder} />
@@ -73,24 +101,24 @@ const Feeder = () => {
              <button class="btn btn-icons btn-rounded btn-secondary" onClick={() => refetch()}><span class="icon-refresh"></span></button>
              &nbsp;&nbsp;
              <Link to="/add_feeder" class="btn btn-info btn-fw">
-             <i class="icon-cloud-upload"></i>Add Feeder
+             <i class="icon-cloud-upload"></i>Add 11KV Feeder
              </Link>
-                  {/* <button type="button" class="btn btn-info btn-fw">
-                  <i class="icon-cloud-upload"></i>Add Feeder
-                  </button> */}
-                  <div className="btn  btn-fw">
-                  <select className="form-control">
-                    <option value="">Select Feeder Type</option>
-                    <option value="33kv Feeder">11kv Feeder</option>
-                    <option value="11kv Feeder">33kv Feeder</option>
-                  </select>
-                  </div>
+             &nbsp;&nbsp;
+             <Link to="/add_thirty_feeder" class="btn btn-danger btn-fw">
+             <i class="icon-cloud-upload"></i>Add 33KV Feeder
+             </Link>
              </h4>
 
              <div class="form-group d-flex">
                           <input type="text" class="form-control" placeholder="Search Feeders(s)..." />
                           <button type="submit" class="btn btn-primary ml-3">Search</button>
+                          <button type="submit" className="btn btn-danger ml-4" onClick={openPopup}>
+                          Export(excel)
+                        </button>
                     </div>
+
+                    <Popup isOpen={isOpen} onClose={closePopup} title="Advance Search" content={customContent} />
+
            
              <div className="table-responsive">
              <DataTable 

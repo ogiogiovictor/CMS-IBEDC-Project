@@ -1,8 +1,30 @@
 import React, { useState, useEffect  } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAddFeederMutation } from '../../redux/services/feeder/feederService';
+import { notify  } from '../../utils/notify';
+
 
 const AddFeeder = () => {
 
     const [isProcessing, setIsProcessing] = useState(false);
+    const [addFeeder, { isLoading }] = useAddFeederMutation();
+
+    const [latitude, setLatitude] = useState(null);
+    const [longitude, setLongitude] = useState(null);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+          setLatitude(position.coords.latitude);
+          setLongitude(position.coords.longitude);
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }, []);
+
     const [values, setValues] = useState({
         latitude: '',
         longtitude: '',
@@ -75,7 +97,71 @@ const AddFeeder = () => {
 
       const postCustomer = async (e) => {
         e.preventDefault();
-        setIsProcessing(true);
+        if(!values.assettype){
+          setValues({...values, errorMessage: 'Please select Asset Type'});
+          return;
+        }else {
+
+           //Collect data from the form
+          const idata = { 
+            latitude: latitude?? values.latitude,
+            longtitude: longitude?? values.longtitude,
+            naccode: values.naccode,
+            CDateTime: values.CDateTime,
+            F11kvFeeder_Name: values.F11kvFeeder_Name,
+            Feeder_CBSerial: values.Feeder_CBSerial,
+            F11kvFeeder_parent: values.F11kvFeeder_parent,
+            F11kvFeeder_CBYearofManufacture: values.F11kvFeeder_CBYearofManufacture,
+            F11kvFeeder_CB_Make: values.F11kvFeeder_CB_Make,
+            F11kvFeeder_CB_country_of_Manufacture: values.F11kvFeeder_CB_country_of_Manufacture,
+            F11kvFeeder_Relay_Make: values.F11kvFeeder_Relay_Make,
+            F11kvFeeder_Relay_Type: values.F11kvFeeder_Relay_Type,
+            F11kvFeeder_CTRatio: values.F11kvFeeder_CTRatio,
+            F11kvFeeder_RMUSerial: values.F11kvFeeder_RMUSerial,
+            F11kvFeeder_RMUYearofManufacture: values.F11kvFeeder_RMUYearofManufacture,
+            F11kvFeeder_RMU_Make: values.F11kvFeeder_RMU_Make,
+            F11kvFeeder_RMU_country_of_Manufacture: values.F11kvFeeder_RMU_country_of_Manufacture,
+            F11kvFeeder_RMU_Type: values.F11kvFeeder_RMU_Type,
+            F11kvFeeder_Route_Length: values.F11kvFeeder_Route_Length,
+            F11kvFeeder_Conductor_Size: values.F11kvFeeder_Conductor_Size,
+            F11kvFeeder_Aluminium_Conductor: values.F11kvFeeder_Aluminium_Conductor,
+            F11kvFeeder_UP_Type: values.F11kvFeeder_UP_Type,
+            F11kvFeeder_UP_Length: values.F11kvFeeder_UP_Length,
+            F11kvFeeder_Manufacture: values.F11kvFeeder_Manufacture,
+            F11kvFeeder_Ratedcurrent: values.F11kvFeeder_Ratedcurrent,
+            F11kvFeeder_Ratedvoltage: values.F11kvFeeder_Ratedvoltage,
+            F11kvFeeder_CB_Type: values.F11kvFeeder_CB_Type,
+            assettype: values.assettype,
+          }
+
+          try {
+            setIsProcessing(true);
+            const result =  await addFeeder(idata).unwrap();
+            
+            if(result.data){
+              notify("success", "Feeder Successfully Added" || "Process Completed Successfully");
+             navigate('/feeders');
+             }else{
+              setIsProcessing(false); // Enable the button back
+              setValues({...values, errorMessage: 'Error Added Feeder. Please contact IT'});
+              return;
+             }
+
+          }catch(error){
+           // setIsProcessing(false);
+            if (error.status === 500) {
+              // Handle error 500 here...
+              setIsProcessing(false); // Enable the button back
+              setValues({...values, errorMessage: 'Ooh something went wrong, Please contact helpdesk.'});
+              return;
+            }
+            setIsProcessing(false);
+            // Handle other errors here...
+            setValues({...values, errorMessage: error.message});
+            return;
+          }
+        }
+      
         
       };
 
@@ -84,7 +170,7 @@ const AddFeeder = () => {
             <div className="col-md-10 grid-margin stretch-card">
               <div className="card">
                 <div className="card-body">
-                  <h4 className="card-title">ADD NEW FEEDER</h4>
+                  <h4 className="card-title">ADD NEW 11KV FEEDER</h4>
                   <p className="card-description">
                   <hr/>
                    IBEDC Feeder Management
@@ -101,14 +187,11 @@ const AddFeeder = () => {
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Select AssetType</label>
                           <div class="col-sm-8">
-                            <select   onChange={onChangeHandler} class="form-control"  name="assettype">
+                            <select  onChange={onChangeHandler} class="form-control"  name="assettype">
                             <option value="">Select Feeder</option>
-                            <option value="11kv Feeder">11kv Feeder</option>
-                            <option value="33kv Feeder">33kv Feeder</option>
+                            <option value="11KV Feeder">11kv Feeder</option>
                             </select>
-                         
                           </div>
-                          <small>FeederName Cannot be empty</small>
                         </div>
                       </div>
                      
@@ -128,9 +211,11 @@ const AddFeeder = () => {
                            onChange={onChangeHandler}
                            onBlur={onBlurHandler}
                            touched={touched.F11kvFeeder_Name.toString()}
+                           placeholder='Please enter Feeder Name' required
                            />
+                           <small>Feeder Name Cannot be empty</small>
                           </div>
-                          <small>FeederName Cannot be empty</small>
+                          
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -144,6 +229,7 @@ const AddFeeder = () => {
                            onChange={onChangeHandler}
                            onBlur={onBlurHandler}
                            touched={touched.Feeder_CBSerial.toString()}
+                           placeholder='Please enter Feeder Serial CB' required
                             />
                             <small>Feeder CB Serial Cannot be empty</small>
                           </div>
@@ -164,7 +250,9 @@ const AddFeeder = () => {
                           onChange={onChangeHandler}
                           onBlur={onBlurHandler}
                           touched={touched.F11kvFeeder_CBYearofManufacture.toString()}
+                          placeholder='Please enter Manufacture Year' required
                           />
+                           <small>Feeder CB Serial Cannot be empty</small>
                           </div>
                         </div>
                       </div>
@@ -508,7 +596,9 @@ const AddFeeder = () => {
                           onChange={onChangeHandler}
                           onBlur={onBlurHandler}
                           touched={touched.latitude.toString()}
+                          placeholder='Please enter Latitude' required
                           />
+                          <small>Please enter Latitude</small>
                           </div>
                         </div>
                       </div>
@@ -523,7 +613,9 @@ const AddFeeder = () => {
                             onChange={onChangeHandler}
                             onBlur={onBlurHandler}
                             touched={touched.longtitude.toString()}
+                            placeholder='Please enter Manufacture Year' required
                             />
+                            <small>Please enter Longitude</small>
                           </div>
                         </div>
                       </div>

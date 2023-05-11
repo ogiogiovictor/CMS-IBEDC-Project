@@ -20,8 +20,8 @@ const dssSlice = createSlice({
             
         },
 
-        setDssInfo: (state, action) => {
-            state.dssInfo = action.payload;
+        setDssInfo: (state, { payload }) => {
+            state.dssInfo = payload;
         
          }
 

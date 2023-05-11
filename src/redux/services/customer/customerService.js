@@ -15,10 +15,13 @@ export const customerService = createApi({
     }),
 
     getCustomerDetailsByType: builder.query({
-      query: ({ userQuery, pageNo }) => ({
-        url: `/${API_VERSION}/grap_customers?type=${userQuery}&page=${pageNo}`,
+      query: ({ userQuery, userStatus, pageNo }) => ({
+       // url: `/${API_VERSION}/grap_customers?type=${userQuery}&page=${pageNo}`,
+        url: `/${API_VERSION}/grap_customers?type=${userQuery}&status=${userStatus}&page=${pageNo}`,
         method: "GET",
       }),
+      pollingInterval: 180000, // 15 minutes
+      cacheTime: 180000, // 3 minutes
     }),
 
     getCustomerInfo: builder.query({
@@ -73,7 +76,21 @@ export const customerService = createApi({
       console.error(error);
     },
 
+
+    getSearchCustomerPostpaid: builder.query({
+      query: ({ status, type,pageNo }) => ({
+        url: `/${API_VERSION}/grap_customers_status/${status}/${type}&page=${pageNo}`,
+        method: "GET",
+      }),
+      pollingInterval: 900000, // 15 minutes
+      cacheTime: 180000, // 3 minutes
+    }),
+
+
+
   }),
+
+ 
 
 });
 
@@ -84,5 +101,6 @@ export const {
   usePostTicketIDMutation,
   usePostCRMDMutation,
   useGetCRMDCustomerQuery,
-  usePostUpdateCRMDMutation
+  usePostUpdateCRMDMutation,
+  useGetSearchCustomerPostpaidQuery,
 } = customerService;

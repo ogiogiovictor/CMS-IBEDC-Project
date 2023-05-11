@@ -61,7 +61,6 @@ const NewCustomer = () => {
       try {
         setIsProcessing(true);
         const result =  await addTicket(idata).unwrap();
-        console.log(result);
          dispatch(setTicketInfo(result));
          if(result.data.customer){
           notify("success", "Ticket Successfully Found" || "Process Completed Successfully");

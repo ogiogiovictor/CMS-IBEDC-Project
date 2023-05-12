@@ -38,15 +38,16 @@ const Transformer = () => {
     if (currentPage && data) {
       refetch();
       dispatch(setDss(data?.data));
+      dispatch(setDataDss(data?.data));
       type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
       type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
     }
-  }, [data, dispatch, currentPage, refetch, type, dssInfo]);
+  }, [data, dispatch, currentPage, refetch, type, updatedType, dssInfo]);
   
  
   // console.log("...................checking here.............");
   console.log(dss);
-  
+
 
   const handleTransformerClick = (elevenDt) => {
     //perform certian actions
@@ -120,7 +121,7 @@ const Transformer = () => {
     return (
 
         <Fragment>
-            <TransformerCard idssCard={dss} onFilterStatusChange={handleTransformerClick}/>
+            {/* <TransformerCard idssCard={dss} onFilterStatusChange={handleTransformerClick}/> */}
 
             {isUninitialized ? <PageLoader /> : ''}
 

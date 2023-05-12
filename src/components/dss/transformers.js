@@ -37,16 +37,17 @@ const Transformer = () => {
   useEffect(() => {
     if (currentPage && data) {
       refetch();
-      dispatch(setDss(data?.data));
-      dispatch(setDataDss(data?.data));
+      dispatch(setDss(data));
+      dispatch(setDataDss(data));
       type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
       type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
     }
-  }, [data, dispatch, currentPage, refetch, type, updatedType, dssInfo]);
+ }, [data, dispatch, currentPage, refetch, type, updatedType, dssInfo]);
+
   
  
   // console.log("...................checking here.............");
-  console.log(dss);
+  console.log(data?.allDt?.data);
 
 
   const handleTransformerClick = (elevenDt) => {
@@ -121,7 +122,7 @@ const Transformer = () => {
     return (
 
         <Fragment>
-            {/* <TransformerCard idssCard={dss} onFilterStatusChange={handleTransformerClick}/> */}
+            <TransformerCard idssCard={dss} onFilterStatusChange={handleTransformerClick}/>
 
             {isUninitialized ? <PageLoader /> : ''}
 
@@ -159,12 +160,12 @@ const Transformer = () => {
                       
                   <div className="table-responsive">
                   <DataTable 
-                    data={data?.data?.allDt?.data}
+                    data={dssData.allDt?.data}
                     columns={columns}
                     pagination
                     currentPage={currentPage}
-                    totalCount={data?.data?.allDt?.total || 1}
-                    pageSize={data?.data?.allDt?.per_page || 1}
+                    totalCount={data?.allDt?.total || 1}
+                    pageSize={data?.allDt?.per_page || 1}
                     onPageChange={(page) => setCurrentPage(page)}
                     onActionClick={handleActionClick}
                     />

@@ -13,6 +13,10 @@ export const dtService = createApi({
               method: "GET",
             }),
             pollingInterval: 900000, // 15 minutes
+            cacheOptions: {
+              // cache results for 5 minutes
+              ttl: 3000000,
+            },
           }),
 
           getDSSInfo: builder.query({

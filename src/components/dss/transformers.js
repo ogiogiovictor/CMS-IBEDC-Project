@@ -91,7 +91,7 @@ const Transformer = () => {
       { title: "Customers", field: "get_customer_count_count" },
       { title: "Longitude", field: "longtitude" },
       { title: "Latitude", field: "latitude" },
-      { title: "Status", field: "DSS_11KV_415V_cus_profile" },
+      { title: "Status", field: "Status" },
     ];
 
 

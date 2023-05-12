@@ -36,13 +36,13 @@ const Transformer = () => {
 
   useEffect(() => {
     if (currentPage && data) {
-      refetch();
+      //refetch();
       dispatch(setDss(data));
       dispatch(setDataDss(data));
       type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
       type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
     }
- }, [data, dispatch, currentPage, refetch, type, updatedType, dssInfo]);
+ }, [data, dispatch, currentPage, type, updatedType, dssInfo]);
 
   
  
@@ -89,7 +89,7 @@ const Transformer = () => {
       { title: "Asset Type", field: "assettype" },
       { title: "DSS Name", field: "DSS_11KV_415V_Name" },
       { title: "Customers", field: "get_customer_count_count" },
-      { title: "Longitude", field: "longitude" },
+      { title: "Longitude", field: "longtitude" },
       { title: "Latitude", field: "latitude" },
       { title: "Status", field: "DSS_11KV_415V_cus_profile" },
     ];

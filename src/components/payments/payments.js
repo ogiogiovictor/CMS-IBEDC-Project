@@ -31,15 +31,14 @@ const Payments = () => {
     window.scrollTo(0, 0);
   };
 
-  console.log(data);
+  console.log(paymentData);
 
   const columns = [
     { title: "Pay Date", field: "TransactionDateTime" },
-    { title: "Pay Source", field: "CSPClientID" },
     { title: "AccountNo", field: "AccountNo" },
     { title: "Meter No", field: "MeterNo" },
-    { title: "BusinessUnit", field: "BUID" },
     { title: "Token", field: "Token" },
+    { title: "Business Unit", field: "BUID" },
     { title: "Amount", field: "Amount" },
   ];
 

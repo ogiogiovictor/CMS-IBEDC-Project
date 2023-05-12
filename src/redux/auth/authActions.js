@@ -17,7 +17,7 @@ export const userLogin = createAsyncThunk(
         },
       };
       const { data } = await axios.post(
-        `${backendURL}/auth_login_test`,
+        `${backendURL}/auth_login`,
         { email, password },
         config
       );
@@ -27,6 +27,7 @@ export const userLogin = createAsyncThunk(
       notify("success", "Login successful");
       return data.data.user;
     } catch (error) {
+      console.log(error)
       // return custom error message from API if any
       if (error.response && error.response.data.message) {
         notify("error", error.response.data.message);

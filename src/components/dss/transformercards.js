@@ -1,7 +1,7 @@
 import React from 'react';
 
-const TransformerCard = ({ dssCard, onFilterStatusChange }) => {
-  const { dtTotal, elevenDt, thirtyDt } = dssCard;
+const TransformerCard = ({ idssCard, onFilterStatusChange }) => {
+  const { dtTotal, elevenDt, thirtyDt } = idssCard;
 
   const handleCardClick = (elevenDt) => {
     onFilterStatusChange(elevenDt)
@@ -75,7 +75,7 @@ const TransformerCard = ({ dssCard, onFilterStatusChange }) => {
                 <i className="icon-screen-desktop icon-lg"></i>
                 <div className="ml-4">
                   <h4 className="font-weight-light">Total</h4>
-                  <h3 className="font-weight-light mb-3">{ dtTotal }</h3>
+                  <h3 className="font-weight-light mb-3">{ dtTotal ?? '' }</h3>
                 </div>
               </div>
             </div>

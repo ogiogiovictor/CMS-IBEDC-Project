@@ -25,6 +25,7 @@ export const paymentService = createApi({
               url: `/${API_VERSION}/paymentDetails/${FAccount}/${Token}/${CSPClientID}`,
               method: "GET",
             }),
+            pollingInterval: 3000000, // 15 minutes
             providesTags: (result, error, args) => ['BillService'],
             cacheOptions: {
               // cache results for 5 minutes

@@ -9,7 +9,7 @@ const baseQuery = fetchBaseQuery({
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
       headers.set("app-secret", `${process.env.REACT_APP_API_APP_SECRET}`);
-      headers.set("app-Token", `${process.env.REACT_APP_API_APP_TOKEN}`);
+      headers.set("app-token", `${process.env.REACT_APP_API_APP_TOKEN}`);
       return headers;
     }
   },

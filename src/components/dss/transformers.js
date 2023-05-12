@@ -24,7 +24,7 @@ const Transformer = () => {
 
   const [updatedType, setUpdatedType] = useState(type); 
 
-  console.log("type:", type);
+  //console.log("type:", type);
   const { data, isFetching, isUninitialized, refetch } = useGetAllDistributionQuery(
     { userQuery: updatedType, pageNo: currentPage }
   );
@@ -34,6 +34,19 @@ const Transformer = () => {
   const openPopup = () => {  setIsOpen(true); };
   const closePopup = () => { setIsOpen(false); };
 
+  useEffect(() => {
+    if (currentPage && data) {
+      refetch();
+      dispatch(setDss(data?.data));
+      type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
+      type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
+    }
+  }, [data, dispatch, currentPage, refetch, type, dssInfo]);
+  
+ 
+  // console.log("...................checking here.............");
+  console.log(dss);
+  
 
   const handleTransformerClick = (elevenDt) => {
     //perform certian actions
@@ -45,22 +58,11 @@ const Transformer = () => {
    setUpdatedType(updatedType);
    refetch({ userQuery: updatedType }); // refetch the data with the updated type parameter
   // const updatedType = elevenDt === "Distribution Sub Station 11KV_415V" ? "11KV_415V" : "33KV_415V"; // update the type with your desired format
-   console.log(updatedType);
+  // console.log(updatedType);
    
  }
 
-    useEffect(() => {
-      if (currentPage && data) {
-        refetch();
-        dispatch(setDss(data?.data));
-        type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
-        type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
-      }
-    }, [data, dispatch, currentPage, refetch, type, dssInfo]);
-    
    
-    // console.log("...................checking here.............");
-    console.log(data);
     // console.log(data.data.allDt)
     // const handleActionClick = ({Assetid}) => {
     //   navigate(`/transformerDetails/${Assetid}`);
@@ -118,7 +120,7 @@ const Transformer = () => {
     return (
 
         <Fragment>
-            <TransformerCard dssCard={dss} onFilterStatusChange={handleTransformerClick}/>
+            <TransformerCard idssCard={dss} onFilterStatusChange={handleTransformerClick}/>
 
             {isUninitialized ? <PageLoader /> : ''}
 

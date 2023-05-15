@@ -12,8 +12,8 @@ export const amiService = createApi({
               url: `/${API_VERSION}/get_events?page=${pageNo}`,
               method: "GET",
             }),
-            pollingInterval: 180000, // 15 minutes
-           // cacheTime: 180000, // 3 minutes
+            pollingInterval: 1800000, // 15 minutes
+            cacheTime: 1800000, // 3 minutes
             cacheOptions: {
                 // cache results for 5 minutes
                 ttl: 3000000,
@@ -23,4 +23,4 @@ export const amiService = createApi({
     }),
 });
 
-export const {useGetAMIServiceQuery } = amiService;
+export const { useGetAMIServiceQuery } = amiService;

@@ -58,10 +58,11 @@ const AllCustomers = () => {
   const columns = [
     
     { title: "Setup Date", field: "SetupDate" },
-    { title: "Customer Name", field: "FirstName" },
+    { title: "Surname", field: "Surname" },
+    { title: "FirstName", field: "FirstName" },
     { title: "Account Number", field: "AccountNo" },
     { title: "Business Hub", field: "BusinessHub" },
-    { title: "Service Center", field: "service_center" },
+    // { title: "Service Center", field: "service_center" },
     { title: "DSS ID", field: "DistributionID" },
     { title: "Status", field: "StatusCode" },
   ];

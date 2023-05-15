@@ -98,6 +98,804 @@ const AddTransformer = () => {
                     </div>
                   </div>
                </div>
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Transformer Rating</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_Rating"
+                       value={values.DSS_11KV_415V_Rating}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Rating.toString()}
+                       placeholder='Please enter Rating' required
+                       />
+                       <small>Transformer Rating Cannot be empty</small>
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Make</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_Make"
+                       value={values.DSS_11KV_415V_Make}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Make.toString()}
+                       placeholder='Please enter DSS Make' required
+                        />
+                        <small>DSS Make Cannot be empty</small>
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS FeederPillar Type</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_Feederpillarr_Type"
+                       value={values.DSS_11KV_415V_Feederpillarr_Type}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Feederpillarr_Type.toString()}
+                       placeholder='Please enter DSS FeederPillar Type' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS FP Condition</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_FP_Condition"
+                       value={values.DSS_11KV_415V_FP_Condition}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_FP_Condition.toString()}
+                       placeholder='Please enter DSS_11KV_415V_FP_Condition' required
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS FP_Catridge</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_FP_Catridge"
+                       value={values.DSS_11KV_415V_FP_Catridge}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_FP_Catridge.toString()}
+                       placeholder='Please enter DSS_11KV_415V_FP_Catridge' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS HV_Fuse</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_HV_Fuse"
+                       value={values.DSS_11KV_415V_HV_Fuse}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_HV_Fuse.toString()}
+                       placeholder='Please enter DSS_11KV_415V_HV_Fuse' required
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS HV_Fus_Condition</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_HV_Fus_Condition"
+                       value={values.DSS_11KV_415V_HV_Fus_Condition}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_HV_Fus_Condition.toString()}
+                       placeholder='Please enter DSS_11KV_415V_HV_Fus_Condition' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Lightning_Arrester</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_Lightning_Arrester"
+                       value={values.DSS_11KV_415V_Lightning_Arrester}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Lightning_Arrester.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Lightning_Arrester'
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Serial_No</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_Serial_No"
+                       value={values.DSS_11KV_415V_Serial_No}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Serial_No.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Serial_No' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Voltage_Ratio</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_Voltage_Ratio"
+                       value={values.DSS_11KV_415V_Voltage_Ratio}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Voltage_Ratio.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Voltage_Ratio'
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Oil_Temp</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_Oil_Temp"
+                       value={values.DSS_11KV_415V_Oil_Temp}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Oil_Temp.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Oil_Temp' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Winding_Temp</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_Winding_Temp"
+                       value={values.DSS_11KV_415V_Winding_Temp}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Winding_Temp.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Winding_Temp'
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Manufacture_Year</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_Manufacture_Year"
+                       value={values.DSS_11KV_415V_Manufacture_Year}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Manufacture_Year.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Manufacture_Year' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Installation_Year</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_Installation_Year"
+                       value={values.DSS_11KV_415V_Installation_Year}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Installation_Year.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Installation_Year'
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Country_of_Manufacture</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_country_of_Manufacture"
+                       value={values.DSS_11KV_415V_country_of_Manufacture}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_country_of_Manufacture.toString()}
+                       placeholder='Please enter DSS_11KV_415V_country_of_Manufacture' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Percentage_Loading</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_Percentage_Loading"
+                       value={values.DSS_11KV_415V_Percentage_Loading}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Percentage_Loading.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Percentage_Loading'
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS No_Load_Loss</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_No_Load_Loss"
+                       value={values.DSS_11KV_415V_No_Load_Loss}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_No_Load_Loss.toString()}
+                       placeholder='Please enter DSS_11KV_415V_No_Load_Loss' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Load_Loss</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_Load_Loss"
+                       value={values.DSS_11KV_415V_Load_Loss}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Load_Loss.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Load_Loss'
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Impedence</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_Impedence"
+                       value={values.DSS_11KV_415V_Impedence}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Impedence.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Impedence' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Upriser_Number</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_Upriser_Number"
+                       value={values.DSS_11KV_415V_Upriser_Number}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Upriser_Number.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Upriser_Number'
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Oil_Level</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_Oil_Level"
+                       value={values.DSS_11KV_415V_Oil_Level}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Oil_Level.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Oil_Level' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Silica_Condition</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_Silica_Condition"
+                       value={values.DSS_11KV_415V_Silica_Condition}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Silica_Condition.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Silica_Condition'
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Security</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_Security"
+                       value={values.DSS_11KV_415V_Security}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Security.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Security' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Substation_gravelled</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_substation_gravelled"
+                       value={values.DSS_11KV_415V_substation_gravelled}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_substation_gravelled.toString()}
+                       placeholder='Please enter DSS_11KV_415V_substation_gravelled'
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Substation_vegetation</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_substation_vegetation"
+                       value={values.DSS_11KV_415V_substation_vegetation}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_substation_vegetation.toString()}
+                       placeholder='Please enter DSS_11KV_415V_substation_vegetation' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Low_Voltage_Cable_Size</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_Low_Voltage_Cable_Size"
+                       value={values.DSS_11KV_415V_Low_Voltage_Cable_Size}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Low_Voltage_Cable_Size.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Low_Voltage_Cable_Size'
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Tranformer_leaking_Oil</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_Is_Tranformer_leaking_Oil"
+                       value={values.DSS_11KV_415V_Is_Tranformer_leaking_Oil}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Is_Tranformer_leaking_Oil.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Is_Tranformer_leaking_Oil' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Number_of_HV_Fuse</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_Number_of_HV_Fuse"
+                       value={values.DSS_11KV_415V_Number_of_HV_Fuse}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Number_of_HV_Fuse.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Number_of_HV_Fuse'
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Feederpillarr_Available</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_Feederpillarr_Available"
+                       value={values.DSS_11KV_415V_Feederpillarr_Available}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Feederpillarr_Available.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Feederpillarr_Available' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Placement</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_Placement"
+                       value={values.DSS_11KV_415V_Placement}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Placement.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Placement'
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Cus_profile</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_cus_profile"
+                       value={values.DSS_11KV_415V_cus_profile}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_cus_profile.toString()}
+                       placeholder='Please enter DSS_11KV_415V_cus_profile' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS red_line</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_red_line"
+                       value={values.DSS_11KV_415V_red_line}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_red_line.toString()}
+                       placeholder='Please enter DSS_11KV_415V_red_line'
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Yellow_line</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_Yellow_line"
+                       value={values.DSS_11KV_415V_Yellow_line}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Yellow_line.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Yellow_line' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Blue_line</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_Blue_line"
+                       value={values.DSS_11KV_415V_Blue_line}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Blue_line.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Blue_line'
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Neutral_line</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_Neutral_line"
+                       value={values.DSS_11KV_415V_Neutral_line}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Neutral_line.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Neutral_line' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Percent</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_percent"
+                       value={values.DSS_11KV_415V_percent}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_percent.toString()}
+                       placeholder='Please enter DSS_11KV_415V_percent'
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Omage</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_omage"
+                       value={values.DSS_11KV_415V_omage}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_omage.toString()}
+                       placeholder='Please enter DSS_11KV_415V_omage' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Mounting</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_mounting"
+                       value={values.DSS_11KV_415V_mounting}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_mounting.toString()}
+                       placeholder='Please enter DSS_11KV_415V_mounting'
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS fp_with_meter</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_fp_with_meter"
+                       value={values.DSS_11KV_415V_fp_with_meter}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_fp_with_meter.toString()}
+                       placeholder='Please enter DSS_11KV_415V_fp_with_meter' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Cooling_type</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_cooling_type"
+                       value={values.DSS_11KV_415V_cooling_type}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_cooling_type.toString()}
+                       placeholder='Please enter DSS_11KV_415V_cooling_type'
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Terminal_arrangement</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_terminal_arrangement"
+                       value={values.DSS_11KV_415V_terminal_arrangement}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_terminal_arrangement.toString()}
+                       placeholder='Please enter DSS_11KV_415V_terminal_arrangement' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Trenches_available</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="	DSS_11KV_415V_Trenches_available"
+                       value={values.	DSS_11KV_415V_Trenches_available}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.	DSS_11KV_415V_Trenches_available.toString()}
+                       placeholder='Please enter 	DSS_11KV_415V_Trenches_available'
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Trenches_with_granite</label>
+                      <div class="col-sm-8">
+                      <input type="text"  class="form-control" 
+                       name="DSS_11KV_415V_Trenches_with_granite"
+                       value={values.DSS_11KV_415V_Trenches_with_granite}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_Trenches_with_granite.toString()}
+                       placeholder='Please enter DSS_11KV_415V_Trenches_with_granite' 
+                       />
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Fence_type</label>
+                      <div class="col-sm-8">
+                        <input type="text" 
+                        class="form-control"
+                        name="DSS_11KV_415V_fence_type"
+                       value={values.DSS_11KV_415V_fence_type}
+                       onChange={onChangeHandler}
+                       onBlur={onBlurHandler}
+                       touched={touched.DSS_11KV_415V_fence_type.toString()}
+                       placeholder='Please enter DSS_11KV_415V_fence_type'
+                        />
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
+
+               
        
                 
                

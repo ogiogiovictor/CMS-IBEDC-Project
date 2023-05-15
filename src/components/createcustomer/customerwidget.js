@@ -26,6 +26,11 @@ const CustomerWidget = ({ customerInfo }) => {
     window.scrollTo(0, 0);
   };
 
+  const hanleEventClick = ({ FAccountNo, DistributionID }) => {
+   // navigate(`/customerinfo/${FAccountNo}/${DistributionID}`);
+    window.scrollTo(0, 0);
+  };
+
   
 
   const customePaymentsColumns = [
@@ -56,6 +61,18 @@ const CustomerWidget = ({ customerInfo }) => {
     { title: "Location", field: "location_id" },
     { title: "Status", field: "status" },
   ]
+
+  const EventColumns = [
+    { title: "Meter", field: "MSNO" },
+    { title: "Date", field: "SAVEDB_TIME" },
+    { title: "KWH", field: "KWH_ABS" },
+    { title: "Region", field: "Region" },
+    { title: "Business Hub", field: "BusinessHub" },
+    { title: "Transformer", field: "Transformer" },
+    { title: "AssetType", field: "AssetType" },
+  ]
+
+ 
 
   return (
     <>
@@ -356,7 +373,20 @@ const CustomerWidget = ({ customerInfo }) => {
                         role="tabpanel"
                         aria-labelledby="user-profile-energy-tab"
                       >
-                        Customer Energy Information
+                        <h4>Energy Information </h4><hr/>
+                        {customerInfo?.amiEvents?.length !== 0 ? (
+                          <DataTable
+                            data={customerInfo?.amiEvents.data}
+                            columns={EventColumns}
+                            pagination
+                            currentPage={1}
+                            totalCount={1}
+                            pageSize={1}
+                            onActionClick={hanleEventClick}
+                          />
+                        ) : (
+                          <p className="text-center">No Events Found</p>
+                        )}
                       </div>
 
                       <div
@@ -365,7 +395,8 @@ const CustomerWidget = ({ customerInfo }) => {
                         role="tabpanel"
                         aria-labelledby="user-profile-disconnection-tab"
                       >
-                        Customer disconnection Information
+                         <h4>Disconnection Information </h4><hr/>
+                        <CustomerInfoTable customerInfo={customerInfo?.disconnections} />
                       </div>
                     </div>
                   </div>

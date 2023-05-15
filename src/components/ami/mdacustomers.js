@@ -1,7 +1,24 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import AMICard from './amicards';
+import { useGetAllServiceQuery } from '../../redux/services/ami/amiService';
+import { setAmi } from '../../redux/services/ami/amiSlice';
+import PageLoader from "../spinner/loader";
+import DataTable from '../datatable';
+import { useSelector } from 'react-redux';
+
 
 const MDACustomers = () => {
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const { ami } = useSelector((state) => state.ami) || [];
+
+  const {data, isError, isFetching, isSuccess, isUninitialized, refetch} = useGetAllServiceQuery(
+    { pageNo: currentPage },  //{ cacheTime: 0 }
+  );
+
+  console.log(data)
+
+
     return (
         <Fragment>
             

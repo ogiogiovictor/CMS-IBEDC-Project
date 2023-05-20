@@ -41,7 +41,7 @@ const Header = () => {
               </NavLink>
             </div>
             <div className="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-              <form className="search-field" action="#">
+              {/* <form className="search-field" action="#">
                 <div className="form-group mb-0">
                   <div className="input-group">
                     <input
@@ -56,7 +56,7 @@ const Header = () => {
                     </div>
                   </div>
                 </div>
-              </form>
+              </form> */}
               <ul className="navbar-nav navbar-nav-right mr-0">
                 <li className="nav-item dropdown">
                   <a

@@ -44,10 +44,7 @@ const Transformer = () => {
     }
  }, [data, dispatch, currentPage, type, updatedType, dssInfo]);
 
-  
- 
-  // console.log("...................checking here.............");
-  console.log(data?.allDt?.data);
+//  console.log(dss);
 
 
   const handleTransformerClick = (elevenDt) => {
@@ -59,21 +56,11 @@ const Transformer = () => {
    setSelectedObject(null); 
    setUpdatedType(updatedType);
    refetch({ userQuery: updatedType }); // refetch the data with the updated type parameter
-  // const updatedType = elevenDt === "Distribution Sub Station 11KV_415V" ? "11KV_415V" : "33KV_415V"; // update the type with your desired format
-  // console.log(updatedType);
    
  }
 
-   
-    // console.log(data.data.allDt)
-    // const handleActionClick = ({Assetid}) => {
-    //   navigate(`/transformerDetails/${Assetid}`);
-    //   window.scrollTo(0, 0);
-    // };
-
     const handleActionClick = (data) => {
       setSelectedObject(data);
-      //navigate(`/details/${data.Assetid}`);
       navigate(`/details/${data.Assetid}`, { 
         state: { 
           rowData: data, 
@@ -81,6 +68,28 @@ const Transformer = () => {
           rowSubTitle: data.DSS_11KV_415V_Name,
           routeName: '/transformers'
          } });
+    };
+
+
+    const [searchQuery, setSearchQuery] = useState('');
+    const [hiddenFieldValue, setHiddenFieldValue] = useState('dt_asset');
+
+    const handleSearchSubmit = (e) => {
+      e.preventDefault();
+      performSearch(searchQuery);
+    }
+
+    const performSearch = (query) => {
+      const payload = {
+        searchQuery: query,
+        hiddenField: hiddenFieldValue
+      };
+
+      console.log(payload)
+      // Perform the search API call or any other search logic here
+      // Update the searchResults state with the search results
+      //const results = // Perform the search and get the results
+     // setSearchResults(results);
     };
 
 
@@ -141,31 +150,43 @@ const Transformer = () => {
                   <Link to="/add_transfomer" class="btn btn-danger btn-fw">
                   <i class="icon-cloud-upload"></i>Add Transformer
                   </Link>
-                  {/* <button type="button" class="btn btn-info btn-fw">
-                  <i class="icon-cloud-upload"></i>Add Distribution Station(DT)
-                  </button> */}
+                  &nbsp;&nbsp;
+                  <Link to="/transformer_map" class="btn btn-primary btn-fw">
+                  <i class="icon-cloud-upload"></i>View Map
+                  </Link>
                  
                   </h4>
-                  
+                  <form onSubmit={handleSearchSubmit}>
                   <div class="form-group d-flex">
-                          <input type="text" class="form-control" placeholder="Search Distribution Station..." />
+                  
+                          <input type="text" 
+                          value={searchQuery} 
+                          onChange={(e) => setSearchQuery(e.target.value)} 
+                          name="search_dss"
+                          class="form-control" placeholder="Search Distribution Station..." />
+
+                          <input type="hidden"  value={hiddenFieldValue} 
+                          onChange={(e) => setHiddenFieldValue(e.target.value)}
+                           class="form-control" />
                           <button type="submit" class="btn btn-primary ml-3">Search</button>
+                  
                           <button type="submit" className="btn btn-danger ml-4" onClick={openPopup}>
                           Export(excel)
                         </button>
                     </div>
+                    </form>
 
                     <Popup isOpen={isOpen} onClose={closePopup} title="Advance Search" content={customContent} />
 
                       
                   <div className="table-responsive">
                   <DataTable 
-                    data={dssData.allDt?.data}
+                    data={dss?.data?.allDt?.data}
                     columns={columns}
                     pagination
                     currentPage={currentPage}
-                    totalCount={data?.allDt?.total || 1}
-                    pageSize={data?.allDt?.per_page || 1}
+                    totalCount={data?.data?.allDt?.total || 1}
+                    pageSize={data?.data?.allDt?.per_page || 1}
                     onPageChange={(page) => setCurrentPage(page)}
                     onActionClick={handleActionClick}
                     />

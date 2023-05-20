@@ -1,7 +1,7 @@
 import React from 'react';
 
 const TransformerCard = ({ idssCard, onFilterStatusChange }) => {
-  const { dtTotal, elevenDt, thirtyDt } = idssCard;
+  const { dtTotal, elevenDt, thirtyDt } = idssCard.data ?? 0;
 
   const handleCardClick = (elevenDt) => {
     onFilterStatusChange(elevenDt)

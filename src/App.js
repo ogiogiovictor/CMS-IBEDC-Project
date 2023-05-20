@@ -36,6 +36,7 @@ import MDACustomers from "./components/ami/mdacustomers";
 import PowerUpDown from "./components/ami/powerupdown";
 import AddThirtyFeeder from "./components/feeder/addthirtyfeeder";
 import AddTransformer from "./components/dss/addtransfomer";
+import TransformerMap from "./components/dss/transformerMap";
 
 const App = () => {
   return (
@@ -45,6 +46,11 @@ const App = () => {
           <Route element={<LoginLayout />}>
             <Route path="/" element={<Login />} />
           </Route>
+
+          <Route
+                  path="transformer_map"
+                  element={<TransformerMap />}
+                  />
 
           <Route element={<ProtectedRoute />}>
             <Route element={<AdminLayout />}>
@@ -125,6 +131,8 @@ const App = () => {
                   path="add_transfomer"
                   element={<AddTransformer />}
                   />
+
+                 
 
 
 

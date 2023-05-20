@@ -40432,6 +40432,34 @@ input:invalid[touched="true"] {
 input:invalid[touched="true"] ~ small {
     display: block;
 }
+
+.mapScale {
+    width: 100vw;
+    height: 100vh;
+
+}
+.locDot{
+    /* position: absolute; */
+    height: 12px;
+    width: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    background-color: #1E90FF;
+    border: 2px solid #fff;
+    border-radius: 100%; 
+    /* z-index: 1; */
+}
+.marker-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.marker-btn img{
+    width: 30px;
+    height: 30px;
+}
 /*-------------------------------------------------------------------*/
 /* === Layouts === */
 /*-------------------------------------------------------------------*/

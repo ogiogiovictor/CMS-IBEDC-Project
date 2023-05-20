@@ -26,7 +26,17 @@ export const dtService = createApi({
             }),
           }),
 
+          // Create a new endpoint for the POST request
+        searchAssetDT: builder.mutation({
+          query: (requestData) => ({
+            url: `/${API_VERSION}/search_any`,
+            method: "POST",
+            body: requestData, // the data you want to send in the request body
+          }),
+        }),
+
     }),
 });
 
-export const { useGetAllDistributionQuery, useGetDSSInfoQuery } = dtService;
+
+export const { useGetAllDistributionQuery, useGetDSSInfoQuery, useSearchAssetDTMutation } = dtService;

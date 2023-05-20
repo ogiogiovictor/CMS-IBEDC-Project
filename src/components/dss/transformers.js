@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams, Link  } from "react-router-dom";
 import TransformerCard from './transformercards';
-import { useGetAllDistributionQuery } from '../../redux/services/dss/dtService';
+import { useGetAllDistributionQuery, useSearchAssetDTMutation } from '../../redux/services/dss/dtService';
 import { setDss, setDataDss, setDssInfo } from './transformerSlice';
 import PageLoader from "../spinner/loader";
 import DataTable from "../datatable";
@@ -22,7 +22,13 @@ const Transformer = () => {
 
   const { type } = useParams();
 
+  //Everything to click card and update state
   const [updatedType, setUpdatedType] = useState(type); 
+
+  //Everything Search State
+  const [searchQuery, setSearchQuery] = useState('');
+  const [hiddenFieldValue, setHiddenFieldValue] = useState('dt_asset');
+  const [searchResult, setSearchResult] = useState(null);
 
   //console.log("type:", type);
   const { data, isFetching, isUninitialized, refetch } = useGetAllDistributionQuery(
@@ -35,18 +41,16 @@ const Transformer = () => {
   const closePopup = () => { setIsOpen(false); };
 
   useEffect(() => {
-    if (currentPage && data) {
+    if (currentPage && (data || searchResult)) {
       //refetch();
-      dispatch(setDss(data));
-      dispatch(setDataDss(data));
+      dispatch(setDss(data || searchResult));
+      dispatch(setDataDss(data?.data?.allDt?.data));
       type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
       type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
     }
- }, [data, dispatch, currentPage, type, updatedType, dssInfo]);
+ }, [data, searchResult, dispatch, currentPage, type, updatedType, dssInfo]);
 
-//  console.log(dss);
-
-
+ //Handle cardclick and rerender page
   const handleTransformerClick = (elevenDt) => {
     //perform certian actions
    dispatch(setDssInfo(elevenDt));
@@ -70,26 +74,34 @@ const Transformer = () => {
          } });
     };
 
-
-    const [searchQuery, setSearchQuery] = useState('');
-    const [hiddenFieldValue, setHiddenFieldValue] = useState('dt_asset');
+    const [postSearch ] = useSearchAssetDTMutation();
 
     const handleSearchSubmit = (e) => {
       e.preventDefault();
       performSearch(searchQuery);
     }
 
-    const performSearch = (query) => {
-      const payload = {
-        searchQuery: query,
-        hiddenField: hiddenFieldValue
-      };
+    const performSearch = async (query) =>  {
+        const payload = {
+          searchQuery: query,
+          hiddenField: hiddenFieldValue
+        };
 
-      console.log(payload)
-      // Perform the search API call or any other search logic here
-      // Update the searchResults state with the search results
-      //const results = // Perform the search and get the results
-     // setSearchResults(results);
+        if(!payload.searchQuery){
+          return null;
+        }
+
+        try {
+          const result = await postSearch(payload).unwrap();
+          refetch();
+          setCurrentPage(1);
+          dispatch(setDataDss(result.data.allDt.data));
+          dispatch(setDss(result));
+
+        } catch (error) {
+          console.log(error);
+          // Handle any error that occurs during the search
+        }
     };
 
 
@@ -181,7 +193,7 @@ const Transformer = () => {
                       
                   <div className="table-responsive">
                   <DataTable 
-                    data={dss?.data?.allDt?.data}
+                    data={dssData}
                     columns={columns}
                     pagination
                     currentPage={currentPage}

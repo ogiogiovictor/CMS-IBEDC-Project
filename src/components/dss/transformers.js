@@ -92,11 +92,12 @@ const Transformer = () => {
         }
 
         try {
-          refetch();
+         
           const result = await postSearch(payload).unwrap();
           setCurrentPage(1);
           dispatch(setDataDss(result.data.allDt.data));
           dispatch(setDss(result));
+          refetch();
 
         } catch (error) {
           console.log(error);
@@ -182,7 +183,6 @@ const Transformer = () => {
                   <h4 className="card-title">All Distribution Sub Stations &nbsp;&nbsp;
                   <button class="btn btn-icons btn-rounded btn-secondary" onClick={() => refetch()}><span class="icon-refresh"></span></button>
                   &nbsp;&nbsp;
-
                   <Link to="/add_transfomer" class="btn btn-danger btn-fw">
                   <i class="icon-cloud-upload"></i>Add Transformer
                   </Link>

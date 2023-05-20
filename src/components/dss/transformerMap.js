@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import Map, {Marker, Popup} from 'react-map-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
+
 
 const TransformerMap = () => {
     const { dss, dssData } = useSelector((state) => state.dss) || [];
@@ -43,17 +45,18 @@ const TransformerMap = () => {
                 const latitude = parseFloat(asset.latitude);
                 const longitude = parseFloat(asset.longitude);
 
+                return (
                 <Marker key={asset.Assetid} 
-                latitude={latitude}
-                 longitude={longitude}>
+                 latitude={longitude}
+                 longitude={latitude}>
                     <button className="marker-btn" onClick={(e) => {
                         e.preventDefault();
                         setSelectedAsset(asset);
                     } }>
                         <img src="/map-marker-svgrepo-com.svg" alt="Marker" />
-                       
                     </button>
                 </Marker>
+                );
             })}
            
            {selectedAsset ? (

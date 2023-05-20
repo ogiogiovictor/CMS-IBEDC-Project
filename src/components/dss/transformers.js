@@ -115,19 +115,43 @@ const Transformer = () => {
       { title: "Status", field: "Status" },
     ];
 
+    console.log(dssData);
 
     const customContent = (handleStartDateChange, handleEndDateChange, handleSubmit) => (
       <div>
         <p style={{ marginBottom: '10px' }}>
           <label>
-            Start Date:
-            <input type="date"  onChange={handleStartDateChange} style={{ marginLeft: '10px' }} />
+            Start Date: &nbsp;
+            <input type="date"   onChange={handleStartDateChange} style={{ marginLeft: '10px' }} />
+          </label>
+          &nbsp; &nbsp;
+          <label>
+            End Date: &nbsp;
+            <input type="date"  onChange={handleEndDateChange} style={{ marginLeft: '13px' }} />
           </label>
         </p>
         <p style={{ marginBottom: '10px' }}>
           <label>
-            End Date:
-            <input type="date"  onChange={handleEndDateChange} style={{ marginLeft: '13px' }} />
+            Business Hub  &nbsp;
+            <select>
+            <option value="">Select Hub</option>
+                {dssData.length > 0 ? (
+                  [...new Set(dssData.map(el => el.hub_name))].map(hubName => (
+                    <option key={hubName} value={hubName}>{hubName}</option>
+                  ))
+                ) : (
+                  <option value="" disabled>No data available</option>
+                )}
+            </select>
+          </label>
+          &nbsp; &nbsp;
+          <label>
+            Status  &nbsp;
+            <select>
+            <option value="">Select Status</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+            </select>
           </label>
         </p>
         <p>

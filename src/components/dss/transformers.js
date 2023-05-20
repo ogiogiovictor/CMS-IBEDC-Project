@@ -92,8 +92,8 @@ const Transformer = () => {
         }
 
         try {
-          const result = await postSearch(payload).unwrap();
           refetch();
+          const result = await postSearch(payload).unwrap();
           setCurrentPage(1);
           dispatch(setDataDss(result.data.allDt.data));
           dispatch(setDss(result));

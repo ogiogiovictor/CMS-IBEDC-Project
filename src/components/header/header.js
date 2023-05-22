@@ -260,11 +260,11 @@ const Header = () => {
                         Complaint
                       </NavLink>
                     </li>
-                    <li className="nav-item">
+                    {/* <li className="nav-item">
                       <NavLink className="nav-link" to="/ccuperformance">
                         CCU Performance Report
                       </NavLink>
-                    </li>
+                    </li> */}
                    
                   </ul>
                 </div>
@@ -371,18 +371,18 @@ const Header = () => {
                     <li className="nav-item">
                       <NavLink
                         className="nav-link"
-                        to="/crmdetails"
+                        to="/allusers"
                       >
                        User
                       </NavLink>
                     </li>
                     <li className="nav-item">
-                      <a
+                    <NavLink
                         className="nav-link"
-                        to="crmdetails"
+                        to="/locations"
                       >
                         Locations
-                      </a>
+                      </NavLink>
                     </li>
                   </ul>
                 </div>

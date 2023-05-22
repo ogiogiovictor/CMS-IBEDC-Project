@@ -118,12 +118,13 @@ const Transformer = () => {
 
     console.log(dssData);
 
-    const customContent = (handleStartDateChange, handleEndDateChange, handleSubmit) => (
+    const customContent = (handleStartDateChange, handleEndDateChange, handleBusinessHubChange, 
+      handleStatus, handleFeeder, handleCustomer, handleInjection, handleEnergy, handleSubmit) => (
       <div>
         <p style={{ marginBottom: '10px' }}>
           <label>
             Start Date: &nbsp;
-            <input type="date"   onChange={handleStartDateChange} style={{ marginLeft: '10px' }} />
+            <input type="date"  onChange={handleStartDateChange} style={{ marginLeft: '10px' }} />
           </label>
           &nbsp; &nbsp;
           <label>
@@ -134,7 +135,7 @@ const Transformer = () => {
         <p style={{ marginBottom: '10px' }}>
           <label>
             Business Hub  &nbsp;
-            <select>
+            <select onChange={handleBusinessHubChange} name="business_hub">
             <option value="">Select Hub</option>
                 {dssData.length > 0 ? (
                   [...new Set(dssData.map(el => el.hub_name))].map(hubName => (
@@ -148,12 +149,18 @@ const Transformer = () => {
           &nbsp; &nbsp;
           <label>
             Status  &nbsp;
-            <select>
+            <select onChange={handleStatus} name="status">
             <option value="">Select Status</option>
             <option value="Active">Active</option>
             <option value="Inactive">Inactive</option>
             </select>
           </label>
+        </p>
+        <p>
+          <input type="checkbox" value="add_feeder" onChange={handleFeeder}  /> Feeder &nbsp;&nbsp;
+          <input type="checkbox" value="add_customers" onChange={handleCustomer} /> Customers &nbsp;&nbsp;
+          <input type="checkbox" value="add_inj_station" onChange={handleInjection} /> Injection SubStation &nbsp;&nbsp;
+          <input type="checkbox" value="add_energy" onChange={handleEnergy} /> Energy &nbsp;&nbsp;
         </p>
         <p>
           <button  className="btn btn-danger btn-xs"  type="button" onClick={handleSubmit}>
@@ -192,27 +199,38 @@ const Transformer = () => {
                   </Link>
                  
                   </h4>
-                  <form onSubmit={handleSearchSubmit}>
-                  <div class="form-group d-flex">
-                  
-                          <input type="text" 
-                          value={searchQuery} 
-                          onChange={(e) => setSearchQuery(e.target.value)} 
-                          name="search_dss"
-                          class="form-control" placeholder="Search Distribution Station..." />
 
-                          <input type="hidden"  value={hiddenFieldValue} 
-                          onChange={(e) => setHiddenFieldValue(e.target.value)}
-                           class="form-control" />
-                          <button type="submit" class="btn btn-primary ml-3">Search</button>
-                  
+                  <div class="row">
+                      <div class="col-md-10">
+                          <form onSubmit={handleSearchSubmit}>
+                            <div class="form-group d-flex">
+                        
+                                <input type="text" 
+                                value={searchQuery} 
+                                onChange={(e) => setSearchQuery(e.target.value)} 
+                                name="search_dss"
+                                class="form-control" placeholder="Search Distribution Station..." />
+
+                                <input type="hidden"  value={hiddenFieldValue} 
+                                onChange={(e) => setHiddenFieldValue(e.target.value)}
+                                class="form-control" />
+                                <button type="submit" class="btn btn-primary ml-3">Search</button>
+                            </div>
+                          </form>
+                      </div>
+
+                      <div class="col-md-2">
                           <button type="submit" className="btn btn-danger ml-4" onClick={openPopup}>
-                          Export(excel)
-                        </button>
-                    </div>
-                    </form>
+                                Export(excel)
+                          </button>
+                      </div>
+                  </div>
 
-                    <Popup isOpen={isOpen} onClose={closePopup} title="Advance Search" content={customContent} />
+                  
+
+                   
+
+                  <Popup isOpen={isOpen} onClose={closePopup} title="Advance Search (DSS)" content={customContent} />
 
                       
                   <div className="table-responsive">

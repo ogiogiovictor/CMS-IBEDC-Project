@@ -127,6 +127,7 @@ const NewCustomer = () => {
                     {/* <button className="btn btn-light">Cancel</button> */}
                       {/* <button className="btn btn-primary mr-2" disabled={isSubmitting}> {isSubmitting ? 'Submitting..' : 'Save'}</button> */}
                   </form> 
+                  
                 </div>
               </div>
             </div>

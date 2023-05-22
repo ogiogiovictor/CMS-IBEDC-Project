@@ -35,8 +35,18 @@ export const dtService = createApi({
           }),
         }),
 
+
+        // Create a new endpoint for the POST request
+        exportAssetDT: builder.mutation({
+          query: (requestData) => ({
+            url: `/${API_VERSION}/export_dt`,
+            method: "POST",
+            body: requestData, // the data you want to send in the request body
+          }),
+        }),
+
     }),
 });
 
 
-export const { useGetAllDistributionQuery, useGetDSSInfoQuery, useSearchAssetDTMutation } = dtService;
+export const { useGetAllDistributionQuery, useGetDSSInfoQuery, useSearchAssetDTMutation, useExportAssetDTMutation } = dtService;

@@ -37,6 +37,8 @@ import PowerUpDown from "./components/ami/powerupdown";
 import AddThirtyFeeder from "./components/feeder/addthirtyfeeder";
 import AddTransformer from "./components/dss/addtransfomer";
 import TransformerMap from "./components/dss/transformerMap";
+import Users from "./components/users/users";
+import Location from "./components/users/location";
 
 const App = () => {
   return (
@@ -131,6 +133,18 @@ const App = () => {
                   path="add_transfomer"
                   element={<AddTransformer />}
                   />
+
+                <Route
+                  path="allusers"
+                  element={<Users />}
+                  />
+
+                <Route
+                  path="locations"
+                  element={<Location />}
+                  />
+
+
 
                  
 

@@ -18,6 +18,8 @@ import { transmisionService } from "./services/transmission/transmissionService"
 import transmissionSlice from "../components/transmission/transmissionSlice";
 import { amiService } from "./services/ami/amiService";
 import amiSlice from "./services/ami/amiSlice";
+import { userService } from "./services/user/userService";
+import userSlice from "./services/user/userSlice";
 
 
 
@@ -32,6 +34,7 @@ const store = configureStore({
         payment: paymentSlice,
         transmission: transmissionSlice,
         ami: amiSlice,
+        user: userSlice,
         [authApi.reducerPath]: authApi.reducer,
         [customerService.reducerPath]: customerService.reducer,
         [billService.reducerPath]: billService.reducer,
@@ -41,6 +44,7 @@ const store = configureStore({
         [paymentService.reducerPath]: paymentService.reducer,
         [transmisionService.reducerPath]: transmisionService.reducer,
         [amiService.reducerPath]: amiService.reducer,
+        [userService.reducerPath]: userService.reducer,
     },
     middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -53,6 +57,7 @@ const store = configureStore({
         paymentService.middleware,
         transmisionService.middleware,
         amiService.middleware,
+        userService.middleware,
         ),
 });
   

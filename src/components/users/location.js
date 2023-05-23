@@ -8,7 +8,7 @@ const Location = () => {
             <div className="col-md-8 grid-margin stretch-card">
               <div className="card">
                 <div className="card-body">
-                  <h4 className="card-title">LIST OF LOCATION</h4>
+                  <h4 className="card-title">LIST OF LOCATION</h4> 
                   <p className="card-description">
                   <hr/>
                    All Locations By Type
@@ -21,6 +21,8 @@ const Location = () => {
                 </div>
               </div>
             </div>
+
+            
 
             <LocationCard />
 

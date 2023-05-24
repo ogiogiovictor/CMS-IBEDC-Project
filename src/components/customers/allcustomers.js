@@ -50,7 +50,7 @@ const AllCustomers = () => {
 
  // console.log(data);
 
-  const handleActionClick = ({ FAccountNo, DistributionID }) => {
+  const handleActionClick = ({ FAccountNo, DistributionID='null' }) => {
     navigate(`/customerinfo/${FAccountNo}/${DistributionID}`);
     window.scrollTo(0, 0);
   };

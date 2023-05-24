@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    ami: []
+    ami: [],
+    events: [],
 }
 
 const amiSlice = createSlice({
@@ -11,9 +12,13 @@ const amiSlice = createSlice({
 
         setAmi(state, {payload}){
             state.ami = payload;
+        },
+
+        setEvents(state, {payload}){
+            state.events = payload;
         }
     }
 });
 
-export const { setAmi  } = amiSlice.actions;
+export const { setAmi, setEvents  } = amiSlice.actions;
 export default amiSlice.reducer;

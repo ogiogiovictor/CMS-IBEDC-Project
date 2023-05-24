@@ -33,13 +33,13 @@ import DynamicData from "./components/layout/dynamicData";
 import PendingCustomer from "./components/customers/pendingcustomer";
 import AddFeeder from "./components/feeder/addfeeder";
 import MDACustomers from "./components/ami/mdacustomers";
-import PowerUpDown from "./components/ami/powerupdown";
 import AddThirtyFeeder from "./components/feeder/addthirtyfeeder";
 import AddTransformer from "./components/dss/addtransfomer";
 import TransformerMap from "./components/dss/transformerMap";
 import Users from "./components/users/users";
 import Location from "./components/users/location";
 import AddUser from "./components/users/adduser";
+import AmiEvents from "./components/ami/amievents";
 
 const App = () => {
   return (
@@ -121,8 +121,8 @@ const App = () => {
                 />
 
                 <Route
-                path="powerupdown"
-                element={<PowerUpDown />}
+                path="amievents"
+                element={<AmiEvents />}
                 />
 
                 <Route

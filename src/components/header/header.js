@@ -284,8 +284,8 @@ const Header = () => {
                       </NavLink>
                     </li>
                     <li className="nav-item">
-                      <NavLink className="nav-link" to="/powerupdown">
-                        Event Analysis
+                      <NavLink className="nav-link" to="/amievents">
+                        Events Analysis
                       </NavLink>
                     </li>
                     {/* <li className="nav-item">

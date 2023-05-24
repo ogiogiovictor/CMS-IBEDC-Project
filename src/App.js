@@ -39,6 +39,7 @@ import AddTransformer from "./components/dss/addtransfomer";
 import TransformerMap from "./components/dss/transformerMap";
 import Users from "./components/users/users";
 import Location from "./components/users/location";
+import AddUser from "./components/users/adduser";
 
 const App = () => {
   return (
@@ -143,6 +144,13 @@ const App = () => {
                   path="locations"
                   element={<Location />}
                   />
+
+                <Route
+                  path="adduser"
+                  element={<AddUser />}
+                  />
+
+
 
 
 

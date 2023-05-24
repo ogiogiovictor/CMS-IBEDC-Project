@@ -12,6 +12,8 @@ const DataTable = ({
   pageSize = 1,
   onPageChange = () => {},
   onActionClick = () => {},
+  Edit = false, // Optional prop for edit functionality
+  onEditClick = () => {}, // Add the onEditClick prop
 }) => {
   const [sortColumn, setSortColumn] = useState("");
   const [sortOrder, setSortOrder] = useState("");
@@ -27,6 +29,10 @@ const DataTable = ({
 
   const handleActionClick = (item) => {
     onActionClick(item);
+  };
+
+  const handleEditClick = (item) => {
+    onEditClick(item);
   };
 
   const sortedData = sortColumn
@@ -73,6 +79,17 @@ const DataTable = ({
                   >
                     View
                   </button>
+                  &nbsp;&nbsp;
+
+                  {Edit && (
+                    <button
+                      type="submit"
+                      className="btn btn-xs btn-primary"
+                      onClick={() => handleEditClick(item)} // Call the onEditClick function
+                    >
+                      Edit
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}

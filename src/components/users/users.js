@@ -1,5 +1,6 @@
 import React, {Fragment, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { useGetAllUserQuery } from "../../redux/services/user/userService";
 import { setUser } from "../../redux/services/user/userSlice";
 import PageLoader from "../spinner/loader";
@@ -36,6 +37,10 @@ const Users = () => {
 
       }
 
+      const handleEditClick = () => {
+
+      }
+
      
   return (
     <Fragment>
@@ -48,9 +53,16 @@ const Users = () => {
         <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">
           <div className="card">
             <div className="card-body">
+           
               <h4 className="card-title">
-                All Users
+             
+                All Users &nbsp;&nbsp;
+                <NavLink to="/adduser"> 
+                <button className="btn btn-xs btn-dark"><span className="icon-user-follow"></span> Add User</button>
+                </NavLink>
+               
               </h4>
+              
               <div class="form-group d-flex">
                 <input
                   type="text"
@@ -71,6 +83,8 @@ const Users = () => {
                     pageSize={data?.data?.per_page || 1}
                     onPageChange={(page) => setCurrentPage(page)}
                     onActionClick={handleActionClick}
+                    Edit
+                    onEditClick={handleEditClick}
                     />
               </div>
             </div>

@@ -9,7 +9,8 @@ export const amiService = createApi({
     endpoints: (builder) => ({
         getAMIService: builder.query({
             query: ({ pageNo }) => ({
-              url: `/${API_VERSION}/get_events?page=${pageNo}`,
+              //url: `/${API_VERSION}/get_events?page=${pageNo}`,
+              url: `/${API_VERSION}/get_all_connection?page=${pageNo}`,
               method: "GET",
             }),
             pollingInterval: 1800000, // 15 minutes

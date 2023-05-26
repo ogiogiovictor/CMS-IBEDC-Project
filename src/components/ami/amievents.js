@@ -18,19 +18,20 @@ const AmiEvents = () => {
   useEffect(() => {
     if(currentPage && data){
       refetch();
-      dispatch(setEvents(data.data.ami_data.data))
+      dispatch(setEvents(data?.data?.ami_data?.data))
     }
-  }, [data, currentPage, refetch, dispatch])
+  }, [data, currentPage, dispatch, refetch])
 
-  console.log(events);
+  console.log(data);
+  console.log(isSuccess);
 
   const columns = [
     { title: "MSNO", field: "MSNO" },
-    { title: "Consumption", field: "consumption" },
+    { title: "Consumption", field: "KWH_ABS" },
     { title: "AssetType", field: "AssetType" },
-    { title: "Region", field: "region" },
-    { title: "Business Hub", field: "business_hub" },
-    { title: "Begin Time", field: "BEGINTIME" },
+    { title: "Region", field: "Region" },
+    { title: "Business Hub", field: "BusinessHub" },
+    { title: "Begin Time", field: "SAVEDB_TIME" },
     { title: "Transformer", field: "Transformer" },
   ];
 

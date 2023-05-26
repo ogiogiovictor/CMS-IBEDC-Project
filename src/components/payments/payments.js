@@ -20,7 +20,7 @@ const Payments = () => {
 
   useEffect(() => {
     if (currentPage && data) {
-      refetch();
+     // refetch();
       dispatch(setPayment(data?.data));
       dispatch(setDataPayment(data?.data?.payments?.data));
     }

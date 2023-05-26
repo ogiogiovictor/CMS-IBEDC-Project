@@ -61,8 +61,8 @@ const Transformer = () => {
 //  }, [data, searchResult, dispatch, currentPage, type, updatedType, dssInfo]);
 
 
- console.log(data?.allDt?.data);
- console.log(dssData);
+//  console.log(data?.allDt?.data);
+//  console.log(dssData);
 
  //Handle cardclick and rerender page
   const handleTransformerClick = (elevenDt) => {
@@ -101,17 +101,22 @@ const Transformer = () => {
           type: hiddenFieldValue
         };
 
-        if(!payload.searchQuery){
+       
+
+        if(!payload.DT){
           return null;
         }
+
 
         try {
          
           const result = await postSearch(payload).unwrap();
           setCurrentPage(1);
-          dispatch(setDataDss(result.data.allDt.data));
+          console.log(result)
+          //dispatch(setDataDss(result.data.allDt.data));
+          dispatch(setDataDss(result?.allDt?.data));
           dispatch(setDss(result));
-          refetch();
+          //refetch();
 
         } catch (error) {
           console.log(error);

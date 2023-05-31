@@ -42,13 +42,27 @@ const Transformer = () => {
 
   useEffect(() => {
     if (currentPage && (data || searchResult)) {
-      //refetch();
+      refetch();
       dispatch(setDss(data || searchResult));
-      dispatch(setDataDss(data?.data?.allDt?.data));
-      type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
-      type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
+      dispatch(setDataDss(data?.allDt?.data || searchResult));
+      type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(data?.allDt?.data));
+      type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(data?.allDt?.data));
     }
- }, [data, searchResult, dispatch, currentPage, type, updatedType, dssInfo]);
+ }, [data, refetch, searchResult, dispatch, currentPage, type, updatedType, dssInfo]);
+
+//   useEffect(() => {
+//     if (currentPage && (data || searchResult)) {
+//       //refetch();
+//       dispatch(setDss(data || searchResult));
+//       dispatch(setDataDss(data?.data?.allDt?.data));
+//       type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
+//       type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
+//     }
+//  }, [data, searchResult, dispatch, currentPage, type, updatedType, dssInfo]);
+
+
+//  console.log(data?.allDt?.data);
+//  console.log(dssData);
 
  //Handle cardclick and rerender page
   const handleTransformerClick = (elevenDt) => {
@@ -83,21 +97,26 @@ const Transformer = () => {
 
     const performSearch = async (query) =>  {
         const payload = {
-          searchQuery: query,
-          hiddenField: hiddenFieldValue
+          DT: query,
+          type: hiddenFieldValue
         };
 
-        if(!payload.searchQuery){
+       
+
+        if(!payload.DT){
           return null;
         }
+
 
         try {
          
           const result = await postSearch(payload).unwrap();
           setCurrentPage(1);
-          dispatch(setDataDss(result.data.allDt.data));
+          console.log(result)
+          //dispatch(setDataDss(result.data.allDt.data));
+          dispatch(setDataDss(result?.allDt?.data));
           dispatch(setDss(result));
-          refetch();
+          //refetch();
 
         } catch (error) {
           console.log(error);
@@ -116,7 +135,6 @@ const Transformer = () => {
       { title: "Status", field: "Status" },
     ];
 
-    console.log(dssData);
 
     const customContent = (handleStartDateChange, handleEndDateChange, handleBusinessHubChange, 
       handleStatus, handleFeeder, handleCustomer, handleInjection, handleEnergy, handleSubmit) => (
@@ -137,7 +155,7 @@ const Transformer = () => {
             Business Hub  &nbsp;
             <select onChange={handleBusinessHubChange} name="business_hub">
             <option value="">Select Hub</option>
-                {dssData.length > 0 ? (
+                {dssData?.length > 0 ? (
                   [...new Set(dssData.map(el => el.hub_name))].map(hubName => (
                     <option key={hubName} value={hubName}>{hubName}</option>
                   ))
@@ -239,8 +257,8 @@ const Transformer = () => {
                     columns={columns}
                     pagination
                     currentPage={currentPage}
-                    totalCount={data?.data?.allDt?.total || 1}
-                    pageSize={data?.data?.allDt?.per_page || 1}
+                    totalCount={data?.allDt?.total || 1}
+                    pageSize={data?.allDt?.per_page || 1}
                     onPageChange={(page) => setCurrentPage(page)}
                     onActionClick={handleActionClick}
                     />

@@ -2,16 +2,23 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetCustomerDetailsByTypeQuery } from "../../redux/services/customer/customerService";
+import { useSearchAssetDTMutation } from "../../redux/services/dss/dtService";
 import { setAllCustomers, setPostpaidCards, setPrepaidCards, setFilterStatus, setFilteredCustomers  } from "../../redux/customer/customerSlice";
 import PageLoader from "../spinner/loader";
 import DataTable from "../datatable";
 import CustomerCard from "../createcustomer/customercard";
 import Popup from "../modal/popup";
+import { notify } from "../../utils/notify";
 
 const AllCustomers = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchText, setSearchText] = useState("");
   const [isOpen, setIsOpen] = useState(false); // State for popup
+
+  //Search Implementation
+  const [hiddenFieldValue, setHiddenFieldValue] = useState('customers');
+  const [searchResult, setSearchResult] = useState(null);
+
 
   const dispatch = useDispatch();
   const { customers, postpaidCards, prepaidCards } =
@@ -39,16 +46,47 @@ const AllCustomers = () => {
 
   useEffect(() => {
     if (currentPage && data) {
-      refetch();
+      //refetch();
       dispatch(setAllCustomers(data?.data?.customers?.data));
       filterStatus == null && dispatch(setAllCustomers(data?.data?.customers?.data));
       userStatus && dispatch(setAllCustomers(data?.data?.customers?.data));
       customerType === "prepaid" && dispatch(setPrepaidCards(data?.data?.prepaid));
       customerType === "postpaid" && dispatch(setPostpaidCards(data?.data?.postpaid));
     }
-  }, [data, dispatch, currentPage, refetch, customerType, filterStatus]);
+  }, [data, dispatch, refetch, currentPage, customerType, filterStatus]);
 
- // console.log(data);
+
+  //Searching...
+  const [postSearch ] = useSearchAssetDTMutation();
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    performSearch(searchText);
+  }
+
+
+  const performSearch = async (query) =>  { 
+    const payload = {
+      AccountNo: query,
+      type: hiddenFieldValue
+    };
+
+    if(!payload.AccountNo){
+      return null;
+    }
+    try {
+         
+      const result = await postSearch(payload).unwrap();
+      setCurrentPage(1);
+      dispatch(setAllCustomers(result));
+     // refetch();
+
+    } catch (error) {
+      notify("error", error.data.data);
+      console.log(error);
+      // Handle any error that occurs during the search
+    }
+  }
 
   const handleActionClick = ({ FAccountNo, DistributionID='null' }) => {
     navigate(`/customerinfo/${FAccountNo}/${DistributionID}`);
@@ -131,22 +169,40 @@ const AllCustomers = () => {
 
               </h4>
 
-              <div className="form-group d-flex">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Search Customers(s)..."
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
-                />
-                <button type="submit" className="btn btn-primary ml-3">
-                  Search
-                </button>
-                <button type="submit" className="btn btn-danger ml-4" onClick={openPopup}>
-                  Export(excel)
-                </button>
-               
+             
+              <div class="row">
+
+                      <div class="col-md-10">
+                        <form onSubmit={handleSearchSubmit}>
+                        <div className="form-group d-flex">
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="Search Customers(s)..."
+                              name="search_customers"
+                              value={searchText}
+                              onChange={(e) => setSearchText(e.target.value)}
+                            />
+                            <input type="hidden"  value={hiddenFieldValue} 
+                                            onChange={(e) => setHiddenFieldValue(e.target.value)}
+                                            class="form-control" />
+                            <button type="submit" className="btn btn-primary ml-3">
+                              Search
+                            </button>
+                            </div>
+                          </form>
+                      </div>
+
+
+                        <div  class="col-md-2">
+                        <button type="submit" className="btn btn-danger ml-4" onClick={openPopup}>
+                          Export(excel)
+                        </button>
+                        </div>
+
               </div>
+           
+               
 
               <Popup isOpen={isOpen} onClose={closePopup} title="Advance Search" content={customContent} />
 

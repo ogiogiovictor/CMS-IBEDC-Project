@@ -8,7 +8,7 @@ const PaymentCard = ({ payCard }) => {
         <div className="card bg-dark text-white border-0">
           <div className="card-body">
             <div className="d-flex align-items-center">
-              <i className="icon-user icon-lg"></i>
+              {/* <i className="icon-user icon-lg"></i> */}
               <div className="ml-4">
                 <h4 className="font-weight-light">Postpaid Payment</h4>
                 <h3 className="font-weight-light mb-3">{ ems_payment ?? 0}</h3>
@@ -22,7 +22,7 @@ const PaymentCard = ({ payCard }) => {
         <div className="card bg-primary text-white border-0">
           <div className="card-body">
             <div className="d-flex align-items-center">
-              <i className="link-icon icon-book-open icon-user icon-lg"></i>
+              {/* <i className="link-icon icon-book-open icon-user icon-lg"></i> */}
               <div className="ml-4">
                 <h4 className="font-weight-light">Prepaid Payments</h4>
                 <h3 className="font-weight-light mb-3">{ ecmi_payment ?? 0}</h3>
@@ -53,7 +53,7 @@ const PaymentCard = ({ payCard }) => {
         <div className="card bg-info text-white border-0">
           <div className="card-body">
             <div className="d-flex align-items-center">
-              <i className="icon-screen-desktop icon-lg"></i>
+              {/* <i className="icon-screen-desktop icon-lg"></i> */}
               <div className="ml-4">
                 <h4 className="font-weight-light">Today's Payments</h4>
                 <h3 className="font-weight-light mb-3">{ today_payments ?? 0}</h3>

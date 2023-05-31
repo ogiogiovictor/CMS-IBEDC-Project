@@ -13,17 +13,17 @@ const MDACustomers = () => {
   const { ami } = useSelector((state) => state.ami) || [];
   const dispatch = useDispatch();
 
-  const {data, isError, isFetching, isSuccess, isUninitialized, refetch} = useGetAMIServiceQuery(
+  const {data, isError, isFetching, isSuccess, isUninitialized} = useGetAMIServiceQuery(
     { pageNo: currentPage },  //{ cacheTime: 0 }
   );
 
 
   useEffect(() => {
     if(currentPage && data){
-      refetch();
+     // refetch();
       dispatch(setAmi(data.data))
     }
-  }, [data, currentPage, refetch])
+  }, [data, currentPage])
   console.log(ami)
 
   const columns = [

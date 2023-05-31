@@ -1,11 +1,26 @@
 import React, { Fragment, useState  } from 'react';
+import { useRegisterUserMutation } from '../../redux/services/user/userService';
+import AuthorityDropdown from '../../redux/services/user/authorityDropdown';
 
 const AddUser = () => {
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [values, setValues] = useState({
     name: '',
+    email: '',
+    password: '',
+    authority: '',
+    region: '',
+    business_hub: '',
+    service_center: '',
+
   });
+
+  const [selectedAuthority, setSelectedAuthority] = useState('');
+
+  const onSelectChangeAuthorityHandler = (event) => {
+    setSelectedAuthority(event.target.value);
+  };
 
   const onChangeHandler = (e) => {
     setValues({...values, [e.target.name]: e.target.value})
@@ -14,6 +29,44 @@ const AddUser = () => {
   const postUser = (e) => {
 
   }
+
+  const region = (<div className="form-group">
+  <label htmlFor="surname">Region</label>
+   <select value={values.region} className="form-control" onChange={onChangeHandler}>
+     <option value="">Select Region</option>
+     <option value="business_hub">Region</option>
+     <option value="business_hub">Ogun</option>
+     <option value="business_hub">Oyo</option>
+     <option value="business_hub">Kwara</option>
+     <option value="business_hub">Osun</option>
+   </select>
+  <small>Authority Cannot be empty</small>
+</div>);
+
+const businessHub = (
+  <div className="form-group">
+    <label htmlFor="surname">Business Hub</label>
+    <select value={values.business_hub} className="form-control" onChange={onChangeHandler}>
+      <option value="business_hub">Edd</option>
+      <option value="business_hub">Ijeun</option>
+      <option value="business_hub">Apata</option>
+    </select>
+    <small>Authority Cannot be empty</small>
+  </div>
+);
+
+const serviceCenter = (
+  <div className="form-group">
+  <label htmlFor="surname">Service Centre</label>
+   <select value={values.service_center} className="form-control" onChange={onChangeHandler}>
+     <option value="business_hub">Region</option>
+     <option value="business_hub">Business Hub</option>
+     <option value="business_hub">Service Center</option>
+   </select>
+  <small>Authority Cannot be empty</small>
+</div>
+);
+
  
     return (
         <div className="row">
@@ -68,42 +121,77 @@ const AddUser = () => {
                        <small>User Password Cannot be empty</small>
                      </div>
 
-                     <div className="form-group">
+                     <AuthorityDropdown onChange={onSelectChangeAuthorityHandler} value={selectedAuthority} />
+
+
+                     {/* <div className="form-group">
                        <label htmlFor="surname">Authority</label>
-                        <select>
-                          <option>Region</option>
-                          <option>Business Hub</option>
-                          <option>Service Center</option>
+                        <select  className="form-control" onChange={onSelectChangeAuthorityHandler} value={selectedAuthority}>
+                          <option value="region">Region</option>
+                          <option value="business_hub">Business Hub</option>
+                          <option value="service_center">Service Center</option>
                         </select>
                        <small>Authority Cannot be empty</small>
-                     </div>
+                     </div> */}
 
-                     <div className="form-group">
-                       <label htmlFor="surname">Region</label>
-                        <select>
-                          <option>Region</option>
-                          <option>Business Hub</option>
-                          <option>Service Center</option>
-                        </select>
-                       <small>Authority Cannot be empty</small>
-                     </div>
+                     {selectedAuthority === 'region' && (
+                      <Fragment>
+                      {region}
+                    </Fragment>
+                    //  <div className="form-group">
+                    //    <label htmlFor="surname">Region</label>
+                    //     <select value={values.region} className="form-control" onChange={onChangeHandler}>
+                    //       <option value="">Select Region</option>
+                    //       <option value="business_hub">Region</option>
+                    //       <option value="business_hub">Business Hub</option>
+                    //       <option value="business_hub">Service Center</option>
+                    //     </select>
+                    //    <small>Authority Cannot be empty</small>
+                    //  </div>
+                     )}
 
-                     <div className="form-group">
-                       <label htmlFor="surname">Business Hub</label>
-                        <select>
-                          <option>Region</option>
-                          <option>Business Hub</option>
-                          <option>Service Center</option>
-                        </select>
-                       <small>Authority Cannot be empty</small>
-                     </div>
+                     {selectedAuthority === 'business_hub' && (
+                       <Fragment>
+                       {region}
+                       {businessHub}
+                     </Fragment>
+                    //  <div className="form-group">
+                    //    <label htmlFor="surname">Business Hub</label>
+                    //     <select value={values.business_hub} className="form-control" onChange={onChangeHandler}>
+                    //       <option value="business_hub">Region</option>
+                    //       <option value="business_hub">Business Hub</option>
+                    //       <option value="business_hub">Service Center</option>
+                    //     </select>
+                    //    <small>Authority Cannot be empty</small>
+                    //  </div>
+                     )}
 
-                     <div className="form-group">
-                       <label htmlFor="surname">Service Centre</label>
-                        <select>
-                          <option>Region</option>
-                          <option>Business Hub</option>
-                          <option>Service Center</option>
+                  {selectedAuthority === 'service_center' && (
+                    <Fragment>
+                       {region}
+                       {businessHub}
+                      {serviceCenter}
+                    </Fragment>
+                    //  <div className="form-group">
+                    //    <label htmlFor="surname">Service Centre</label>
+                    //     <select value={values.service_center} className="form-control" onChange={onChangeHandler}>
+                    //       <option value="business_hub">Region</option>
+                    //       <option value="business_hub">Business Hub</option>
+                    //       <option value="business_hub">Service Center</option>
+                    //     </select>
+                    //    <small>Authority Cannot be empty</small>
+                    //  </div>
+                  )}
+
+
+
+                  <div className="form-group">
+                       <label htmlFor="surname">Select Role</label>
+                        <select value={values.service_center} className="form-control" onChange={onChangeHandler}>
+                          <option value="">Select</option>
+                          <option value="business_hub">User</option>
+                          <option value="business_hub">Teamlead</option>
+                          <option value="business_hub">Admin</option>
                         </select>
                        <small>Authority Cannot be empty</small>
                      </div>

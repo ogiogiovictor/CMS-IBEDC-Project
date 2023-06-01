@@ -15,9 +15,22 @@ export const userService = createApi({
             pollingInterval: 900000, // 15 minutes
           }),
 
+
+          registerUser: builder.mutation({
+            query: (requestData) => ({
+              url: `/${API_VERSION}/reg_users`,
+              method: "POST",
+              body: requestData,
+            }),
+          }),
+            onError: (error) => {
+              throw new Error(error)
+              //console.error(error);
+            },
+
        
      })
 
 });
 
-export const { useGetAllUserQuery } = userService;
+export const { useGetAllUserQuery, useRegisterUserMutation } = userService;

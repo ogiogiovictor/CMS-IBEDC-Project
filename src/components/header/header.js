@@ -16,11 +16,57 @@ const Header = () => {
     pollingInterval: 900000,
   });
 
+ 
+  useEffect(() => {
+    if (data && !localStorage.getItem("userMenu")) {
+      localStorage.setItem("userMenu", JSON.stringify(data));
+    } else if (data) {
+      const storedData = JSON.parse(localStorage.getItem("userMenu"));
+      if (storedData && JSON.stringify(storedData) !== JSON.stringify(data)) {
+        localStorage.setItem("userMenu", JSON.stringify(data));
+      }
+    }
+  }, [data]);
+  
+
   useEffect(() => {
     if (data && data?.data?.name) {
       dispatch(setCredentials(data?.data));
     }
   }, [data, dispatch]);
+
+
+  const storedData = JSON.parse(localStorage.getItem("userMenu"));
+  console.log(storedData.data.menus)
+
+  const renderSubmenuItems = (submenus) => {
+    return submenus.map((submenu) => (
+      <li className="nav-item" key={submenu.id}>
+        <NavLink className="nav-link" to={submenu.menu_url}>
+          {submenu.name}
+        </NavLink>
+      </li>
+    ));
+  };
+
+
+  const renderMenuItems = () => {
+    return storedData.data.menus.map((menu) => (
+      <li className="nav-item" key={menu.id}>
+        <a href="#" className="nav-link">
+          <i className="link-icon icon-disc"></i>
+          <span className="menu-title">{menu.menu_name}</span>
+          <i className="menu-arrow"></i>
+        </a>
+        <div className="submenu">
+          <ul className="submenu-item">
+            {renderSubmenuItems(menu.submenu)}
+          </ul>
+        </div>
+      </li>
+    ));
+  };
+
 
   return isFetching ? (
     <PageLoader />
@@ -171,7 +217,9 @@ const Header = () => {
                 </NavLink>
               </li>
 
-              <li className="nav-item">
+          {renderMenuItems()}
+
+              {/* <li className="nav-item">
                 <a href="#" className="nav-link">
                   <i className="link-icon icon-disc"></i>
                   <span className="menu-title">Customers</span>
@@ -211,9 +259,10 @@ const Header = () => {
                     </li>
                   </ul>
                 </div>
-              </li>
+              </li> */}
 
-              <li className="nav-item">
+
+               {/* <li className="nav-item">
                 <a href="#" className="nav-link">
                   <i className="link-icon icon-book-open"></i>
                   <span className="menu-title">Assets</span>
@@ -237,17 +286,12 @@ const Header = () => {
                         Transmission Sub Stations
                       </NavLink>
                     </li>
-                    {/* <li className="nav-item">
-                      <NavLink className="nav-link" to="/powertransformer">
-                        Power Transformer
-                      </NavLink>
-                    </li> */}
                     
                   </ul>
                 </div>
-              </li>
+              </li>  */}
 
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <a href="#" className="nav-link">
                   <i className="link-icon icon-pie-chart"></i>
                   <span className="menu-title">Customer Complaint</span>
@@ -260,17 +304,11 @@ const Header = () => {
                         Complaint
                       </NavLink>
                     </li>
-                    {/* <li className="nav-item">
-                      <NavLink className="nav-link" to="/ccuperformance">
-                        CCU Performance Report
-                      </NavLink>
-                    </li> */}
-                   
                   </ul>
                 </div>
-              </li>
+              </li> */}
 
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <a href="#" className="nav-link">
                   <i className="link-icon icon-wallet"></i>
                   <span className="menu-title">Events</span>
@@ -288,49 +326,14 @@ const Header = () => {
                         Events Analysis
                       </NavLink>
                     </li>
-                    {/* <li className="nav-item">
-                      <NavLink className="nav-link" to="/billdistribution">
-                       Energy Reading
-                      </NavLink>
-                    </li> */}
-                    
-                  </ul>
-                </div>
-              </li>
-
-              {/* <li className="nav-item">
-                <a href="#" className="nav-link">
-                  <i className="link-icon icon-calculator"></i>
-                  <span className="menu-title">Staff</span>
-                  <i className="menu-arrow"></i>
-                </a>
-                <div className="submenu">
-                  <ul className="submenu-item">
-                    <li className="nav-item">
-                      <NavLink className="nav-link" to="/ibedcstaff">
-                        IBEDC Staff
-                      </NavLink>
-                    </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link" to="/ibedcstaff">
-                        Outsourced Staff
-                      </NavLink>
-                    </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link" to="/ibedcstaff">
-                        Leave Management
-                      </NavLink>
-                    </li>
-                    <li className="nav-item">
-                      <NavLink className="nav-link" to="/ibedcstaff">
-                        Reports
-                      </NavLink>
-                    </li>
                   </ul>
                 </div>
               </li> */}
 
-              <li className="nav-item">
+
+
+
+              {/* <li className="nav-item">
                 <a href="#" className="nav-link">
                   <i className="link-icon icon-disc"></i>
                   <span className="menu-title">Approvals</span>
@@ -356,11 +359,10 @@ const Header = () => {
                     </li>
                   </ul>
                 </div>
-              </li>
+              </li> */}
+  
 
-              
-
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <a href="#" className="nav-link">
                   <i className="link-icon icon-docs"></i>
                   <span className="menu-title">Administration</span>
@@ -386,7 +388,9 @@ const Header = () => {
                     </li>
                   </ul>
                 </div>
-              </li>
+              </li> */}
+
+
             </ul>
           </div>
         </div>

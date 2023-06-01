@@ -50,7 +50,9 @@ const PendingCustomer = () => {
        <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">
          <div className="card">
            <div className="card-body">
-             <h4 className="card-title">Pending CRMD (customers)</h4>
+             <h4 className="card-title">Pending CRMD (customers) &nbsp;
+              <a class="btn btn-xs btn-primary" href="">My Approvals</a>
+             </h4>
            
              <div class="form-group d-flex">
                           <input type="text" class="form-control" placeholder="Search Bills(s)..." />

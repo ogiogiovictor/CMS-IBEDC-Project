@@ -1,7 +1,7 @@
 import React from "react";
 
 const PaymentCard = ({ payCard }) => {
-  const { ecmi_payment, ems_payment, total_payments, today_payments, spec_bills } = payCard;
+  const { ecmi_payment, ems_payment, total_payments, today_payments, spec_bills, spec_bill_lastMonth } = payCard;
   return (
     <div className="row">
       <div className="col-md-6 col-lg-3 grid-margin stretch-card">
@@ -57,6 +57,7 @@ const PaymentCard = ({ payCard }) => {
               <div className="ml-4">
                 <h4 className="font-weight-light">Today's Payments</h4>
                 <h3 className="font-weight-light mb-3">{ today_payments ?? 0}</h3>
+                <small class="badge badge-dark">Spectrum Bill Payment(Last Month):<br/> {spec_bill_lastMonth}</small>
               </div>
             </div>
           </div>

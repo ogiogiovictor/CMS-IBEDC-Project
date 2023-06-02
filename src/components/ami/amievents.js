@@ -18,12 +18,13 @@ const AmiEvents = () => {
 
   useEffect(() => {
     if(currentPage && data){
-      refetch();
+     // refetch();
       dispatch(setEvents(data?.data?.ami_data?.data))
     }
-  }, [data, currentPage, dispatch, refetch])
+  }, [data, currentPage, dispatch])
 
-  console.log(data.data.group);
+  console.log(data);
+  //console.log(data.data.group);
   //console.log(events);
   //console.log(isSuccess);
 
@@ -52,7 +53,7 @@ const AmiEvents = () => {
 
           {isUninitialized ? <PageLoader /> : ''}
 
-          {!isFetching ? <PageLoader /> : 
+          {isFetching ? <PageLoader /> : 
             
         <div className="row">
        <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">
@@ -80,8 +81,8 @@ const AmiEvents = () => {
                  columns={columns}
                  pagination
                  currentPage={currentPage}
-                 totalCount={data?.data?.ami_data?.data?.total || 1}
-                 pageSize={data?.data?.ami_data?.data?.per_page || 1}
+                 totalCount={data?.data?.ami_data?.total || 1}
+                 pageSize={data?.data?.ami_data?.per_page || 1}
                  onPageChange={(page) => setCurrentPage(page)}
                  onActionClick={handleActionClick}
                 />

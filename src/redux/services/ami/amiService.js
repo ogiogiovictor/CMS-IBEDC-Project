@@ -28,10 +28,10 @@ export const amiService = createApi({
             }),
             pollingInterval: 1800000, // 15 minutes
             cacheTime: 1800000, // 3 minutes
-            cacheOptions: {
-                // cache results for 5 minutes
-                ttl: 3000000,
-            },
+            // cacheOptions: {
+            //     // cache results for 5 minutes
+            //     ttl: 3000000,
+            // },
           }),
 
     }),

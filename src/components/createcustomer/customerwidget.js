@@ -43,6 +43,16 @@ const CustomerWidget = ({ customerInfo }) => {
     { title: "Processed", field: "Processed" },
   ];
 
+  const customePrepaidColumns = [
+    { title: "Date", field: "TransactionDateTime" },
+    { title: "AccountNo", field: "AccountNo" },
+    { title: "Meter No", field: "MeterNo" },
+    { title: "Business Hub", field: "BUID" },
+    { title: "Amount", field: "Amount" },
+    { title: "Units", field: "Units" },
+    { title: "Cost Unit", field: "CostOfUnits" },
+  ]
+
 
   const customerBillsColumns = [
     { title: "Bill Date", field: "Billdate" },
@@ -82,7 +92,7 @@ const CustomerWidget = ({ customerInfo }) => {
             <div className="card-body">
               <h4 className="card-title">
                 {customerInfo?.FirstName} {customerInfo?.Surname}{" "}
-                {customerInfo?.OtherNames} (360 Overview)
+                {customerInfo?.OtherNames} (360 Overview) - {customerInfo?.AccountType}
               </h4>
               <Link onClick={goBack} class="btn btn-info btn-xs">
                 <i class="icon-action-undo"></i>
@@ -268,7 +278,7 @@ const CustomerWidget = ({ customerInfo }) => {
                           </button>
                         </div>
 
-                        {customerInfo?.payments?.length !== 0 ? (
+                        {customerInfo?.payments?.length !== 0  &&  customerInfo?.AccountType == 'Postpaid' ? (
                           <DataTable
                             data={customerInfo?.payments}
                             columns={customePaymentsColumns}
@@ -279,8 +289,24 @@ const CustomerWidget = ({ customerInfo }) => {
                             onActionClick={handleActionClick}
                           />
                         ) : (
-                          <p className="text-center">No Payments Found</p>
+                          <p className="text-center">&nbsp;</p>
                         )}
+
+                      {customerInfo?.transactions?.length !== 0  &&  customerInfo?.AccountType == 'Prepaid' ? (
+                          <DataTable
+                            data={customerInfo?.transactions}
+                            columns={customePrepaidColumns}
+                            pagination
+                            currentPage={1}
+                            totalCount={1}
+                            pageSize={1}
+                            onActionClick={handleActionClick}
+                          />
+                        ) : (
+                          <p className="text-center">&nbsp;</p>
+                        )}
+
+
                       </div>
 
                       <div

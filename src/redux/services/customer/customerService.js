@@ -25,8 +25,8 @@ export const customerService = createApi({
     }),
 
     getCustomerInfo: builder.query({
-      query: ({ FAccount, DistributionID }) => ({
-        url: `/${API_VERSION}/customer360/${FAccount}/${DistributionID}`,
+      query: ({ FAccount, DistributionID, AccountType, MeterNo }) => ({
+        url: `/${API_VERSION}/customer360/${FAccount}/${DistributionID}/${AccountType}/${MeterNo}`,
         method: "GET",
       }),
     }),

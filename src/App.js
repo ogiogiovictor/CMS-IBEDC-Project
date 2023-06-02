@@ -84,7 +84,7 @@ const App = () => {
               <Route path="/crmd" element={<CustomerRecord />} />
               
               <Route
-                path="/customerinfo/:FAccount/:DistributionID"
+                path="/customerinfo/:FAccount/:DistributionID/:AccountType/:MeterNo"
                 element={<CustomerInfo />}
               />  
                <Route

@@ -4,6 +4,7 @@ import { useGetAmiEventsQuery } from '../../redux/services/ami/amiService';
 import { setEvents } from '../../redux/services/ami/amiSlice';
 import PageLoader from "../spinner/loader";
 import DataTable from '../datatable';
+import EventCard from './eventcards';
 
 const AmiEvents = () => {
 
@@ -22,8 +23,9 @@ const AmiEvents = () => {
     }
   }, [data, currentPage, dispatch, refetch])
 
-  console.log(data);
-  console.log(isSuccess);
+  console.log(data.data.group);
+  //console.log(events);
+  //console.log(isSuccess);
 
   const columns = [
     { title: "MSNO", field: "MSNO" },
@@ -40,10 +42,13 @@ const AmiEvents = () => {
        window.scrollTo(0, 0);
      };
 
-
+   
 
     return (
         <Fragment>
+
+         { isSuccess === true ? ( <EventCard  cardData={data}/>) : '' }
+         
 
           {isUninitialized ? <PageLoader /> : ''}
 
@@ -53,7 +58,18 @@ const AmiEvents = () => {
        <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">
          <div className="card">
            <div className="card-body">
-             <h4 className="card-title">Events Analysis</h4>
+             <h4 className="card-title">Events Analysis
+             <div className="btn  btn-fw">
+                     <select className="form-control">
+                        <option value="">Select Type</option>
+                        {data.data.group.map((eventName) => (
+                          <option value={eventName.AssetType}>{eventName.AssetType}({eventName.total})</option>
+                        ))
+                      }
+                        
+                    </select> 
+                </div>
+             </h4>
              <div class="form-group d-flex">
                           <input type="text" class="form-control" placeholder="Search Customer(s)..." />
                           <button type="submit" class="btn btn-primary ml-3">Search</button>

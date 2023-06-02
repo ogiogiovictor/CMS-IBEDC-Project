@@ -78,7 +78,7 @@ const AllCustomers = () => {
          
       const result = await postSearch(payload).unwrap();
       setCurrentPage(1);
-      dispatch(setAllCustomers(result));
+      dispatch(setAllCustomers(result.data));
      // refetch();
 
     } catch (error) {
@@ -88,8 +88,10 @@ const AllCustomers = () => {
     }
   }
 
-  const handleActionClick = ({ FAccountNo, DistributionID='null' }) => {
-    navigate(`/customerinfo/${FAccountNo}/${DistributionID}`);
+  const handleActionClick = ({ FAccountNo, DistributionID, AccountType, MeterNo }) => {
+    const distributionIDParam = DistributionID ? DistributionID : 'null';
+    const MeterNumber = MeterNo ? MeterNo : 'null';
+    navigate(`/customerinfo/${FAccountNo}/${distributionIDParam}/${AccountType}/${MeterNumber}`);
     window.scrollTo(0, 0);
   };
 
@@ -100,7 +102,7 @@ const AllCustomers = () => {
     { title: "FirstName", field: "FirstName" },
     { title: "Account Number", field: "AccountNo" },
     { title: "Business Hub", field: "BusinessHub" },
-    // { title: "Service Center", field: "service_center" },
+   // { title: "MeterNo", field: "MeterNo" },
     { title: "DSS ID", field: "DistributionID" },
     { title: "Status", field: "StatusCode" },
   ];

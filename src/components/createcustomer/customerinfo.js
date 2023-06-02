@@ -8,11 +8,11 @@ import CustomerWidget from "./customerwidget";
 
 const CustomerInfo = () => {
   const dispatch = useDispatch();
-  const { FAccount, DistributionID } = useParams();
+  const { FAccount, DistributionID, AccountType, MeterNo } = useParams();
   const { customerInfo } = useSelector((state) => state.customer) || {};
 
   const { data, isFetching } = useGetCustomerInfoQuery(
-    { FAccount, DistributionID },
+    { FAccount, DistributionID, AccountType, MeterNo },
     "",
     { pollingInterval: 900000 }
   );

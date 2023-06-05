@@ -17,6 +17,7 @@ const AddUser = () => {
     region: '',
     business_hub: '',
     service_center: '',
+    role: '',
 
   });
 
@@ -29,10 +30,9 @@ const AddUser = () => {
 
     useEffect(() => {
     if (data) {
-     // refetch();
       dispatch(setRole(data));
     }
- }, [data, dispatch ]);
+ }, [data ]);
 
 
  console.log(data);
@@ -59,8 +59,11 @@ const AddUser = () => {
       name: values.name,
       password: values.password,
       region: values.region,
-      service_center: values.service_center
+      service_center: values.service_center,
+      role: values.role,
+      level: `${values.region}, ${values.business_hub}, ${values.service_center}`,
     }
+
 
     if(!idata.authority){
       notify("error", "Please Select Authority");
@@ -70,6 +73,12 @@ const AddUser = () => {
 
     if(!idata.email || !idata.name){
       notify("error", "Please enter email and name");
+      setIsProcessing(false);
+      return;
+    }
+
+    if(!idata.role){
+      notify("error", "Please Select Role");
       setIsProcessing(false);
       return;
     }
@@ -91,13 +100,13 @@ const AddUser = () => {
 
   const region = (<div className="form-group">
   <label htmlFor="region">Region</label>
-   <select value={values.region} name="region" className="form-control"  onChange={onChangeHandler}>
+   <select  name="region" className="form-control"  onChange={onChangeHandler}>
      <option value="">Select Region</option>
-     <option value="business_hub">Region</option>
-     <option value="business_hub">Ogun</option>
-     <option value="business_hub">Oyo</option>
-     <option value="business_hub">Kwara</option>
-     <option value="business_hub">Osun</option>
+     <option value="oyo">Oyo</option>
+     <option value="ogun">Ogun</option>
+     <option value="oyo">Oyo</option>
+     <option value="kwara">Kwara</option>
+     <option value="osun">Osun</option>
    </select>
   <small>Authority Cannot be empty</small>
 </div>);
@@ -105,10 +114,11 @@ const AddUser = () => {
 const businessHub = (
   <div className="form-group">
     <label htmlFor="surname">Business Hub</label>
-    <select value={values.business_hub} name="business_hub" className="form-control" onChange={onChangeHandler}>
-      <option value="business_hub">Edd</option>
-      <option value="business_hub">Ijeun</option>
-      <option value="business_hub">Apata</option>
+    <select  name="business_hub" className="form-control" onChange={onChangeHandler}>
+      <option value="">Select</option>
+      <option value="Ede">Ede</option>
+      <option value="Ijeun">Ijeun</option>
+      <option value="Apata">Apata</option>
     </select>
     <small>Authority Cannot be empty</small>
   </div>
@@ -117,7 +127,7 @@ const businessHub = (
 const serviceCenter = (
   <div className="form-group">
   <label htmlFor="surname">Service Centre</label>
-   <select value={values.service_center} name="service_center" className="form-control" onChange={onChangeHandler}>
+   <select name="service_center" className="form-control" onChange={onChangeHandler}>
      <option value="business_hub">Region</option>
      <option value="business_hub">Business Hub</option>
      <option value="business_hub">Service Center</option>
@@ -209,12 +219,12 @@ const serviceCenter = (
 
 
                   <div className="form-group">
-                       <label htmlFor="surname">Select Role</label>
-                        <select value={values.service_center} className="form-control" onChange={onChangeHandler}>
+                       <label htmlFor="role">Select Role</label>
+                        <select required value={values.role} name="role" className="form-control" onChange={onChangeHandler}>
                           <option value="">Select</option>
-                          <option value="business_hub">User</option>
-                          <option value="business_hub">Teamlead</option>
-                          <option value="business_hub">Admin</option>
+                          {data?.data?.map((role) => (
+                            <option key={role.id} value={role.name}>{role.name}</option>
+                          ))}
                         </select>
                        <small>Authority Cannot be empty</small>
                      </div>

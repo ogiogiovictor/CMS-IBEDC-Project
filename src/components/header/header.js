@@ -37,10 +37,10 @@ const Header = () => {
 
 
   const storedData = JSON.parse(localStorage.getItem("userMenu"));
-  console.log(storedData.data.menus)
+  console.log(storedData)
 
   const renderSubmenuItems = (submenus) => {
-    return submenus.map((submenu) => (
+    return submenus?.map((submenu) => (
       <li className="nav-item" key={submenu.id}>
         <NavLink className="nav-link" to={submenu.menu_url}>
           {submenu.name}
@@ -51,7 +51,7 @@ const Header = () => {
 
 
   const renderMenuItems = () => {
-    return storedData.data.menus.map((menu) => (
+    return storedData?.data?.menus?.map((menu) => (
       <li className="nav-item" key={menu.id}>
         <a href="#" className="nav-link">
           <i className="link-icon icon-disc"></i>

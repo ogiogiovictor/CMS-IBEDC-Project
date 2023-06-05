@@ -1,6 +1,9 @@
-import React, { Fragment, useState  } from 'react';
-import { useRegisterUserMutation } from '../../redux/services/user/userService';
+import React, { Fragment, useState, useEffect  } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { useRegisterUserMutation, useGetRoleQuery } from '../../redux/services/user/userService';
+import { setRole } from '../../redux/auth/authSlice';
 import AuthorityDropdown from '../../redux/services/user/authorityDropdown';
+import { notify } from '../../utils/notify';
 //import { useForm } from 'react-hook-form';
 
 const AddUser = () => {
@@ -19,8 +22,23 @@ const AddUser = () => {
 
   const [selectedAuthority, setSelectedAuthority] = useState('');
 
-  const onSelectChangeAuthorityHandler = (event) => {
-    setSelectedAuthority(event.target.value);
+  const userRole =  useSelector((state) => state.user.roles);
+  const dispatch = useDispatch();
+
+  const { data, isFetching } = useGetRoleQuery();
+
+    useEffect(() => {
+    if (data) {
+     // refetch();
+      dispatch(setRole(data));
+    }
+ }, [data, dispatch ]);
+
+
+ console.log(data);
+
+  const onSelectChangeAuthorityHandler = (e) => {
+    setSelectedAuthority(e.target.value);
   };
 
   const onChangeHandler = (e) => {
@@ -28,12 +46,47 @@ const AddUser = () => {
   }
 
   //const { register, handleSubmit, errors } = useForm();
+  const [ registerUser ] = useRegisterUserMutation();
 
-  const postUser = (e) => {
+  const postUser = async (e) => {
     e.preventDefault();
     setIsProcessing(true);
-    const { name, email, password, authority, region, business_hub, service_center } = values;
-    console.log(values);
+   // const { name, email, password, authority, region, business_hub, service_center } = values;
+    const idata = { 
+      authority: selectedAuthority,
+      business_hub: values.business_hub,
+      email: values.email,
+      name: values.name,
+      password: values.password,
+      region: values.region,
+      service_center: values.service_center
+    }
+
+    if(!idata.authority){
+      notify("error", "Please Select Authority");
+      setIsProcessing(false);
+      return;
+    }
+
+    if(!idata.email || !idata.name){
+      notify("error", "Please enter email and name");
+      setIsProcessing(false);
+      return;
+    }
+
+
+    try {
+
+      const result =  await registerUser(idata).unwrap();
+      console.log(result);
+
+    }catch(e) {
+      setIsProcessing(false);
+      console.log(e);
+    }
+
+    
+    
   }
 
   const region = (<div className="form-group">
@@ -64,7 +117,7 @@ const businessHub = (
 const serviceCenter = (
   <div className="form-group">
   <label htmlFor="surname">Service Centre</label>
-   <select value={values.service_center} className="form-control" onChange={onChangeHandler}>
+   <select value={values.service_center} name="service_center" className="form-control" onChange={onChangeHandler}>
      <option value="business_hub">Region</option>
      <option value="business_hub">Business Hub</option>
      <option value="business_hub">Service Center</option>

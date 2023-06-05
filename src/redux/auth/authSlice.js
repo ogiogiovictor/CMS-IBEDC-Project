@@ -16,6 +16,7 @@ const initialState = {
   error: null,
   success: false,
   dashboardStats: [],
+  roles: [],
 };
 
 const authSlice = createSlice({
@@ -36,6 +37,9 @@ const authSlice = createSlice({
     setDashboardStats: (state, { payload }) => {
       state.dashboardStats = payload;
     },
+    setRole: (state, {payload}) => {
+      state.roles = payload;
+    }
   },
   extraReducers: {
     // login user
@@ -54,5 +58,5 @@ const authSlice = createSlice({
     },
   },
 });
-export const { logout, setCredentials, setDashboardStats } = authSlice.actions;
+export const { logout, setCredentials, setDashboardStats, setRole } = authSlice.actions;
 export default authSlice.reducer;

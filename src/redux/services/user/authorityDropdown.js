@@ -1,10 +1,11 @@
 import React from 'react';
 
 const AuthorityDropdown = ({ onChange, value }) => {
+  console.log(value)
   return (
     <div className="form-group">
       <label htmlFor="authority">Authority</label>
-      <select className="form-control" name="value" onChange={onChange} value={value}>
+      <select className="form-control" name={value} onChange={onChange} value={value}>
         <option value="" selected>Select Authority</option>
         <option value="region">Region</option>
         <option value="business_hub">Business Hub</option>

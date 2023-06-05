@@ -13,7 +13,7 @@ export const userService = createApi({
               method: "GET",
             }),
             pollingInterval: 900000, // 15 minutes
-          }),
+        }),
 
 
           registerUser: builder.mutation({
@@ -28,9 +28,18 @@ export const userService = createApi({
               //console.error(error);
             },
 
+      getRole: builder.query({
+          query: () => ({
+              url: `/${API_VERSION}/roles/get_roles`,
+              method: "GET",
+          }),
+          pollingInterval: 900000, // 15 minutes
+      }),
+  
+
        
      })
 
 });
 
-export const { useGetAllUserQuery, useRegisterUserMutation } = userService;
+export const { useGetAllUserQuery, useRegisterUserMutation, useGetRoleQuery } = userService;

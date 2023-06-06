@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect  } from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 import { useRegisterUserMutation, useGetRoleQuery } from '../../redux/services/user/userService';
 import { setRole } from '../../redux/auth/authSlice';
 import AuthorityDropdown from '../../redux/services/user/authorityDropdown';
@@ -25,6 +26,7 @@ const AddUser = () => {
 
   const userRole =  useSelector((state) => state.user.roles);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { data, isFetching } = useGetRoleQuery();
 
@@ -87,7 +89,12 @@ const AddUser = () => {
     try {
 
       const result =  await registerUser(idata).unwrap();
-      console.log(result);
+      if(result.data.id){
+        notify("error", result.message);
+        setIsProcessing(false);
+        navigate('/allusers');
+      }
+      //console.log(result);
 
     }catch(e) {
       setIsProcessing(false);

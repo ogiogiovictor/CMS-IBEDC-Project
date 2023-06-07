@@ -2,7 +2,9 @@ import React, {Fragment, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetAllPaymentQuery } from '../../redux/services/payment/paymentService';
+import { useSearchAssetDTMutation } from '../../redux/services/dss/dtService';
 import { setPayment, setDataPayment } from './paymentSlice';
+import { notify } from '../../utils/notify';
 import PaymentCard from './paymentcard';
 import PageLoader from "../spinner/loader";
 import DataTable from "../datatable";
@@ -31,8 +33,6 @@ const Payments = () => {
     window.scrollTo(0, 0);
   };
 
-  console.log(paymentData);
-
   const columns = [
     { title: "Pay Date", field: "TransactionDateTime" },
     { title: "AccountNo", field: "AccountNo" },
@@ -41,6 +41,48 @@ const Payments = () => {
     { title: "Business Unit", field: "BUID" },
     { title: "Amount", field: "Amount" },
   ];
+
+
+  //Implementation for Search
+  const [searchQuery, setSearchQuery] = useState('');
+  const [hiddenFieldValue, setHiddenFieldValue] = useState('search_payment');
+
+
+  const [ postSearch ] = useSearchAssetDTMutation();
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    postPayment(searchQuery);
+  }
+
+  const postPayment = async (query) =>  {
+
+    const payload = {
+      Payment: query,
+      type: hiddenFieldValue
+    };
+
+    if(!payload.Payment){
+      notify("error", "Please enter search term");
+      return;
+    }
+
+    try {
+
+      const result = await postSearch(payload).unwrap();
+      console.log(result);
+
+    }catch(e){
+      console.log(e);
+      notify("error", "Error occured while searching  || " + e?.message);
+    }
+
+   
+
+
+  }
+
+
 
 
     return (
@@ -59,11 +101,31 @@ const Payments = () => {
              &nbsp;&nbsp;
              <button class="btn btn-icons btn-rounded btn-secondary" onClick={() => refetch()}><span class="icon-refresh"></span></button>
              </h4>
+
+             <div class="row">
+              <div class="col-md-12">
+              <form onSubmit={handleSearchSubmit}>
+              <div class="form-group d-flex">
+                        
+                        <input type="text" 
+                        value={searchQuery} 
+                        onChange={(e) => setSearchQuery(e.target.value)} 
+                        name="searching"
+                        class="form-control" placeholder="Search Payment..." />
+
+                        <input type="hidden"  value={hiddenFieldValue} 
+                        onChange={(e) => setHiddenFieldValue(e.target.value)}
+                        class="form-control" />
+                        <button type="submit" class="btn btn-danger ml-3">Search</button>
+                    </div>
+              </form>
+                </div>
+             </div>
            
-             <div class="form-group d-flex">
+             {/* <div class="form-group d-flex">
                           <input type="text" class="form-control" placeholder="Search Payments(s)..." />
                           <button type="submit" class="btn btn-primary ml-3">Search</button>
-                    </div>
+             </div> */}
 
              <div className="table-responsive">
                

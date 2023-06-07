@@ -28,8 +28,8 @@ const Payments = () => {
     }
   }, [data, dispatch, currentPage, refetch]);
 
-  const handleActionClick = ({ FAccount, Token, CSPClientID }) => {
-    navigate(`/paymentDetails/${FAccount}/${Token}/${CSPClientID}`);
+  const handleActionClick = ({ FAccountNo, Token, MeterNo }) => {
+    navigate(`/paymentDetails/${FAccountNo}/${Token}/${MeterNo}`);
     window.scrollTo(0, 0);
   };
 
@@ -54,6 +54,9 @@ const Payments = () => {
     e.preventDefault();
     postPayment(searchQuery);
   }
+
+   //data?.data?.payments?.total  //data?.data?.payments?.meta
+  console.log(data);
 
   const postPayment = async (query) =>  {
 
@@ -97,7 +100,7 @@ const Payments = () => {
        <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">
          <div className="card">
            <div className="card-body">
-             <h4 className="card-title">All Payment
+             <h4 className="card-title">Prepaid Payment
              &nbsp;&nbsp;
              <button class="btn btn-icons btn-rounded btn-secondary" onClick={() => refetch()}><span class="icon-refresh"></span></button>
              </h4>
@@ -134,8 +137,8 @@ const Payments = () => {
                     columns={columns}
                     pagination
                     currentPage={currentPage}
-                    totalCount={data?.data?.payments?.total || 1}
-                    pageSize={data?.data?.payments?.per_page || 1}
+                    totalCount={data?.data?.payments?.meta.total || 1}
+                    pageSize={data?.data?.payments?.meta.per_page || 1}
                     onPageChange={(page) => setCurrentPage(page)}
                     onActionClick={handleActionClick}
                     />

@@ -40,6 +40,8 @@ import Users from "./components/users/users";
 import Location from "./components/users/location";
 import AddUser from "./components/users/adduser";
 import AmiEvents from "./components/ami/amievents";
+import ErrorPage from "./components/error/errorpage";
+import NotFound from "./components/error/notfound";
 
 const App = () => {
   return (
@@ -82,6 +84,8 @@ const App = () => {
               <Route path="/tracker" element={<Tracker />} />
               <Route path="/ibedcstaff" element={<Ibedcstaff />} />
               <Route path="/crmd" element={<CustomerRecord />} />
+              <Route path="/errorpage" element={<ErrorPage />} />
+              <Route path="*" element={<NotFound />} /> {/* Not-found route */}
               
               <Route
                 path="/customerinfo/:FAccount/:DistributionID/:AccountType/:MeterNo"

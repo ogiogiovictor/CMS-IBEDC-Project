@@ -6,6 +6,9 @@ import { useGetAllTicketsQuery } from '../../redux/services/ticket/ticketService
 import { setTicket, setDataTicket } from './ticketSlice';
 import PageLoader from '../spinner/loader';
 import DataTable from '../datatable';
+import { notify } from "../../utils/notify";
+
+
 
 const Tickets = () => {
 
@@ -13,11 +16,23 @@ const Tickets = () => {
   const { tickets, ticketData } = useSelector((state) => state.tickets) || [];
 
   const dispatch = useDispatch();
-  const { data, isFetching, isUninitialized, refetch } = useGetAllTicketsQuery( 
+  const navigate = useNavigate();
+  const { data, isFetching, isUninitialized, refetch, error } = useGetAllTicketsQuery( 
     { pageNo: currentPage },  //{ cacheTime: 0 }
   );
 
-  const navigate = useNavigate();
+  if (error) {
+    // Handle the error here
+    console.log(error);
+    notify("error", error.data.data);
+    navigate(`/errorpage`);
+    
+    // You can display an error message to the user or perform other error handling tasks
+  }
+
+  console.log(data);
+
+ 
 
   useEffect(() => {
     if (currentPage && data) {

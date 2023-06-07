@@ -13,7 +13,18 @@ export const ticketService = createApi({
               method: "GET",
             }),
             pollingInterval: 900000, // 15 minutes
+           // cachePolicy: 'network-only', // Set cache policy to always fetch from the network
+           // keepUnusedDataFor: 0,
+           onError: (error, { rejectWithValue }) => {
+            ///console.log("Error occurred:", error);
+            return rejectWithValue({ error: "An error occurred while fetching tickets." });
+            // Alternatively, you can throw an error to be caught by a higher-level error boundary
+            // throw new Error("An error occurred while fetching tickets.");
+          },
+       
+
           }),
+        
 
     }),
 

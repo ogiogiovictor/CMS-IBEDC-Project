@@ -48,7 +48,7 @@ const Payments = () => {
   const [hiddenFieldValue, setHiddenFieldValue] = useState('search_payment');
 
 
-  const [ postSearch, { isLoading } ] = useSearchAssetDTMutation();
+  const [ postSearch ] = useSearchAssetDTMutation();
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -74,9 +74,10 @@ const Payments = () => {
 
       const result = await postSearch(payload).unwrap();
       refetch();
-      setCurrentPage(1);
-      console.log(result?.payments?.data);
       dispatch(setDataPayment(result?.payments?.data))
+     // setCurrentPage(1);
+      console.log(result?.payments?.data);
+      
 
     }catch(e){
       console.log(e);
@@ -95,9 +96,9 @@ const Payments = () => {
         <Fragment>
             <PaymentCard payCard={payment} />
 
-            {isUninitialized ? <PageLoader /> : ''}
+            {/* {isUninitialized ? <PageLoader /> : ''} */}
 
-          {isFetching || isLoading ? <PageLoader /> : 
+          {isUninitialized || isFetching ? <PageLoader /> : 
 
         <div className="row">
        <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">

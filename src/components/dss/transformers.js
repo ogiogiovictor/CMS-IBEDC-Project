@@ -50,19 +50,6 @@ const Transformer = () => {
     }
  }, [data, refetch, searchResult, dispatch, currentPage, type, updatedType, dssInfo]);
 
-//   useEffect(() => {
-//     if (currentPage && (data || searchResult)) {
-//       //refetch();
-//       dispatch(setDss(data || searchResult));
-//       dispatch(setDataDss(data?.data?.allDt?.data));
-//       type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
-//       type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(data?.data?.allDt?.data));
-//     }
-//  }, [data, searchResult, dispatch, currentPage, type, updatedType, dssInfo]);
-
-
-//  console.log(data?.allDt?.data);
-//  console.log(dssData);
 
  //Handle cardclick and rerender page
   const handleTransformerClick = (elevenDt) => {

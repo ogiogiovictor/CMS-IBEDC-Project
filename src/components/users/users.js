@@ -3,14 +3,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { useGetAllUserQuery } from "../../redux/services/user/userService";
 import { setUser } from "../../redux/services/user/userSlice";
+import { useSearchAssetDTMutation } from '../../redux/services/dss/dtService';
 import PageLoader from "../spinner/loader";
 import DataTable from "../datatable";
+import { notify } from '../../utils/notify';
+import { useNavigate } from 'react-router-dom';
 
 const Users = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const dispatch = useDispatch();
-    const { data, isFetching, isUninitialized, isError } = useGetAllUserQuery({ pageNo: currentPage  });
+    const navigate = useNavigate();
+    
+    const { data, isFetching, isUninitialized, isError, error } = useGetAllUserQuery({ pageNo: currentPage  });
+
+    if (error) {
+      console.log(error);
+      notify("error", error.data.data);
+      navigate(`/errorpage`);
+    }
+
 
     useEffect(() => {
         if (data) {
@@ -41,6 +53,34 @@ const Users = () => {
 
       }
 
+
+    //Searching implementation for Feeder
+    const [searchQuery, setSearchQuery] = useState('');
+    const [hiddenFieldValue, setHiddenFieldValue] = useState('search_user');
+
+      //Searching...
+    const [postSearch ] = useSearchAssetDTMutation();
+    const handleSearchSubmit = (e) => {
+      e.preventDefault();
+      performSearch(searchQuery);
+    }
+
+    const performSearch = async (searchQuery) => {
+      try {
+        const response = await postSearch({searchQuery, hiddenFieldValue});
+        if (response.data.status === "success") {
+          notify.showSuccess(response.data.message);
+          dispatch(setUser(response.data.data.feeders.data));
+        } else {
+          notify.showInfo(response.data.message);
+        }
+      } catch (error) {
+        notify.handleError(error);
+      }
+    }
+
+
+
      
   return (
     <Fragment>
@@ -63,16 +103,23 @@ const Users = () => {
                
               </h4>
               
+              <form onSubmit={handleSearchSubmit}>
               <div class="form-group d-flex">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Search Customer(s)..."
-                />
-                <button type="submit" class="btn btn-primary ml-3">
-                  Search
-                </button>
-              </div>
+                        
+                        <input type="text" 
+                        value={searchQuery} 
+                        onChange={(e) => setSearchQuery(e.target.value)} 
+                        name="searching"
+                        class="form-control" placeholder="Search User(s)..." />
+
+                        <input type="hidden"  value={hiddenFieldValue} 
+                        onChange={(e) => setHiddenFieldValue(e.target.value)}
+                        class="form-control" />
+                        <button type="submit" class="btn btn-danger ml-3">Search</button>
+                    </div>
+              </form>
+
+
               <div className="table-responsive">
               <DataTable 
                     data={users}

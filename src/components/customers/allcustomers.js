@@ -21,9 +21,9 @@ const AllCustomers = () => {
 
 
   const dispatch = useDispatch();
-  const { customers, postpaidCards, prepaidCards } =
-    useSelector((state) => state.customer) || [];
   const navigate = useNavigate();
+  const { customers, postpaidCards, prepaidCards } = useSelector((state) => state.customer) || [];
+
   const { customerType, type } = useParams();
   const stringType = customerType &&  `${customerType.charAt(0).toUpperCase()}${customerType.slice(1).toLowerCase()}`;
 
@@ -34,9 +34,18 @@ const AllCustomers = () => {
 
   const userStatus = type && type.toUpperCase();
  // console.log(stringType);
-  const { data, isFetching, refetch } = useGetCustomerDetailsByTypeQuery(
+  const { data, isFetching, refetch, error, dataUpdatedAt } = useGetCustomerDetailsByTypeQuery(
     { userQuery: stringType, userStatus: filterStatus, pageNo: currentPage }
   );
+
+  
+  if (error) {
+    console.log(error);
+    notify("error", error.data.data);
+    navigate(`/errorpage`);
+  }
+
+  console.log(dataUpdatedAt);
 
   const handleFilterStatusChange = (statusCode) => {
      dispatch(setFilterStatus(statusCode));
@@ -82,8 +91,8 @@ const AllCustomers = () => {
      // refetch();
 
     } catch (error) {
-      notify("error", error.data.data);
       console.log(error);
+      notify("error", "Error occured while searching  || " + error?.data.data);
       // Handle any error that occurs during the search
     }
   }

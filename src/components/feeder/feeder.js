@@ -2,12 +2,13 @@ import React, {Fragment, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { useGetAllFeederQuery } from '../../redux/services/feeder/feederService';
+import { useSearchAssetDTMutation } from '../../redux/services/dss/dtService';
 import { setFeeder, setDataFeeder } from './feederSlice';
 import FeederCard from './feedercard';
 import PageLoader from "../spinner/loader";
 import DataTable from "../datatable";
 import Popup from '../modal/popup';
-// import AddFeeder from './addfeeder';
+import { notify } from '../../utils/notify';
 
 const Feeder = () => {
 
@@ -20,10 +21,16 @@ const Feeder = () => {
 
   const { type } = useParams();
 
-  const { data, isFetching, isUninitialized, refetch } = useGetAllFeederQuery(
+  const { data, isFetching, isUninitialized, refetch, error } = useGetAllFeederQuery(
     { userQuery: type, pageNo: currentPage });
   
   const navigate = useNavigate();
+
+  if (error) {
+    console.log(error);
+    notify("error", error.data.data);
+    navigate(`/errorpage`);
+  }
 
   const openPopup = () => {  setIsOpen(true); };
   const closePopup = () => { setIsOpen(false); };
@@ -60,6 +67,36 @@ const Feeder = () => {
     { title: "Latitude", field: "latitude" },
     { title: "Date Entered", field: "Capture DateTime" },
   ];
+
+
+  //Searching implementation for Feeder
+  const [searchQuery, setSearchQuery] = useState('');
+  const [hiddenFieldValue, setHiddenFieldValue] = useState('search_feeder');
+
+  //Searching...
+  const [postSearch ] = useSearchAssetDTMutation();
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    performSearch(searchQuery);
+  }
+
+  const performSearch = async (searchQuery) => {
+    try {
+      const response = await postSearch({searchQuery, hiddenFieldValue});
+      if (response.data.status === "success") {
+        notify.showSuccess(response.data.message);
+        dispatch(setDataFeeder(response.data.data.feeders.data));
+      } else {
+        notify.showInfo(response.data.message);
+      }
+    } catch (error) {
+      notify.handleError(error);
+    }
+  }
+
+
+
 
 
   const customContent = (handleStartDateChange, handleEndDateChange, handleSubmit) => (
@@ -109,13 +146,36 @@ const Feeder = () => {
              </Link>
              </h4>
 
-             <div class="form-group d-flex">
-                          <input type="text" class="form-control" placeholder="Search Feeders(s)..." />
-                          <button type="submit" class="btn btn-primary ml-3">Search</button>
-                          <button type="submit" className="btn btn-danger ml-4" onClick={openPopup}>
+
+             <div class="row">
+              <div class="col-md-8">
+                  <form onSubmit={handleSearchSubmit}>
+                    <div class="form-group d-flex">
+                              
+                              <input type="text" 
+                              value={searchQuery} 
+                              onChange={(e) => setSearchQuery(e.target.value)} 
+                              name="searching"
+                              class="form-control" placeholder="Search Feeders(s)..." />
+
+                              <input type="hidden"  value={hiddenFieldValue} 
+                              onChange={(e) => setHiddenFieldValue(e.target.value)}
+                              class="form-control" />
+                              <button type="submit" class="btn btn-danger ml-3">Search</button>
+                      </div>
+                  </form>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group d-flex">
+                        <button type="submit" className="btn btn-danger ml-4" onClick={openPopup}>
                           Export(excel)
                         </button>
-                    </div>
+                  </div>
+                </div>
+             </div>
+
+           
 
                     <Popup isOpen={isOpen} onClose={closePopup} title="Advance Search" content={customContent} />
 

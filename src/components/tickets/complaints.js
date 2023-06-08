@@ -17,17 +17,14 @@ const Tickets = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { data, isFetching, isUninitialized, refetch, error } = useGetAllTicketsQuery( 
+  const { data, isFetching, isUninitialized, refetch, error, dataUpdatedAt } = useGetAllTicketsQuery( 
     { pageNo: currentPage },  //{ cacheTime: 0 }
   );
 
   if (error) {
-    // Handle the error here
     console.log(error);
     notify("error", error.data.data);
     navigate(`/errorpage`);
-    
-    // You can display an error message to the user or perform other error handling tasks
   }
 
   console.log(data);

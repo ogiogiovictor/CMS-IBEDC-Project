@@ -14,11 +14,17 @@ const Payments = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { payment, paymentData } = useSelector((state) => state.payment) || [];
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { data, isFetching, isUninitialized, refetch } = useGetAllPaymentQuery(
+  const { data, isFetching, isUninitialized, refetch, error } = useGetAllPaymentQuery(
     { pageNo: currentPage });
 
-    const navigate = useNavigate();
+    if (error) {
+      console.log(error);
+      notify("error", error.data.data);
+      navigate(`/errorpage`);
+    }
+    
 
   useEffect(() => {
     if (currentPage && data) {

@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import BillCard from './billcards';
 import { useGetAllBillsQuery } from '../../redux/services/bill/billService';
+import { useSearchAssetDTMutation } from '../../redux/services/dss/dtService';
 import { setBills, setDataBills } from './billSlice';
 import PageLoader from "../spinner/loader";
 import DataTable from '../datatable';
+import { notify } from '../../utils/notify';
 
 
 const Bills = () => {
@@ -13,11 +15,18 @@ const Bills = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { bills, billData } = useSelector((state) => state.bills) || [];
   const dispatch = useDispatch();
-  const { data, isFetching, isUninitialized, refetch } = useGetAllBillsQuery( 
+  const navigate = useNavigate();
+
+  const { data, isFetching, isUninitialized, refetch, error } = useGetAllBillsQuery( 
     { pageNo: currentPage },  //{ cacheTime: 0 }
     );
 
-  const navigate = useNavigate();
+    if (error) {
+      console.log(error);
+      notify("error", error.data.data);
+      navigate(`/errorpage`);
+    }
+ 
 
 
   useEffect(() => {
@@ -43,6 +52,42 @@ const Bills = () => {
     navigate(`/billDetails/${BillID}`);
     window.scrollTo(0, 0);
   };
+
+
+  //Searching implementation for Billing
+  const [searchQuery, setSearchQuery] = useState(null);
+  const [hiddenFieldValue, setHiddenFieldValue] = useState('search_payment');
+
+  //Searching...
+  const [postSearch ] = useSearchAssetDTMutation();
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    performSearch(searchQuery);
+  }
+
+  const performSearch = async (query) =>  { 
+    const payload = {
+      Bill: query,
+      type: hiddenFieldValue
+    };
+
+    if(!payload.AccountNo){
+      return null;
+    }
+
+    try {
+
+      const result = await postSearch(payload).unwrap();
+      setCurrentPage(1);
+      dispatch(setBills(result.data));
+
+    }catch(e){
+      console.log(e);
+      notify("error", "Error occured while searching  || " + e?.message);
+    }
+  }
+
   
     return (
         <Fragment>
@@ -58,10 +103,22 @@ const Bills = () => {
            <div className="card-body">
              <h4 className="card-title">Latest Bills <button class="btn btn-icons btn-rounded btn-secondary" onClick={() => refetch()}><span class="icon-refresh"></span></button></h4>
            
-             <div class="form-group d-flex">
-                          <input type="text" class="form-control" placeholder="Search Bills(s)..." />
-                          <button type="submit" class="btn btn-primary ml-3">Search</button>
-              </div>
+             <form onSubmit={handleSearchSubmit}>
+              <div class="form-group d-flex">
+                        
+                        <input type="text" 
+                        value={searchQuery} 
+                        onChange={(e) => setSearchQuery(e.target.value)} 
+                        name="searching"
+                        class="form-control" placeholder="Search Bills(s)..." />
+
+                        <input type="hidden"  value={hiddenFieldValue} 
+                        onChange={(e) => setHiddenFieldValue(e.target.value)}
+                        class="form-control" />
+                        <button type="submit" class="btn btn-danger ml-3">Search</button>
+                    </div>
+              </form>
+             
 
              <div className="table-responsive">
              <DataTable 

@@ -30,13 +30,13 @@ const Bills = () => {
 
 
   useEffect(() => {
-    if (currentPage && data) {
+    if (data) {
       refetch();
       //dispatch(setBills(data?.data?.bills?.data)); //You are only dispatching the bills
       dispatch(setBills(data?.data));
       dispatch(setDataBills(data?.data?.bills?.data));
     }
-  }, [data, refetch, currentPage, dispatch]);
+  }, [data, dispatch, refetch]);
 
 
   const columns = [
@@ -55,8 +55,9 @@ const Bills = () => {
 
 
   //Searching implementation for Billing
-  const [searchQuery, setSearchQuery] = useState(null);
-  const [hiddenFieldValue, setHiddenFieldValue] = useState('search_payment');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [hiddenFieldValue, setHiddenFieldValue] = useState('search_bills');
+  const [searchLoading, setSearchLoading] = useState(false);
 
   //Searching...
   const [postSearch ] = useSearchAssetDTMutation();
@@ -67,24 +68,28 @@ const Bills = () => {
   }
 
   const performSearch = async (query) =>  { 
+    setSearchLoading(true);
     const payload = {
       Bill: query,
       type: hiddenFieldValue
     };
-
-    if(!payload.AccountNo){
-      return null;
+   
+    if(!payload.Bill){
+      notify("info", "Please enter Search Parameter");
+      setSearchLoading(false);
     }
 
     try {
 
       const result = await postSearch(payload).unwrap();
+      dispatch(setDataBills(result.data));
       setCurrentPage(1);
-      dispatch(setBills(result.data));
+      setSearchLoading(false);
 
     }catch(e){
       console.log(e);
       notify("error", "Error occured while searching  || " + e?.message);
+      setSearchLoading(false);
     }
   }
 
@@ -93,9 +98,9 @@ const Bills = () => {
         <Fragment>
             <BillCard cardData={bills}/>
 
-            {isUninitialized ? <PageLoader /> : ''}
+            {isUninitialized  ? <PageLoader /> : ''}
 
-            {isFetching ? <PageLoader /> : 
+            {isFetching || searchLoading ? <PageLoader /> : 
           
           <div className="row">
           <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">

@@ -90,7 +90,7 @@ const Feeder = () => {
       } else {
         notify("info", response.data.message);
       }
-    } catch (error) {
+    } catch (e) {
       notify("error", "Error occured while searching " + e?.message);
     }
   }

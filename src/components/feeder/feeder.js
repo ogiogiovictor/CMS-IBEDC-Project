@@ -85,13 +85,13 @@ const Feeder = () => {
     try {
       const response = await postSearch({searchQuery, hiddenFieldValue});
       if (response.data.status === "success") {
-        notify.showSuccess(response.data.message);
+        notify("success", response.data.message);
         dispatch(setDataFeeder(response.data.data.feeders.data));
       } else {
-        notify.showInfo(response.data.message);
+        notify("info", response.data.message);
       }
     } catch (error) {
-      notify.handleError(error);
+      notify("error", "Error occured while searching " + e?.message);
     }
   }
 

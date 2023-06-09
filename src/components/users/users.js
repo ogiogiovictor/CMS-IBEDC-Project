@@ -14,7 +14,7 @@ const Users = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+
     const { data, isFetching, isUninitialized, isError, error } = useGetAllUserQuery({ pageNo: currentPage  });
 
     if (error) {
@@ -69,13 +69,13 @@ const Users = () => {
       try {
         const response = await postSearch({searchQuery, hiddenFieldValue});
         if (response.data.status === "success") {
-          notify.showSuccess(response.data.message);
+          notify("success", response.data.message);
           dispatch(setUser(response.data.data.feeders.data));
         } else {
-          notify.showInfo(response.data.message);
+          notify("info", response.data.message);
         }
-      } catch (error) {
-        notify.handleError(error);
+      } catch (e) {
+        notify("error", "Error occured while searching " + e?.message);
       }
     }
 

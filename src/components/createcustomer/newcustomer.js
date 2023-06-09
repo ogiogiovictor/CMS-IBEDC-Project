@@ -1,6 +1,6 @@
 import React, { useState, useEffect  } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import CustomerCard from '../cards/customercard';
 import { useGetDashboardStatsQuery } from "../../redux/services/auth/authService";
 import { usePostTicketIDMutation } from "../../redux/services/customer/customerService";
@@ -96,7 +96,8 @@ const NewCustomer = () => {
                   <h4 className="card-title">FIND COMPLAIN - ENTER TICKET ID</h4>
                   <p className="card-description">
                   <hr/>
-                   Customer Record Management Document - CRMD
+                   Customer Record Management Document - CRMD &nbsp;&nbsp;&nbsp;
+                   <NavLink to="/" className="btn btn-xs btn-primary">Add New</NavLink>
                    <hr/>
                   </p>
 

@@ -45,7 +45,7 @@ const Feeder = () => {
     }
   }, [data, dispatch, currentPage, refetch, type]);
 
-  console.log(feeder);
+
 
   const handleActionClick = (feeder) => {
     setSelectedObject(feeder);
@@ -83,12 +83,19 @@ const Feeder = () => {
 
   const performSearch = async (searchQuery) => {
     try {
-      const response = await postSearch({searchQuery, hiddenFieldValue});
-      if (response.data.status === "success") {
+
+      const payload = {
+        Feeder: searchQuery,
+        type: hiddenFieldValue
+      };
+
+      const response = await postSearch(payload);
+      if (response.data) {
         notify("success", response.data.message);
-        dispatch(setDataFeeder(response.data.data.feeders.data));
+        dispatch(setDataFeeder(response.data.data));
+        console.log(response.data.data);
       } else {
-        notify("info", response.data.message);
+        notify("info", "Error, Something went wrong");
       }
     } catch (e) {
       notify("error", "Error occured while searching " + e?.message);

@@ -27,12 +27,12 @@ const Payments = () => {
     
 
   useEffect(() => {
-    if (currentPage && data) {
+    if (data) {
       //refetch();
       dispatch(setPayment(data?.data));
       dispatch(setDataPayment(data?.data?.payments?.data));
     }
-  }, [data, dispatch, currentPage, refetch]);
+  }, [data, dispatch, refetch]);
 
   const handleActionClick = ({ FAccountNo, Token, MeterNo }) => {
     navigate(`/paymentDetails/${FAccountNo}/${Token}/${MeterNo}`);
@@ -52,7 +52,7 @@ const Payments = () => {
   //Implementation for Search
   const [searchQuery, setSearchQuery] = useState('');
   const [hiddenFieldValue, setHiddenFieldValue] = useState('search_payment');
-
+  const [searchLoading, setSearchLoading] = useState(false);
 
   const [ postSearch ] = useSearchAssetDTMutation();
 
@@ -65,7 +65,7 @@ const Payments = () => {
   console.log(data);
 
   const postPayment = async (query) =>  {
-
+    setSearchLoading(true);
     const payload = {
       Payment: query,
       type: hiddenFieldValue
@@ -73,21 +73,23 @@ const Payments = () => {
 
     if(!payload.Payment){
       notify("error", "Please enter search term");
+      setSearchLoading(false);
       return;
     }
 
     try {
 
       const result = await postSearch(payload).unwrap();
-      refetch();
       dispatch(setDataPayment(result?.payments?.data))
-     // setCurrentPage(1);
-      console.log(result?.payments?.data);
+      setCurrentPage(1);
+      setSearchLoading(false);
+    //  console.log(result?.payments?.data);
       
 
     }catch(e){
       console.log(e);
       notify("error", "Error occured while searching  || " + e?.message);
+      setSearchLoading(false);
     }
 
    
@@ -104,7 +106,7 @@ const Payments = () => {
 
             {/* {isUninitialized ? <PageLoader /> : ''} */}
 
-          {isUninitialized || isFetching ? <PageLoader /> : 
+          {isUninitialized || isFetching || searchLoading ? <PageLoader /> : 
 
         <div className="row">
        <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">

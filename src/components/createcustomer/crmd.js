@@ -1,5 +1,5 @@
 import React, { useState, useEffect  } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { usePostCRMDMutation } from "../../redux/services/customer/customerService";
 import { notify } from '../../utils/notify';
@@ -156,7 +156,10 @@ const CustomerRecord = () => {
               <div className="card">
                
               <div class="card-body">
-                  <h4 class="card-title">Customer Record Management Document (CRMD)</h4>
+                  <h4 class="card-title">Customer Record Management Document (CRMD)
+                 
+                  </h4>
+                 
                   <form class="form-sample" onSubmit={processCRMD}>
                   
                     <p class="card-description">

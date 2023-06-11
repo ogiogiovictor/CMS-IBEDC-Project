@@ -43,6 +43,8 @@ import AmiEvents from "./components/ami/amievents";
 import ErrorPage from "./components/error/errorpage";
 import NotFound from "./components/error/notfound";
 import AddCustomer from "./components/createcustomer/addcustomer";
+import ViewCustomers from "./components/customers/viewcustomers";
+import CustomerMoreDetails from "./components/customers/customerdetails";
 
 
 const App = () => {
@@ -157,6 +159,8 @@ const App = () => {
                   />
 
                   <Route path="addcustomer" element={<AddCustomer />} />
+                  <Route path="viewcustomers" element={<ViewCustomers />} />
+                  <Route path="customernewdetails/:id" element={<CustomerMoreDetails />} />
 
 
 

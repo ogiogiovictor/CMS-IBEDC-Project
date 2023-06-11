@@ -97,6 +97,16 @@ export const customerService = createApi({
     }),
 
 
+    //GET PENDING CRMD CUSTOMERS DETAILS
+    getNewCustomers: builder.query({
+      query: () => ({
+        url: `/${API_VERSION}/pending_customer_validation`,
+        method: "GET",
+      }),
+      pollingInterval: 900000, // 15 minutes
+    }),
+
+
 
   }),
 
@@ -113,5 +123,6 @@ export const {
   useGetCRMDCustomerQuery,
   usePostUpdateCRMDMutation,
   useGetSearchCustomerPostpaidQuery,
-  useAddNewCustomerMutation
+  useAddNewCustomerMutation,
+  useGetNewCustomersQuery,
 } = customerService;

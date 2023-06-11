@@ -137,7 +137,7 @@ const CustomerRecord = () => {
         if(result.data.data === 201){
           notify("success", result.data.data.message || "CRMD Completed Successfully");
           setIsProcessing(false);
-         navigate('/crmdetails');
+         navigate('/viewcustomers');
         }
        
       }catch(err){

@@ -42,6 +42,8 @@ import AddUser from "./components/users/adduser";
 import AmiEvents from "./components/ami/amievents";
 import ErrorPage from "./components/error/errorpage";
 import NotFound from "./components/error/notfound";
+import AddCustomer from "./components/createcustomer/addcustomer";
+
 
 const App = () => {
   return (
@@ -154,6 +156,8 @@ const App = () => {
                   element={<AddUser />}
                   />
 
+                  <Route path="addcustomer" element={<AddCustomer />} />
+
 
 
 
@@ -175,7 +179,7 @@ const App = () => {
       </BrowserRouter>
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={20000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

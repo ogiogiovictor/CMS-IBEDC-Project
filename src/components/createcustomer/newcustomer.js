@@ -97,7 +97,9 @@ const NewCustomer = () => {
                   <p className="card-description">
                   <hr/>
                    Customer Record Management Document - CRMD &nbsp;&nbsp;&nbsp;
-                   <NavLink to="/" className="btn btn-xs btn-primary">Add New</NavLink>
+                   <NavLink to="/addcustomer" className="btn btn-xs btn-primary">Add New</NavLink>
+                   &nbsp;&nbsp;&nbsp;
+                   <NavLink to="/viewcustomer" className="btn btn-xs btn-info">View Pending Customers</NavLink>
                    <hr/>
                   </p>
 

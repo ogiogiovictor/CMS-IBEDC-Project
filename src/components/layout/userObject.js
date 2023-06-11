@@ -34,11 +34,11 @@ const UserObject = () => {
          <div className="card">
            <div className="card-body">
              <h4 className="card-title">{paymentInfo.CustomerName ?? 0}</h4>
-             <Link onClick={goBack} class="btn btn-info btn-xs"><i class="icon-action-undo"></i></Link>
-                <div class="profile-body">
-                    <ul class="nav tab-switch" role="tablist">
-                      <li class="nav-item">
-                        <a class="nav-link active" id="user-profile-info-tab" data-toggle="pill" href="#user-profile-info" role="tab" aria-controls="user-profile-info" aria-selected="true">
+             <Link onClick={goBack} class="btn btn-info btn-xs"><i className="icon-action-undo"></i></Link>
+                <div className="profile-body">
+                    <ul className="nav tab-switch" role="tablist">
+                      <li className="nav-item">
+                        <a className="nav-link active" id="user-profile-info-tab" data-toggle="pill" href="#user-profile-info" role="tab" aria-controls="user-profile-info" aria-selected="true">
                            Payment Information
                         </a>
                       </li>
@@ -46,12 +46,12 @@ const UserObject = () => {
                     </ul>
 
 
-                    <div class="row">
-                      <div class="col-md-12">
+                    <div className="row">
+                      <div className="col-md-12">
                         
-                        <div class="tab-content tab-body" id="profile-log-switch">
+                        <div className="tab-content tab-body" id="profile-log-switch">
 
-                          <div class="tab-pane fade show active pr-3" id="user-profile-info" role="tabpanel" aria-labelledby="user-profile-info-tab">
+                          <div className="tab-pane fade show active pr-3" id="user-profile-info" role="tabpanel" aria-labelledby="user-profile-info-tab">
                         
                             { isUninitialized ? <PageLoader /> : ''}
 

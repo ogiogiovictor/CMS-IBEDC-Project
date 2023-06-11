@@ -29,10 +29,15 @@ const CustomerCard = ({ statusCard, onFilterStatusChange }) => {
                   </div>
                 </div>
               </div>
+              
             </div>
+            
           </div>
         ))}
+
+       
       </div>
+
     </>
   );
 };

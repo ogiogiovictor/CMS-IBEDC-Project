@@ -87,6 +87,16 @@ export const customerService = createApi({
     }),
 
 
+    // Create a new endpoint for the POST request for CRMD
+    addNewCustomer: builder.mutation({
+      query: (requestData) => ({
+        url: `/${API_VERSION}/add_customer`,
+        method: "POST",
+        body: requestData, // the data you want to send in the request body
+      }),
+    }),
+
+
 
   }),
 
@@ -103,4 +113,5 @@ export const {
   useGetCRMDCustomerQuery,
   usePostUpdateCRMDMutation,
   useGetSearchCustomerPostpaidQuery,
+  useAddNewCustomerMutation
 } = customerService;

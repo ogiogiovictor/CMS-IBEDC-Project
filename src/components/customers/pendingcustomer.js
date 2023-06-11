@@ -1,10 +1,12 @@
 import React, {Fragment, useState, useEffect } from 'react';
-import {  useGetCRMDCustomerQuery, usePostUpdateCRMDMutation } from "../../redux/services/customer/customerService";
+import {  useGetCRMDCustomerQuery, usePostUpdateCRMDMutation, 
+  useGetNewCustomersQuery, usePostUpdateNewlyCreatedMutation } from "../../redux/services/customer/customerService";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { setCrmd } from "../../redux/customer/customerSlice";
 import { datePicker } from '../../redux/helpers';
 import { notify } from '../../utils/notify';
+import DataTable from '../datatable';
 
 
 
@@ -17,7 +19,12 @@ const PendingCustomer = () => {
 
 
     const { data, isFetching, refetch } = useGetCRMDCustomerQuery({  pageNo: currentPage });
-    const [ postUpdateCRMD, {isLoading},  ] = usePostUpdateCRMDMutation();
+    const [ postUpdateCRMD,  ] = usePostUpdateCRMDMutation();
+    const [ PostUpdateNewCreated, { isLoading } ] = usePostUpdateNewlyCreatedMutation();
+
+    const { data: newCustomersData } = useGetNewCustomersQuery();
+
+    console.log(newCustomersData?.data);
 
     const { crmd } =  useSelector((state) => state.customer) || [];
  
@@ -29,7 +36,7 @@ const PendingCustomer = () => {
     }
 
 
-    const handleButtonApprove = async (id) => {
+    const handleApproveButton = async (id) => {
         try {
             const result = await postUpdateCRMD({ id: id, status: 'approved', userid: userInfo.id });
             refetch();
@@ -39,7 +46,7 @@ const PendingCustomer = () => {
           }
     }
 
-    const handleButtonVerify = async (id) => {
+    const handleVerifyButton = async (id) => {
         try {
             const result = await postUpdateCRMD({ id: id, status: 'verified', userid: userInfo.id });
             refetch();
@@ -55,6 +62,74 @@ const PendingCustomer = () => {
           dispatch(setCrmd(data?.data?.message));
         }
     }, [data, dispatch, currentPage, refetch]);
+
+
+    const columns = [
+      { title: "Firstname", field: "firstname" },
+      { title: "Surname", field: "surname" },
+      { title: "Customer Type", field: "customer_type" },
+      { title: "Region", field: "region" },
+      { title: "Business Hub", field: "business_hub" },
+      { title: "Status", field: "status" },
+      { title: "Captured By", field: "captured_by_name" },
+    
+    ];
+
+    const handleActionClick = ({_id}) => {
+      const filteredData = newCustomersData?.data.filter((customer) => customer._id === _id);
+      navigate(`/customernewdetails/${_id}`, { state: { data: filteredData } });
+      
+    };
+
+
+    const handleButtonVerify = async (data) => {
+     
+      try {
+          const result = await PostUpdateNewCreated({ id: data._id, status: 'verified', userid: userInfo.id });
+          
+          if(result.data){
+            notify("success",  "Result Verified and Completed Successfully");
+            window.location.reload(); // Reload the page
+          }
+          if(result.error.status == 500){
+            notify("info",  result.error.data.message);
+          }
+         
+          
+         
+        } catch (error) {
+          notify("info",  error.data.message);
+          console.log(error);
+        }
+      }
+    
+
+
+      const handleButtonApprove = async (data) => {
+        
+      try {
+        const result = await PostUpdateNewCreated({ id: data._id, status: 'approved', userid: userInfo.id });
+        refetch();
+        //console.log(result)
+        if(result.data){
+          notify("success",  "Result Approved  Successfully");
+        }
+        if(result.error.status == 500){
+          notify("info",  result.error.data.message);
+        }
+        
+       
+      } catch (error) {
+        notify("info",  error.data.message);
+        console.log(error);
+      }
+        
+    }
+      
+    
+    
+
+   
     
     return (
         <Fragment>
@@ -104,21 +179,41 @@ const PendingCustomer = () => {
                             View
                           </button>&nbsp;
 
-                          <button onClick={() => handleButtonApprove(customer?._id)} className="btn btn-xs btn-outline-danger">
-                            <i class="icon-check"></i>
-                            Approve
-                          </button>&nbsp;
-                          <button onClick={() => handleButtonVerify(customer?._id)} className="btn btn-xs btn-outline-success">
+                          <button onClick={() => handleVerifyButton(customer?._id)} className="btn btn-xs btn-outline-success">
                             <i class="icon-check"></i>
                             Verify
                           </button>
+
+                          <button onClick={() => handleApproveButton(customer?._id)} className="btn btn-xs btn-outline-danger">
+                            <i class="icon-check"></i>
+                            Approve
+                          </button>
+                         
                         </td>
                     </tr>
                  ))}
-                 
-                   
                  </tbody>
                </table>
+
+
+              <hr/>
+              <h4 className="card-title">Newly Created (customers) &nbsp;&nbsp;</h4>
+              <input type="text" class="form-control" placeholder="" disabled />
+              <DataTable 
+                 data={newCustomersData?.data}
+                 columns={columns}
+                 pagination
+                 currentPage={currentPage}
+                 totalCount={1}
+                 pageSize={1}
+                 onPageChange={(page) => setCurrentPage(1)}
+                 onActionClick={handleActionClick}
+                 Verify
+                 onVerifyClick={handleButtonVerify}
+                 Approve
+                 onApproveClick={handleButtonApprove}
+                />
+
              </div>
            </div>
 

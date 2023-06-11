@@ -23,6 +23,7 @@ const AddCustomer = () => {
       ...data,
       captured_by_name: userInfo.name ?? '0',
       captured_by: userInfo.id ?? '0',
+      created_at: data.created_at ?? new Date(),
       customer_type: data.customer_type.toLowerCase(),
       building_description: data.building_description.toLowerCase(),
       status: "pending",
@@ -125,6 +126,8 @@ const AddCustomer = () => {
                             <input type="text"  {...register('customer_title', { required: 'Title is required' })} class="form-control" name="customer_title" placeholder="Enter Customer Title"
                             />
                             <input type="hidden"  {...register('status')}  name="status" value="pending"/>
+                            <input type="hidden" {...register('created_at')}   value={new Date()}  name="created_at" />
+                           
                           </div>
                         </div>
                       </div>

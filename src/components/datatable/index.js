@@ -14,6 +14,12 @@ const DataTable = ({
   onActionClick = () => {},
   Edit = false, // Optional prop for edit functionality
   onEditClick = () => {}, // Add the onEditClick prop
+  Approve = false, // Optional prop for edit functionality
+  onApproveClick = () => {}, // Add the onEditClick prop
+  Verify = false, // Optional prop for edit functionality
+  onVerifyClick = () => {}, // Add the onEditClick prop
+  Delete = false,
+  onDeleteClick = () => {},
 }) => {
   const [sortColumn, setSortColumn] = useState("");
   const [sortOrder, setSortOrder] = useState("");
@@ -34,6 +40,18 @@ const DataTable = ({
   const handleEditClick = (item) => {
     onEditClick(item);
   };
+
+  const handleApproveClick = (item) => {
+    onApproveClick(item);
+  };
+
+  const handleVerifyClick = (item) => {
+    onVerifyClick(item);
+  };
+
+  const handleDeleteClick = (item) => {
+    onDeleteClick(item);
+  }
 
   const sortedData = sortColumn
     ? data.sort((a, b) => {
@@ -74,7 +92,7 @@ const DataTable = ({
                 <td>
                   <button
                     type="submit"
-                    className="btn btn-xs btn-success"
+                    className="btn btn-xs btn-primary"
                     onClick={() => handleActionClick(item)}
                   >
                     View
@@ -90,6 +108,42 @@ const DataTable = ({
                       Edit
                     </button>
                   )}
+                  &nbsp;&nbsp;
+
+                  {Verify && (
+                    <button
+                      type="submit"
+                      className="btn btn-xs btn-success"
+                      onClick={() => handleVerifyClick(item)} // Call the onEditClick function
+                    >
+                      Verify
+                    </button>
+                  )}
+                  &nbsp; &nbsp;
+
+                  {Approve && (
+                    <button
+                      type="submit"
+                      className="btn btn-xs btn-info"
+                      onClick={() => handleApproveClick(item)} // Call the onEditClick function
+                    >
+                      Approve
+                    </button>
+                  )}
+
+                  &nbsp; &nbsp;
+                  {Delete && (
+                    <button
+                      type="submit"
+                      className="btn btn-xs btn-danger"
+                      onClick={() => handleDeleteClick(item)} // Call the onEditClick function
+                    >
+                      Delete
+                    </button>
+                  )}
+
+
+                  
                 </td>
               </tr>
             ))}

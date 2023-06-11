@@ -45,6 +45,7 @@ import NotFound from "./components/error/notfound";
 import AddCustomer from "./components/createcustomer/addcustomer";
 import ViewCustomers from "./components/customers/viewcustomers";
 import CustomerMoreDetails from "./components/customers/customerdetails";
+import AccessControl from "./components/settings/acl";
 
 
 const App = () => {
@@ -161,6 +162,7 @@ const App = () => {
                   <Route path="addcustomer" element={<AddCustomer />} />
                   <Route path="viewcustomers" element={<ViewCustomers />} />
                   <Route path="customernewdetails/:id" element={<CustomerMoreDetails />} />
+                  <Route path="acl" element={<AccessControl />} />
 
 
 

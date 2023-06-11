@@ -107,6 +107,23 @@ export const customerService = createApi({
     }),
 
 
+     // Approve Newly Created Customers
+     postUpdateNewlyCreated: builder.mutation({
+    query: ({ id, status, userid }) => ({
+      url: `/${API_VERSION}/updatenewlycreated`,
+      method: "POST",
+      body: {
+        id,
+        status,
+        userid
+      },
+    }),
+  }),
+    onError: (error) => {
+      console.error(error);
+    },
+
+
 
   }),
 
@@ -125,4 +142,5 @@ export const {
   useGetSearchCustomerPostpaidQuery,
   useAddNewCustomerMutation,
   useGetNewCustomersQuery,
+  usePostUpdateNewlyCreatedMutation,
 } = customerService;

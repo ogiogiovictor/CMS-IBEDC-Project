@@ -45,14 +45,14 @@ const ViewCustomers = () => {
   
 
   const handleActionClick = ({_id}) => {
-    navigate(`/customernewdetails/${_id}`);
+    //navigate(`/customernewdetails/${_id}`);
     const filteredData = newCustomersData?.data.filter((customer) => customer._id === _id);
     navigate(`/customernewdetails/${_id}`, { state: { data: filteredData } });
     window.scrollTo(0, 0);
   };
 
   const handleCustomerClick = ({_id}) => {
-    navigate(`/customernewdetails/${_id}`);
+   // navigate(`/customernewdetails/${_id}`);
     const filteredData = crmData?.data.message.filter((customer) => customer._id === _id);
     navigate(`/customernewdetails/${_id}`, { state: { data: filteredData } });
     window.scrollTo(0, 0);

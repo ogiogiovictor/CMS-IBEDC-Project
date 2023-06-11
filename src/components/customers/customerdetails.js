@@ -14,8 +14,8 @@ const CustomerMoreDetails = () => {
 
   
   const goBack = () => {
-    navigate('/viewcustomers')
-    // window.history.back();
+   // navigate('/viewcustomers')
+     window.history.back();
   };
 
   console.log(rowData);

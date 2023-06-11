@@ -1,6 +1,7 @@
 import React, {Fragment, useState, useEffect } from 'react';
 import {  useGetCRMDCustomerQuery, usePostUpdateCRMDMutation } from "../../redux/services/customer/customerService";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 import { setCrmd } from "../../redux/customer/customerSlice";
 import { datePicker } from '../../redux/helpers';
 import { notify } from '../../utils/notify';
@@ -10,12 +11,23 @@ import { notify } from '../../utils/notify';
 const PendingCustomer = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const { userInfo } = useSelector((state) => state.auth);
+    
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+
     const { data, isFetching, refetch } = useGetCRMDCustomerQuery({  pageNo: currentPage });
     const [ postUpdateCRMD, {isLoading},  ] = usePostUpdateCRMDMutation();
 
     const { crmd } =  useSelector((state) => state.customer) || [];
  
+
+    const handleButtonClick = async (_id) => {
+      const filteredData = crmd?.filter((customer) => customer._id === _id);
+      navigate(`/customernewdetails/${_id}`, { state: { data: filteredData } });
+      window.scrollTo(0, 0);
+    }
+
 
     const handleButtonApprove = async (id) => {
         try {
@@ -87,10 +99,11 @@ const PendingCustomer = () => {
                             </td>
                         <td>
                        
-                        <button className="btn btn-xs btn-outline-primary">
+                        <button onClick={() => handleButtonClick(customer?._id)} className="btn btn-xs btn-outline-primary">
                             <i class="icon-user"></i>
                             View
                           </button>&nbsp;
+
                           <button onClick={() => handleButtonApprove(customer?._id)} className="btn btn-xs btn-outline-danger">
                             <i class="icon-check"></i>
                             Approve

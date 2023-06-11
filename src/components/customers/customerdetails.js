@@ -39,10 +39,11 @@ const CustomerMoreDetails = () => {
                 { rowData === undefined ? notify('danger', 'An error occured while fetching data') :
                 <CustomerInfoTable customerInfo={rowData[0]} />
                 }
+                
 
                 <hr/>
                 {
-                   rowData[0]?.contact_details?.length === 0  ?
+                   rowData[0]?.contact_details && rowData[0]?.contact_details?.length != '' ?
                    <h4 className="card-title">Contact Details</h4> :
                    <h4 className="card-title">Meter Change Information</h4>
                 }
@@ -50,24 +51,55 @@ const CustomerMoreDetails = () => {
                
                 <hr/>
                 {
-                  rowData[0]?.contact_details?.length === 0 ? 
+                  rowData[0]?.contact_details && rowData[0]?.contact_details?.length != '' ? 
                   <CustomerInfoTable customerInfo={rowData[0]?.contact_details} /> :
                   <CustomerInfoTable customerInfo={rowData[0]?.meter_change_info} /> 
                 }
                 <hr/>
-                
+
                
                 {
-                   rowData[0]?.contact_details?.length === 0  ?
+                   rowData[0]?.contact_details && rowData[0]?.contact_details?.length != '' ?
                    <h4 className="card-title">Wiring</h4> :
                    <h4 className="card-title">Meter Information</h4>
                 }
                 <hr/>
                 {
-                  rowData[0]?.contact_details?.length === 0 ? 
+                  rowData[0]?.contact_details && rowData[0]?.contact_details?.length != '' ? 
                   <CustomerInfoTable customerInfo={rowData[0]?.wiring} /> :
                   <CustomerInfoTable customerInfo={rowData[0]?.meter_info} /> 
                 }
+
+              
+                <br/>
+                {
+                   rowData[0]?.contact_details && rowData[0]?.contact_details?.length != ''  ? ' ' :
+                   <h4 className="card-title">Meter Disconnection Section</h4> 
+                }
+                <hr/>
+                {
+                  rowData[0]?.contact_details && rowData[0]?.contact_details?.length != '' ?  '' : 
+                  <CustomerInfoTable customerInfo={rowData[0]?.meter_disconnection_section} /> 
+                }
+
+
+            <br/>
+                {
+                   rowData[0]?.contact_details && rowData[0]?.contact_details?.length != ''  ? '' :
+                   <h4 className="card-title">Meter Reconnection Section</h4> 
+                }
+                <hr/>
+                {
+                  rowData[0]?.contact_details && rowData[0]?.contact_details?.length != '' ?  '' : 
+                  <CustomerInfoTable customerInfo={rowData[0]?.meter_reconnection} /> 
+                }
+
+
+
+
+
+
+
                 
            
 

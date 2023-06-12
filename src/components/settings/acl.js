@@ -31,9 +31,8 @@ const AccessControl = () => {
       //console.log(role);
 
         const handleButtonClick = async (role) => {
-            console.log(role);
-            //navigate(`/role/${role?.id}`, { state: { data: role } });
-            //window.scrollTo(0, 0);
+            navigate(`/role/${role?.id}`, { state: { data: role } });
+            window.scrollTo(0, 0);
         }
 
    

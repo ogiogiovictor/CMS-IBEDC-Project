@@ -46,6 +46,7 @@ import AddCustomer from "./components/createcustomer/addcustomer";
 import ViewCustomers from "./components/customers/viewcustomers";
 import CustomerMoreDetails from "./components/customers/customerdetails";
 import AccessControl from "./components/settings/acl";
+import Roles from "./components/settings/roles";
 
 
 const App = () => {
@@ -163,6 +164,7 @@ const App = () => {
                   <Route path="viewcustomers" element={<ViewCustomers />} />
                   <Route path="customernewdetails/:id" element={<CustomerMoreDetails />} />
                   <Route path="acl" element={<AccessControl />} />
+                  <Route path="role/:id" element={<Roles />} />
 
 
 

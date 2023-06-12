@@ -35,6 +35,16 @@ export const userService = createApi({
           }),
           pollingInterval: 900000, // 15 minutes
       }),
+
+      getAccessList: builder.query({
+        query: () => ({
+            url: `/${API_VERSION}/access_control_list`,
+            method: "GET",
+        }),
+        pollingInterval: 900000, // 15 minutes
+    }),
+
+      
   
 
        
@@ -42,4 +52,4 @@ export const userService = createApi({
 
 });
 
-export const { useGetAllUserQuery, useRegisterUserMutation, useGetRoleQuery } = userService;
+export const { useGetAllUserQuery, useRegisterUserMutation, useGetRoleQuery, useGetAccessListQuery } = userService;

@@ -1,7 +1,6 @@
 import React, {Fragment, useState } from 'react';
 import { CustomerInfoTable } from '../createcustomer/customerinfotable';
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { notify } from '../../utils/notify';
 import PageLoader from "../spinner/loader";
 

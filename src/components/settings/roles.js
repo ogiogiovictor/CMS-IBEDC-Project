@@ -4,7 +4,7 @@ import { datePicker } from '../../redux/helpers';
 import PageLoader from "../spinner/loader";
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useGetAccessListQuery, useGetAllUserQuery, useGetRoleQuery } from '../../redux/services/user/userService';
+import { useGetAccessListQuery, useGetAllUserQuery, useGetRoleQuery, useGetControListQuery } from '../../redux/services/user/userService';
 import './role.css'
 
 
@@ -19,6 +19,7 @@ const Roles = () => {
   const { data } = useGetAccessListQuery();
   const { data: getAllUsers } = useGetAllUserQuery({ pageNo: currentPage  });
   const { data: allRolesUsers } = useGetRoleQuery();
+  const { data: getControList } = useGetControListQuery();
    
 
 
@@ -31,8 +32,9 @@ const Roles = () => {
     console.log(event.target.checked, submenuId);
   };
 
- console.log(allRolesUsers?.data);
- console.log(rowData.id);
+// console.log(allRolesUsers?.data);
+// console.log(rowData.id);
+console.log(getControList);
    
     
     return (

@@ -28,7 +28,13 @@ const AccessControl = () => {
         }
       }, [data, dispatch, isLoading, isError]);
 
-      console.log(role);
+      //console.log(role);
+
+        const handleButtonClick = async (role) => {
+            console.log(role);
+            //navigate(`/role/${role?.id}`, { state: { data: role } });
+            //window.scrollTo(0, 0);
+        }
 
    
     
@@ -75,7 +81,7 @@ const AccessControl = () => {
                                 <td>{datePicker(role?.created_at)}</td>
                                 <td><label className="badge badge-danger">Active</label></td>
                                 <td>
-                                    <button className="btn btn-primary btn-sm">View</button>
+                                    <button onClick={() => handleButtonClick(role)} className="btn btn-primary btn-sm">View</button>
                                 </td>
                             </tr>
                         ))

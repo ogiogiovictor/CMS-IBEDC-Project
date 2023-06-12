@@ -15,22 +15,36 @@ const Roles = () => {
   const location = useLocation();
   const rowData = location.state.data;
   const [isEditing, setIsEditing] = useState(false);
+  const [getControList, setGetControList] = useState(null);
 
   const { data } = useGetAccessListQuery();
   const { data: getAllUsers } = useGetAllUserQuery({ pageNo: currentPage  });
   const { data: allRolesUsers } = useGetRoleQuery();
-  const { data: getControList } = useGetControListQuery();
+  const { data: initialControListData  } = useGetControListQuery({ role_id: rowData.id });
    
 
+
+  useEffect(() => {
+    setGetControList(initialControListData?.data);
+  }, [initialControListData]);
 
   const handleEditClick = () => {
     setIsEditing(!isEditing);
   };
 
   const handleCheckboxChange = (event, submenuId) => {
-    // Handle checkbox change logic here
-    console.log(event.target.checked, submenuId);
+    const isChecked = event.target.checked;
+
+    // Update the getControList data based on the checkbox state
+    const updatedControList = isChecked
+      ? [...getControList, { id: submenuId }]
+      : getControList.filter(control => control.id !== submenuId);
+
+    // Set the updated control list in the state
+    setGetControList(updatedControList);
   };
+
+
 
 // console.log(allRolesUsers?.data);
 // console.log(rowData.id);
@@ -47,7 +61,7 @@ console.log(getControList);
              <h4 className="card-title">{ rowData.name.replace(/_/g, ' ').toUpperCase() } ACCESS&nbsp;</h4>
 
              <div>
-                <button onClick={handleEditClick}>{isEditing ? 'Save' : 'Edit'}</button>
+                <button className="btn btn-sm btn-primary" onClick={handleEditClick}>{isEditing ? 'Save' : 'Update'}</button>
               </div>
              <hr/>
 
@@ -56,19 +70,42 @@ console.log(getControList);
                 
                 {data?.data?.map((item, index) => (
                   <div key={index}>
-                    <div className="main_menu_list">{item.menu_name}</div>
+                    <div className="main_menu_list">{item.menu_name} </div>
                     <ul className="checkbox-list">
-                      {item.submenu.map((submenu, subIndex) => (
+
+                    {item.submenu.map((submenu, subIndex) => {
+                      const foundControl = getControList?.find(control => control.id === submenu.id);
+                      const isChecked = foundControl !== undefined;
+
+                      return (
                         <li key={subIndex}>
                           <input
+                            type="checkbox"
+                            disabled={!isEditing}
+                            checked={isChecked}
+                            onChange={(event) => handleCheckboxChange(event, submenu.id)}
+                          />&nbsp;
+                          <span>{submenu.name} {submenu.id}</span>
+                        </li>
+                      );
+                    })}
+
+                      {/* {
+                      
+                      item.submenu.map((submenu, subIndex) => (
+                        <li key={subIndex}>
+                           <input
                               type="checkbox"
                               disabled={!isEditing}
-                              checked={submenu.selected}
+                              checked={isChecked}
                               onChange={(event) => handleCheckboxChange(event, submenu.id)}
                             />&nbsp;
                           <span>{submenu.name}</span>
                         </li>
-                      ))}
+                      ))
+                    } */}
+
+
                     </ul>
                   </div>
                 ))}

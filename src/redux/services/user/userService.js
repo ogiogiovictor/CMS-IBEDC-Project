@@ -45,8 +45,8 @@ export const userService = createApi({
     }),
 
     getControList: builder.query({
-      query: () => ({
-          url: `/${API_VERSION}/get_acccess`,
+      query: ({ role_id }) => ({
+          url: `/${API_VERSION}/get_permission_role/${role_id}`,
           method: "GET",
       }),
       pollingInterval: 900000, // 15 minutes

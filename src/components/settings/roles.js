@@ -4,18 +4,23 @@ import { datePicker } from '../../redux/helpers';
 import PageLoader from "../spinner/loader";
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useGetAccessListQuery } from '../../redux/services/user/userService';
+import { useGetAccessListQuery, useGetAllUserQuery, useGetRoleQuery } from '../../redux/services/user/userService';
 import './role.css'
 
 
 
 const Roles = () => {
 
+  const [currentPage, setCurrentPage] = useState(1);
   const location = useLocation();
   const rowData = location.state.data;
   const [isEditing, setIsEditing] = useState(false);
 
-  const { data, isFetching, error } = useGetAccessListQuery();
+  const { data } = useGetAccessListQuery();
+  const { data: getAllUsers } = useGetAllUserQuery({ pageNo: currentPage  });
+  const { data: allRolesUsers } = useGetRoleQuery();
+   
+
 
   const handleEditClick = () => {
     setIsEditing(!isEditing);
@@ -26,7 +31,8 @@ const Roles = () => {
     console.log(event.target.checked, submenuId);
   };
 
- // console.log(data.data);
+ console.log(allRolesUsers?.data);
+ console.log(rowData.id);
    
     
     return (
@@ -65,6 +71,81 @@ const Roles = () => {
                   </div>
                 ))}
 
+                </div>
+
+                <hr/>
+
+                <div className="form-group">
+                    <label>Add Users</label>
+                    <div class="row">
+                      <div class="col-md-11">
+                      <select class="form-control">
+                      {
+                        getAllUsers?.data?.data?.map((item, index) => (
+                          <option key={index} value={item.id}>{item.name} ({item.email})</option>
+                        ))
+                      }
+                    </select>
+                      </div>
+                      <div class="col-md-1">
+                      <button className="btn btn-sm btn-primary btn-block">Add</button>
+                      </div>
+
+                    </div>
+
+                   
+                    
+                  </div>
+
+                <hr/>
+
+                <div className="form-group">
+                      
+                <table className="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Authority</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {
+                          allRolesUsers?.data?.find((item) => item.id === rowData.id)?.users?.map((user, index) => (
+                            <tr key={index}>
+                              <td>{user.id}</td>
+                              <td>{user.name}</td>
+                              <td>{user.email}</td>
+                              <td>{user.authority}</td>
+                              <td>{user.status}</td>
+                              <td>
+                                <button className="btn btn-xs btn-primary">View</button>&nbsp;
+                                <button className="btn btn-xs btn-info">Edit</button>&nbsp;
+                                <button className="btn btn-xs btn-danger">Remove</button>
+                              </td>
+                            </tr>
+                          ))
+                        }
+                      </tbody>
+                  </table>
+
+
+                     {/* {
+                        allRolesUsers?.data?.filter((item) => item.id === rowData.id).map((item, index) => (
+                          <div key={index}>
+                            {
+                              item.users.map((user, index) => (
+                                <div key={index}>
+                                  <span>{user.name} ({user.email})</span>
+                                </div>
+                              ))
+                            }
+                          </div>
+                        ))
+                      }  */}
                 </div>
 
 

@@ -142,7 +142,8 @@ const CustomerRecord = () => {
        
       }catch(err){
         setIsProcessing(false);
-        console.log(err);
+        notify("error", err.data.data);
+        console.log(err.data);
       }
 
 
@@ -156,9 +157,7 @@ const CustomerRecord = () => {
               <div className="card">
                
               <div class="card-body">
-                  <h4 class="card-title">Customer Record Management Document (CRMD)
-                 
-                  </h4>
+                  <h4 class="card-title">Customer Record Management Document (CRMD)</h4>
                  
                   <form class="form-sample" onSubmit={processCRMD}>
                   
@@ -185,7 +184,7 @@ const CustomerRecord = () => {
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Firstname</label>
                           <div class="col-sm-9">
-                          <input type="text" value={consInfo.FirstName ?? ''} class="form-control" disabled />
+                          <input type="text" value={consInfo.Surname ? consInfo.Surname : consInfo.FirstName} class="form-control" disabled />
                           <input type="text" 
                           value={Number(userInfo.id) ?? 0} 
                           name="created_by"

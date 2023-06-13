@@ -13,10 +13,14 @@ const ViewCustomers = () => {
 
   const { data: newCustomersData, isFetching: isNewCustomersFetching, 
     refetch: refetchNewCustomers, isUninitialized: isNewCustomersUninitialized, 
-    isError: isNewCustomersError } = useGetNewCustomersQuery();
+    isError: isNewCustomersError, error: mError } = useGetNewCustomersQuery();
   
   const { data: crmData } = useGetCRMDCustomerQuery({  pageNo: currentPage });
   
+  if(isNewCustomersError){
+    notify('info', mError.data);
+  }
+  console.log(newCustomersData);
   console.log(crmData);
   
 

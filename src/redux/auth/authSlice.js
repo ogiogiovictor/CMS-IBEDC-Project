@@ -8,11 +8,15 @@ const userToken = localStorage.getItem("userToken")
 const userInfo = JSON.parse(localStorage.getItem("userInfo"))
   ? JSON.parse(localStorage.getItem("userInfo"))
   : null;
+const userMenu = JSON.parse(localStorage.getItem("userMenu"))
+  ? JSON.parse(localStorage.getItem("userMenu"))
+  : null;
 
 const initialState = {
   loading: false,
   userInfo,
   userToken,
+  userMenu,
   error: null,
   success: false,
   dashboardStats: [],
@@ -26,9 +30,11 @@ const authSlice = createSlice({
     logout: (state) => {
       localStorage.removeItem("userToken"); // deletes token from storage
       localStorage.removeItem("userInfo"); // deletes token from storage
+      localStorage.removeItem("userMenu"); // deletes token from storage
       state.loading = false;
       state.userInfo = null;
       state.userToken = null;
+      state.userMenu = null;
       state.error = null;
     },
     setCredentials: (state, { payload }) => {

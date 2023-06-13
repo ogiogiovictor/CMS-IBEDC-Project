@@ -127,8 +127,6 @@ const NewCustomer = () => {
                     <button type="submit" className="btn btn-primary mr-2" disabled={isProcessing}>
                     {isProcessing ? 'Processing...' : 'Proceed'}
                     </button>
-                    {/* <button className="btn btn-light">Cancel</button> */}
-                      {/* <button className="btn btn-primary mr-2" disabled={isSubmitting}> {isSubmitting ? 'Submitting..' : 'Save'}</button> */}
                   </form> 
                   
                 </div>

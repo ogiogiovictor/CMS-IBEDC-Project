@@ -61,7 +61,7 @@ console.log(getControList);
              <h4 className="card-title">{ rowData.name.replace(/_/g, ' ').toUpperCase() } ACCESS&nbsp;</h4>
 
              <div>
-                <button className="btn btn-sm btn-primary" onClick={handleEditClick}>{isEditing ? 'Save' : 'Update'}</button>
+                <button className="btn btn-sm btn-primary" onClick={handleEditClick}>{isEditing ? 'Save' : 'Edit'}</button>
               </div>
              <hr/>
 

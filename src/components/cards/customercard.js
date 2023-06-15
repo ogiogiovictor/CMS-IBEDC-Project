@@ -16,7 +16,7 @@ const CustomerCard = ({ cstats }) => {
             {cstats?.map(({ id, Region, total }) => (
               <div className="mb-3" key={id}>
                 <p className="d-flex mb-2">
-                  <Link to="#" style={changeColor}>
+                  <Link to={"/customer_region/".Region} style={changeColor}>
                     {Region}
                   </Link>
                   <span className="ml-auto font-weight-bold">{total}</span>

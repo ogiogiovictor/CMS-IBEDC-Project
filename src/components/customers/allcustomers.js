@@ -45,7 +45,7 @@ const AllCustomers = () => {
     navigate(`/errorpage`);
   }
 
-  console.log(dataUpdatedAt);
+  //console.log(dataUpdatedAt);
 
   const handleFilterStatusChange = (statusCode) => {
      dispatch(setFilterStatus(statusCode));
@@ -86,8 +86,10 @@ const AllCustomers = () => {
     try {
          
       const result = await postSearch(payload).unwrap();
+      console.log(result);
       setCurrentPage(1);
       dispatch(setAllCustomers(result.data));
+      
      // refetch();
 
     } catch (error) {
@@ -160,8 +162,8 @@ const AllCustomers = () => {
           <div className="col-lg-12 grid-margin stretch-card">
             <div className="card">
               <div className="card-body">
-                <h4 className="card-title">Customer Summary</h4>
-                <canvas id="barChart"></canvas>
+                {/* <h4 className="card-title">Customer Summary</h4>
+                <canvas id="barChart"></canvas> */}
               </div>
             </div>
           </div>

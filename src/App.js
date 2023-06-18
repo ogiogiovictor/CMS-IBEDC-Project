@@ -47,6 +47,7 @@ import ViewCustomers from "./components/customers/viewcustomers";
 import CustomerMoreDetails from "./components/customers/customerdetails";
 import AccessControl from "./components/settings/acl";
 import Roles from "./components/settings/roles";
+import AddMeters from "./components/meters/add_meters";
 
 
 const App = () => {
@@ -165,14 +166,7 @@ const App = () => {
                   <Route path="customernewdetails/:id" element={<CustomerMoreDetails />} />
                   <Route path="acl" element={<AccessControl />} />
                   <Route path="role/:id" element={<Roles />} />
-
-
-
-
-
-                 
-
-
+                  <Route path="add_meters" element={<AddMeters />} /> 
 
 
 

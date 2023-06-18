@@ -243,7 +243,7 @@ const AddFeeder = () => {
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Feeder CB Year Of Manufacture</label>
                           <div class="col-sm-8">
-                          <input type="text" 
+                          <input type="number" 
                           name="F11kvFeeder_CBYearofManufacture"
                           class="form-control" 
                           value={values.F11kvFeeder_CBYearofManufacture}

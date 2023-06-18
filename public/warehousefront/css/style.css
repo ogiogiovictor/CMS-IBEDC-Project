@@ -40464,4 +40464,9 @@ input:invalid[touched="true"] ~ small {
 /* === Layouts === */
 /*-------------------------------------------------------------------*/
 
+.hiddenFORMS {
+    display: none;
+  }
+  
+
 /*# sourceMappingURL=maps/style.css.map */

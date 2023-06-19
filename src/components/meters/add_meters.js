@@ -1,4 +1,4 @@
-import React, { useState  } from 'react';
+import React, { useState, useEffect  } from 'react';
 import { useForm } from 'react-hook-form';
 
 
@@ -7,11 +7,25 @@ const  AddMeters = () => {
     const [isProcessing, setIsProcessing] = useState(false);
     const [selectedType, setSelectedType] = useState("");
 
-    const { register, handleSubmit, errors } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSelectChangeHandler = (e) => {
-        setSelectedType(e.target.value);
+        const selectedValue = e.target.value;
+        setSelectedType(selectedValue);
+      }
+    
+
+    const handleSelectChange = (e) => {
+        setSelectedType({[e.target.name]: e.target.value})
     }
+
+
+    // Form submission handler
+  const onSubmit = (data) => {
+    console.log(selectedType);
+    console.log(data);
+  };
+
 
 
 
@@ -28,26 +42,27 @@ const  AddMeters = () => {
                   </p>
 
                  
-                   <form className="forms-sample">
+                   <form className="forms-sample" onSubmit={handleSubmit(onSubmit)}>
                     
-                      
+                    
                    <div className="row">
-                      <div className="col-md-6">
-                        <div className="form-group row">
-                          <label className="col-sm-4 col-form-label">Select Type</label>
-                          <div className="col-sm-8">
-                            <select   className="form-control"  name="type"  onChange={onSelectChangeHandler} >
-                            <option value="">Select Type</option>
-                            <option value="DT">DT</option>
-                            <option value="FEEDER">FEEDER</option>
-                            <option value="MD">MD</option>
-                            <option value="NMD">NMD</option>
-                            <option value="MDA">MDA</option>
-                            </select>
-                          </div>
+                        <div className="col-md-6">
+                            <div className="form-group row">
+                            <label className="col-sm-4 col-form-label">Select Type</label>
+                            <div className="col-sm-8">
+                                <select className="form-control" name="type" onChange={onSelectChangeHandler} required >
+                                <option value="">Select Type</option>
+                                <option value="DT">DT</option>
+                                <option value="FEEDER">FEEDER</option>
+                                <option value="MD">MD</option>
+                                <option value="NMD">NMD</option>
+                                <option value="MDA">MDA</option>
+                                </select>
+                            </div>
+                            </div>
                         </div>
-                      </div>
-                   </div>
+                        </div>
+
 
 
                    <div className="row">
@@ -55,7 +70,7 @@ const  AddMeters = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">REGION</label>
                           <div className="col-sm-8">
-                          <select   className="form-control"  name="region">
+                          <select   className="form-control"  name="region" onChange={handleSelectChange} {...register("region", { required: "Please select region." })} >
                             <option value="">Select Region</option>
                             <option value="OGUN">OGUN</option>
                             <option value="KWARA">KWARA</option>
@@ -63,6 +78,7 @@ const  AddMeters = () => {
                             <option value="OSUN">OSUN</option>
                             <option value="IBADAN">IBADAN</option>
                             </select>
+                            {errors.region && <span className="errors">{errors.region.message}</span>}
                           </div>
                         </div>
                       </div>
@@ -70,12 +86,13 @@ const  AddMeters = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">BUSINESS HUB</label>
                           <div className="col-sm-8">
-                          <select   className="form-control"  name="business_hub">
+                          <select  className="form-control"  name="business_hub" {...register("business_hub", { required: "Please select hub." })}>
                             <option value="">Select Business Hub</option>
                             <option value="Ota">Ota</option>
                             <option value="Ikirun">Ikirun</option>
                             <option value="Ede">Ede</option>
                             </select>
+                            {errors.business_hub && <span className="errors">{errors.business_hub.message}</span>}
                           </div>
                         </div>
                       </div>
@@ -129,7 +146,8 @@ const  AddMeters = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">11KV FEEDER NAME</label>
                           <div className="col-sm-8">
-                          <input type="text" name="33feederline" className="form-control" placeholder="Feeder Name"/>
+                          <input type="text" name="feeder_name" className="form-control" placeholder="Feeder Name" {...register("feeder_name", { required: "Please Add Feeder Name." })}/>
+                          {errors.feeder_name && <span className="errors">{errors.feeder_name.message}</span>}
                           </div>
                         </div>
                       </div>
@@ -166,11 +184,12 @@ const  AddMeters = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label"> DSS NAME</label>
                           <div className="col-sm-8">
-                          <select   className="form-control"  name="dss_name">
+                          <select   className="form-control"  name="dss_name" {...register("dss_name", { required: "Please select DSS." })}>
                             <option value="">Select DSS</option>
                             <option value="station">Station One</option>
                             <option value="stationtwo">Station Two</option>
                             </select>
+                            {errors.dss_name && <span className="errors">{errors.dss_name.message}</span>}
                           </div>
                         </div>
                       </div>

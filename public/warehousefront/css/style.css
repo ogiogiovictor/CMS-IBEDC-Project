@@ -40467,6 +40467,9 @@ input:invalid[touched="true"] ~ small {
 .hiddenFORMS {
     display: none;
   }
-  
+  .errors {
+    font-size: 11px;
+    color:red;
+  }
 
 /*# sourceMappingURL=maps/style.css.map */

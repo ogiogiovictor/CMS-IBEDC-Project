@@ -11,6 +11,7 @@ const initialState = {
   error: null,
   success: false,
   filterStatus: null,
+  searchCustomers: [],
 };
 
 const customerSlice = createSlice({
@@ -56,6 +57,10 @@ const customerSlice = createSlice({
     setCrmd: (state, action) => {
       state.crmd = action.payload;
     },
+    setRegionCustomers: (state, action) => {
+      state.searchCustomers = action.payload;
+    }
+
   },
 });
 
@@ -68,5 +73,6 @@ export const {
   setCrmd,
   setFilterStatus,
   setFilteredCustomers,
+  setRegionCustomers,
 } = customerSlice.actions;
 export default customerSlice.reducer;

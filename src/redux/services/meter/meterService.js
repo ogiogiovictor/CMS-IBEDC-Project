@@ -9,7 +9,7 @@ export const meterService = createApi({
     endpoints: (builder) => ({
         getAllMeters: builder.query({
             query: ({ pageNo }) => ({
-              url: `/${API_VERSION}/get_meters?page=${pageNo}`,
+              url: `/${API_VERSION}/get_meter?page=${pageNo}`,
               method: "GET",
             }),
             pollingInterval: 1800000, // 15 minutes
@@ -32,4 +32,4 @@ export const meterService = createApi({
     }),
 });
 
-export const { useGetAllMeterQuery, useAddMetersMutation } = meterService;
+export const { useGetAllMetersQuery, useAddMetersMutation } = meterService;

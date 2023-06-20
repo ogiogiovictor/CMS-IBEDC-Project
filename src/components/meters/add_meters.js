@@ -28,9 +28,9 @@ const  AddMeters = () => {
 
     // Form submission handler
   const onSubmit = async (data) => {
-   // console.log(selectedType);
-    //console.log(data);
-    notify("info", "Please wait...", 1000);
+    //console.log(selectedType);
+   // console.log(data);
+    notify("info", "Please wait...", 10);
     setIsProcessing(true);
     const idata = {
         mdata: data,
@@ -40,14 +40,16 @@ const  AddMeters = () => {
     try {
 
       const result =  await addMeter(idata).unwrap();
-      if(result.data){
-        notify("error", result.message);
+     console.log(result);
+      if(result){
+        notify("success", result.message);
         setIsProcessing(false);
-        navigate('/allmeters');
+        navigate('/all_meters');
       }
 
     }catch(error){
-        notify("error", error.message, 1000);
+      navigate('/all_meters');
+      notify("error", error.message, 1000);
         setIsProcessing(false);
     }
 
@@ -131,7 +133,7 @@ const  AddMeters = () => {
 
                    
                    {/* <div className={`row ${selectedType === "DT" ? "" : "hiddenFORMS"}`}> */}
-                   {(selectedType === "FEEDER" || selectedType === "NMD" || selectedType === "MD") && (
+                   {(selectedType === "11KV Feeder" ||  selectedType === "33KV Feeder" ||  selectedType === "NMD" || selectedType === "MD") && (
                    <div className={`row ${selectedType === "DT" ? "" : "hiddenFORMS"}`}>
                       <div className="col-md-6">
                         <div className="form-group row">
@@ -157,7 +159,7 @@ const  AddMeters = () => {
                    )}
 
 
-                   {(selectedType === "DT" || selectedType === "FEEDER" || selectedType === "NMD") && (
+                   {(selectedType === "Distribution Sub Station 33KV_415V" || selectedType === "Distribution Sub Station 11KV_415V" || selectedType === "11KV Feeder" ||  selectedType === "33KV Feeder"  || selectedType === "NMD") && (
                    <div className="row">
                       <div className="col-md-6">
                         <div className="form-group row">
@@ -171,7 +173,7 @@ const  AddMeters = () => {
                           </div>
                         </div>
                       </div>
-                      {(selectedType === "DT" || selectedType === "MD" || selectedType === "NMD" || selectedType === "MDA") && (
+                      {(selectedType === "Distribution Sub Station 11KV_415V" || selectedType === "Distribution Sub Station 33KV_415V" || selectedType === "MD" || selectedType === "NMD" || selectedType === "MDA") && (
                       <div className="col-md-6">  
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">ADDRESS</label>
@@ -187,7 +189,7 @@ const  AddMeters = () => {
 
 
 
-                {(selectedType === "DT" || selectedType === "FEEDER" || selectedType === "NMD") && (
+                {(selectedType === "Distribution Sub Station 33KV_415V" || selectedType === "Distribution Sub Station 11KV_415V" || selectedType === "33KV Feeder" || selectedType === "11KV Feeder" ||  selectedType === "NMD") && (
                    <div className="row">
                       <div className="col-md-6">
                         <div className="form-group row">
@@ -209,7 +211,7 @@ const  AddMeters = () => {
                 )}
 
 
-                {(selectedType === "DT" || selectedType === "MD" || selectedType === "NMD") && (
+                {(selectedType === "Distribution Sub Station 33KV_415V" || selectedType === "Distribution Sub Station 11KV_415V"  || selectedType === "MD" || selectedType === "NMD") && (
                    <div className={`row ${selectedType === "DT"  ? "" : "hiddenFORMS"}`}>
                       <div className="col-md-6">
                         <div className="form-group row">
@@ -237,7 +239,9 @@ const  AddMeters = () => {
 
 
 
-                   <div className={`row ${selectedType === "DT" ? "" : "hiddenFORMS"}`}>  
+        {(selectedType === "Distribution Sub Station 33KV_415V" || selectedType === "Distribution Sub Station 11KV_415V" ) && (
+
+                   <div className="row">  
                       <div className="col-md-12">
                         <div className="form-group row">
                           <label className="col-sm-2 col-form-label"> DSS PUBLIC/PRIVATE</label>
@@ -251,6 +255,7 @@ const  AddMeters = () => {
                         </div>
                       </div>
                    </div>
+            )}
 
 
                   
@@ -299,7 +304,9 @@ const  AddMeters = () => {
 
 
 
-                   <div className={`row ${selectedType === "DT" ? "" : "hiddenFORMS"}`}>
+               {(selectedType === "Distribution Sub Station 33KV_415V" || selectedType === "Distribution Sub Station 11KV_415V" ) && (
+                  
+                   <div className="row">
                       <div className="col-md-6">
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">METER RATED CAPACITY</label>
@@ -317,10 +324,11 @@ const  AddMeters = () => {
                         </div>
                       </div>
                    </div>
+               )}
 
 
 
-                   {(selectedType === "DT" || selectedType === "MD" || selectedType === "NMD" ) && (
+                   {(selectedType === "Distribution Sub Station 33KV_415V" || selectedType === "Distribution Sub Station 11KV_415V"  || selectedType === "MD" || selectedType === "NMD" ) && (
                    <div className="row">
                       <div className="col-md-6">
                         <div className="form-group row">
@@ -343,7 +351,7 @@ const  AddMeters = () => {
 
 
 
-                {(selectedType === "DT" || selectedType === "MD" || selectedType === "NMD" || selectedType === "FEEDER" ) && (
+                {(selectedType === "Distribution Sub Station 33KV_415V" || selectedType === "Distribution Sub Station 11KV_415V"  || selectedType === "MD" || selectedType === "NMD" || selectedType === "FEEDER" ) && (
                    <div className="row">
                       <div className="col-md-6">
                         <div className="form-group row">
@@ -373,7 +381,7 @@ const  AddMeters = () => {
 
 
 
-                {(selectedType === "DT" || selectedType === "MD" || selectedType === "NMD" || selectedType === "FEEDER" ) && (
+                {(selectedType === "DT" || selectedType === "MD" || selectedType === "NMD" || selectedType === "33KV Feeder"  || selectedType === "11KV Feeder" ) && (
                    <div className="row">
                       <div className="col-md-6">
                         <div className="form-group row">
@@ -396,7 +404,8 @@ const  AddMeters = () => {
                 
 
 
-                   <div className={`row ${selectedType === "FEEDER" ? "" : "hiddenFORMS"}`}>
+                {(selectedType === "33KV Feeder"  || selectedType === "11KV Feeder" ) && (
+                   <div className="row">
                       <div className="col-md-6">
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">FEEDER NAME</label>
@@ -423,9 +432,10 @@ const  AddMeters = () => {
                         </div>
                       </div>
                    </div>
+                )}
 
 
-                   <div className={`row ${selectedType === "FEEDER" ? "" : "hiddenFORMS"}`}>
+                   <div className={`row ${selectedType === "11KV Feeder" ? "" : "hiddenFORMS"}`}>
                       <div className="col-md-6">
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">FEEDER BAND</label>
@@ -446,7 +456,8 @@ const  AddMeters = () => {
 
 
 
-                   {(selectedType === "FEEDER" ) && (
+                   {(selectedType === "33KV Feeder"  || selectedType === "11KV Feeder" ) && (
+                  
                    <div className="row">
                       <div className="col-md-6">
                         <div className="form-group row">
@@ -469,7 +480,7 @@ const  AddMeters = () => {
 
 
 
-                {(selectedType === "FEEDER" ) && (
+              {(selectedType === "33KV Feeder"  || selectedType === "11KV Feeder" ) && (
                    <div className="row">
                       <div className="col-md-6">
                         <div className="form-group row">

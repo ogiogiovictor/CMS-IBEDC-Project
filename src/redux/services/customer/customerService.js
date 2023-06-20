@@ -125,6 +125,15 @@ export const customerService = createApi({
 
 
 
+    getCustomerByRegion: builder.query({
+      query: ({ region }) => ({
+        url: `/${API_VERSION}/customer_all_region/${region}`,
+        method: "GET",
+      }),
+    }),
+
+
+
   }),
 
  
@@ -132,6 +141,7 @@ export const customerService = createApi({
 });
 
 export const {
+  useGetCustomerByRegionQuery,
   useGetCustomerDetailsByIDQuery,
   useGetCustomerDetailsByTypeQuery,
   useGetCustomerInfoQuery,

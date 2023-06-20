@@ -199,9 +199,9 @@ const Transformer = () => {
                   <i class="icon-cloud-upload"></i>Add Transformer
                   </Link>
                   &nbsp;&nbsp;
-                  <Link to="/transformer_map" class="btn btn-primary btn-fw">
+                  {/* <Link to="/transformer_map" class="btn btn-primary btn-fw">
                   <i class="icon-cloud-upload"></i>View Map
-                  </Link>
+                  </Link> */}
                  
                   </h4>
 

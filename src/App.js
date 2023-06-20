@@ -48,6 +48,8 @@ import CustomerMoreDetails from "./components/customers/customerdetails";
 import AccessControl from "./components/settings/acl";
 import Roles from "./components/settings/roles";
 import AddMeters from "./components/meters/add_meters";
+import Meters from "./components/meters/meters";
+import CustomerByRegion from "./components/customers/cusstomerregion";
 
 
 const App = () => {
@@ -167,6 +169,9 @@ const App = () => {
                   <Route path="acl" element={<AccessControl />} />
                   <Route path="role/:id" element={<Roles />} />
                   <Route path="add_meters" element={<AddMeters />} /> 
+                  <Route path="all_meters" element={<Meters />} />
+                  <Route path="customer_region/:region" element={<CustomerByRegion/>} />
+                  
 
 
 

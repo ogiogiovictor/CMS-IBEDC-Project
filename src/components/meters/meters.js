@@ -1,5 +1,6 @@
 import React,  {Fragment, useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useGetAllMetersQuery } from '../../redux/services/meter/meterService';
 import { setMeter } from '../../redux/services/meter/meterSlice';
 import PageLoader from "../spinner/loader";
@@ -7,9 +8,13 @@ import DataTable from '../datatable';
 
 const Meters = () => {
 
-  const [currentPage, setCurrentPage] = useState(1);
+  
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { meter } = useSelector((state) => state.meter) || [];
+  const [selectedObject, setSelectedObject] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const {data, isError, isFetching, isUninitialized, refetch} = useGetAllMetersQuery(
     { pageNo: currentPage },  
@@ -22,7 +27,7 @@ const Meters = () => {
     }
   }, [data, currentPage, dispatch])
 
-  console.log(data);
+
 
   const columns = [
     { title: "TYPE", field: "type" },
@@ -34,8 +39,15 @@ const Meters = () => {
     { title: "Longitude", field: "longitude" },
   ];
 
-  const handleActionClick = ({MSNO}) => {
-    //   navigate(`/amiDetails/${MSNO}`);
+  const handleActionClick = ({meter}) => {
+    setSelectedObject(meter);
+    navigate(`/details/${meter.id}`, { 
+      state: { 
+        rowData: meter, 
+        rowTitle: 'Meter Information',
+        rowSubTitle: meter.type,
+        routeName: '/meters'
+       } });
        window.scrollTo(0, 0);
      };
 

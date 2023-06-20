@@ -14,23 +14,21 @@ const RecentCustomer = ({ recentCustomer }) => {
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="Search Customers(s)..."
+                  disabled
                 />
-                <button type="submit" className="btn btn-primary ml-3">
-                  Search
-                </button>
               </div>
 
               <div className="table-responsive">
                 <table className="table">
                   <thead>
                     <tr>
+                      
+                    <th>Setup Date</th>
                       <th>AccountNo</th>
                       <th>Surname</th>
                       <th>Firstname</th>
                       <th>Account Type</th>
                       <th>Business Hub</th>
-                      <th>Service Center</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -38,12 +36,12 @@ const RecentCustomer = ({ recentCustomer }) => {
                   <tbody>
                     {recentCustomer?.map((customer) => (
                       <tr key={customer?.CustomerSK}>
+                        <td>{customer?.SetupDate}</td>
                         <td>{customer?.AccountNo}</td>
                         <td>{customer?.Surname}</td>
                         <td>{customer?.FirstName}</td>
                         <td>{customer?.AccountType}</td>
                         <td>{customer?.BusinessHub}</td>
-                        <td>{customer?.service_center}</td>
                         <td>
                           <label className="badge badge-info">
                             {customer?.StatusCode}

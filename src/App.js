@@ -50,6 +50,7 @@ import Roles from "./components/settings/roles";
 import AddMeters from "./components/meters/add_meters";
 import Meters from "./components/meters/meters";
 import CustomerByRegion from "./components/customers/cusstomerregion";
+import BillingEfficiency from "./components/dss/billingEfficiency";
 
 
 const App = () => {
@@ -171,6 +172,7 @@ const App = () => {
                   <Route path="add_meters" element={<AddMeters />} /> 
                   <Route path="all_meters" element={<Meters />} />
                   <Route path="customer_region/:region" element={<CustomerByRegion/>} />
+                  <Route path="dt_billing_efficiency" element={<BillingEfficiency />} />
                   
 
 

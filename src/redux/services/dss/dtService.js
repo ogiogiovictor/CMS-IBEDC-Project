@@ -45,8 +45,18 @@ export const dtService = createApi({
           }),
         }),
 
+        getBillingEfficency: builder.query({
+          query: ({ pageNo }) => ({
+            url: `/${API_VERSION}/dt_billing_efficency`,
+            method: "GET",
+          }),
+        }),
+
+
+        
+
     }),
 });
 
 
-export const { useGetAllDistributionQuery, useGetDSSInfoQuery, useSearchAssetDTMutation, useExportAssetDTMutation } = dtService;
+export const { useGetBillingEfficencyQuery, useGetAllDistributionQuery, useGetDSSInfoQuery, useSearchAssetDTMutation, useExportAssetDTMutation } = dtService;

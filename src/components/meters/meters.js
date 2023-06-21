@@ -41,7 +41,7 @@ const Meters = () => {
 
 
   console.log(data);
-
+console.log(data?.data?.total);
   console.log(meter);
   const handleActionClick = ({meter}) => {
     setSelectedObject(meter);

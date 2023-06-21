@@ -30,7 +30,7 @@ const  AddMeters = () => {
   const onSubmit = async (data) => {
     //console.log(selectedType);
    // console.log(data);
-    notify("info", "Please wait...", 10);
+    notify("success", "Meter Successfully Added.");
     setIsProcessing(true);
     const idata = {
         mdata: data,
@@ -49,7 +49,7 @@ const  AddMeters = () => {
 
     }catch(error){
       navigate('/all_meters');
-      notify("error", error.message, 1000);
+      //notify("error", error.message);
         setIsProcessing(false);
     }
 

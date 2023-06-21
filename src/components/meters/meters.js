@@ -30,15 +30,19 @@ const Meters = () => {
 
 
   const columns = [
+    { title: "ID", field: "id" },
     { title: "TYPE", field: "type" },
     { title: "Region", field: "region" },
     { title: "Business Hub", field: "business_hub" },
-    { title: "Region", field: "Region" },
     { title: "Meter Number", field: "meter_number" },
     { title: "Latitude", field: "latitude" },
     { title: "Longitude", field: "longitude" },
   ];
 
+
+  console.log(data);
+
+  console.log(meter);
   const handleActionClick = ({meter}) => {
     setSelectedObject(meter);
     navigate(`/details/${meter.id}`, { 

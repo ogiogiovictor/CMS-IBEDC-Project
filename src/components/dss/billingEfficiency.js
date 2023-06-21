@@ -61,7 +61,7 @@ const BillingEfficiency = () => {
     const columns = [
       { title: "Asset ID", field: "Assetid" },
       { title: "DSS Name", field: "DSS_11KV_415V_Name" },
-      { title: "Total DSS", field: "TotalDSS" },
+      { title: "Total Customers", field: "TotalDSS" },
       { title: "Customers", field: "TotalCustomers" },
       { title: "UnBilled", field: "UnBilledCustomers" },
       { title: "AmountBilled", field: "AmountBilled" },

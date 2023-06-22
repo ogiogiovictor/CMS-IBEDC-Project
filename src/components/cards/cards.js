@@ -63,11 +63,11 @@ const Cards = ({ stats }) => {
             <div className="d-flex align-items-center">
               <i className="icon-power icon-lg"></i>
               <div className="ml-4">
-                <Link to="" className="linkCards">
-                  <h4 className="font-weight-light">Online Feeders</h4>
+                <Link to="/feeders" className="linkCards">
+                  <h4 className="font-weight-light">Feeders</h4>
                 </Link>
-                <h3 className="font-weight-light mb-3">0</h3>
-                <p className="mb-0 font-weight-light">Total Event - 10 </p>
+                <h3 className="font-weight-light mb-3">{stats.feeder_11 + stats.feeder_33}</h3>
+                {/* <p className="mb-0 font-weight-light">Total Event - 10 </p> */}
               </div>
             </div>
           </div>

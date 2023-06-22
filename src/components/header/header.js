@@ -87,22 +87,10 @@ const Header = () => {
               </NavLink>
             </div>
             <div className="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-              {/* <form className="search-field" action="#">
                 <div className="form-group mb-0">
-                  <div className="input-group">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="search"
-                    />
-                    <div className="input-group-append">
-                      <span className="input-group-text">
-                        <i className="icon-magnifier"></i>
-                      </span>
-                    </div>
+                  <div className="input-group"> ({`${userInfo?.authority}`})
                   </div>
                 </div>
-              </form> */}
               <ul className="navbar-nav navbar-nav-right mr-0">
                 {/* <li className="nav-item dropdown">
                   <a
@@ -188,7 +176,7 @@ const Header = () => {
                     {/* <span className="nav-profile-text">
                         Hello {userInfo?.name}
                       </span> */}
-                    <span>{`Hello ${userInfo?.name}`} ({`${userInfo?.authority}`})</span>
+                    <span>{`Hello ${userInfo?.name}`}</span>
                     <img
                       src="http://via.placeholder.com/36x36"
                       className="rounded-circle"

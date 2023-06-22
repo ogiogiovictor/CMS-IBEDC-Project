@@ -4,6 +4,7 @@ const initialState = {
     dss: [],
     dssData: [],
     dssInfo: null,
+    dtbilling: [],
 }
 
 const dssSlice = createSlice({
@@ -23,6 +24,10 @@ const dssSlice = createSlice({
         setDssInfo: (state, { payload }) => {
             state.dssInfo = payload;
         
+         },
+         setDTBill: (state, { payload }) => {
+            state.dtbilling = payload;
+        
          }
 
     }
@@ -32,6 +37,7 @@ export const {
     setDss,
     setDataDss,
     setDssInfo,
+    setDTBill,
 } = dssSlice.actions;
 
 

@@ -30,6 +30,7 @@ const Meters = () => {
 
 
   const columns = [
+    { title: "ID", field: "id" },
     { title: "TYPE", field: "type" },
     { title: "Region", field: "region" },
     { title: "Business Hub", field: "business_hub" },

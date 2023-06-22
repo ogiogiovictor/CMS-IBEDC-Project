@@ -33,20 +33,19 @@ const Meters = () => {
     { title: "TYPE", field: "type" },
     { title: "Region", field: "region" },
     { title: "Business Hub", field: "business_hub" },
-    { title: "Region", field: "Region" },
     { title: "Meter Number", field: "meter_number" },
     { title: "Latitude", field: "latitude" },
     { title: "Longitude", field: "longitude" },
   ];
 
-  const handleActionClick = ({meter}) => {
+  const handleActionClick = (meter) => {
     setSelectedObject(meter);
-    navigate(`/details/${meter.id}`, { 
+    navigate(`/details/${meter.meter_number}`, { 
       state: { 
         rowData: meter, 
         rowTitle: 'Meter Information',
         rowSubTitle: meter.type,
-        routeName: '/meters'
+        routeName: '/all_meters'
        } });
        window.scrollTo(0, 0);
      };

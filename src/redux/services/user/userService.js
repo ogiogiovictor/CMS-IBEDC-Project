@@ -53,16 +53,19 @@ export const userService = createApi({
   }),
 
 
+  getResourceList: builder.query({
+    query: () => ({
+        url: `/${API_VERSION}/get_dropdown_all`,
+        method: "GET",
+    }),
+    pollingInterval: 900000, // 15 minutes
+}),
 
-    
-
-      
-  
 
        
      })
 
 });
 
-export const { useGetAllUserQuery, useRegisterUserMutation, useGetRoleQuery, useGetAccessListQuery,
+export const { useGetResourceListQuery, useGetAllUserQuery, useRegisterUserMutation, useGetRoleQuery, useGetAccessListQuery,
 useGetControListQuery } = userService;

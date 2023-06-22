@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect  } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { useRegisterUserMutation, useGetRoleQuery } from '../../redux/services/user/userService';
+import { useRegisterUserMutation, useGetRoleQuery, useGetResourceListQuery } from '../../redux/services/user/userService';
 import { setRole } from '../../redux/auth/authSlice';
 import AuthorityDropdown from '../../redux/services/user/authorityDropdown';
 import { notify } from '../../utils/notify';
@@ -29,6 +29,7 @@ const AddUser = () => {
   const navigate = useNavigate();
 
   const { data, isFetching } = useGetRoleQuery();
+  const { data: getResource } = useGetResourceListQuery();
 
     useEffect(() => {
     if (data) {
@@ -36,8 +37,7 @@ const AddUser = () => {
     }
  }, [data ]);
 
-
- console.log(data);
+//console.log(getResource);
 
   const onSelectChangeAuthorityHandler = (e) => {
     setSelectedAuthority(e.target.value);
@@ -102,18 +102,22 @@ const AddUser = () => {
     }
 
     
-    
   }
+    // Get distinct values of 'name' property from the array
+  const iregion = [...new Set(getResource?.data?.service_unit?.map(item => item.Region.toUpperCase()))];
+  const biz_hub = [...new Set(getResource?.data?.service_unit?.map(item => item.Biz_Hub))];
+  const service_center = [...new Set(getResource?.data?.service_unit?.map(item => item.Name))];
+  console.log(biz_hub);
 
   const region = (<div className="form-group">
   <label htmlFor="region">Region</label>
    <select  name="region" className="form-control"  onChange={onChangeHandler}>
-     <option value="">Select Region</option>
-     <option value="oyo">Oyo</option>
-     <option value="ogun">Ogun</option>
-     <option value="oyo">Oyo</option>
-     <option value="kwara">Kwara</option>
-     <option value="osun">Osun</option>
+   <option value="">Select Region</option>
+    {
+      iregion.map((item, index) => (
+        <option key={index} value={item}>{item}</option>
+      ))
+    }
    </select>
   <small>Authority Cannot be empty</small>
 </div>);
@@ -123,9 +127,11 @@ const businessHub = (
     <label htmlFor="surname">Business Hub</label>
     <select  name="business_hub" className="form-control" onChange={onChangeHandler}>
       <option value="">Select</option>
-      <option value="Ede">Ede</option>
-      <option value="Ijeun">Ijeun</option>
-      <option value="Apata">Apata</option>
+      {
+      biz_hub.map((item, index) => (
+        <option key={index} value={item}>{item}</option>
+      ))
+    }
     </select>
     <small>Authority Cannot be empty</small>
   </div>
@@ -136,8 +142,11 @@ const serviceCenter = (
   <label htmlFor="surname">Service Centre</label>
    <select name="service_center" className="form-control" onChange={onChangeHandler}>
      <option value="business_hub">Region</option>
-     <option value="business_hub">Business Hub</option>
-     <option value="business_hub">Service Center</option>
+     {
+      data?.business_hubBiz_hub.map((item, index) => (
+        <option key={index} value={business_Hub}>{business_Hub}</option>
+      ))
+    }
    </select>
   <small>Authority Cannot be empty</small>
 </div>

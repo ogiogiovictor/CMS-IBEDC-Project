@@ -188,7 +188,7 @@ const Header = () => {
                     {/* <span className="nav-profile-text">
                         Hello {userInfo?.name}
                       </span> */}
-                    <span>{`Hello ${userInfo?.name}`}</span>
+                    <span>{`Hello ${userInfo?.name}`} ({`${userInfo?.authority}`})</span>
                     <img
                       src="http://via.placeholder.com/36x36"
                       className="rounded-circle"

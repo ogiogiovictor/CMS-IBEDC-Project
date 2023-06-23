@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useGetAccessListQuery, useGetAllUserQuery, useGetRoleQuery, useGetControListQuery } from '../../redux/services/user/userService';
 import './role.css'
-
+import { useForm } from 'react-hook-form';
 
 
 const Roles = () => {
@@ -22,6 +22,7 @@ const Roles = () => {
   const { data: allRolesUsers } = useGetRoleQuery();
   const { data: initialControListData  } = useGetControListQuery({ role_id: rowData.id });
    
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
 
   useEffect(() => {
@@ -45,10 +46,24 @@ const Roles = () => {
   };
 
 
+  const onSubmit = async (data) => {
+
+    const menuIds = getControList.map(item => item.menu_id);
+    const formData = { 
+      ...data,
+      list: menuIds
+    }
+
+    console.log(formData);
+   console.log(getControList);
+  
+  };
+
+
 
 // console.log(allRolesUsers?.data);
 // console.log(rowData.id);
-console.log(getControList);
+//console.log(getControList);
    
     
     return (
@@ -66,7 +81,7 @@ console.log(getControList);
              <hr/>
 
 
-
+              <form onSubmit={handleSubmit(onSubmit)} className="forms-sample">
               <div className="table-responsive">
                 
                 {data?.data?.map((item, index) => (
@@ -119,16 +134,16 @@ console.log(getControList);
                       <label>Add Users</label>
                       <div class="row">
                         <div class="col-md-11">
-                        <select class="form-control" name="semail">
+                        <select class="form-control" name="semail"  {...register('semail', { required: 'Please select an email' })}>
                         {
                           getAllUsers?.data?.data?.map((item, index) => (
-                            <option key={index} value={item.id}>{item.name} ({item.email})</option>
+                            <option key={index} value={item.email}>{item.name} ({item.email})</option>
                           ))
                         }
                       </select>
                         </div>
                         <div class="col-md-1">
-                        <button className="btn btn-sm btn-primary btn-block">Save</button>
+                        <button type="submit" className="btn btn-sm btn-primary btn-block">Save</button>
                         </div>
 
                       </div>
@@ -137,11 +152,14 @@ console.log(getControList);
                       
                     </div>
 
+              </form>
+
+
                 <hr/>
 
                 <div className="form-group">
                       
-                <table className="table table-bordered table-hover">
+                  <table className="table table-bordered table-hover">
                       <thead>
                         <tr>
                           <th>ID</th>

@@ -2,12 +2,13 @@ import React, { useState, useEffect  } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAddFeederMutation } from '../../redux/services/feeder/feederService';
 import { notify  } from '../../utils/notify';
-
+import { useGetResourceListQuery } from '../../redux/services/user/userService';
 
 const AddThirtyFeeder = () => {
 
     const [isProcessing, setIsProcessing] = useState(false);
     const [addFeeder, { isLoading }] = useAddFeederMutation();
+    const { data: getResource } = useGetResourceListQuery();
 
     const [latitude, setLatitude] = useState(null);
     const [longitude, setLongitude] = useState(null);
@@ -137,6 +138,54 @@ const AddThirtyFeeder = () => {
         
       };
 
+
+      // Get distinct values of 'name' property from the array
+  const iregion = [...new Set(getResource?.data?.service_unit?.map(item => item.Region.toUpperCase()))];
+  const biz_hub = [...new Set(getResource?.data?.service_unit?.map(item => item.Biz_Hub))];
+
+  const [selectedRegion, setSelectedRegion] = useState("");
+  const [selectedBizHub, setSelectedBizHub] = useState("");
+
+  const onChangeRegion = (event) => {
+    setSelectedRegion(event.target.value);
+    console.log(selectedRegion);
+    setSelectedBizHub("");
+  };
+  
+
+  const onChangeBizHub = (event) => {
+    setSelectedBizHub(event.target.value);
+  };
+
+  const filteredBizHubs = selectedRegion
+  ? biz_hub.filter((item) => getResource?.data?.service_unit.find( (unit) => unit.Biz_Hub === item && unit.Region.toUpperCase() === selectedRegion
+  )) : biz_hub;
+
+
+  const region = (
+    <select name="F33kv_Regional_Name" className="form-control" value={selectedRegion} onChange={onChangeRegion} >
+      <option value="">Select Region</option>
+      {iregion.map((item, index) => (
+        <option key={index} value={item}>
+          {item}
+        </option>
+      ))}
+    </select>
+);
+
+
+const businessHub = (
+    <select name="business_hub" className="form-control" value={selectedBizHub} onChange={onChangeBizHub} disabled={!selectedRegion}  >
+      <option value="">Select</option>
+      {filteredBizHubs.map((item, index) => (
+        <option key={index} value={item}>
+          {item}
+        </option>
+      ))}
+    </select>
+);
+
+
     return (
         <div className="row">
             <div className="col-md-10 grid-margin stretch-card">
@@ -159,7 +208,7 @@ const AddThirtyFeeder = () => {
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Select AssetType</label>
                           <div class="col-sm-8">
-                            <select  onChange={onChangeHandler} class="form-control"  name="assettype">
+                            <select  onChange={onChangeHandler} class="form-control"  name="assettype" required>
                             <option value="">Select Feeder</option>
                             <option value="33KV Feeder">33kv Feeder</option>
                             </select>
@@ -218,31 +267,24 @@ const AddThirtyFeeder = () => {
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">F33kv_Regional_Name</label>
                           <div class="col-sm-8">
-                          <input type="text" 
-                          name="F33kv_Regional_Name"
-                          class="form-control" 
-                          value={values.F33kv_Regional_Name}
-                          onChange={onChangeHandler}
-                          onBlur={onBlurHandler}
-                          touched={touched.F33kv_Regional_Name.toString()}
-                          placeholder='Please enter F33kv_Regional_Name' required
-                          />
-                           <small>Feeder F33kv_Regional_Name Cannot be empty</small>
+                          {region}
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">F33kv_Business_Hub_Name</label>
+                          
                           <div class="col-sm-8">
-                            <input type="text" 
+                          {businessHub}
+                            {/* <input type="text" 
                             class="form-control"
                             name="F33kv_Business_Hub_Name"
                             value={values.F33kv_Business_Hub_Name}
                             onChange={onChangeHandler}
                             onBlur={onBlurHandler}
                             touched={touched.F33kv_Business_Hub_Name.toString()}
-                            />
+                            /> */}
                           </div>
                         </div>
                       </div>

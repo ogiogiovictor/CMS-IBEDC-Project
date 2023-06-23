@@ -4,10 +4,12 @@ import { useAddFeederMutation } from '../../redux/services/feeder/feederService'
 import { notify  } from '../../utils/notify';
 
 
+
 const AddFeeder = () => {
 
     const [isProcessing, setIsProcessing] = useState(false);
     const [addFeeder, { isLoading }] = useAddFeederMutation();
+    const { data: getResource } = useGetResourceListQuery();
 
     const [latitude, setLatitude] = useState(null);
     const [longitude, setLongitude] = useState(null);
@@ -161,9 +163,9 @@ const AddFeeder = () => {
             return;
           }
         }
-      
         
       };
+
 
     return (
         <div className="row">

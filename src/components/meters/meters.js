@@ -41,7 +41,7 @@ const Meters = () => {
 
   const handleActionClick = (meter) => {
     setSelectedObject(meter);
-    navigate(`/details/${meter.meter_number}`, { 
+    navigate(`/details/${meter.id}`, { 
       state: { 
         rowData: meter, 
         rowTitle: 'Meter Information',

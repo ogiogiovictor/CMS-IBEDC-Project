@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useAddMetersMutation } from '../../redux/services/meter/meterService';
 import { notify } from '../../utils/notify';
 import { useNavigate } from 'react-router-dom';
+import { useGetResourceListQuery } from '../../redux/services/user/userService';
 
 
 const  AddMeters = () => {
@@ -25,6 +26,7 @@ const  AddMeters = () => {
     }
 
     const [ addMeter ] = useAddMetersMutation();
+    const { data: getResource } = useGetResourceListQuery();
 
     // Form submission handler
   const onSubmit = async (data) => {
@@ -55,6 +57,53 @@ const  AddMeters = () => {
 
   };
 
+
+      // Get distinct values of 'name' property from the array
+      const iregion = [...new Set(getResource?.data?.service_unit?.map(item => item.Region.toUpperCase()))];
+      const biz_hub = [...new Set(getResource?.data?.service_unit?.map(item => item.Biz_Hub))];
+    
+      const [selectedRegion, setSelectedRegion] = useState("");
+      const [selectedBizHub, setSelectedBizHub] = useState("");
+    
+      const onChangeRegion = (event) => {
+        setSelectedRegion(event.target.value);
+        console.log(selectedRegion);
+        setSelectedBizHub("");
+      };
+      
+    
+      const onChangeBizHub = (event) => {
+        setSelectedBizHub(event.target.value);
+      };
+    
+      const filteredBizHubs = selectedRegion
+      ? biz_hub.filter((item) => getResource?.data?.service_unit.find( (unit) => unit.Biz_Hub === item && unit.Region.toUpperCase() === selectedRegion
+      )) : biz_hub;
+    
+    
+      const region = (
+        <select name="F33kv_Regional_Name" className="form-control" value={selectedRegion} onChange={onChangeRegion} >
+          <option value="">Select Region</option>
+          {iregion.map((item, index) => (
+            <option key={index} value={item}>
+              {item}
+            </option>
+          ))}
+        </select>
+    );
+
+
+    const businessHub = (
+      <select name="business_hub" className="form-control" value={selectedBizHub} onChange={onChangeBizHub} disabled={!selectedRegion}  >
+        <option value="">Select</option>
+        {filteredBizHubs.map((item, index) => (
+          <option key={index} value={item}>
+            {item}
+          </option>
+        ))}
+      </select>
+  );
+    
 
 
 
@@ -101,7 +150,8 @@ const  AddMeters = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">REGION</label>
                           <div className="col-sm-8">
-                          <select   className="form-control"  name="region" onChange={handleSelectChange} {...register("region", { required: "Please select region." })} >
+                            {region}
+                          {/* <select   className="form-control"  name="region" onChange={handleSelectChange} {...register("region", { required: "Please select region." })} >
                             <option value="">Select Region</option>
                             <option value="OGUN">OGUN</option>
                             <option value="KWARA">KWARA</option>
@@ -109,7 +159,7 @@ const  AddMeters = () => {
                             <option value="OSUN">OSUN</option>
                             <option value="IBADAN">IBADAN</option>
                             </select>
-                            {errors.region && <span className="errors">{errors.region.message}</span>}
+                            {errors.region && <span className="errors">{errors.region.message}</span>} */}
                           </div>
                         </div>
                       </div>
@@ -117,13 +167,14 @@ const  AddMeters = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">BUSINESS HUB</label>
                           <div className="col-sm-8">
-                          <select  className="form-control"  name="business_hub" {...register("business_hub", { required: "Please select hub." })}>
+                            {businessHub}
+                          {/* <select  className="form-control"  name="business_hub" {...register("business_hub", { required: "Please select hub." })}>
                             <option value="">Select Business Hub</option>
                             <option value="Ota">Ota</option>
                             <option value="Ikirun">Ikirun</option>
                             <option value="Ede">Ede</option>
                             </select>
-                            {errors.business_hub && <span className="errors">{errors.business_hub.message}</span>}
+                            {errors.business_hub && <span className="errors">{errors.business_hub.message}</span>} */}
                           </div>
                         </div>
                       </div>

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { notify } from '../../utils/notify';
 import { useAddNewCustomerMutation } from '../../redux/services/customer/customerService';
+import { useGetResourceListQuery } from '../../redux/services/user/userService';
 
 
 const AddCustomer = () => {
@@ -13,6 +14,7 @@ const AddCustomer = () => {
   const { userInfo } = useSelector((state) => state.auth);
 
   const [addCustomer] = useAddNewCustomerMutation();
+  const { data: getResource } = useGetResourceListQuery();
 
   const onSubmit = async (data) => {
     // Handle form submission
@@ -27,6 +29,9 @@ const AddCustomer = () => {
       customer_type: data.customer_type.toLowerCase(),
       building_description: data.building_description.toLowerCase(),
       status: "pending",
+      region: selectedRegion,
+      business_hub: selectedBizHub,
+      service_center: selectedServiceCenter,
       contact_details:{
         ctitle: data.ctitle,
         cphone: data.cphone,
@@ -59,6 +64,7 @@ const AddCustomer = () => {
     }
 
     try {
+      console.log(formData);
 
       const result =  await addCustomer(formData).unwrap();
       if(result.message == "Customer Successfully Created"){
@@ -78,8 +84,81 @@ const AddCustomer = () => {
       setIsProcessing(false);
     }
 
-
   };
+
+
+  
+  // Get distinct values of 'name' property from the array
+  const iregion = [...new Set(getResource?.data?.service_unit?.map(item => item.Region.toUpperCase()))];
+  const biz_hub = [...new Set(getResource?.data?.service_unit?.map(item => item.Biz_Hub))];
+  const service_center = [...new Set(getResource?.data?.service_unit?.map(item => item.Name))];
+
+  const [selectedRegion, setSelectedRegion] = useState("");
+  const [selectedBizHub, setSelectedBizHub] = useState("");
+  const [selectedServiceCenter, setSelectedServiceCenter] = useState("");
+
+  const onChangeRegion = (event) => {
+    setSelectedRegion(event.target.value);
+    console.log(selectedRegion);
+    setSelectedBizHub("");
+    setSelectedServiceCenter("");
+  };
+  
+
+  const onChangeBizHub = (event) => {
+    setSelectedBizHub(event.target.value);
+    setSelectedServiceCenter("");
+  };
+
+  const onChangeServiceCenter = (event) => {
+    setSelectedServiceCenter(event.target.value);
+  };
+
+  const filteredBizHubs = selectedRegion
+  ? biz_hub.filter((item) => getResource?.data?.service_unit.find( (unit) => unit.Biz_Hub === item && unit.Region.toUpperCase() === selectedRegion
+  )) : biz_hub;
+
+
+  const filteredServiceCenters = selectedBizHub
+    ? service_center.filter((item) => getResource?.data?.service_unit.find((unit) =>
+              unit.Name === item &&
+              unit.Biz_Hub === selectedBizHub &&
+              unit.Region.toUpperCase() === selectedRegion
+    )): service_center;
+
+    const region = (
+        <select name="region" className="form-control" value={selectedRegion} onChange={onChangeRegion} >
+          <option value="">Select Region</option>
+          {iregion.map((item, index) => (
+            <option key={index} value={item}>
+              {item}
+            </option>
+          ))}
+        </select>
+    );
+
+
+    const businessHub = (
+        <select name="business_hub" className="form-control" value={selectedBizHub} onChange={onChangeBizHub} disabled={!selectedRegion}  >
+          <option value="">Select</option>
+          {filteredBizHubs.map((item, index) => (
+            <option key={index} value={item}>
+              {item}
+            </option>
+          ))}
+        </select>
+    );
+  
+    const serviceCenter = (
+        <select name="service_center" className="form-control" value={selectedServiceCenter} onChange={onChangeServiceCenter} disabled={!selectedBizHub} >
+          <option value="">Select</option>
+          {filteredServiceCenters.map((item, index) => (
+            <option key={index} value={item}>
+              {item}
+            </option>
+          ))}
+        </select>
+    );
  
 
 
@@ -239,9 +318,11 @@ const AddCustomer = () => {
                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Region</label>
+                         
 
                           <div class="col-sm-9">
-                             <select {...register('region', { required: 'Region is required' })}  name="region" className="form-control">
+                          {region}
+                             {/* <select {...register('region', { required: 'Region is required' })}  name="region" className="form-control">
                               <option value="">Select Region</option>
                               <option value="Ogun">Ogun</option>
                               <option value="Oyo">Oyo</option>
@@ -249,7 +330,7 @@ const AddCustomer = () => {
                               <option value="Ota">Ota</option>
                               <option value="Kwara">Kwara</option>
                               <option value="Osun">Osun</option>
-                            </select>
+                            </select> */}
                           </div>
                         </div>
                       </div>
@@ -275,13 +356,14 @@ const AddCustomer = () => {
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Business Hub</label>
                           <div class="col-sm-9">
-                           <select {...register('business_hub', { required: 'Business Hub is required' })}  name="business_hub" className="form-control">
+                            {businessHub}
+                           {/* <select {...register('business_hub', { required: 'Business Hub is required' })}  name="business_hub" className="form-control">
                               <option value="">Select Business Hub</option>
                               <option value="Ota">Ota</option>
                               <option value="Ilesha">Ilesha</option>
                               <option value="Apata">Apata</option>
                               <option value="Soka">Soka</option>
-                            </select>
+                            </select> */}
                           </div>
                         </div>
                       </div>
@@ -290,11 +372,12 @@ const AddCustomer = () => {
                           <label class="col-sm-3 col-form-label">Service Centre</label>
 
                           <div class="col-sm-9">
-                             <select {...register('service_center', { required: 'Service Centre is required' })}  name="service_center" className="form-control">
+                            {serviceCenter}
+                             {/* <select {...register('service_center', { required: 'Service Centre is required' })}  name="service_center" className="form-control">
                               <option value="">Select Service Center</option>
                               <option value="Ikirun">Ikirun</option>
                               <option value="Opute">Opute</option>
-                            </select>
+                            </select> */}
                           </div>
                         </div>
                       </div>

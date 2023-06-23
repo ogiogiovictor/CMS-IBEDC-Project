@@ -100,57 +100,99 @@ const AddUser = () => {
       setIsProcessing(false);
       console.log(e);
     }
-
     
   }
-    // Get distinct values of 'name' property from the array
+
+    //console.log(getResource.data.service_unit);
+
+  // Get distinct values of 'name' property from the array
   const iregion = [...new Set(getResource?.data?.service_unit?.map(item => item.Region.toUpperCase()))];
   const biz_hub = [...new Set(getResource?.data?.service_unit?.map(item => item.Biz_Hub))];
   const service_center = [...new Set(getResource?.data?.service_unit?.map(item => item.Name))];
-  console.log(biz_hub);
 
-  const region = (<div className="form-group">
-  <label htmlFor="region">Region</label>
-   <select  name="region" className="form-control"  onChange={onChangeHandler}>
-   <option value="">Select Region</option>
-    {
-      iregion.map((item, index) => (
-        <option key={index} value={item}>{item}</option>
-      ))
-    }
-   </select>
-  <small>Authority Cannot be empty</small>
-</div>);
+ 
+  const [selectedRegion, setSelectedRegion] = useState("");
+  const [selectedBizHub, setSelectedBizHub] = useState("");
+  const [selectedServiceCenter, setSelectedServiceCenter] = useState("");
 
-const businessHub = (
-  <div className="form-group">
-    <label htmlFor="surname">Business Hub</label>
-    <select  name="business_hub" className="form-control" onChange={onChangeHandler}>
-      <option value="">Select</option>
-      {
-      biz_hub.map((item, index) => (
-        <option key={index} value={item}>{item}</option>
-      ))
-    }
-    </select>
-    <small>Authority Cannot be empty</small>
-  </div>
-);
+  const onChangeRegion = (event) => {
+    setSelectedRegion(event.target.value);
+    setSelectedBizHub("");
+    setSelectedServiceCenter("");
+  };
 
-const serviceCenter = (
-  <div className="form-group">
-  <label htmlFor="surname">Service Centre</label>
-   <select name="service_center" className="form-control" onChange={onChangeHandler}>
-     <option value="business_hub">Region</option>
-     {
-      data?.business_hubBiz_hub.map((item, index) => (
-        <option key={index} value={business_Hub}>{business_Hub}</option>
-      ))
-    }
-   </select>
-  <small>Authority Cannot be empty</small>
-</div>
-);
+  const onChangeBizHub = (event) => {
+    setSelectedBizHub(event.target.value);
+    setSelectedServiceCenter("");
+  };
+
+  const onChangeServiceCenter = (event) => {
+    setSelectedServiceCenter(event.target.value);
+  };
+
+
+  const filteredBizHubs = selectedRegion
+  ? biz_hub.filter((item) => getResource?.data?.service_unit.find( (unit) => unit.Biz_Hub === item && unit.Region.toUpperCase() === selectedRegion
+  )) : biz_hub;
+
+
+  const filteredServiceCenters = selectedBizHub
+    ? service_center.filter((item) => getResource?.data?.service_unit.find((unit) =>
+              unit.Name === item &&
+              unit.Biz_Hub === selectedBizHub &&
+              unit.Region.toUpperCase() === selectedRegion
+    )): service_center;
+
+
+
+  const region = (
+    <div className="form-group">
+      <label htmlFor="region">Region</label>
+      <select name="region" className="form-control" value={selectedRegion} onChange={onChangeRegion}>
+        <option value="">Select Region</option>
+        {iregion.map((item, index) => (
+          <option key={index} value={item}>
+            {item}
+          </option>
+        ))}
+      </select>
+      <small>Region Cannot be empty</small>
+    </div>
+  );
+
+
+  const businessHub = (
+    <div className="form-group">
+      <label htmlFor="business_hub">Business Hub</label>
+      <select name="business_hub" className="form-control" value={selectedBizHub} onChange={onChangeBizHub} disabled={!selectedRegion}>
+        <option value="">Select</option>
+        {filteredBizHubs.map((item, index) => (
+          <option key={index} value={item}>
+            {item}
+          </option>
+        ))}
+      </select>
+      <small>Business Hub Cannot be empty</small>
+    </div>
+  );
+
+
+  const serviceCenter = (
+    <div className="form-group">
+      <label htmlFor="service_center">Service Center</label>
+      <select name="service_center" className="form-control" value={selectedServiceCenter} onChange={onChangeServiceCenter} disabled={!selectedBizHub}>
+        <option value="">Select</option>
+        {filteredServiceCenters.map((item, index) => (
+          <option key={index} value={item}>
+            {item}
+          </option>
+        ))}
+      </select>
+      <small>Service Center Cannot be empty</small>
+    </div>
+  );
+  
+
 
  
     return (

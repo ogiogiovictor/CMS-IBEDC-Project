@@ -61,12 +61,13 @@ console.log(getControList);
              <h4 className="card-title">{ rowData.name.replace(/_/g, ' ').toUpperCase() } ACCESS&nbsp;</h4>
 
              <div>
-                <button className="btn btn-sm btn-primary" onClick={handleEditClick}>{isEditing ? 'Save' : 'Edit'}</button>
+                <button className="btn btn-sm btn-primary" onClick={handleEditClick}>{isEditing ? 'Disable' : 'Enable'}</button>
               </div>
              <hr/>
 
 
-                <div className="table-responsive">
+
+              <div className="table-responsive">
                 
                 {data?.data?.map((item, index) => (
                   <div key={index}>
@@ -110,31 +111,31 @@ console.log(getControList);
                   </div>
                 ))}
 
-                </div>
+              </div>
 
                 <hr/>
 
-                <div className="form-group">
-                    <label>Add Users</label>
-                    <div class="row">
-                      <div class="col-md-11">
-                      <select class="form-control">
-                      {
-                        getAllUsers?.data?.data?.map((item, index) => (
-                          <option key={index} value={item.id}>{item.name} ({item.email})</option>
-                        ))
-                      }
-                    </select>
-                      </div>
-                      <div class="col-md-1">
-                      <button className="btn btn-sm btn-primary btn-block">Add</button>
+                  <div className="form-group">
+                      <label>Add Users</label>
+                      <div class="row">
+                        <div class="col-md-11">
+                        <select class="form-control" name="semail">
+                        {
+                          getAllUsers?.data?.data?.map((item, index) => (
+                            <option key={index} value={item.id}>{item.name} ({item.email})</option>
+                          ))
+                        }
+                      </select>
+                        </div>
+                        <div class="col-md-1">
+                        <button className="btn btn-sm btn-primary btn-block">Save</button>
+                        </div>
+
                       </div>
 
-                    </div>
-
-                   
                     
-                  </div>
+                      
+                    </div>
 
                 <hr/>
 
@@ -163,7 +164,7 @@ console.log(getControList);
                               <td>
                                 <button className="btn btn-xs btn-primary">View</button>&nbsp;
                                 <button className="btn btn-xs btn-info">Edit</button>&nbsp;
-                                <button className="btn btn-xs btn-danger">Remove</button>
+                                <button className="btn btn-xs btn-danger">Disable</button>
                               </td>
                             </tr>
                           ))

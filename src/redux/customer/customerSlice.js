@@ -12,6 +12,7 @@ const initialState = {
   success: false,
   filterStatus: null,
   searchCustomers: [],
+  nstscustomers:[],
 };
 
 const customerSlice = createSlice({
@@ -59,6 +60,9 @@ const customerSlice = createSlice({
     },
     setRegionCustomers: (state, action) => {
       state.searchCustomers = action.payload;
+    },
+    setNstsCustomers: (state, action) => {
+      state.nstscustomers = action.payload;
     }
 
   },
@@ -74,5 +78,6 @@ export const {
   setFilterStatus,
   setFilteredCustomers,
   setRegionCustomers,
+  setNstsCustomers
 } = customerSlice.actions;
 export default customerSlice.reducer;

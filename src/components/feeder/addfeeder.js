@@ -2,6 +2,7 @@ import React, { useState, useEffect  } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAddFeederMutation } from '../../redux/services/feeder/feederService';
 import { notify  } from '../../utils/notify';
+import {  useGetResourceListQuery } from '../../redux/services/user/userService';
 
 
 

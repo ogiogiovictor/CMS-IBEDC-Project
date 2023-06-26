@@ -35,16 +35,20 @@ const Transformer = () => {
     { userQuery: updatedType, pageNo: currentPage }
   );
 
+  console.log(data?.data?.allDt?.data);
+
   const navigate = useNavigate();
 
   const openPopup = () => {  setIsOpen(true); };
   const closePopup = () => { setIsOpen(false); };
 
   useEffect(() => {
+    //dispatch(setDataDss(data?.allDt?.data));
+
     if (currentPage && (data || searchResult)) {
       refetch();
       dispatch(setDss(data || searchResult));
-      dispatch(setDataDss(data?.allDt?.data || searchResult));
+      dispatch(setDataDss(data?.data?.allDt?.data || searchResult));
       type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(data?.allDt?.data));
       type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(data?.allDt?.data));
     }
@@ -122,23 +126,37 @@ const Transformer = () => {
       { title: "Status", field: "Status" },
     ];
 
+   
 
     const customContent = (handleStartDateChange, handleEndDateChange, handleBusinessHubChange, 
-      handleStatus, handleFeeder, handleCustomer, handleInjection, handleEnergy, handleSubmit) => (
+      handleStatus, handleFeeder, handleCustomer, handleInjection, handleEnergy, handleSubmit, 
+      handleAccountType, handleSearchCustomer, handleRegion, handleDownload) => (
       <div>
         <p style={{ marginBottom: '10px' }}>
           <label>
             Start Date: &nbsp;
-            <input type="date"  onChange={handleStartDateChange} style={{ marginLeft: '10px' }} />
+            <input type="date" name="start_date"  onChange={handleStartDateChange} style={{ marginLeft: '10px' }} />
           </label>
           &nbsp; &nbsp;
           <label>
             End Date: &nbsp;
-            <input type="date"  onChange={handleEndDateChange} style={{ marginLeft: '13px' }} />
+            <input type="date" name="end_date"  onChange={handleEndDateChange} style={{ marginLeft: '13px' }} />
           </label>
         </p>
         <p style={{ marginBottom: '10px' }}>
           <label>
+            Region  &nbsp;
+            <select onChange={handleRegion} name="region">
+            <option value="">Select Region</option>
+            <option value="OYO">OYO</option>
+            <option value="OSUN">OSUN</option>
+            <option value="KWARA">KWARA</option>
+            <option value="OTA">OTA</option>
+            <option value="IBADAN">IBADAN</option>
+            </select>
+          </label>
+
+          {/* <label>
             Business Hub  &nbsp;
             <select onChange={handleBusinessHubChange} name="business_hub">
             <option value="">Select Hub</option>
@@ -150,7 +168,7 @@ const Transformer = () => {
                   <option value="" disabled>No data available</option>
                 )}
             </select>
-          </label>
+          </label> */}
           &nbsp; &nbsp;
           <label>
             Status  &nbsp;
@@ -162,10 +180,12 @@ const Transformer = () => {
           </label>
         </p>
         <p>
-          <input type="checkbox" value="add_feeder" onChange={handleFeeder}  /> Feeder &nbsp;&nbsp;
+          <input type="checkbox" value="download_transformer" onChange={handleDownload}  /> Download &nbsp;&nbsp;
+
+          {/* <input type="checkbox" value="add_feeder" onChange={handleFeeder}  /> Feeder &nbsp;&nbsp;
           <input type="checkbox" value="add_customers" onChange={handleCustomer} /> Customers &nbsp;&nbsp;
           <input type="checkbox" value="add_inj_station" onChange={handleInjection} /> Injection SubStation &nbsp;&nbsp;
-          <input type="checkbox" value="add_energy" onChange={handleEnergy} /> Energy &nbsp;&nbsp;
+          <input type="checkbox" value="add_energy" onChange={handleEnergy} /> Energy &nbsp;&nbsp; */}
         </p>
         <p>
           <button  className="btn btn-danger btn-xs"  type="button" onClick={handleSubmit}>

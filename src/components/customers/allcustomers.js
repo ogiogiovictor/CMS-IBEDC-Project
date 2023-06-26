@@ -122,22 +122,80 @@ const AllCustomers = () => {
     customer?.FirstName?.toLowerCase().includes(searchText?.toLowerCase())
   );
 
+  console.log(customers);
 
-  const customContent = (handleStartDateChange, handleEndDateChange, handleSubmit) => (
+
+  const customContent = (handleStartDateChange, handleEndDateChange, handleBusinessHubChange, 
+    handleStatus, handleFeeder, handleCustomer, handleInjection, handleEnergy, handleSubmit, handleAccountType, 
+    handleSearchCustomer, handleRegion, handleDownload) => (
     <div>
+      
       <p style={{ marginBottom: '10px' }}>
         <label>
           Start Date:
-          <input type="date"  onChange={handleStartDateChange} style={{ marginLeft: '10px' }} />
+          <input type="date" name="start_date" required onChange={handleStartDateChange} style={{ marginLeft: '10px' }} />
         </label>
+        &nbsp; &nbsp;
+        <label>
+            Region  &nbsp;
+            <select onChange={handleRegion} name="region" required>
+            <option value="">Select Region</option>
+                {customers?.length > 0 ? (
+                  [...new Set(customers.map(el => el.Region))].map(regionName => (
+                    <option key={regionName} value={regionName}>{regionName}</option>
+                  ))
+                ) : (
+                  <option value="" disabled>No data available</option>
+                )}
+            </select>
+          </label>
       </p>
       <p style={{ marginBottom: '10px' }}>
         <label>
           End Date:
-          <input type="date"  onChange={handleEndDateChange} style={{ marginLeft: '13px' }} />
+          <input type="date" name="end_date" required onChange={handleEndDateChange} style={{ marginLeft: '13px' }} />
+          <input type="hidden" value="customer_search" name="customer_search"  onChange={handleSearchCustomer} style={{ marginLeft: '10px' }} />
         </label>
+        &nbsp; &nbsp;
+        <label>
+            Business Hub  &nbsp;
+            <select onChange={handleBusinessHubChange} name="business_hub" required>
+            <option value="">Select Hub</option>
+                {customers?.length > 0 ? (
+                  [...new Set(customers.map(el => el.BusinessHub))].map(hubName => (
+                    <option key={hubName} value={hubName}>{hubName}</option>
+                  ))
+                ) : (
+                  <option value="" disabled>No data available</option>
+                )}
+            </select>
+          </label>
       </p>
+
+      <p style={{ marginBottom: '10px' }}>
+      <label>
+            AccountType  &nbsp;
+            <select onChange={handleAccountType} name="accountType" required>
+            <option value="">Select AccountType</option>
+            <option value="Prepaid">Prepaid</option>
+            <option value="Postpaid">Postpaid</option>
+            </select>
+          </label>
+          &nbsp; &nbsp;
+          <label>
+            Status  &nbsp;
+            <select onChange={handleStatus} name="status" required>
+            <option value="">Select Status</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+            </select>
+          </label>
+        </p>
+
       <p>
+
+      <input type="checkbox" value="download_customer" onChange={handleDownload}  /> Download &nbsp;&nbsp;
+      
         <button  className="btn btn-danger btn-xs"  type="button" onClick={handleSubmit}>
           Submit
         </button>

@@ -58,6 +58,8 @@ const CustomerRecord = () => {
     const{ content, ticket_no } = customerData.data.ticket;
     const consInfo = customerData.data.customer;
 
+    console.log(consInfo);
+
    
 
     const onChangeHandler = (e) => {
@@ -73,6 +75,8 @@ const CustomerRecord = () => {
         ticketid : ticket_no ?? '',
         phone: values.phone,
         accountNo: consInfo.AccountNo  ?? '',
+        region: consInfo.Region  ?? '',
+        business_hub: consInfo.BusinessHub  ?? '',
         address: consInfo.address ?? '',
         BUID: consInfo.BUID ?? '',
         meterno: consInfo.meterno ?? '',
@@ -185,6 +189,9 @@ const CustomerRecord = () => {
                           <label class="col-sm-3 col-form-label">Firstname</label>
                           <div class="col-sm-9">
                           <input type="text" value={consInfo.Surname ? consInfo.Surname : consInfo.FirstName} class="form-control" disabled />
+                          <input type="text" value={consInfo.Region ? consInfo.Region : consInfo.Region} class="form-control" hidden />
+                          <input type="text" value={consInfo.BusinessHub ? consInfo.BusinessHub : consInfo.BusinessHub} class="form-control" hidden />
+                          
                           <input type="text" 
                           value={Number(userInfo.id) ?? 0} 
                           name="created_by"

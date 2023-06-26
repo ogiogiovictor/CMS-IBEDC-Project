@@ -127,7 +127,40 @@ const PendingCustomer = () => {
     }
       
     
-    
+    const checkifcanApprove = (customerBUID, HubName) => {
+      if(userInfo?.role == 'admin'){
+        return true;
+      }else if(userInfo?.role == 'businesshub_manager'){
+        var level = userInfo.level.split(",");
+        var businessHUB = level[1];
+        if(businessHUB  && businessHUB == customerBUID || businessHUB == HubName){
+          return true;
+        }else {
+          return false;
+        }
+       
+      }else{
+        return false;
+      }
+    }
+
+
+    const checifkVerify = (customerBUID, HubName) => {
+      if(userInfo?.role == 'admin'){
+        return true;
+      }if(userInfo?.role == 'auditor'){
+        var level = userInfo.level.split(",");
+        var businessHUB = level[1];
+        if(businessHUB  && businessHUB == customerBUID || businessHUB == HubName){
+          return true;
+        }else {
+          return false;
+        }
+       
+      }else{
+        return false;
+      }
+    }
 
    
     
@@ -179,15 +212,28 @@ const PendingCustomer = () => {
                             View
                           </button>&nbsp;
 
-                          <button onClick={() => handleVerifyButton(customer?._id)} className="btn btn-xs btn-outline-success">
-                            <i class="icon-check"></i>
-                            Verify
-                          </button>
+                          {
+                            checifkVerify(customer?.BUID, customer?.business_hub) === true ? (
+                              <button onClick={() => handleVerifyButton(customer?._id)} className="btn btn-xs btn-outline-success">
+                              <i class="icon-check"></i>
+                              Verify
+                            </button>
+                            ) : ''
+                          }
 
-                          <button onClick={() => handleApproveButton(customer?._id)} className="btn btn-xs btn-outline-danger">
+                         
+
+                          {
+                          checkifcanApprove(customer?.BUID, customer?.business_hub) === true ? (
+                            <button onClick={() => handleApproveButton(customer?._id)} className="btn btn-xs btn-outline-danger">
                             <i class="icon-check"></i>
                             Approve
                           </button>
+                          ) : ''
+                          
+                          }
+
+                          
                          
                         </td>
                     </tr>

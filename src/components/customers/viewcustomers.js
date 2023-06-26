@@ -17,11 +17,16 @@ const ViewCustomers = () => {
   
   const { data: crmData } = useGetCRMDCustomerQuery({  pageNo: currentPage });
   
-  if(isNewCustomersError){
-    notify('info', mError.data);
+  if(crmData.message){
+    notify('success', crmData.message);
   }
-  console.log(newCustomersData);
-  console.log(crmData);
+
+  if(isNewCustomersError){
+    console.log(mError.data);
+    //notify('info', mError.data);
+  }
+  //console.log(newCustomersData);
+  console.log(crmData.message);
   
 
   const columns = [

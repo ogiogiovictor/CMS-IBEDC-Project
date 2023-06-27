@@ -35,7 +35,7 @@ const Transformer = () => {
     { userQuery: updatedType, pageNo: currentPage }
   );
 
-  console.log(data?.data?.allDt?.data);
+  console.log(data?.allDt?.data);
 
   const navigate = useNavigate();
 
@@ -48,7 +48,7 @@ const Transformer = () => {
     if (currentPage && (data || searchResult)) {
       refetch();
       dispatch(setDss(data || searchResult));
-      dispatch(setDataDss(data?.data?.allDt?.data || searchResult));
+      dispatch(setDataDss(data?.allDt?.data || searchResult));
       type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(data?.allDt?.data));
       type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(data?.allDt?.data));
     }

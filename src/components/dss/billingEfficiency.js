@@ -75,7 +75,7 @@ const BillingEfficiency = () => {
     return (
 
         <Fragment>
-            <BillingEfficiencyCard dtStatus={data?.data?.dt_by_status} />
+            <BillingEfficiencyCard dtStatus={data?.data?.dt_by_status} dt_billed={data?.data?.dt_total_billed_with_value} dt_without={data?.data?.dt_billed_dss} />
 
             {isUninitialized ? <PageLoader /> : ''}
 

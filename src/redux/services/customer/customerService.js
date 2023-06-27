@@ -134,7 +134,7 @@ export const customerService = createApi({
 
 
     getNstsCustomers: builder.query({
-      query: ({ region }) => ({
+      query: () => ({
         url: `/${API_VERSION}/get_nsts_customers`,
         method: "GET",
       }),

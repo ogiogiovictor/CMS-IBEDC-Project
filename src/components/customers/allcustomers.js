@@ -54,6 +54,7 @@ const AllCustomers = () => {
 
 
   useEffect(() => {
+    
     if (currentPage && data) {
       //refetch();
       dispatch(setAllCustomers(data?.data?.customers?.data));

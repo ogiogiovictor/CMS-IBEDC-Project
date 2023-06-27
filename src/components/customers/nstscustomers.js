@@ -20,8 +20,7 @@ const NstsCustomers = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { searchCustomers } = useSelector((state) => state.customer) || [];
-  const { region } = useParams();
+  const { nstscustomers } = useSelector((state) => state.customer) || [];
 
  // console.log(stringType);
   const { data, isFetching, refetch, error } = useGetNstsCustomersQuery();
@@ -34,11 +33,13 @@ const NstsCustomers = () => {
   }
 
 
+  console.log(data?.data?.total);
+
   useEffect(() => {
     if (data) {
       dispatch(setNstsCustomers(data?.data?.data));
     }
-  }, [data, dispatch, refetch, currentPage, region]);
+  }, [data, dispatch, refetch, currentPage]);
 
 
   const handleSearchSubmit = (e) => {
@@ -46,16 +47,14 @@ const NstsCustomers = () => {
   };
 
 
-  const handleActionClick = ({ FAccountNo, DistributionID, AccountType, MeterNo }) => {
-   const distributionIDParam = DistributionID ? DistributionID : 'null';
-    const MeterNumber = MeterNo ? MeterNo : 'null';
-    navigate(`/customerinfo/${FAccountNo}/${distributionIDParam}/${AccountType}/${MeterNumber}`);
+  const handleActionClick = ({  }) => {
+  
     window.scrollTo(0, 0);
   };
 
   const columns = [
     
-    { title: "Setup Date", field: "SetupDate" },
+    { title: "Setup Date", field: "OpenDate" },
     { title: "Surname", field: "Surname" },
     { title: "FirstName", field: "FirstName" },
     { title: "Account Number", field: "AccountNo" },
@@ -75,7 +74,7 @@ const NstsCustomers = () => {
         <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">
           <div className="card">
             <div className="card-body">
-              <h4 className="card-title"> Customer By Region</h4>
+              <h4 className="card-title"> All Non STS Customers <span className="badge badge-success">{ data?.data?.total }</span></h4>
 
              
               <div class="row">
@@ -104,14 +103,14 @@ const NstsCustomers = () => {
 
               {isFetching ? (
                 <PageLoader />
-              ) : searchCustomers?.length !== 0 ? (
+              ) : nstscustomers?.length !== 0 ? (
                 <DataTable
-                  data={searchCustomers}
+                  data={nstscustomers}
                   columns={columns}
                   pagination
                   currentPage={currentPage}
-                  totalCount={data?.data?.meta?.total || 1}
-                  pageSize={data?.data?.meta?.per_page || 1}
+                  totalCount={data?.data?.total || 1}
+                  pageSize={data?.data?.per_page || 1}
                   onPageChange={(page) => setCurrentPage(page)}
                   onActionClick={handleActionClick}
                 />

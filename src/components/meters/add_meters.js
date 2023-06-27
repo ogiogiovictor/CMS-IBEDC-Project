@@ -59,7 +59,7 @@ const  AddMeters = () => {
 
 
       // Get distinct values of 'name' property from the array
-      const iregion = [...new Set(getResource?.data?.service_unit?.map(item => item.Region.toUpperCase()))];
+      const iregion = [...new Set(getResource?.data?.service_unit?.map(item => item.Region))];
       const biz_hub = [...new Set(getResource?.data?.service_unit?.map(item => item.Biz_Hub))];
     
       const [selectedRegion, setSelectedRegion] = useState("");
@@ -77,7 +77,7 @@ const  AddMeters = () => {
       };
     
       const filteredBizHubs = selectedRegion
-      ? biz_hub.filter((item) => getResource?.data?.service_unit.find( (unit) => unit.Biz_Hub === item && unit.Region.toUpperCase() === selectedRegion
+      ? biz_hub.filter((item) => getResource?.data?.service_unit.find( (unit) => unit.Biz_Hub === item && unit.Region === selectedRegion
       )) : biz_hub;
     
     

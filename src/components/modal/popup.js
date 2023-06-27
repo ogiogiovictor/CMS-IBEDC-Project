@@ -94,6 +94,7 @@ const Popup = ({ isOpen, onClose, title, content }) => {
               'business_hub' : businessHub,
               'download': download,
               'region' : region,
+              'status' : status,
             }
           } 
           if(download == "download_transformer"){

@@ -1,9 +1,94 @@
 import React, { useState, useEffect  } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAddAssetsMutation } from '../../redux/services/dss/dtService';
+import { useGetResourceListQuery } from '../../redux/services/user/userService';
+import { notify } from '../../utils/notify';
+
 
 const AddTransformer = () => {
 
+   const navigate = useNavigate();
+
     const [isProcessing, setIsProcessing] = useState(false);
+
+    const { data: getResource } = useGetResourceListQuery();
+
+    
+
+        // Get distinct values of 'name' property from the array
+    const iregion = [...new Set(getResource?.data?.service_unit?.map(item => item.Region.toUpperCase()))];
+    const biz_hub = [...new Set(getResource?.data?.service_unit?.map(item => item.Biz_Hub))];
+    const service_center = [...new Set(getResource?.data?.service_unit?.map(item => item.Name))];
+
+    const [selectedRegion, setSelectedRegion] = useState("");
+    const [selectedBizHub, setSelectedBizHub] = useState("");
+    const [selectedServiceCenter, setSelectedServiceCenter] = useState("");
+
+    const onChangeRegion = (event) => {
+      setSelectedRegion(event.target.value);
+      console.log(selectedRegion);
+      setSelectedBizHub("");
+      setSelectedServiceCenter("");
+    };
+
+
+    const onChangeBizHub = (event) => {
+      setSelectedBizHub(event.target.value);
+      setSelectedServiceCenter("");
+    };
+
+    const onChangeServiceCenter = (event) => {
+      setSelectedServiceCenter(event.target.value);
+    };
+
+    const filteredBizHubs = selectedRegion
+    ? biz_hub.filter((item) => getResource?.data?.service_unit.find( (unit) => unit.Biz_Hub === item && unit.Region.toUpperCase() === selectedRegion
+    )) : biz_hub;
+  
+  
+    const filteredServiceCenters = selectedBizHub
+      ? service_center.filter((item) => getResource?.data?.service_unit.find((unit) =>
+                unit.Name === item &&
+                unit.Biz_Hub === selectedBizHub &&
+                unit.Region.toUpperCase() === selectedRegion
+      )): service_center;
+  
+      const region = (
+          <select name="region" className="form-control" value={selectedRegion} onChange={onChangeRegion} >
+            <option value="">Select Region</option>
+            {iregion.map((item, index) => (
+              <option key={index} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+      );
+
+
+      const businessHub = (
+        <select name="business_hub" className="form-control" value={selectedBizHub} onChange={onChangeBizHub} disabled={!selectedRegion}  >
+          <option value="">Select</option>
+          {filteredBizHubs.map((item, index) => (
+            <option key={index} value={item}>
+              {item}
+            </option>
+          ))}
+        </select>
+    );
+  
+    const serviceCenter = (
+        <select name="service_center" className="form-control" value={selectedServiceCenter} onChange={onChangeServiceCenter} disabled={!selectedBizHub} >
+          <option value="">Select</option>
+          {filteredServiceCenters.map((item, index) => (
+            <option key={index} value={item}>
+              {item}
+            </option>
+          ))}
+        </select>
+    );
+ 
+
+
     const [values, setValues] = useState({
         DSS_11KV_415V_Name: '',
         DSS_11KV_415V_Address: '',
@@ -70,6 +155,7 @@ const AddTransformer = () => {
         DSS_11KV_415V_Trenches_with_granite: '',
         DSS_11KV_415V_fence_type: '',
         DSS_11KV_415V_FP_Condition: '',
+        assettype:'',
      });
     const [touched, setTouched] = useState({ 
         DSS_11KV_415V_Name: false,
@@ -137,6 +223,7 @@ const AddTransformer = () => {
         DSS_11KV_415V_Trenches_with_granite: false,
         DSS_11KV_415V_fence_type: false,
         DSS_11KV_415V_FP_Condition: false,
+        assettype: false,
     });
 
     const onChangeHandler = (e) => {
@@ -148,7 +235,36 @@ const AddTransformer = () => {
       }
 
 
-    const postCustomer = async (e) => {
+
+  const [ registerAsset ] = useAddAssetsMutation();
+
+    const postTransformer = async (e) => {
+      e.preventDefault();
+      setIsProcessing(true);
+      if(!values.assettype){
+        notify("error", "Please enter you fill out all fields");
+        setIsProcessing(false);
+        return;
+      }
+
+      try {
+        console.log(values);
+
+        const result =  await registerAsset(values).unwrap();
+        if(result.data){
+          notify("success", result.message);
+          setIsProcessing(false);
+          navigate('/transformers');
+        }
+        
+      } catch (error) {
+        if(error.data.error){
+          notify("error", error.data.error);
+        }
+        setIsProcessing(false);
+       
+        console.log(error)
+      }
 
     }
 
@@ -165,7 +281,7 @@ const AddTransformer = () => {
               </p>
 
              
-               <form className="forms-sample" onSubmit={postCustomer}>
+               <form className="forms-sample" onSubmit={postTransformer}>
                 
                {/* { values.errorMessage && <div className="alert alert-danger" role="alert"> {values.errorMessage} </div> }
                    */}
@@ -175,15 +291,48 @@ const AddTransformer = () => {
                       <label class="col-sm-4 col-form-label">Select AssetType</label>
                       <div class="col-sm-8">
                         <select  onChange={onChangeHandler} class="form-control"  name="assettype">
-                        <option value="">Select Feeder</option>
+                        <option value="">Select Asset Type</option>
                         <option value="11KV Feeder">11kv Transfomer</option>
                         <option value="11KV Feeder">33kv Transfomer</option>
                         </select>
                       </div>
                     </div>
                   </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Region</label>
+                      <div class="col-sm-8">
+                      {region}
+                      </div>
+                      
+                    </div>
+                  </div>
                  
                </div>
+
+
+               <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Business Hub</label>
+                      <div class="col-sm-8">
+                      {businessHub}
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">DSS Address</label>
+                      <div class="col-sm-8">
+                      {serviceCenter}
+                      </div>
+                    </div>
+                  </div>
+               </div>
+
+
 
 
 

@@ -49,9 +49,8 @@ const TransformerCard = ({ idssCard, onFilterStatusChange }) => {
         </div>
         
         <div className="col-md-6 col-lg-3 grid-margin stretch-card"
-        style={{ cursor: "pointer" }}
-        onClick={() => handleClickNavigate()}
-        >
+        style={{ cursor: "pointer" }}>
+          <a href='/dt_by_business_hub'>
           <div className="card bg-danger text-white border-0">
             <div className="card-body">
               <div className="d-flex align-items-center">
@@ -63,6 +62,7 @@ const TransformerCard = ({ idssCard, onFilterStatusChange }) => {
               </div>
             </div>
           </div>
+          </a>
         </div>
 
         <div className="col-md-6 col-lg-3 grid-margin stretch-card"

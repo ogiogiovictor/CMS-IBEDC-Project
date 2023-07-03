@@ -141,6 +141,25 @@ export const customerService = createApi({
     }),
 
 
+     // Create a new endpoint for the POST request
+     exportCustomers: builder.mutation({
+      query: (requestData) => ({
+        url: `/${API_VERSION}/export_customers`,
+        method: "POST",
+        body: requestData, // the data you want to send in the request body
+      }),
+    }),
+
+
+
+    getMyApprovals: builder.query({
+      query: () => ({
+        url: `/${API_VERSION}/my_approval`,
+        method: "GET",
+      }),
+    }),
+
+
 
   }),
 
@@ -149,6 +168,7 @@ export const customerService = createApi({
 });
 
 export const {
+  useGetMyApprovalsQuery,
   useGetNstsCustomersQuery,
   useGetCustomerByRegionQuery,
   useGetCustomerDetailsByIDQuery,
@@ -162,4 +182,5 @@ export const {
   useAddNewCustomerMutation,
   useGetNewCustomersQuery,
   usePostUpdateNewlyCreatedMutation,
+  useExportCustomersMutation,
 } = customerService;

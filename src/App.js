@@ -52,6 +52,8 @@ import Meters from "./components/meters/meters";
 import CustomerByRegion from "./components/customers/cusstomerregion";
 import BillingEfficiency from "./components/dss/billingEfficiency";
 import NstsCustomers from "./components/customers/nstscustomers";
+import DTBusinessHub from "./components/dss/transformerBusinessHub";
+import MyApprovals from "./components/customers/myapprovals";
 
 
 const App = () => {
@@ -175,6 +177,8 @@ const App = () => {
                   <Route path="customer_region/:region" element={<CustomerByRegion/>} />
                   <Route path="dt_billing_efficiency" element={<BillingEfficiency />} />
                   <Route path="non_sts_customers" element={<NstsCustomers />} />
+                  <Route path="dt_by_business_hub" element={<DTBusinessHub />} />
+                  <Route path="my_approvals" element={<MyApprovals />} /> 
                   
 
 

@@ -67,11 +67,12 @@ const AddCustomer = () => {
       console.log(formData);
 
       const result =  await addCustomer(formData).unwrap();
-      if(result.message == "Customer Successfully Created"){
-        notify('success', result.message );
+      console.log(result.data == 201);
+      if(result.data ==  201){
+        notify('success', "Customer Successfully Created");
         setIsProcessing(false);
       }else {
-        notify('danger', "Please Try Again! Something went wrong" );
+        notify('error', "Please Try Again! Something went wrong" );
         setIsProcessing(false);
       }
 
@@ -80,7 +81,7 @@ const AddCustomer = () => {
       if(e.data){
         notify('info', e.data);
       }
-      notify('danger', e);
+      notify('error', e);
       setIsProcessing(false);
     }
 
@@ -231,7 +232,7 @@ const AddCustomer = () => {
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Phone</label>
                           <div class="col-sm-9">
-                            <input type="text" {...register('phone', { required: 'Phone is required' })}  class="form-control" name="phone" placeholder="Enter Customer Phone"
+                            <input type="number" {...register('phone', { required: 'Phone is required' })}  class="form-control" name="phone" placeholder="Enter Customer Phone"
                             />
                           </div>
                         </div>

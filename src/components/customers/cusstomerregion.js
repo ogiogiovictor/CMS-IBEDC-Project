@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetCustomerByRegionQuery } from "../../redux/services/customer/customerService";
+import { useGetCustomerByRegionQuery, useExportCustomersMutation } from "../../redux/services/customer/customerService";
 import { setRegionCustomers  } from "../../redux/customer/customerSlice";
 import PageLoader from "../spinner/loader";
 import DataTable from "../datatable";
@@ -9,12 +9,8 @@ import { notify } from "../../utils/notify";
 
 const CustomerByRegion = () => {
   const [currentPage, setCurrentPage] = useState("");
-  const [searchText, setSearchText] = useState("");
-  const [selectedObject, setSelectedObject] = useState(null);
-
-  //Search Implementation
-  const [hiddenFieldValue, setHiddenFieldValue] = useState('customers');
-  const [searchResult, setSearchResult] = useState(null);
+  const [mregion, setRegion] = useState('');
+  const [link, setLink] = useState(null); // State to store the download link
 
 
   const dispatch = useDispatch();
@@ -33,6 +29,7 @@ const CustomerByRegion = () => {
     navigate(`/errorpage`);
   }
 
+  //console.log(searchCustomers)
 
   useEffect(() => {
     if (data) {
@@ -41,9 +38,55 @@ const CustomerByRegion = () => {
   }, [data, dispatch, refetch, currentPage, region]);
 
 
-  const handleSearchSubmit = (e) => {
+  const [ postExport ] = useExportCustomersMutation();
+
+  const handleSearchSubmit = async (e) => {
     e.preventDefault();
+    let payload = null; 
+
+    try {
+
+      payload = {
+        'mregion' : mregion,
+        'download' : "download_by_region",
+      }
+    
+      const response = await postExport(payload);
+      const dahome = response?.error?.data;
+      console.log(dahome);
+      const csvData = 'data:text/csv;charset=utf-8,' + encodeURIComponent(dahome);
+            
+      const tempLink = document.createElement('a');
+      tempLink.href = csvData;
+      tempLink.setAttribute('download', 'export.csv');
+      document.body.appendChild(tempLink);
+
+      setLink(tempLink); // Set the download link in state
+      notify("info", "Pulling data from server...", 10000);
+
+      tempLink.click();
+      tempLink.parentNode.removeChild(tempLink);
+
+      if (tempLink) {
+        notify("success", "Data Successfully Downloaded", 10000);
+      }
+
+      
+    } catch (error) {
+      //console.log(error);
+      console.error('Export error:', error);
+      notify("danger", "Error Downloading File", 10000);
+      
+    }
+
+   
+
+
   };
+
+  const handleRegion = (e) => { 
+    setRegion(e.target.value);
+  };  
 
 
   const handleActionClick = ({ FAccountNo, DistributionID, AccountType, MeterNo }) => {
@@ -83,16 +126,20 @@ const CustomerByRegion = () => {
                       <div class="col-md-12">
                         <form onSubmit={handleSearchSubmit}>
                         <div className="form-group d-flex">
-                            <input
-                              type="text"
-                              class="form-control"
-                              placeholder="Search Customers(s)..."
-                              name="search_customers"
-                              value={searchText}
-                              onChange={(e) => setSearchText(e.target.value)}
-                            />
-                            <button type="submit" className="btn btn-primary ml-3">
-                              Search
+                        
+                            <select onChange={handleRegion} name="region" className="form-control" required> 
+                            <option value="">Select Region</option>
+                                {searchCustomers?.length > 0 ? (
+                                  [...new Set(searchCustomers.map(el => el.Region))].map(regionName => (
+                                    <option key={regionName} value={regionName}>{regionName}</option>
+                                  ))
+                                ) : (
+                                  <option value="" disabled>No data available</option>
+                                )}
+                            </select>
+                          
+                            <button type="submit" className="btn btn-sm btn-primary ml-3">
+                              DOWNLOAD
                             </button>
                             </div>
                           </form>

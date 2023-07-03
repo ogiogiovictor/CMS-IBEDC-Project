@@ -9,12 +9,6 @@ import { notify } from "../../utils/notify";
 
 const NstsCustomers = () => {
   const [currentPage, setCurrentPage] = useState("");
-  const [searchText, setSearchText] = useState("");
-  const [selectedObject, setSelectedObject] = useState(null);
-
-  //Search Implementation
-  const [hiddenFieldValue, setHiddenFieldValue] = useState('customers');
-  const [searchResult, setSearchResult] = useState(null);
 
 
   const dispatch = useDispatch();
@@ -83,15 +77,13 @@ const NstsCustomers = () => {
                         <form onSubmit={handleSearchSubmit}>
                         <div className="form-group d-flex">
                             <input
-                              type="text"
+                              type="hidden"
                               class="form-control"
-                              placeholder="Search Customers(s)..."
-                              name="search_customers"
-                              value={searchText}
-                              onChange={(e) => setSearchText(e.target.value)}
+                              name="nsts_customers"
+                              value="download_nsts_customers"
                             />
                             <button type="submit" className="btn btn-primary ml-3">
-                              Search
+                              Download CSV
                             </button>
                             </div>
                           </form>

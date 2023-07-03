@@ -51,7 +51,8 @@ const Roles = () => {
     const menuIds = getControList.map(item => item.menu_id);
     const formData = { 
       ...data,
-      list: menuIds
+      list: [...new Set(menuIds)],
+      role: rowData.name
     }
 
     console.log(formData);
@@ -101,7 +102,7 @@ const Roles = () => {
                             checked={isChecked}
                             onChange={(event) => handleCheckboxChange(event, submenu.id)}
                           />&nbsp;
-                          <span>{submenu.name} {submenu.id}</span>
+                          <span>{submenu.name} </span>
                         </li>
                       );
                     })}

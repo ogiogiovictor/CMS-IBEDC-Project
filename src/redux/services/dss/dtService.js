@@ -36,6 +36,19 @@ export const dtService = createApi({
         }),
 
 
+          // Create a new endpoint for the POST request
+          addAssets: builder.mutation({
+            query: (requestData) => ({
+              url: `/${API_VERSION}/assets`,
+              method: "POST",
+              body: requestData, // the data you want to send in the request body
+            }),
+          }),
+
+
+        
+
+
         // Create a new endpoint for the POST request
         exportAssetDT: builder.mutation({
           query: (requestData) => ({
@@ -53,10 +66,19 @@ export const dtService = createApi({
         }),
 
 
+        getdtbybusinessHub: builder.query({
+          query: ({ pageNo }) => ({
+            url: `/${API_VERSION}/dt_by_business_hub`,
+            method: "GET",
+          }),
+        }),
+
+
         
 
     }),
 });
 
 
-export const { useGetBillingEfficencyQuery, useGetAllDistributionQuery, useGetDSSInfoQuery, useSearchAssetDTMutation, useExportAssetDTMutation } = dtService;
+export const {  useGetdtbybusinessHubQuery,   useGetBillingEfficencyQuery, useGetAllDistributionQuery, useGetDSSInfoQuery, useSearchAssetDTMutation, 
+  useExportAssetDTMutation, useAddAssetsMutation } = dtService;

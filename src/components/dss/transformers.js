@@ -35,7 +35,7 @@ const Transformer = () => {
     { userQuery: updatedType, pageNo: currentPage }
   );
 
-  console.log(data?.allDt?.data);
+  console.log(data?.data?.allDt?.data);
 
   const navigate = useNavigate();
 
@@ -43,14 +43,18 @@ const Transformer = () => {
   const closePopup = () => { setIsOpen(false); };
 
   useEffect(() => {
-    //dispatch(setDataDss(data?.allDt?.data));
+   // let mdata = data?.allDt?.data; // Data from the API on Production
+    let mdevData = data?.data?.allDt?.data // Data from the API on Development
 
     if (currentPage && (data || searchResult)) {
       refetch();
       dispatch(setDss(data || searchResult));
-      dispatch(setDataDss(data?.allDt?.data || searchResult));
-      type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(data?.allDt?.data));
-      type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(data?.allDt?.data));
+     // dispatch(setDataDss(data?.allDt?.data || searchResult)); // Data from the API on Production
+      dispatch(setDataDss(mdevData || searchResult));
+     // type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(data?.allDt?.data)); // Data from the API on Production
+      type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(mdevData));
+      //type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(data?.allDt?.data)); // Data from the API on Production
+      type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(mdevData));
     }
  }, [data, refetch, searchResult, dispatch, currentPage, type, updatedType, dssInfo]);
 
@@ -132,17 +136,7 @@ const Transformer = () => {
       handleStatus, handleFeeder, handleCustomer, handleInjection, handleEnergy, handleSubmit, 
       handleAccountType, handleSearchCustomer, handleRegion, handleDownload) => (
       <div>
-        <p style={{ marginBottom: '10px' }}>
-          <label>
-            Start Date: &nbsp;
-            <input type="date" name="start_date"  onChange={handleStartDateChange} style={{ marginLeft: '10px' }} />
-          </label>
-          &nbsp; &nbsp;
-          <label>
-            End Date: &nbsp;
-            <input type="date" name="end_date"  onChange={handleEndDateChange} style={{ marginLeft: '13px' }} />
-          </label>
-        </p>
+       
         <p style={{ marginBottom: '10px' }}>
           <label>
             Region  &nbsp;
@@ -180,11 +174,11 @@ const Transformer = () => {
           </label>
         </p>
         <p>
+          <input type="checkbox" value="add_feeder" onChange={handleFeeder}  /> Feeder &nbsp;&nbsp;
+          <input type="checkbox" value="add_inj_station" onChange={handleInjection} /> Injection SubStation &nbsp;&nbsp;
           <input type="checkbox" value="download_transformer" onChange={handleDownload}  /> Download &nbsp;&nbsp;
 
-          {/* <input type="checkbox" value="add_feeder" onChange={handleFeeder}  /> Feeder &nbsp;&nbsp;
-          <input type="checkbox" value="add_customers" onChange={handleCustomer} /> Customers &nbsp;&nbsp;
-          <input type="checkbox" value="add_inj_station" onChange={handleInjection} /> Injection SubStation &nbsp;&nbsp;
+          {/* 
           <input type="checkbox" value="add_energy" onChange={handleEnergy} /> Energy &nbsp;&nbsp; */}
         </p>
         <p>
@@ -213,10 +207,10 @@ const Transformer = () => {
               <div className="card">
                 <div className="card-body">
                   <h4 className="card-title">All Distribution Sub Stations &nbsp;&nbsp;
-                  <button class="btn btn-icons btn-rounded btn-secondary" onClick={() => refetch()}><span class="icon-refresh"></span></button>
+                  <button className="btn btn-icons btn-rounded btn-secondary" onClick={() => refetch()}><span className="icon-refresh"></span></button>
                   &nbsp;&nbsp;
                   <Link to="/add_transfomer" class="btn btn-danger btn-fw">
-                  <i class="icon-cloud-upload"></i>Add Transformer
+                  <i className="icon-cloud-upload"></i>Add Transformer
                   </Link>
                   &nbsp;&nbsp;
                   {/* <Link to="/transformer_map" class="btn btn-primary btn-fw">
@@ -234,12 +228,12 @@ const Transformer = () => {
                                 value={searchQuery} 
                                 onChange={(e) => setSearchQuery(e.target.value)} 
                                 name="search_dss"
-                                class="form-control" placeholder="Search Distribution Station..." />
+                                className="form-control" placeholder="Search Distribution Station..." />
 
                                 <input type="hidden"  value={hiddenFieldValue} 
                                 onChange={(e) => setHiddenFieldValue(e.target.value)}
-                                class="form-control" />
-                                <button type="submit" class="btn btn-primary ml-3">Search</button>
+                                className="form-control" />
+                                <button type="submit" className="btn btn-primary ml-3">Search</button>
                             </div>
                           </form>
                       </div>

@@ -187,8 +187,8 @@ const AllCustomers = () => {
             Status  &nbsp;
             <select onChange={handleStatus} name="status" required>
             <option value="">Select Status</option>
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
+            <option value="A">Active</option>
+            <option value="S">Inactive</option>
             </select>
           </label>
         </p>

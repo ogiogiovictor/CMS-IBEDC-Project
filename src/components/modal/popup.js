@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import { useExportAssetDTMutation } from '../../redux/services/dss/dtService';
+//import { useExportAssetDTMutation } from '../../redux/services/dss/dtService';
+import { useExportCustomersMutation } from '../../redux/services/customer/customerService';
 import { saveAs } from 'file-saver';
 import { notify } from "../../utils/notify";
 
@@ -73,9 +74,15 @@ const Popup = ({ isOpen, onClose, title, content }) => {
     }
     
 
-    const [ postExport ] = useExportAssetDTMutation();
+    const [ postExport ] = useExportCustomersMutation();
 
       const handleSubmit = async (e) => {
+        // if(!startDate || !endDate || !businessHub || !status || !region || !download){
+
+        //   notify("danger", "Please fill all fields", 10000);
+        //   alert("Please fill all fields");
+        //   return;
+        // }
         
           // handle form submission here
           e.preventDefault();
@@ -99,16 +106,17 @@ const Popup = ({ isOpen, onClose, title, content }) => {
           } 
           if(download == "download_transformer"){
              payload = {
-              'start_date' : startDate,
-              'end_date' : endDate,
-              'business_hub' : businessHub,
+              'add_feeder' : businessHub,
               'status' : status,
               'region' : region,
+              'add_inj_station' : injection,
               'download': download,
     
             }            
             
           }
+
+          console.log(payload);
 
 
             // const response  = await postExport(payload).unwrap(); //for dss
@@ -131,23 +139,6 @@ const Popup = ({ isOpen, onClose, title, content }) => {
               if (tempLink) {
                 notify("success", "Data Successfully Downloaded", 10000);
               }
-
-            //   // Create a temporary link element
-            //   const link = document.createElement('a');
-            //   link.href = csvData;
-            //   link.setAttribute('download', 'export.csv');
-            //   document.body.appendChild(link);
-
-            //   // Trigger the download
-            //   link.click();
-
-       
-            //  // Clean up the temporary link
-            //  link.parentNode.removeChild(link);
-
-            //  return link;
-             // console.log(link);
-              //console.log(response);
           
 
         }catch(e){

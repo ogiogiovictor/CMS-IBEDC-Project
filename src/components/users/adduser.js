@@ -24,6 +24,26 @@ const AddUser = () => {
 
   const [selectedAuthority, setSelectedAuthority] = useState('');
 
+  const [selectedRegion, setSelectedRegion] = useState("");
+  const [selectedBizHub, setSelectedBizHub] = useState("");
+  const [selectedServiceCenter, setSelectedServiceCenter] = useState("");
+
+  const onChangeRegion = (event) => {
+    setSelectedRegion(event.target.value);
+    setSelectedBizHub("");
+    setSelectedServiceCenter("");
+  };
+
+  const onChangeBizHub = (event) => {
+    setSelectedBizHub(event.target.value);
+    setSelectedServiceCenter("");
+  };
+
+  const onChangeServiceCenter = (event) => {
+    setSelectedServiceCenter(event.target.value);
+  };
+
+
   const userRole =  useSelector((state) => state.user.roles);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -56,15 +76,18 @@ const AddUser = () => {
    // const { name, email, password, authority, region, business_hub, service_center } = values;
     const idata = { 
       authority: selectedAuthority,
-      business_hub: values.business_hub,
+      business_hub: selectedBizHub, //values.business_hub,
       email: values.email,
       name: values.name,
       password: values.password,
-      region: values.region,
-      service_center: values.service_center,
+      region: selectedRegion, //values.region,
+      service_center: selectedServiceCenter, //values.service_center,
       role: values.role,
-      level: `${values.region}, ${values.business_hub}, ${values.service_center}`,
+      level: `${selectedRegion},${selectedBizHub},${selectedServiceCenter}`,
+      //level: `${values.region}, ${values.business_hub}, ${values.service_center}`,
     }
+
+    console.log(idata);
 
 
     if(!idata.authority){
@@ -87,10 +110,10 @@ const AddUser = () => {
 
 
     try {
-
+     
       const result =  await registerUser(idata).unwrap();
       if(result.data.id){
-        notify("error", result.message);
+        notify("success", result.message);
         setIsProcessing(false);
         navigate('/allusers');
       }
@@ -98,7 +121,14 @@ const AddUser = () => {
 
     }catch(e) {
       setIsProcessing(false);
-      console.log(e);
+      //console.log(e.data.data.email[0]);
+      if(e.data.data.email){
+        notify("error", e.data.data.email[0]);
+      }else if(e.data.data.password){
+        notify("error", e.data.data.password[0]);
+      }else {
+        notify("error", e.data.message);
+      }
     }
     
   }
@@ -109,26 +139,6 @@ const AddUser = () => {
   const iregion = [...new Set(getResource?.data?.service_unit?.map(item => item.Region.toUpperCase()))];
   const biz_hub = [...new Set(getResource?.data?.service_unit?.map(item => item.Biz_Hub))];
   const service_center = [...new Set(getResource?.data?.service_unit?.map(item => item.Name))];
-
- 
-  const [selectedRegion, setSelectedRegion] = useState("");
-  const [selectedBizHub, setSelectedBizHub] = useState("");
-  const [selectedServiceCenter, setSelectedServiceCenter] = useState("");
-
-  const onChangeRegion = (event) => {
-    setSelectedRegion(event.target.value);
-    setSelectedBizHub("");
-    setSelectedServiceCenter("");
-  };
-
-  const onChangeBizHub = (event) => {
-    setSelectedBizHub(event.target.value);
-    setSelectedServiceCenter("");
-  };
-
-  const onChangeServiceCenter = (event) => {
-    setSelectedServiceCenter(event.target.value);
-  };
 
 
   const filteredBizHubs = selectedRegion

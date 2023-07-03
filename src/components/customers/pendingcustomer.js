@@ -1,4 +1,5 @@
 import React, {Fragment, useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 import {  useGetCRMDCustomerQuery, usePostUpdateCRMDMutation, 
   useGetNewCustomersQuery, usePostUpdateNewlyCreatedMutation } from "../../redux/services/customer/customerService";
 import { useDispatch, useSelector } from "react-redux";
@@ -171,13 +172,11 @@ const PendingCustomer = () => {
          <div className="card">
            <div className="card-body">
              <h4 className="card-title">Pending CRMD (customers) &nbsp;
-              <a class="btn btn-xs btn-primary" href="">My Approvals</a>
+              <Link class="btn btn-xs btn-primary" to="/my_approvals">My Approvals</Link>
              </h4>
            
-             <div class="form-group d-flex">
-                          <input type="text" class="form-control" placeholder="Search Bills(s)..." />
-                          <button type="submit" class="btn btn-primary ml-3">Search</button>
-                    </div>
+             <div class="form-group d-flex"></div>
+             <hr/>
              <div className="table-responsive">
                <table className="table">
                  <thead>
@@ -242,7 +241,7 @@ const PendingCustomer = () => {
                </table>
 
 
-              <hr/>
+              <br/><hr/>
               <h4 className="card-title">Newly Created (customers) &nbsp;&nbsp;</h4>
               <input type="text" class="form-control" placeholder="" disabled />
               <DataTable 

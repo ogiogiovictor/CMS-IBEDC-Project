@@ -87,10 +87,11 @@ const AddCustomer = () => {
 
   };
 
+  console.log(getResource);
 
   
   // Get distinct values of 'name' property from the array
-  const iregion = [...new Set(getResource?.data?.service_unit?.map(item => item.Region.toUpperCase()))];
+  const iregion = [...new Set(getResource?.data?.service_unit?.map(item => item.Region))];
   const biz_hub = [...new Set(getResource?.data?.service_unit?.map(item => item.Biz_Hub))];
   const service_center = [...new Set(getResource?.data?.service_unit?.map(item => item.Name))];
 
@@ -116,7 +117,7 @@ const AddCustomer = () => {
   };
 
   const filteredBizHubs = selectedRegion
-  ? biz_hub.filter((item) => getResource?.data?.service_unit.find( (unit) => unit.Biz_Hub === item && unit.Region.toUpperCase() === selectedRegion
+  ? biz_hub.filter((item) => getResource?.data?.service_unit.find( (unit) => unit.Biz_Hub === item && unit.Region && unit.Region.toUpperCase() === selectedRegion.toUpperCase()
   )) : biz_hub;
 
 
@@ -124,7 +125,7 @@ const AddCustomer = () => {
     ? service_center.filter((item) => getResource?.data?.service_unit.find((unit) =>
               unit.Name === item &&
               unit.Biz_Hub === selectedBizHub &&
-              unit.Region.toUpperCase() === selectedRegion
+              unit.Region.toUpperCase() === selectedRegion.toUpperCase()
     )): service_center;
 
     const region = (

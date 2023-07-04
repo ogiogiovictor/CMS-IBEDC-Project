@@ -35,7 +35,7 @@ const Transformer = () => {
     { userQuery: updatedType, pageNo: currentPage }
   );
 
-  console.log(data?.data?.allDt?.data);
+  console.log(data?.allDt?.data);
 
   const navigate = useNavigate();
 
@@ -43,18 +43,18 @@ const Transformer = () => {
   const closePopup = () => { setIsOpen(false); };
 
   useEffect(() => {
-   // let mdata = data?.allDt?.data; // Data from the API on Production
-    let mdevData = data?.data?.allDt?.data // Data from the API on Development
+    let mdata = data?.allDt?.data; // Data from the API on Production
+   // let mdevData = data?.data?.allDt?.data // Data from the API on Development
 
     if (currentPage && (data || searchResult)) {
       refetch();
       dispatch(setDss(data || searchResult));
-     // dispatch(setDataDss(data?.allDt?.data || searchResult)); // Data from the API on Production
-      dispatch(setDataDss(mdevData || searchResult));
-     // type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(data?.allDt?.data)); // Data from the API on Production
-      type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(mdevData));
-      //type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(data?.allDt?.data)); // Data from the API on Production
-      type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(mdevData));
+      dispatch(setDataDss(data?.allDt?.data || searchResult)); // Data from the API on Production
+    //  dispatch(setDataDss(mdevData || searchResult));
+      type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(data?.allDt?.data)); // Data from the API on Production
+    //  type === "Distribution Sub Station 11KV_415V" && dispatch(setDataDss(mdevData));
+      type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(data?.allDt?.data)); // Data from the API on Production
+      // type === "Distribution Sub Station 33KV_415V" && dispatch(setDataDss(mdevData));
     }
  }, [data, refetch, searchResult, dispatch, currentPage, type, updatedType, dssInfo]);
 

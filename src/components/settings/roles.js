@@ -4,7 +4,7 @@ import { datePicker } from '../../redux/helpers';
 import PageLoader from "../spinner/loader";
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useGetAccessListQuery, useGetAllUserQuery, useGetRoleQuery, useGetControListQuery } from '../../redux/services/user/userService';
+import { useGetAccessListQuery, useGetAllUserQuery, useGetRoleQuery, useGetControListQuery, useAssignedMenuMutation } from '../../redux/services/user/userService';
 import './role.css'
 import { useForm } from 'react-hook-form';
 
@@ -16,6 +16,9 @@ const Roles = () => {
   const rowData = location.state.data;
   const [isEditing, setIsEditing] = useState(false);
   const [getControList, setGetControList] = useState(null);
+  const navigate = useNavigate();
+
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const { data } = useGetAccessListQuery();
   const { data: getAllUsers } = useGetAllUserQuery({ pageNo: currentPage  });
@@ -46,18 +49,46 @@ const Roles = () => {
   };
 
 
+  const [ assigneRole ] = useAssignedMenuMutation();
+
   const onSubmit = async (data) => {
 
+    setIsProcessing(true);
     const menuIds = getControList.map(item => item.menu_id);
+    const submenuIds = getControList.map(item => item.id);
+
     const formData = { 
       ...data,
-      list: [...new Set(menuIds)],
-      role: rowData.name
+      menu_id: [...new Set(menuIds)],
+      submenu_id: submenuIds,
+      role: rowData.name,
+     // core: menuIds,
     }
 
-    console.log(formData);
-   console.log(getControList);
+    try {
+      
+      console.log(formData);
+      const result =  await assigneRole(formData).unwrap();
+
+      if(result.data){
+        setIsProcessing(false);
+        notify("success", result.message);
+      }
+
+    }catch(err){
+      setIsProcessing(false);
+      notify('error', err.message);
+    }
+
+    //console.log(formData);
+    //console.log(getControList);
   
+  };
+
+
+  const handleActionClick = () => {
+    navigate(`/viewuser`);
+    window.scrollTo(0, 0);
   };
 
 
@@ -144,7 +175,9 @@ const Roles = () => {
                       </select>
                         </div>
                         <div class="col-md-1">
-                        <button type="submit" className="btn btn-sm btn-primary btn-block">Save</button>
+                        <button type="submit" className="btn btn-sm btn-primary btn-block" disabled={isProcessing}>
+                        {isProcessing ? 'Processing...' : 'Save'}
+                        </button>
                         </div>
 
                       </div>
@@ -181,8 +214,8 @@ const Roles = () => {
                               <td>{user.authority}</td>
                               <td>{user.status}</td>
                               <td>
-                                <button className="btn btn-xs btn-primary">View</button>&nbsp;
-                                <button className="btn btn-xs btn-info">Edit</button>&nbsp;
+                                <button className="btn btn-xs btn-primary" onClick={handleActionClick}>View</button>&nbsp;
+                                {/* <button className="btn btn-xs btn-info">Edit</button>&nbsp; */}
                                 <button className="btn btn-xs btn-danger">Disable</button>
                               </td>
                             </tr>

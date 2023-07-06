@@ -53,13 +53,28 @@ export const userService = createApi({
   }),
 
 
-  getResourceList: builder.query({
-    query: () => ({
-        url: `/${API_VERSION}/get_dropdown_all`,
-        method: "GET",
+      getResourceList: builder.query({
+        query: () => ({
+            url: `/${API_VERSION}/get_dropdown_all`,
+            method: "GET",
+        }),
+        pollingInterval: 900000, // 15 minutes
     }),
-    pollingInterval: 900000, // 15 minutes
-}),
+
+
+    assignedMenu: builder.mutation({
+      query: (requestData) => ({
+        url: `/${API_VERSION}/assign_user_menu`,
+        method: "POST",
+        body: requestData,
+      }),
+    }),
+      onError: (error) => {
+        throw new Error(error)
+      },
+
+
+
 
 
        
@@ -68,4 +83,4 @@ export const userService = createApi({
 });
 
 export const { useGetResourceListQuery, useGetAllUserQuery, useRegisterUserMutation, useGetRoleQuery, useGetAccessListQuery,
-useGetControListQuery } = userService;
+useGetControListQuery, useAssignedMenuMutation } = userService;

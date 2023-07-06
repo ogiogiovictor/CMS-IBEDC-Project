@@ -45,12 +45,19 @@ const Users = () => {
         { title: "Status", field: "status" },
       ];
 
-      const handleActionClick = () => {
-
+      const handleActionClick = (users) => {
+         navigate(`/details/${users.id}`, { 
+          state: { 
+            rowData: users, 
+            rowTitle: 'User Information',
+            rowSubTitle: users.name,
+            routeName: '/allusers'
+           } });
+         window.scrollTo(0, 0);
       }
 
-      const handleEditClick = () => {
-
+      const handleEditClick = (users) => {
+        navigate(`/edit_users/${users.id}`)
       }
 
 

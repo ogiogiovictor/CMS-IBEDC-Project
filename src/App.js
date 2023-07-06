@@ -54,6 +54,7 @@ import BillingEfficiency from "./components/dss/billingEfficiency";
 import NstsCustomers from "./components/customers/nstscustomers";
 import DTBusinessHub from "./components/dss/transformerBusinessHub";
 import MyApprovals from "./components/customers/myapprovals";
+import EditUser from "./components/users/useredit";
 
 
 const App = () => {
@@ -179,8 +180,7 @@ const App = () => {
                   <Route path="non_sts_customers" element={<NstsCustomers />} />
                   <Route path="dt_by_business_hub" element={<DTBusinessHub />} />
                   <Route path="my_approvals" element={<MyApprovals />} /> 
-                  
-
+                  <Route path="edit_users/:id" element={<EditUser />} />
 
 
 

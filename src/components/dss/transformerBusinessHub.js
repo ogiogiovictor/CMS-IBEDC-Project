@@ -26,10 +26,9 @@ const DTBusinessHub = () => {
 
   useEffect(() => {
     if (data ) {
-      refetch();
       dispatch(setBHubDT(data?.data));
     }
- }, [data, refetch]);
+ }, [data]);
 
 
 

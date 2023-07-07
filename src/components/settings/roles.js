@@ -73,6 +73,7 @@ const Roles = () => {
       if(result.data){
         setIsProcessing(false);
         notify("success", result.message);
+      
       }
 
     }catch(err){
@@ -92,6 +93,7 @@ const Roles = () => {
   };
 
 
+  console.log(allRolesUsers);
 
 // console.log(allRolesUsers?.data);
 // console.log(rowData.id);

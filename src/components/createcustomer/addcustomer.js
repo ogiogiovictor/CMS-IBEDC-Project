@@ -3,12 +3,14 @@ import CustomerCard from '../cards/customercard';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { notify } from '../../utils/notify';
+import { useNavigate } from "react-router-dom";
 import { useAddNewCustomerMutation } from '../../redux/services/customer/customerService';
 import { useGetResourceListQuery } from '../../redux/services/user/userService';
 
 
 const AddCustomer = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const navigate = useNavigate();
 
   const [isProcessing, setIsProcessing] = useState(false);
   const { userInfo } = useSelector((state) => state.auth);
@@ -71,6 +73,7 @@ const AddCustomer = () => {
       if(result.data ==  201){
         notify('success', "Customer Successfully Created");
         setIsProcessing(false);
+        //navigate('/viewcustomers');
       }else {
         notify('error', "Please Try Again! Something went wrong" );
         setIsProcessing(false);

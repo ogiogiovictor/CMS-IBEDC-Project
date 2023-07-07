@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 const TransformerCard = ({ idssCard, onFilterStatusChange }) => {
   const { dtTotal, elevenDt, thirtyDt } = idssCard ?? 0;
@@ -50,7 +51,7 @@ const TransformerCard = ({ idssCard, onFilterStatusChange }) => {
         
         <div className="col-md-6 col-lg-3 grid-margin stretch-card"
         style={{ cursor: "pointer" }}>
-          <a href='/dt_by_business_hub'>
+          <Link to='/dt_by_business_hub'>
           <div className="card bg-danger text-white border-0">
             <div className="card-body">
               <div className="d-flex align-items-center">
@@ -62,7 +63,7 @@ const TransformerCard = ({ idssCard, onFilterStatusChange }) => {
               </div>
             </div>
           </div>
-          </a>
+          </Link>
         </div>
 
         <div className="col-md-6 col-lg-3 grid-margin stretch-card"

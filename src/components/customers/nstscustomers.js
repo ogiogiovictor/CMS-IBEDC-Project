@@ -41,8 +41,14 @@ const NstsCustomers = () => {
   };
 
 
-  const handleActionClick = ({  }) => {
-  
+  const handleActionClick = (nstscustomers) => {
+    navigate(`/details/${nstscustomers.MeterNo}`, { 
+      state: { 
+        rowData: nstscustomers, 
+        rowTitle: 'Non STS Customer Information',
+        rowSubTitle: nstscustomers.Surname,
+        routeName: '/non_sts_customers'
+       } });
     window.scrollTo(0, 0);
   };
 

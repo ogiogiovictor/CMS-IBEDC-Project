@@ -52,7 +52,7 @@ const BillCard = ({cardData}) => {
           </div>
         </div>
 
-        <div className="col-md-6 col-lg-3 grid-margin stretch-card">
+        {/* <div className="col-md-6 col-lg-3 grid-margin stretch-card">
           <div className="card bg-danger text-white border-0">
             <div className="card-body">
               <div className="d-flex align-items-center">
@@ -64,7 +64,7 @@ const BillCard = ({cardData}) => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
        
       </div>
     );

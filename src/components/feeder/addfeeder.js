@@ -254,6 +254,7 @@ const AddFeeder = () => {
                           onBlur={onBlurHandler}
                           touched={touched.F11kvFeeder_CBYearofManufacture.toString()}
                           placeholder='Please enter Manufacture Year' required
+                          step={1}
                           />
                            <small>Feeder CB Serial Cannot be empty</small>
                           </div>
@@ -362,12 +363,13 @@ const AddFeeder = () => {
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Feeder RMU Year Manufacture</label>
                           <div class="col-sm-8">
-                            <input type="text" 
+                            <input type="number" 
                             name="F11kvFeeder_RMUYearofManufacture"
                             class="form-control"
                             value={values.F11kvFeeder_RMUYearofManufacture}
                             onChange={onChangeHandler}
                             onBlur={onBlurHandler}
+                            step={1}
                             touched={touched.F11kvFeeder_RMUYearofManufacture.toString()}
                             />
                           </div>
@@ -521,11 +523,12 @@ const AddFeeder = () => {
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Feeder Manufacture</label>
                           <div class="col-sm-8">
-                          <input type="text"  class="form-control"
+                          <input type="number"  class="form-control"
                           name="F11kvFeeder_Manufacture" 
                           value={values.F11kvFeeder_Manufacture}
                           onChange={onChangeHandler}
                           onBlur={onBlurHandler}
+                          step={1}
                           touched={touched.F11kvFeeder_Manufacture.toString()}
                           />
                           </div>
@@ -593,11 +596,12 @@ const AddFeeder = () => {
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Latitude</label>
                           <div class="col-sm-8">
-                          <input type="text"  class="form-control"
+                          <input type="number"  class="form-control"
                           name="latitude" 
                           value={values.latitude}
                           onChange={onChangeHandler}
                           onBlur={onBlurHandler}
+                          
                           touched={touched.latitude.toString()}
                           placeholder='Please enter Latitude' required
                           />
@@ -609,12 +613,13 @@ const AddFeeder = () => {
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Longitude</label>
                           <div class="col-sm-8">
-                            <input type="text" 
+                            <input type="number" 
                             class="form-control"
                             name="longtitude"
                             value={values.longtitude}
                             onChange={onChangeHandler}
                             onBlur={onBlurHandler}
+                            
                             touched={touched.longtitude.toString()}
                             placeholder='Please enter Manufacture Year' required
                             />

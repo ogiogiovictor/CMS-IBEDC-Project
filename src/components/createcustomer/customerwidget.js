@@ -243,11 +243,11 @@ const CustomerWidget = ({ customerInfo }) => {
                                 <p>
                                   {" "}
                                   <td>
-                                    <Link to="/customerinfo">
+                                    {/* <Link to="/customerinfo">
                                       <button class="btn btn-xs btn-info">
                                         <i class="icon-user"></i>Create CAAD
                                       </button>
-                                    </Link>
+                                    </Link> */}
                                   </td>
                                 </p>
                               </div>

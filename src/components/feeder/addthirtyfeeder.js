@@ -92,8 +92,8 @@ const AddThirtyFeeder = () => {
             CDateTime: values.CDateTime,
             F11kvFeeder_Name: values.F11kvFeeder_Name,
             assettype: values.assettype,
-            F33kv_Regional_Name: values.F33kv_Regional_Name,
-            F33kv_Business_Hub_Name: values.F33kv_Regional_Name,
+            F33kv_Regional_Name: selectedRegion ?? values.F33kv_Regional_Name,
+            F33kv_Business_Hub_Name: selectedBizHub ?? values.F33kv_Regional_Name,
             F33kv_Feeder_Name: values.F33kv_Feeder_Name,
             F33kV_Feeder_Circuit_Breaker_Make: values.F33kV_Feeder_Circuit_Breaker_Make,
             F33kV_Feeder_Circuit_Breaker_Type: values.F33kV_Feeder_Circuit_Breaker_Type,
@@ -140,7 +140,7 @@ const AddThirtyFeeder = () => {
 
 
       // Get distinct values of 'name' property from the array
-  const iregion = [...new Set(getResource?.data?.service_unit?.map(item => item.Region.toUpperCase()))];
+  const iregion = [...new Set(getResource?.data?.service_unit?.map(item => item.Region?.toUpperCase()))];
   const biz_hub = [...new Set(getResource?.data?.service_unit?.map(item => item.Biz_Hub))];
 
   const [selectedRegion, setSelectedRegion] = useState("");
@@ -158,7 +158,7 @@ const AddThirtyFeeder = () => {
   };
 
   const filteredBizHubs = selectedRegion
-  ? biz_hub.filter((item) => getResource?.data?.service_unit.find( (unit) => unit.Biz_Hub === item && unit.Region.toUpperCase() === selectedRegion
+  ? biz_hub.filter((item) => getResource?.data?.service_unit.find( (unit) => unit.Biz_Hub === item && unit.Region?.toUpperCase() === selectedRegion
   )) : biz_hub;
 
 
@@ -250,9 +250,8 @@ const businessHub = (
                            onChange={onChangeHandler}
                            onBlur={onBlurHandler}
                            touched={touched.naccode.toString()}
-                           placeholder='Please enter naccode' required
+                           placeholder='Please enter naccode'
                             />
-                            <small>Naccode Cannot be empty</small>
                           </div>
                         </div>
                       </div>
@@ -451,7 +450,8 @@ const businessHub = (
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">F33kv_Commisioning</label>
                           <div class="col-sm-8">
-                            <input type="text" 
+                            <input type="number"
+                            step={1} 
                             class="form-control"
                             name="F33kv_Commisioning"
                             value={values.F33kv_Commisioning}

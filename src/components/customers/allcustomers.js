@@ -268,7 +268,7 @@ const AllCustomers = () => {
 
                         <div  class="col-md-2">
                         <button type="submit" className="btn btn-danger ml-4" onClick={openPopup}>
-                          Export(excel)
+                          Download
                         </button>
                         </div>
 

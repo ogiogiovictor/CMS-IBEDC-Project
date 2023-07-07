@@ -16,7 +16,7 @@ const AddTransformer = () => {
     
 
         // Get distinct values of 'name' property from the array
-    const iregion = [...new Set(getResource?.data?.service_unit?.map(item => item.Region.toUpperCase()))];
+    const iregion = [...new Set(getResource?.data?.service_unit?.map(item => item.Region?.toUpperCase()))];
     const biz_hub = [...new Set(getResource?.data?.service_unit?.map(item => item.Biz_Hub))];
     const service_center = [...new Set(getResource?.data?.service_unit?.map(item => item.Name))];
 
@@ -42,7 +42,7 @@ const AddTransformer = () => {
     };
 
     const filteredBizHubs = selectedRegion
-    ? biz_hub.filter((item) => getResource?.data?.service_unit.find( (unit) => unit.Biz_Hub === item && unit.Region.toUpperCase() === selectedRegion
+    ? biz_hub.filter((item) => getResource?.data?.service_unit.find( (unit) => unit.Biz_Hub === item && unit.Region?.toUpperCase() === selectedRegion
     )) : biz_hub;
   
   
@@ -540,7 +540,7 @@ const AddTransformer = () => {
                     <div class="form-group row">
                       <label class="col-sm-4 col-form-label">DSS Voltage_Ratio</label>
                       <div class="col-sm-8">
-                        <input type="text" 
+                        <input type="number" 
                         class="form-control"
                         name="DSS_11KV_415V_Voltage_Ratio"
                        value={values.DSS_11KV_415V_Voltage_Ratio}
@@ -560,7 +560,7 @@ const AddTransformer = () => {
                     <div class="form-group row">
                       <label class="col-sm-4 col-form-label">DSS Oil_Temp</label>
                       <div class="col-sm-8">
-                      <input type="text"  class="form-control" 
+                      <input type="number"  class="form-control" 
                        name="DSS_11KV_415V_Oil_Temp"
                        value={values.DSS_11KV_415V_Oil_Temp}
                        onChange={onChangeHandler}
@@ -596,7 +596,7 @@ const AddTransformer = () => {
                     <div class="form-group row">
                       <label class="col-sm-4 col-form-label">DSS Manufacture_Year</label>
                       <div class="col-sm-8">
-                      <input type="text"  class="form-control" 
+                      <input type="number"  class="form-control" 
                        name="DSS_11KV_415V_Manufacture_Year"
                        value={values.DSS_11KV_415V_Manufacture_Year}
                        onChange={onChangeHandler}
@@ -612,7 +612,7 @@ const AddTransformer = () => {
                     <div class="form-group row">
                       <label class="col-sm-4 col-form-label">DSS Installation_Year</label>
                       <div class="col-sm-8">
-                        <input type="text" 
+                        <input type="number" 
                         class="form-control"
                         name="DSS_11KV_415V_Installation_Year"
                        value={values.DSS_11KV_415V_Installation_Year}
@@ -866,7 +866,7 @@ const AddTransformer = () => {
                     <div class="form-group row">
                       <label class="col-sm-4 col-form-label">DSS Number_of_HV_Fuse</label>
                       <div class="col-sm-8">
-                        <input type="text" 
+                        <input type="number" 
                         class="form-control"
                         name="DSS_11KV_415V_Number_of_HV_Fuse"
                        value={values.DSS_11KV_415V_Number_of_HV_Fuse}
@@ -1010,7 +1010,7 @@ const AddTransformer = () => {
                     <div class="form-group row">
                       <label class="col-sm-4 col-form-label">DSS Percent</label>
                       <div class="col-sm-8">
-                        <input type="text" 
+                        <input type="number" 
                         class="form-control"
                         name="DSS_11KV_415V_percent"
                        value={values.DSS_11KV_415V_percent}

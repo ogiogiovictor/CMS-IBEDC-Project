@@ -50,8 +50,14 @@ const Tickets = () => {
     { title: "Status", field: "status" },
   ];
 
-  const handleActionClick = () => {
-    navigate(`/tickeview`);
+  const handleActionClick = (ticketData) => {
+    navigate(`/details/${ticketData.ticket_no}`, { 
+      state: { 
+        rowData: ticketData, 
+        rowTitle: 'Ticket Information',
+        rowSubTitle: ticketData.ticket_no,
+        routeName: '/tickets'
+       } });
     window.scrollTo(0, 0);
   };
 

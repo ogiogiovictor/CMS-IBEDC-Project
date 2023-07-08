@@ -119,9 +119,6 @@ export const customerService = createApi({
       },
     }),
   }),
-    onError: (error) => {
-      console.error(error);
-    },
 
 
 

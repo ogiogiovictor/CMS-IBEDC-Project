@@ -68,10 +68,7 @@ export const userService = createApi({
         method: "POST",
         body: requestData,
       }),
-    }),
-      onError: (error) => {
-        throw new Error(error)
-      },
+    })
 
 
 

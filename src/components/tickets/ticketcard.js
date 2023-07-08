@@ -1,12 +1,16 @@
 import React from 'react';
 
-const TicketCard = ({myTickets}) => {
+const TicketCard = ({myTickets, onFilterStatusChange}) => {
   console.log(myTickets)
   const { closedTicket, openTicket, totalTicket, unassigned } = myTickets.data??'';
 
+  const handleCardClick = (data) => {
+    onFilterStatusChange(data)
+  }
+
     return (
         <div className="row">
-        <div className="col-md-6 col-lg-3 grid-margin stretch-card">
+        <div className="col-md-6 col-lg-3 grid-margin stretch-card" onClick={() => handleCardClick("All")} style={{ cursor: "pointer" }}>
           <div className="card bg-dark text-white border-0">
             <div className="card-body">
               <div className="d-flex align-items-center">
@@ -20,7 +24,7 @@ const TicketCard = ({myTickets}) => {
           </div>
         </div>
         
-        <div className="col-md-6 col-lg-3 grid-margin stretch-card">
+        <div className="col-md-6 col-lg-3 grid-margin stretch-card" onClick={() => handleCardClick('unassigned')} style={{ cursor: "pointer" }}>
           <div className="card bg-primary text-white border-0">
             <div className="card-body">
               <div className="d-flex align-items-center">
@@ -34,7 +38,7 @@ const TicketCard = ({myTickets}) => {
           </div>
         </div>
         
-        <div className="col-md-6 col-lg-3 grid-margin stretch-card">
+        <div className="col-md-6 col-lg-3 grid-margin stretch-card" onClick={() => handleCardClick('closed')} style={{ cursor: "pointer" }}>
           <div className="card bg-danger text-white border-0">
             <div className="card-body">
               <div className="d-flex align-items-center">
@@ -48,7 +52,7 @@ const TicketCard = ({myTickets}) => {
           </div>
         </div>
 
-        <div className="col-md-6 col-lg-3 grid-margin stretch-card">
+        <div className="col-md-6 col-lg-3 grid-margin stretch-card" onClick={() => handleCardClick('open')} style={{ cursor: "pointer" }}>
           <div className="card bg-danger text-white border-0">
             <div className="card-body">
               <div className="d-flex align-items-center">

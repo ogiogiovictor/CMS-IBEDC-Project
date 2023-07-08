@@ -8,8 +8,8 @@ export const ticketService = createApi({
     baseQuery,
     endpoints: (builder) => ({
         getAllTickets: builder.query({
-            query: ({ pageNo }) => ({
-              url: `/${API_VERSION}/tickets`,
+            query: ({ userQuery, pageNo }) => ({
+              url: `/${API_VERSION}/tickets?type=${userQuery}&page=${pageNo}`,
               method: "GET",
             }),
             pollingInterval: 900000, // 15 minutes

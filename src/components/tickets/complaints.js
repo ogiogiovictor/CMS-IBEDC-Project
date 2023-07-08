@@ -1,8 +1,9 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import TicketCard from './ticketcard';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { useGetAllTicketsQuery } from '../../redux/services/ticket/ticketService';
+import { useSearchAssetDTMutation } from '../../redux/services/dss/dtService';
 import { setTicket, setDataTicket } from './ticketSlice';
 import PageLoader from '../spinner/loader';
 import DataTable from '../datatable';
@@ -17,8 +18,17 @@ const Tickets = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { type } = useParams();
+  //Everything to click card and update state
+  const [updatedType, setUpdatedType] = useState(type); 
+
+   //Everything Search State
+   const [searchQuery, setSearchQuery] = useState('');
+   const [hiddenFieldValue, setHiddenFieldValue] = useState('tickets');
+
   const { data, isFetching, isUninitialized, refetch, error, dataUpdatedAt } = useGetAllTicketsQuery( 
-    { pageNo: currentPage },  //{ cacheTime: 0 }
+    { userQuery: updatedType, pageNo: currentPage },  //{ cacheTime: 0 }
   );
 
   if (error) {
@@ -35,9 +45,27 @@ const Tickets = () => {
     if (currentPage && data) {
       refetch();
       dispatch(setTicket(data));
-      dispatch(setDataTicket(data?.data?.tickets?.data));
+
+     // dispatch(setDataTicket(data?.data?.tickets?.data));
+
+      let newData = data?.data?.tickets?.data;
+
+      if (type) {
+        if (type === 'closed' || type === 'All' || type === 'Open' || type === 'Unassigned') {
+          newData = newData.filter(ticket => ticket.status === type);
+        }
+      }
+
+      dispatch(setDataTicket(newData));
+
+      /*
+      type === "closed" && dispatch(setDataTicket(data?.data?.tickets?.data));
+      type === "All" && dispatch(setDataTicket(data?.data?.tickets?.data));
+      type === "Open" && dispatch(setDataTicket(data?.data?.tickets?.data));
+      type === "Unassigned" && dispatch(setDataTicket(data?.data?.tickets?.data));
+      */
     }
-  }, [data, refetch, currentPage, dispatch]);
+  }, [data, refetch, currentPage, type, updatedType, dispatch]);
 
   console.log(data);
 
@@ -61,10 +89,47 @@ const Tickets = () => {
     window.scrollTo(0, 0);
   };
 
+  const onhandleStateChange = (data) => {
+    const updatedType = data;
+    setUpdatedType(updatedType);
+  }
+
+  const [postSearch ] = useSearchAssetDTMutation();
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    performSearch(searchQuery);
+  }
+
+
+  const performSearch = async (searchQuery) =>  {
+    const payload = {
+      Tickets: searchQuery,
+      type: hiddenFieldValue
+    };
+
+    if(!payload.Tickets){
+      notify("error", "Please enter a search query");
+      return null;
+    }
+
+    try {
+         
+      const result = await postSearch(payload).unwrap();
+      setCurrentPage(1);
+      dispatch(setDataTicket(result?.tickets?.data));
+
+    } catch (error) {
+      notify("error", error.data.data);
+      console.log(error.data.data);
+      // Handle any error that occurs during the search
+    }
+
+  }
 
     return (
         <Fragment>
-        <TicketCard myTickets={tickets} />
+        <TicketCard myTickets={tickets} onFilterStatusChange={onhandleStateChange} />
 
         {isUninitialized ? <PageLoader /> : ''}
 
@@ -77,11 +142,28 @@ const Tickets = () => {
              <h4 className="card-title">All Tickets &nbsp;
              <button class="btn btn-icons btn-rounded btn-secondary" onClick={() => refetch()}><span class="icon-refresh"></span></button>
              </h4>
-           
-             <div class="form-group d-flex">
-                  <input type="text" class="form-control" placeholder="Search Power Transformers(s)..." />
-                  <button type="submit" class="btn btn-primary ml-3">Search</button>
-            </div>
+
+
+             <div class="row">
+                      <div class="col-md-12">
+                          <form onSubmit={handleSearchSubmit}>
+                            <div class="form-group d-flex">
+                        
+                            <input type="text" 
+                            value={searchQuery} 
+                            onChange={(e) => setSearchQuery(e.target.value)} 
+                            name="search_ticket"
+                              className="form-control" placeholder="Search Tickets..." />
+
+                              <input type="hidden"  value={hiddenFieldValue} 
+                              onChange={(e) => setHiddenFieldValue(e.target.value)}
+                              className="form-control" />
+                                <button type="submit" className="btn btn-primary ml-3">Search</button>
+                            </div>
+                          </form>
+                      </div>
+
+                  </div>
 
 
             <DataTable 

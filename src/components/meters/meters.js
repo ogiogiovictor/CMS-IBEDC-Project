@@ -2,9 +2,11 @@ import React,  {Fragment, useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useGetAllMetersQuery } from '../../redux/services/meter/meterService';
+import { useSearchAssetDTMutation } from '../../redux/services/dss/dtService';
 import { setMeter } from '../../redux/services/meter/meterSlice';
 import PageLoader from "../spinner/loader";
 import DataTable from '../datatable';
+import { notify } from "../../utils/notify";
 
 const Meters = () => {
 
@@ -15,6 +17,13 @@ const Meters = () => {
   const { meter } = useSelector((state) => state.meter) || [];
   const [selectedObject, setSelectedObject] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+
+
+     //Everything Search State
+     const [searchQuery, setSearchQuery] = useState('');
+     const [hiddenFieldValue, setHiddenFieldValue] = useState('meters');
+     const [selectedType, setSelectedType] = useState("");
+
 
   const {data, isError, isFetching, isUninitialized, refetch} = useGetAllMetersQuery(
     { pageNo: currentPage },  
@@ -51,6 +60,48 @@ const Meters = () => {
        window.scrollTo(0, 0);
      };
 
+
+  const [postSearch ] = useSearchAssetDTMutation();
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    performSearch(searchQuery);
+  }
+
+
+  const performSearch = async (searchQuery) =>  {
+    const payload = {
+      Meters: searchQuery,
+      type: hiddenFieldValue
+    };
+
+    if(!payload.Meters){
+      notify("error", "Please enter a search query");
+      return null;
+    }
+
+    try {
+         
+      const result = await postSearch(payload).unwrap();
+      setCurrentPage(1);
+      dispatch(setMeter(result?.data?.data))
+
+    } catch (error) {
+      notify("error", error.data.data);
+      console.log(error.data.data);
+      // Handle any error that occurs during the search
+    }
+
+
+  }
+
+
+  const makeOnchangeMeters = (e) => {
+    const selectedValue = e.target.value;
+    setSelectedType(selectedValue);
+    
+    // alert(selectedValue)
+  }
    
 
     return (
@@ -68,7 +119,7 @@ const Meters = () => {
            <div className="card-body">
              <h4 className="card-title">Meter Installation - DSS - Feeders
              <div className="btn  btn-fw">
-             <select className="form-control" name="type" required >
+             <select className="form-control" name="type" required onChange={makeOnchangeMeters} >
                                 <option value="">Select Type</option>
                                 <option value="Distribution Sub Station 11KV_415V">Distribution Sub Station 11KV_415V</option>
                                 <option value="Distribution Sub Station 33KV_415V">Distribution Sub Station 33KV_415V</option>
@@ -80,10 +131,31 @@ const Meters = () => {
                                 </select>
                 </div>
              </h4>
-             <div class="form-group d-flex">
-                          <input type="text" class="form-control" placeholder="Search type(s)..." />
-                          <button type="submit" class="btn btn-primary ml-3">Search</button>
-                    </div>
+
+             <div class="row">
+                      <div class="col-md-12">
+                          <form onSubmit={handleSearchSubmit}>
+                            <div class="form-group d-flex">
+                        
+                            <input type="text" 
+                            value={searchQuery} 
+                            onChange={(e) => setSearchQuery(e.target.value)} 
+                            name="search_ticket"
+                              className="form-control" placeholder="Search Meters..." />
+
+                              <input type="hidden"  value={hiddenFieldValue} 
+                              onChange={(e) => setHiddenFieldValue(e.target.value)}
+                              className="form-control" />
+                                <button type="submit" className="btn btn-primary ml-3">Search</button>
+                            </div>
+                          </form>
+                      </div>
+
+              </div>
+
+            
+
+
              <div className="table-responsive">
              <DataTable 
                  data={meter}

@@ -7,6 +7,7 @@ export const amiService = createApi({
     reducerPath: "amiService",
     baseQuery,
     endpoints: (builder) => ({
+
         getAMIService: builder.query({
             query: ({ pageNo }) => ({
               url: `/${API_VERSION}/get_events?page=${pageNo}`,
@@ -26,12 +27,10 @@ export const amiService = createApi({
               url: `/${API_VERSION}/get_all_connection?page=${pageNo}`,
               method: "GET",
             }),
-            pollingInterval: 1800000, // 15 minutes
-            cacheTime: 1800000, // 3 minutes
-            // cacheOptions: {
-            //     // cache results for 5 minutes
-            //     ttl: 3000000,
-            // },
+            cacheOptions: {
+                // cache results for 5 minutes
+                ttl: 3000000,
+            },
           }),
 
     }),

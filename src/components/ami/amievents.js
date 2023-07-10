@@ -12,18 +12,22 @@ const AmiEvents = () => {
   const dispatch = useDispatch();
   const { events } = useSelector((state) => state.ami) || [];
 
-  const {data, isError, isFetching, isSuccess, isUninitialized, refetch} = useGetAmiEventsQuery(
-    { pageNo: currentPage },  
-  );
+  const { data, isError, error, isFetching, isSuccess, isUninitialized, refetch } = useGetAmiEventsQuery({ pageNo: currentPage });
+  
+console.log(isError);
+console.log(error);
+  console.log(isFetching);
+  console.log(events);
+  console.log(data?.data?.ami_data?.data);
 
   useEffect(() => {
-    if(currentPage && data){
-     // refetch();
-      dispatch(setEvents(data?.data?.ami_data?.data))
+    if(data){
+      refetch();
+      dispatch(setEvents(data?.data?.ami_data?.data));
     }
-  }, [data, currentPage, dispatch])
+  }, [data, currentPage, dispatch, refetch])
 
-  console.log(data);
+
   //console.log(data.data.group);
   //console.log(events);
   //console.log(isSuccess);
@@ -72,12 +76,12 @@ const AmiEvents = () => {
                 </div>
              </h4>
              <div class="form-group d-flex">
-                          <input type="text" class="form-control" placeholder="Search Customer(s)..." />
+                          <input type="text" class="form-control" placeholder="Search event(s)..." />
                           <button type="submit" class="btn btn-primary ml-3">Search</button>
                     </div>
              <div className="table-responsive">
              <DataTable 
-                 data={events}
+                 data={data?.data?.ami_data?.data}
                  columns={columns}
                  pagination
                  currentPage={currentPage}

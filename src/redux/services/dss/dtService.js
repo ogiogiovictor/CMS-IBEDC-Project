@@ -39,7 +39,7 @@ export const dtService = createApi({
           // Create a new endpoint for the POST request
           addAssets: builder.mutation({
             query: (requestData) => ({
-              url: `/${API_VERSION}/assets`,
+              url: `/${API_VERSION}/add_assets`,
               method: "POST",
               body: requestData, // the data you want to send in the request body
             }),

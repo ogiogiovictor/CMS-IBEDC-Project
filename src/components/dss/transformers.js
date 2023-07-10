@@ -174,8 +174,8 @@ const Transformer = () => {
           </label>
         </p>
         <p>
-          <input type="checkbox" value="add_feeder" onChange={handleFeeder}  /> Feeder &nbsp;&nbsp;
-          <input type="checkbox" value="add_inj_station" onChange={handleInjection} /> Injection SubStation &nbsp;&nbsp;
+          {/* <input type="checkbox" value="add_feeder" onChange={handleFeeder}  /> Feeder &nbsp;&nbsp;
+          <input type="checkbox" value="add_inj_station" onChange={handleInjection} /> Injection SubStation &nbsp;&nbsp; */}
           <input type="checkbox" value="download_transformer" onChange={handleDownload}  /> Download &nbsp;&nbsp;
 
           {/* 

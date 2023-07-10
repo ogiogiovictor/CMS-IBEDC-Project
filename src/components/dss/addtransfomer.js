@@ -126,26 +126,6 @@ const AddTransformer = () => {
         DSS_11KV_415V_Yellow_line: '',
         DSS_11KV_415V_Blue_line: '',
         DSS_11KV_415V_Neutral_line: '',
-        DSS_11KV_415V_percent: '',
-        DSS_11KV_415V_No_Load_Loss: '',
-        DSS_11KV_415V_Load_Loss: '',
-        DSS_11KV_415V_Impedence: '',
-        DSS_11KV_415V_Upriser_Number: '',
-        DSS_11KV_415V_Oil_Level: '',
-        DSS_11KV_415V_Silica_Condition: '',
-        DSS_11KV_415V_Security: '',
-        DSS_11KV_415V_substation_gravelled: '',
-        DSS_11KV_415V_substation_vegetation: '',
-        DSS_11KV_415V_Low_Voltage_Cable_Size: '',
-        DSS_11KV_415V_Is_Tranformer_leaking_Oil: '',
-        DSS_11KV_415V_Number_of_HV_Fuse: '',
-        DSS_11KV_415V_Feederpillarr_Available: '',
-        DSS_11KV_415V_Placement: '',
-        DSS_11KV_415V_cus_profile: '',
-        DSS_11KV_415V_red_line: '',
-        DSS_11KV_415V_Yellow_line: '',
-        DSS_11KV_415V_Blue_line: '',
-        DSS_11KV_415V_Neutral_line: '',
         DSS_11KV_415V_omage: '',
         DSS_11KV_415V_mounting: '',
         DSS_11KV_415V_fp_with_meter: '',
@@ -195,25 +175,6 @@ const AddTransformer = () => {
         DSS_11KV_415V_Blue_line: false,
         DSS_11KV_415V_Neutral_line: false,
         DSS_11KV_415V_percent: false,
-        DSS_11KV_415V_No_Load_Loss: false,
-        DSS_11KV_415V_Load_Loss: false,
-        DSS_11KV_415V_Impedence: false,
-        DSS_11KV_415V_Upriser_Number: false,
-        DSS_11KV_415V_Oil_Level: false,
-        DSS_11KV_415V_Silica_Condition: false,
-        DSS_11KV_415V_Security: false,
-        DSS_11KV_415V_substation_gravelled: false,
-        DSS_11KV_415V_substation_vegetation: false,
-        DSS_11KV_415V_Low_Voltage_Cable_Size: false,
-        DSS_11KV_415V_Is_Tranformer_leaking_Oil: false,
-        DSS_11KV_415V_Number_of_HV_Fuse: false,
-        DSS_11KV_415V_Feederpillarr_Available: false,
-        DSS_11KV_415V_Placement: false,
-        DSS_11KV_415V_cus_profile: false,
-        DSS_11KV_415V_red_line: false,
-        DSS_11KV_415V_Yellow_line: false,
-        DSS_11KV_415V_Blue_line: false,
-        DSS_11KV_415V_Neutral_line: false,
         DSS_11KV_415V_omage: false,
         DSS_11KV_415V_mounting: false,
         DSS_11KV_415V_fp_with_meter: false,
@@ -247,15 +208,67 @@ const AddTransformer = () => {
         return;
       }
 
-      try {
-        console.log(values);
+      const idata = { 
 
-        const result =  await registerAsset(values).unwrap();
-        if(result.data){
-          notify("success", result.message);
-          setIsProcessing(false);
-          navigate('/transformers');
-        }
+        DSS_11KV_415V_Name: values.DSS_11KV_415V_Name,
+        DSS_11KV_415V_Address: values.DSS_11KV_415V_Address,
+        DSS_11KV_415V_Rating: values.DSS_11KV_415V_Rating,
+        DSS_11KV_415V_Make: values.DSS_11KV_415V_Make,
+        DSS_11KV_415V_Feederpillarr_Type: values.DSS_11KV_415V_Feederpillarr_Type,
+        DSS_11KV_415V_FP_Catridge: values.DSS_11KV_415V_FP_Catridge,
+        DSS_11KV_415V_HV_Fuse: values.DSS_11KV_415V_HV_Fuse,
+        DSS_11KV_415V_HV_Fus_Condition: values.DSS_11KV_415V_HV_Fus_Condition,
+        DSS_11KV_415V_Lightning_Arrester: values.DSS_11KV_415V_Lightning_Arrester,
+        DSS_11KV_415V_Serial_No: values.DSS_11KV_415V_Serial_No,
+        DSS_11KV_415V_Voltage_Ratio: values.DSS_11KV_415V_Voltage_Ratio,
+        DSS_11KV_415V_Oil_Temp: values.DSS_11KV_415V_Oil_Temp,
+        DSS_11KV_415V_Winding_Temp: values.DSS_11KV_415V_Winding_Temp,
+        DSS_11KV_415V_Manufacture_Year: values.DSS_11KV_415V_Manufacture_Year,
+        DSS_11KV_415V_Installation_Year: values.DSS_11KV_415V_Installation_Year,
+        DSS_11KV_415V_country_of_Manufacture: values.DSS_11KV_415V_country_of_Manufacture,
+        DSS_11KV_415V_Percentage_Loading: values.DSS_11KV_415V_Percentage_Loading,
+        DSS_11KV_415V_No_Load_Loss: values.DSS_11KV_415V_No_Load_Loss,
+        DSS_11KV_415V_Load_Loss: values.DSS_11KV_415V_Load_Loss,
+        DSS_11KV_415V_Impedence: values.DSS_11KV_415V_Impedence,
+        DSS_11KV_415V_Upriser_Number: values.DSS_11KV_415V_Upriser_Number,
+        DSS_11KV_415V_Oil_Level: values.DSS_11KV_415V_Oil_Level,
+        DSS_11KV_415V_Silica_Condition: values.DSS_11KV_415V_Silica_Condition,
+        DSS_11KV_415V_Security: values.DSS_11KV_415V_Security,
+        DSS_11KV_415V_substation_gravelled: values.DSS_11KV_415V_substation_gravelled,
+        DSS_11KV_415V_substation_vegetation: values.DSS_11KV_415V_substation_vegetation,
+        DSS_11KV_415V_Low_Voltage_Cable_Size: values.DSS_11KV_415V_Low_Voltage_Cable_Size,
+        DSS_11KV_415V_Is_Tranformer_leaking_Oil: values.DSS_11KV_415V_Is_Tranformer_leaking_Oil,
+        DSS_11KV_415V_Number_of_HV_Fuse: values.DSS_11KV_415V_Number_of_HV_Fuse,
+        DSS_11KV_415V_Feederpillarr_Available: values.DSS_11KV_415V_Feederpillarr_Available,
+        DSS_11KV_415V_Placement: values.DSS_11KV_415V_Placement,
+        DSS_11KV_415V_cus_profile: values.DSS_11KV_415V_cus_profile,
+        DSS_11KV_415V_red_line: values.DSS_11KV_415V_red_line,
+        DSS_11KV_415V_Yellow_line: values.DSS_11KV_415V_Yellow_line,
+        DSS_11KV_415V_Blue_line: values.DSS_11KV_415V_Blue_line,
+        DSS_11KV_415V_Neutral_line: values.DSS_11KV_415V_Neutral_line,
+        DSS_11KV_415V_percent: values.DSS_11KV_415V_percent,
+        DSS_11KV_415V_omage: values.DSS_11KV_415V_omage,
+        DSS_11KV_415V_mounting: values.DSS_11KV_415V_mounting,
+        DSS_11KV_415V_fp_with_meter: values.DSS_11KV_415V_fp_with_meter,
+        DSS_11KV_415V_cooling_type: values.DSS_11KV_415V_cooling_type,
+        DSS_11KV_415V_terminal_arrangement: values.DSS_11KV_415V_terminal_arrangement,
+        DSS_11KV_415V_Trenches_available: values.DSS_11KV_415V_Trenches_available,
+        DSS_11KV_415V_Trenches_with_granite: values.DSS_11KV_415V_Trenches_with_granite,
+        DSS_11KV_415V_fence_type: values.DSS_11KV_415V_fence_type,
+        DSS_11KV_415V_FP_Condition: values.DSS_11KV_415V_FP_Condition,
+        assettype: values.assettype,
+      }
+
+      try {
+        console.log(idata);
+
+        const result =  await registerAsset(idata).unwrap();
+        console.log(result);
+        // if(result.data){
+        //   notify("success", result.message);
+        //   setIsProcessing(false);
+        //   navigate('/transformers');
+        // }
         
       } catch (error) {
         if(error.data.error){
@@ -263,7 +276,7 @@ const AddTransformer = () => {
         }
         setIsProcessing(false);
        
-        console.log(error)
+        console.log(error.error)
       }
 
     }
@@ -292,8 +305,8 @@ const AddTransformer = () => {
                       <div class="col-sm-8">
                         <select  onChange={onChangeHandler} class="form-control"  name="assettype">
                         <option value="">Select Asset Type</option>
-                        <option value="11KV Feeder">11kv Transfomer</option>
-                        <option value="11KV Feeder">33kv Transfomer</option>
+                        <option value="Distribution Sub Station 11KV_415V">11kv Transfomer</option>
+                        <option value="Distribution Sub Station 33KV_415V">33kv Transfomer</option>
                         </select>
                       </div>
                     </div>
@@ -1121,10 +1134,10 @@ const AddTransformer = () => {
                         <input type="text" 
                         class="form-control"
                         name="	DSS_11KV_415V_Trenches_available"
-                       value={values.	DSS_11KV_415V_Trenches_available}
+                       value={values.DSS_11KV_415V_Trenches_available}
                        onChange={onChangeHandler}
                        onBlur={onBlurHandler}
-                       touched={touched.	DSS_11KV_415V_Trenches_available.toString()}
+                       touched={touched.DSS_11KV_415V_Trenches_available.toString()}
                        placeholder='Please enter 	DSS_11KV_415V_Trenches_available'
                         />
                       </div>

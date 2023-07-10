@@ -31,6 +31,8 @@ const Tickets = () => {
     { userQuery: updatedType, pageNo: currentPage },  //{ cacheTime: 0 }
   );
 
+  console.log(data);
+
   if (error) {
     console.log(error);
     notify("error", error.data.data);
@@ -43,7 +45,7 @@ const Tickets = () => {
 
   useEffect(() => {
     if (currentPage && data) {
-      refetch();
+      //refetch();
       dispatch(setTicket(data));
 
      // dispatch(setDataTicket(data?.data?.tickets?.data));
@@ -65,16 +67,16 @@ const Tickets = () => {
       type === "Unassigned" && dispatch(setDataTicket(data?.data?.tickets?.data));
       */
     }
-  }, [data, refetch, currentPage, type, updatedType, dispatch]);
+  }, [data, currentPage, type, updatedType, dispatch]);
 
   console.log(data);
 
   const columns = [
     { title: "Date Created", field: "created_at" },
     { title: "TicketNo", field: "ticket_no" },
-    { title: "Category", field: "category_id" },
+    { title: "Category", field: "category_name" },
     { title: "Classification", field: "classification" },
-    { title: "Business Hub", field: "location_id" },
+    { title: "Business Hub", field: "location_name" },
     { title: "Status", field: "status" },
   ];
 
@@ -116,12 +118,13 @@ const Tickets = () => {
     try {
          
       const result = await postSearch(payload).unwrap();
+      console.log(result)
       setCurrentPage(1);
-      dispatch(setDataTicket(result?.tickets?.data));
+      dispatch(setDataTicket(result));
 
     } catch (error) {
-      notify("error", error.data.data);
-      console.log(error.data.data);
+      notify("error", error.data);
+      console.log(error.data);
       // Handle any error that occurs during the search
     }
 

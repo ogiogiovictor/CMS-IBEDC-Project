@@ -106,7 +106,7 @@ const Popup = ({ isOpen, onClose, title, content }) => {
           } 
           if(download == "download_transformer"){
              payload = {
-              'add_feeder' : businessHub,
+              'business_hub' : businessHub,
               'status' : status,
               'region' : region,
               'add_inj_station' : injection,

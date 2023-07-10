@@ -53,9 +53,6 @@ const DTBusinessHub = () => {
       { title: "Postpaid Payment", field: "postpaid_payments" },
       { title: "Prepaid Payment", field: "prepaid_payments_previous" },
       { title: "Amount Billed", field: "bills" },
-
-      
-
       
     ];
 
@@ -90,6 +87,8 @@ const DTBusinessHub = () => {
                         <th>Business Hub</th>
                         <th>Number of Dts</th>
                         <th>Number of Customers</th>
+                        <th>Prepaid Customers</th>
+                        <th>Postpiad Customers</th>
                         <th>Amount Billed</th>
                         <th>Action</th>
                       </tr>
@@ -102,6 +101,8 @@ const DTBusinessHub = () => {
                         <td>{customer.hub_name}</td>
                         <td>{customer.asset_count}</td>
                         <td>{customer.customers}</td>
+                        <td>{customer.prepaid_customers}</td>
+                        <td>{customer.postpaid_customers}</td>
                         <td>{customer.bills}</td>
                         <td>
                           <button className="btn btn-primary btn-xs" onClick={() => handleActionClick(customer)}><span className="mdi mdi-eye">View</span></button>

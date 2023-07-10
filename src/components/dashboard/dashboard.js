@@ -7,12 +7,29 @@ import RecentCustomer from "../customers/recentcustomer";
 import { useGetDashboardStatsQuery } from "../../redux/services/auth/authService";
 import { setDashboardStats } from "../../redux/auth/authSlice";
 import PageLoader from "../spinner/loader";
+import { notify } from '../../utils/notify';
+import { useNavigate, useParams } from "react-router-dom";
+import { logout, logoutAndDeleteTokens } from "../../redux/auth/authSlice";
+
 
 const Dashboard = () => {
-  const { data, isFetching } = useGetDashboardStatsQuery("dashboardStats", {
+
+  const navigate = useNavigate();
+
+
+  const { data, isFetching, error } = useGetDashboardStatsQuery("dashboardStats", {
     // perform a refetch every 15mins
     pollingInterval: 900000,
   });
+
+
+  console.log(error);
+  if(error){
+    notify('Error', error);
+    dispatch(logout());
+    navigate(`/errorpage`);
+
+  }
 
   const { dashboardStats } = useSelector((state) => state.auth);
   const dispatch = useDispatch();

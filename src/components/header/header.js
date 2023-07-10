@@ -2,7 +2,8 @@ import React, { useEffect, Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetUserDetailsQuery } from "../../redux/services/auth/authService";
-import { logout, setCredentials } from "../../redux/auth/authSlice";
+import { logout, setCredentials, logoutAndDeleteTokens } from "../../redux/auth/authSlice";
+import { notify } from "../../utils/notify";
 
 import "./header.css";
 import PageLoader from "../spinner/loader";
@@ -12,9 +13,20 @@ const Header = () => {
   const dispatch = useDispatch();
 
   // automatically authenticate user if token is found
-  const { data, isFetching } = useGetUserDetailsQuery("userDetails", {
+  const { data, isFetching, error } = useGetUserDetailsQuery("userDetails", {
     pollingInterval: 900000,
   });
+
+  if(error && error.originalStatus === 500) {
+    dispatch(logout());
+    notify("error", "An error occurred, you have not been properly profiled");
+  }
+
+  if(error && error.originalStatus === 401) {
+    dispatch(logout());
+    notify("error", "An error occurred while fetching user details.");
+    
+  }
 
  
   useEffect(() => {
@@ -26,7 +38,7 @@ const Header = () => {
         localStorage.setItem("userMenu", JSON.stringify(data));
       }
     }
-  }, [data]);
+  }, [data, localStorage]);
   
 
   useEffect(() => {
@@ -65,6 +77,12 @@ const Header = () => {
         </div>
       </li>
     ));
+  };
+
+
+
+  const handleLogout = () => {
+    dispatch(logoutAndDeleteTokens(userInfo?.id));
   };
 
 
@@ -164,10 +182,16 @@ const Header = () => {
                   </div>
                 </li> */}
                 <li className="nav-item">
-                  <NavLink
+                  {/* <NavLink
                     className="nav-link"
                     onClick={() => dispatch(logout())}
                   >
+                    <i className="icon-logout" title="Logout"></i>
+                  </NavLink> */}
+
+                  <NavLink
+                    className="nav-link"
+                    onClick={handleLogout}>
                     <i className="icon-logout" title="Logout"></i>
                   </NavLink>
                 </li>

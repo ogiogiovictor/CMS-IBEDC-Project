@@ -29,6 +29,7 @@ const Meters = () => {
     { pageNo: currentPage },  
   );
 
+
   useEffect(() => {
     if(currentPage && data){
      // refetch();
@@ -99,7 +100,7 @@ const Meters = () => {
   const makeOnchangeMeters = (e) => {
     const selectedValue = e.target.value;
     setSelectedType(selectedValue);
-    
+
     // alert(selectedValue)
   }
    

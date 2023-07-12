@@ -28,6 +28,8 @@ const Roles = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
 
+  console.log(initialControListData);
+  
   useEffect(() => {
     setGetControList(initialControListData?.data);
   }, [initialControListData]);
@@ -62,7 +64,7 @@ const Roles = () => {
       menu_id: [...new Set(menuIds)],
       submenu_id: submenuIds,
       role: rowData.name,
-     // core: menuIds,
+      core: initialControListData,
     }
 
     try {

@@ -68,7 +68,16 @@ export const userService = createApi({
         method: "POST",
         body: requestData,
       }),
-    })
+    }),
+
+
+     getLogOut: builder.mutation({
+      query: (requestData) => ({
+        url: `/${API_VERSION}/mlogout`,
+        method: "POST",
+        body: requestData, 
+      }),
+    }),
 
 
 
@@ -80,4 +89,4 @@ export const userService = createApi({
 });
 
 export const { useGetResourceListQuery, useGetAllUserQuery, useRegisterUserMutation, useGetRoleQuery, useGetAccessListQuery,
-useGetControListQuery, useAssignedMenuMutation } = userService;
+useGetControListQuery, useAssignedMenuMutation, useGetLogOutMutation } = userService;

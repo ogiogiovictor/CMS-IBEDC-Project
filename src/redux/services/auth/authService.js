@@ -23,6 +23,8 @@ export const authApi = createApi({
         method: "GET",
       }),
     }),
+
+
   }),
 });
 

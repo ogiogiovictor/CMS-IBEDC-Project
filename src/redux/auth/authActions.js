@@ -13,7 +13,7 @@ export const userLogin = createAsyncThunk(
         headers: {
           "Content-Type": "application/json",
           "app-secret": `${process.env.REACT_APP_API_APP_SECRET}`,
-          "app-Token": `${process.env.REACT_APP_API_APP_TOKEN}`,
+          "app-token": `${process.env.REACT_APP_API_APP_TOKEN}`,
         },
       };
       const { data } = await axios.post(

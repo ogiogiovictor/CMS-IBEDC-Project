@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { userLogin } from "./authActions";
 import axios from "axios";
+//import { useGetLogOutMutation } from "../services/auth/authService";
 
 const API_VERSION = `${process.env.REACT_APP_API_VERSION}`;
 const backendURL = `${process.env.REACT_APP_API_URL}`;
@@ -72,18 +73,36 @@ const authSlice = createSlice({
 export const { logout, setCredentials, setDashboardStats, setRole } = authSlice.actions;
 
 
+
 export const logoutAndDeleteTokens = (userId) => async (dispatch) => {
+
+  
+
   try {
+   
+    //alert(backendURL);
+     //const result =  await postLogout({ "userid" : userId }).unwrap();
+     //console.log(result);
+
+     const userToken = localStorage.getItem("userToken")
+
+    //await axios.post('/api/logout', { userId });
+    await axios.post(`${backendURL}/v2/mlogout`, { userId }, {
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${userToken}`,
+        'app-secret': `${process.env.REACT_APP_API_APP_SECRET}`,
+        'app-token': `${process.env.REACT_APP_API_APP_TOKEN}`,
+      }
+    });
+
     localStorage.removeItem("userToken");
     localStorage.removeItem("userInfo");
     localStorage.removeItem("userMenu");
 
     dispatch(logout()); // Dispatching the logout action
     
-    alert(backendURL);
-
-    //await axios.post('/api/logout', { userId });
-    await axios.post(`${backendURL}/v2/logout`, {userId});
 
     // Handle any further actions after successful logout, if needed
     // For example, dispatching a success action or navigating to a different page

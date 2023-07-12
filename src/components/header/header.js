@@ -1,7 +1,9 @@
 import React, { useEffect, Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 import { useGetUserDetailsQuery } from "../../redux/services/auth/authService";
+//import { useGetLogOutMutation } from "../../redux/services/user/userService";
 import { logout, setCredentials, logoutAndDeleteTokens } from "../../redux/auth/authSlice";
 import { notify } from "../../utils/notify";
 
@@ -11,11 +13,13 @@ import PageLoader from "../spinner/loader";
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // automatically authenticate user if token is found
   const { data, isFetching, error } = useGetUserDetailsQuery("userDetails", {
     pollingInterval: 900000,
   });
+
 
   if(error && error.originalStatus === 500) {
     dispatch(logout());
@@ -25,7 +29,6 @@ const Header = () => {
   if(error && error.originalStatus === 401) {
     dispatch(logout());
     notify("error", "An error occurred while fetching user details.");
-    
   }
 
  
@@ -54,8 +57,9 @@ const Header = () => {
   const renderSubmenuItems = (submenus) => {
     return submenus?.map((submenu) => (
       <li className="nav-item" key={submenu.id}>
-        <NavLink className="nav-link" to={submenu.menu_url}>
-          {submenu.name}
+        <NavLink className="nav-link" to={submenu.sub_menu_url}>
+          {/* {submenu.name} */}
+          {submenu.sub_menu_name}
         </NavLink>
       </li>
     ));
@@ -80,9 +84,26 @@ const Header = () => {
   };
 
 
+  
+ 
+  //const [ postLogout ] = useGetLogOutMutation();
 
-  const handleLogout = () => {
-    dispatch(logoutAndDeleteTokens(userInfo?.id));
+  const handleLogout = async (e)  =>  {
+  //   e.preventDefault();
+  dispatch(logoutAndDeleteTokens(userInfo?.id));
+  //   localStorage.removeItem("userToken");
+  //   localStorage.removeItem("userInfo");
+  //   localStorage.removeItem("userMenu");
+   
+  //   try{
+
+  //     const result =  await postLogout({"userid": userInfo?.id}).unwrap();
+  //     console.log(result);
+  //     navigate("/");
+  
+  //   }catch(error){
+  //     console.log(error)
+  //   }
   };
 
 

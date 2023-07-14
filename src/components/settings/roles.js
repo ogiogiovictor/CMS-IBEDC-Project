@@ -29,6 +29,7 @@ const Roles = () => {
 
 
   console.log(initialControListData);
+  console.log(data);
   
   useEffect(() => {
     setGetControList(initialControListData?.data);
@@ -40,12 +41,10 @@ const Roles = () => {
 
   const handleCheckboxChange = (event, submenuId) => {
     const isChecked = event.target.checked;
-
+    console.log(submenuId);
     // Update the getControList data based on the checkbox state
-    const updatedControList = isChecked
-      ? [...getControList, { id: submenuId }]
-      : getControList.filter(control => control.id !== submenuId);
-
+    const updatedControList = isChecked ? [...getControList, { id: submenuId }] : getControList.filter(control => control.id !== submenuId);
+    console.log(updatedControList);
     // Set the updated control list in the state
     setGetControList(updatedControList);
   };
@@ -58,12 +57,15 @@ const Roles = () => {
     setIsProcessing(true);
     const menuIds = getControList.map(item => item.menu_id);
     const submenuIds = getControList.map(item => item.id);
+    const roleid = getControList.map(item => item.role_id);
 
     const formData = { 
       ...data,
-      menu_id: [...new Set(menuIds)],
+      menu_id: getControList, // [...new Set(menuIds)],
       submenu_id: submenuIds,
+      menuid : [...new Set(menuIds)],
       role: rowData.name,
+      role_id: [...new Set(roleid)],
       core: initialControListData,
     }
 
@@ -95,11 +97,12 @@ const Roles = () => {
   };
 
 
-  console.log(allRolesUsers);
+ // console.log(allRolesUsers);
 
 // console.log(allRolesUsers?.data);
 // console.log(rowData.id);
-//console.log(getControList);
+console.log(getControList);
+console.log(data?.data)
    
     
     return (
@@ -137,7 +140,7 @@ const Roles = () => {
                             checked={isChecked}
                             onChange={(event) => handleCheckboxChange(event, submenu.id)}
                           />&nbsp;
-                          <span>{submenu.name} </span>
+                          <span>{submenu.name} {submenu.id}</span>
                         </li>
                       );
                     })}
@@ -179,8 +182,11 @@ const Roles = () => {
                       </select>
                         </div>
                         <div class="col-md-1">
-                        <button type="submit" className="btn btn-sm btn-primary btn-block" disabled={isProcessing}>
+                        {/* <button type="submit" className="btn btn-sm btn-primary btn-block" disabled={isProcessing}>
                         {isProcessing ? 'Processing...' : 'Save'}
+                        </button> */}
+                        <button type="submit" className="btn btn-sm btn-primary btn-block">
+                         Save
                         </button>
                         </div>
 

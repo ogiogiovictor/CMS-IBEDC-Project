@@ -55,6 +55,8 @@ import NstsCustomers from "./components/customers/nstscustomers";
 import DTBusinessHub from "./components/dss/transformerBusinessHub";
 import MyApprovals from "./components/customers/myapprovals";
 import EditUser from "./components/users/useredit";
+import CAAD from "./components/createcustomer/caad";
+import PROCESSFLOW from "./components/settings/process_flow";
 
 
 const App = () => {
@@ -181,6 +183,8 @@ const App = () => {
                   <Route path="dt_by_business_hub" element={<DTBusinessHub />} />
                   <Route path="my_approvals" element={<MyApprovals />} /> 
                   <Route path="edit_users/:id" element={<EditUser />} />
+                  <Route path="createcaad/:customerSK" element={<CAAD />} />
+                  <Route path="caad_process_flow" element={<PROCESSFLOW />} />
 
 
 

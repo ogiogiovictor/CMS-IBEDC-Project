@@ -243,11 +243,11 @@ const CustomerWidget = ({ customerInfo }) => {
                                 <p>
                                   {" "}
                                   <td>
-                                    {/* <Link to="/customerinfo">
+                                     <Link to={`/createcaad/${customerInfo.CustomerSK}`}>
                                       <button class="btn btn-xs btn-info">
                                         <i class="icon-user"></i>Create CAAD
                                       </button>
-                                    </Link> */}
+                                    </Link>
                                   </td>
                                 </p>
                               </div>
@@ -402,7 +402,7 @@ const CustomerWidget = ({ customerInfo }) => {
                         <h4>Energy Information </h4><hr/>
                         {customerInfo?.amiEvents?.length !== 0 ? (
                           <DataTable
-                            data={customerInfo?.amiEvents.data}
+                            data={customerInfo?.amiEvents?.data}
                             columns={EventColumns}
                             pagination
                             currentPage={1}

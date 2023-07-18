@@ -55,12 +55,9 @@ import NstsCustomers from "./components/customers/nstscustomers";
 import DTBusinessHub from "./components/dss/transformerBusinessHub";
 import MyApprovals from "./components/customers/myapprovals";
 import EditUser from "./components/users/useredit";
-<<<<<<< HEAD
 import Events from "./components/ami/events";
-=======
 import CAAD from "./components/createcustomer/caad";
 import PROCESSFLOW from "./components/settings/process_flow";
->>>>>>> acf22ab39e6436894d867ea739486fd80e51f92d
 
 
 const App = () => {

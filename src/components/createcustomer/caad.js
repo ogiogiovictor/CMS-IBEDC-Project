@@ -77,6 +77,58 @@ const CAAD = () => {
                         </div>
                       </div>
                    </div>
+
+
+                   <div className="row">
+                      <div className="col-md-6">
+                        <div className="form-group row">
+                          <label className="col-sm-4 col-form-label"> OTHER NAMES</label>
+                          <div className="col-sm-8">
+                          <input type="number"  name="accountno"  className="form-control" placeholder="accountno"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="form-group row">
+                          <label className="col-sm-4 col-form-label">SERVICE CENTER</label>
+                          <div className="col-sm-8">
+                          <select   className="form-control"  name="transtype" >
+                            <option value="">Select Type</option>
+                            <option value="DB">sERVICE cENTER 1</option>
+                          </select>
+                          </div>
+                        </div>
+                      </div>
+                   </div>
+
+
+
+                   <div className="row">
+                      <div className="col-md-6">
+                        <div className="form-group row">
+                          <label className="col-sm-4 col-form-label"> DUE BILL</label>
+                          <div className="col-sm-8">
+                          <select   className="form-control"  name="transtype" >
+                            <option value="">Select Type</option>
+                            <option value="due_for_billing">DUE FOR BILLING</option>
+                            <option value="due_for_payment">DUE FOR PAYMENT</option>
+                          </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="form-group row">
+                          <label className="col-sm-4 col-form-label">ACCOUNT TYPE</label>
+                          <div className="col-sm-8">
+                          <select   className="form-control"  name="transtype" >
+                            <option value="">Select Type</option>
+                            <option value="Prepaid">Prepaid</option>
+                            <option value="Postpaid">Postpaid</option>
+                          </select>
+                          </div>
+                        </div>
+                      </div>
+                   </div>
                 
 
                  <p className="card-description">
@@ -165,6 +217,30 @@ const CAAD = () => {
                       </div>
                      
                    </div>
+
+
+
+
+                   <p className="card-description">
+                  <hr/>
+                  FILE UPLOAD
+                   <hr/>
+                  </p>
+
+
+       
+                   <div className="row">
+                      <div className="col-md-6">
+                        <div className="form-group row">
+                          <label className="col-sm-4 col-form-label">UPLOAD FILE</label>
+                          <div className="col-sm-8">
+                          <input type="file" name="file_upload" className="form-control"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-6"></div>
+                   </div>
+
 
 
 

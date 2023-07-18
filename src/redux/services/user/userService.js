@@ -79,6 +79,15 @@ export const userService = createApi({
       }),
     }),
 
+    getCaadFlow: builder.query({
+      query: () => ({
+          url: `/${API_VERSION}/caad_process_flow`,
+          method: "GET",
+      }),
+      pollingInterval: 900000, // 15 minutes
+  }),
+
+
 
 
 
@@ -89,4 +98,4 @@ export const userService = createApi({
 });
 
 export const { useGetResourceListQuery, useGetAllUserQuery, useRegisterUserMutation, useGetRoleQuery, useGetAccessListQuery,
-useGetControListQuery, useAssignedMenuMutation, useGetLogOutMutation } = userService;
+useGetControListQuery, useAssignedMenuMutation, useGetLogOutMutation, useGetCaadFlowQuery } = userService;

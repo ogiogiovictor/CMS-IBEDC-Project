@@ -4,12 +4,14 @@ import { CustomerInfoTable } from "./customerinfotable";
 import DataTable from "../datatable";
 
 const CustomerWidget = ({ customerInfo }) => {
+
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
   };
 
   console.log(customerInfo);
+  
 
   const handleActionClick = ({ FAccountNo, DistributionID }) => {
     navigate(`/customerinfo/${FAccountNo}/${DistributionID}`);
@@ -243,9 +245,17 @@ const CustomerWidget = ({ customerInfo }) => {
                                 <p>
                                   {" "}
                                   <td>
-                                     <Link to={`/createcaad/${customerInfo.CustomerSK}`}>
+                                     <Link to={`/createcaad/${customerInfo?.CustomerSK}`}>
                                       <button class="btn btn-xs btn-info">
                                         <i class="icon-user"></i>Create CAAD
+                                      </button>
+                                    </Link>
+                                  </td>
+                                     
+                                  <td>
+                                     <Link to={`/createcaad/${customerInfo?.CustomerSK}`}>
+                                      <button class="btn btn-xs btn-danger" disabled>
+                                        <i class="icon-user"></i>UPLOAD BULK CAAD
                                       </button>
                                     </Link>
                                   </td>

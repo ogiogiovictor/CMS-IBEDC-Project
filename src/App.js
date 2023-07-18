@@ -55,7 +55,12 @@ import NstsCustomers from "./components/customers/nstscustomers";
 import DTBusinessHub from "./components/dss/transformerBusinessHub";
 import MyApprovals from "./components/customers/myapprovals";
 import EditUser from "./components/users/useredit";
+<<<<<<< HEAD
 import Events from "./components/ami/events";
+=======
+import CAAD from "./components/createcustomer/caad";
+import PROCESSFLOW from "./components/settings/process_flow";
+>>>>>>> acf22ab39e6436894d867ea739486fd80e51f92d
 
 
 const App = () => {
@@ -184,6 +189,8 @@ const App = () => {
                   <Route path="dt_by_business_hub" element={<DTBusinessHub />} />
                   <Route path="my_approvals" element={<MyApprovals />} /> 
                   <Route path="edit_users/:id" element={<EditUser />} />
+                  <Route path="createcaad/:customerSK" element={<CAAD />} />
+                  <Route path="caad_process_flow" element={<PROCESSFLOW />} />
 
 
 

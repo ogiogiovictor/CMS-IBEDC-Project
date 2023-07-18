@@ -55,6 +55,7 @@ import NstsCustomers from "./components/customers/nstscustomers";
 import DTBusinessHub from "./components/dss/transformerBusinessHub";
 import MyApprovals from "./components/customers/myapprovals";
 import EditUser from "./components/users/useredit";
+import Events from "./components/ami/events";
 
 
 const App = () => {
@@ -142,6 +143,8 @@ const App = () => {
                 path="amievents"
                 element={<AmiEvents />}
                 />
+
+                <Route path="events" element={<Events />} />
 
                 <Route
                   path="add_thirty_feeder"

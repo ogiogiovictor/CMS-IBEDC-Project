@@ -29,7 +29,19 @@ export const meterService = createApi({
             }),
           }),
 
+          getEventsLoop: builder.query({
+            query: ({ pageNo }) => ({
+              url: `/${API_VERSION}/events?page=${pageNo}`,
+              method: "GET",
+            }),
+            cacheOptions: {
+                // cache results for 5 minutes
+                ttl: 3000000,
+            },
+          }),
+
+
     }),
 });
 
-export const { useGetAllMetersQuery, useAddMetersMutation } = meterService;
+export const { useGetAllMetersQuery, useAddMetersMutation, useGetEventsLoopQuery } = meterService;

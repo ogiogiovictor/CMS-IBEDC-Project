@@ -1,6 +1,6 @@
 import React,  {Fragment, useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { useGetAmiEventsQuery } from '../../redux/services/ami/amiService';
+import { useGetAmiEventsQuery, useGetAMIServiceQuery } from '../../redux/services/ami/amiService';
 import { setEvents } from '../../redux/services/ami/amiSlice';
 import PageLoader from "../spinner/loader";
 import DataTable from '../datatable';
@@ -12,13 +12,11 @@ const AmiEvents = () => {
   const dispatch = useDispatch();
   const { events } = useSelector((state) => state.ami) || [];
 
-  const { data, isError, error, isFetching, isSuccess, isUninitialized, refetch } = useGetAmiEventsQuery({ pageNo: currentPage });
+  const { data, isError, error, isFetching, isSuccess, isUninitialized, refetch } = useGetAMIServiceQuery({ pageNo: currentPage });
   
-console.log(isError);
-console.log(error);
-  console.log(isFetching);
   console.log(events);
-  console.log(data?.data?.ami_data?.data);
+
+ // console.log(data?.data?.ami_data?.data);
 
   useEffect(() => {
     if(data){

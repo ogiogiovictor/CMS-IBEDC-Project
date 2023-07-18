@@ -16,7 +16,10 @@ const Events = () => {
     const { events } = useSelector((state) => state.ami) || [];
     const navigate = useNavigate();
 
-    const { data, isError, error, isFetching, isSuccess, isUninitialized, refetch } = useGetEventsLoopQuery({ pageNo: currentPage });
+    const { type } = useParams();
+    const [updatedType, setUpdatedType] = useState(type);
+    
+    const { data, isError, error, isFetching, isSuccess, isUninitialized, refetch } = useGetEventsLoopQuery({ userQuery: updatedType, pageNo: currentPage });
 
    // console.log(events);
 
@@ -29,11 +32,20 @@ const Events = () => {
 
 
     useEffect(() => {
-        if(data){
-          refetch();
-          dispatch(setEvents(data?.data?.ami_data?.data));
+        if(currentPage && data){
+        //  refetch();
+         // dispatch(setEvents(data?.data?.ami_data?.data));
+         let newData = data?.data?.ami_data?.data;
+         if (type) {
+          if (type === 'DT' || type === 'Feeder' || type === 'Non-MD' || type === 'MD' || type === 'Government/Organization') {
+            newData = newData.filter(eventloop => eventloop.AssetType === type);
+          }
         }
-      }, [data, currentPage, dispatch, refetch]);
+
+        dispatch(setEvents(newData));
+
+        }
+      }, [data, currentPage, updatedType, dispatch, refetch]);
 
 
       const columns = [
@@ -61,11 +73,15 @@ const Events = () => {
          };
    
 
+        const handleEventClick = (event) => {
+          const updatedType = event;
+          setUpdatedType(event);
+        }
 
     return (
         <Fragment>
 
-            { isSuccess === true ? ( <EventCard  cardData={data}/>) : '' }
+            { isSuccess === true ? ( <EventCard  cardData={data}  onFilterStatusChange={handleEventClick}/>) : '' }
             
         <div className="row">
        <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">

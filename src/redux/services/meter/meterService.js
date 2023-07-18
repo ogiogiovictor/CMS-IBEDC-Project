@@ -30,8 +30,8 @@ export const meterService = createApi({
           }),
 
           getEventsLoop: builder.query({
-            query: ({ pageNo }) => ({
-              url: `/${API_VERSION}/events?page=${pageNo}`,
+            query: ({ userQuery, pageNo }) => ({
+              url: `/${API_VERSION}/events?type=${userQuery}&page=${pageNo}`,
               method: "GET",
             }),
             cacheOptions: {

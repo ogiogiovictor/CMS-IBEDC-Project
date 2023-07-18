@@ -5,15 +5,21 @@ const EventCard = (props) => {
     //console.log(props.cardData.data.group);
   //const dtItems = props.cardData.filter(item => item.AssetType === 'DT');
 
-  //const dtLength = dtItems.length;
+  const handleCardClick = (AssetType) => {
+    props.onFilterStatusChange(AssetType)
+  };
 
     return (
-        <div className="row">
+        <div className="row"
+        >
 
 
         {
             props.cardData.data.group.map((event) => (
-                <div className="col-md-6 col-lg-3 grid-margin stretch-card">
+                <div className="col-md-6 col-lg-3 grid-margin stretch-card"
+                style={{ cursor: "pointer" }}
+                onClick={() => handleCardClick(event.AssetType)}
+                >
                 <div className="card bg-dark text-white border-0">
                   <div className="card-body">
                     <div className="d-flex align-items-center">

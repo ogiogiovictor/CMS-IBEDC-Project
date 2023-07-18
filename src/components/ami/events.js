@@ -21,7 +21,7 @@ const Events = () => {
     
     const { data, isError, error, isFetching, isSuccess, isUninitialized, refetch } = useGetEventsLoopQuery({ userQuery: updatedType, pageNo: currentPage });
 
-   // console.log(events);
+    console.log(type);
 
    
   if (error) {
@@ -41,11 +41,12 @@ const Events = () => {
             newData = newData.filter(eventloop => eventloop.AssetType === type);
           }
         }
+        console.log(updatedType)
 
         dispatch(setEvents(newData));
 
         }
-      }, [data, currentPage, updatedType, dispatch, refetch]);
+      }, [data, currentPage, updatedType, type, dispatch, refetch]);
 
 
       const columns = [
@@ -75,7 +76,7 @@ const Events = () => {
 
         const handleEventClick = (event) => {
           const updatedType = event;
-          setUpdatedType(event);
+          setUpdatedType(updatedType);
         }
 
     return (
@@ -83,22 +84,14 @@ const Events = () => {
 
             { isSuccess === true ? ( <EventCard  cardData={data}  onFilterStatusChange={handleEventClick}/>) : '' }
             
+            
+        {isFetching ? <PageLoader /> : 
+
         <div className="row">
        <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">
          <div className="card">
            <div className="card-body">
-             <h4 className="card-title">All Events 
-             <div className="btn  btn-fw">
-                     <select className="form-control">
-                        <option value="">Select Type</option>
-                        {data?.data?.group?.map((eventName) => (
-                          <option value={eventName.AssetType}>{eventName.AssetType}({eventName.total})</option>
-                        ))
-                      }
-                        
-                    </select> 
-                </div>
-             </h4>
+             <h4 className="card-title">All Events  </h4>
              <div class="form-group d-flex">
                           <input type="text" class="form-control" placeholder="Search event(s)..." />
                           <button type="submit" class="btn btn-primary ml-3">Search</button>
@@ -124,7 +117,7 @@ const Events = () => {
        </div>
        
      </div>
-      
+       }
    </Fragment>
     );
   

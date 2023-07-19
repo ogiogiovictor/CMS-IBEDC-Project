@@ -41,7 +41,17 @@ export const meterService = createApi({
           }),
 
 
+
+          addCAAD: builder.mutation({
+            query: (requestData) => ({
+              url: `/${API_VERSION}/process_caad_request`,
+              method: "POST",
+              body: requestData, // the data you want to send in the request body
+            }),
+          }),
+
+
     }),
 });
 
-export const { useGetAllMetersQuery, useAddMetersMutation, useGetEventsLoopQuery } = meterService;
+export const { useGetAllMetersQuery, useAddMetersMutation, useGetEventsLoopQuery, useAddCAADMutation } = meterService;

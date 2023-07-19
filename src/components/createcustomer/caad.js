@@ -1,10 +1,9 @@
 import React, { useState, useEffect  } from 'react';
-import { useForm } from 'react-hook-form';
 import numberToWords from 'number-to-words';
 import { notify } from '../../utils/notify';
 
 
-import { useAddMetersMutation } from '../../redux/services/meter/meterService';
+import { useAddCAADMutation } from '../../redux/services/meter/meterService';
 
 
 const CAAD = () => {
@@ -15,8 +14,6 @@ const CAAD = () => {
     const [selectedType, setSelectedType] = useState("");
     const [uploadProgress, setUploadProgress] = useState(0);
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
-   
 
     const handleInputChange = (e) => {
         const inputValue = e.target.value;
@@ -30,39 +27,33 @@ const CAAD = () => {
       }
 
 
-    const [ uploadCAAD ] = useAddMetersMutation();
+    const [ uploadCAAD ] = useAddCAADMutation();
 
-    const onSubmit = async (data) => {
+    const handleOnSubmit = async (e) => {
+      e.preventDefault();
+
+      
+
       notify("info", "Processing please wait...");
       setIsProcessing(true);
       
       try{
-        /*
-        const formData = new FormData();
-        for (let i = 0; i < data.file_upload.length; i++) {
-          formData.append('file_upload', data.file_upload[i]);
+        
+        const formData = new FormData(e.target);
+
+      // Append each file to the formData object with a unique key
+      if (formData.get('file_upload') !== null) {
+        const fileUploads = formData.getAll('file_upload'); // Get all the files in an array
+        for (let i = 0; i < fileUploads.length; i++) {
+          formData.append(`file_upload[${i}]`, fileUploads[i]);
         }
+      }
 
-        formData.append('accountNo', data.accountNo);
-        formData.append('phoneNo', data.phoneNo);
-        formData.append('surname', data.surname);
-        formData.append('lastname', data.lastname);
-        formData.append('othername', data.othername);
-        formData.append('service_center', data.service_center);
-        formData.append('transtype', data.transtype);
-        formData.append('accountType', data.accountType);
-        formData.append('meterno', data.meterno);
-        formData.append('meter_reading', data.meter_reading);
-        formData.append('transaction_type', data.transaction_type);
-        formData.append('effective_date', data.effective_date);
-        formData.append('amount', data.amount);
-        formData.append('remarks', data.remarks);
+      const formEntry = Object.fromEntries(formData);
 
-        console.log(formData);
-        */
-        console.log(data);
+      console.log(formEntry);
 
-        const result =  await uploadCAAD(data).unwrap();
+      const result =  await uploadCAAD(formEntry).unwrap();
 
       }catch(e){
 
@@ -87,7 +78,7 @@ const CAAD = () => {
                   </p>
 
                  
-                   <form className="forms-sample" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+                   <form className="forms-sample" onSubmit={handleOnSubmit} encType="multipart/form-data">
                     
                   
                    <div className="row">
@@ -95,7 +86,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label"> ACCOUNT NO</label>
                           <div className="col-sm-8">
-                          <input type="text"  {...register("accountNo")}  className="form-control" placeholder="accountno"/>
+                          <input type="text"  name="accountNo"  className="form-control" placeholder="accountno"/>
                           </div>
                         </div>
                       </div>
@@ -103,7 +94,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">PHONE NO</label>
                           <div className="col-sm-8">
-                          <input type="number" name="phoneNo" {...register("phoneNo")}  className="form-control" placeholder="phoneno"/>
+                          <input type="number" name="phoneNo"   className="form-control" placeholder="phoneno"/>
                           </div>
                         </div>
                       </div>
@@ -115,7 +106,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">SURNAME</label>
                           <div className="col-sm-8">
-                          <input type="text" name="surname"  {...register("surname")} className="form-control" placeholder="surname"/>
+                          <input type="text" name="surname"  className="form-control" placeholder="surname"/>
                           </div>
                         </div>
                       </div>
@@ -123,7 +114,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">LASTNAME</label>
                           <div className="col-sm-8">
-                          <input type="text" name="lastname" {...register("lastname")}  className="form-control" placeholder="Enter lastname"/>
+                          <input type="text" name="lastname" className="form-control" placeholder="Enter lastname"/>
                           </div>
                         </div>
                       </div>
@@ -135,7 +126,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label"> OTHER NAMES</label>
                           <div className="col-sm-8">
-                          <input type="text"  name="othername"  {...register("othername")} className="form-control" placeholder="othername"/>
+                          <input type="text"  name="othername" className="form-control" placeholder="othername"/>
                           </div>
                         </div>
                       </div>
@@ -143,7 +134,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">SERVICE CENTER</label>
                           <div className="col-sm-8">
-                          <select   className="form-control"  name="service_center" {...register("service_center")}  >
+                          <select   className="form-control"  name="service_center">
                             <option value="">Select Type</option>
                             <option value="DB">sERVICE cENTER 1</option>
                           </select>
@@ -159,7 +150,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label"> DUE BILL</label>
                           <div className="col-sm-8">
-                          <select   className="form-control"  name="transtype"  {...register("transtype")} >
+                          <select   className="form-control"  name="transtype" >
                             <option value="">Select Type</option>
                             <option value="due_for_billing">DUE FOR BILLING</option>
                             <option value="due_for_payment">DUE FOR PAYMENT</option>
@@ -171,7 +162,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">ACCOUNT TYPE</label>
                           <div className="col-sm-8">
-                          <select   className="form-control"  name="accountType"  {...register("accountType")}  >
+                          <select   className="form-control"  name="accountType" >
                             <option value="">Select Type</option>
                             <option value="Prepaid">Prepaid</option>
                             <option value="Postpaid">Postpaid</option>
@@ -194,7 +185,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">METER NO</label>
                           <div className="col-sm-8">
-                          <input type="text" name="meterno"  {...register("meterno")}  className="form-control" placeholder="meterno"/>
+                          <input type="text" name="meterno"  className="form-control" placeholder="meterno"/>
                           </div>
                         </div>
                       </div>
@@ -202,7 +193,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">METER READING</label>
                           <div className="col-sm-8">
-                          <input type="text" name="meter_reading"  {...register("meter_reading")}   className="form-control" placeholder="Enter meter_reading"/>
+                          <input type="text" name="meter_reading" className="form-control" placeholder="Enter meter_reading"/>
                           </div>
                         </div>
                       </div>
@@ -222,7 +213,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">TRANSACTION TYPE</label>
                           <div className="col-sm-8">
-                          <select   className="form-control"  name="transaction_type" {...register("transaction_type")} >
+                          <select   className="form-control"  name="transaction_type" >
                             <option value="">Select Type</option>
                             <option value="DB">Debit (DB)</option>
                             <option value="CR">Credit (CR)</option>
@@ -236,7 +227,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">EFFECTIVE DATE</label>
                           <div className="col-sm-8">
-                          <input type="date" name="effective_date" {...register("effective_date")} className="form-control" placeholder="effective_date"/>
+                          <input type="date" name="effective_date"  className="form-control" placeholder="effective_date"/>
                           </div>
                         </div>
                       </div>
@@ -248,7 +239,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-12 col-form-label">AMOUNT</label>
                           <div className="col-sm-12">
-                          <input type="text" name="amount"  {...register("amount")} className="form-control" value={number} onChange={handleInputChange}/>
+                          <input type="text" name="amount"  className="form-control" value={number} onChange={handleInputChange}/>
                           <span className="text-danger">{words}</span>
                           </div>
                         </div>
@@ -262,7 +253,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-12 col-form-label">REMARKS</label>
                           <div className="col-sm-12">
-                            <textarea className="form-control"  {...register("remarks")} name="remarks" rows="4" placeholder="Enter remarks"></textarea>
+                            <textarea className="form-control"  name="remarks" rows="4" placeholder="Enter remarks"></textarea>
                           </div>
                         </div>
                       </div>
@@ -285,7 +276,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">UPLOAD FILE</label>
                           <div className="col-sm-8">
-                          <input type="file" name="file_upload" multiple {...register("file_upload")} className="form-control"/>
+                          <input type="file" name="file_upload" multiple className="form-control"/>
                           </div>
                         </div>
                       </div>

@@ -35,33 +35,32 @@ const CAAD = () => {
     const onSubmit = async (data) => {
       notify("info", "Processing please wait...");
       setIsProcessing(true);
-
-      console.log(data);
       
       try{
+        /*
+        const formData = new FormData();
+        for (let i = 0; i < data.file_upload.length; i++) {
+          formData.append('file_upload', data.file_upload[i]);
+        }
 
-        // const formData = new FormData();
-        // for (let i = 0; i < data.file_upload.length; i++) {
-        //   formData.append('file_upload', data.file_upload[i]);
-        // }
+        formData.append('accountNo', data.accountNo);
+        formData.append('phoneNo', data.phoneNo);
+        formData.append('surname', data.surname);
+        formData.append('lastname', data.lastname);
+        formData.append('othername', data.othername);
+        formData.append('service_center', data.service_center);
+        formData.append('transtype', data.transtype);
+        formData.append('accountType', data.accountType);
+        formData.append('meterno', data.meterno);
+        formData.append('meter_reading', data.meter_reading);
+        formData.append('transaction_type', data.transaction_type);
+        formData.append('effective_date', data.effective_date);
+        formData.append('amount', data.amount);
+        formData.append('remarks', data.remarks);
 
-        // formData.append('accountNo', data.accountNo);
-        // formData.append('phoneNo', data.phoneNo);
-        // formData.append('surname', data.surname);
-        // formData.append('lastname', data.lastname);
-        // formData.append('othername', data.othername);
-        // formData.append('service_center', data.service_center);
-        // formData.append('transtype', data.transtype);
-        // formData.append('accountType', data.accountType);
-        // formData.append('meterno', data.meterno);
-        // formData.append('meter_reading', data.meter_reading);
-        // formData.append('transaction_type', data.transaction_type);
-        // formData.append('effective_date', data.effective_date);
-        // formData.append('amount', data.amount);
-        // formData.append('remarks', data.remarks);
-
-        // console.log(formData);
-        // console.log(data);
+        console.log(formData);
+        */
+        console.log(data);
 
         const result =  await uploadCAAD(data).unwrap();
 

@@ -47,6 +47,7 @@ const ALLCAAD = () => {
     { title: "Batch Name", field: "batch_name" },
     { title: "Business Hub", field: "business_hub" },
     { title: "TotalCount", field: "withmanycaads_count" },
+    { title: "Comments", field: "withmayncomments_count" },
     { title: "Status", field: "batch_status" },
     { title: "Date Created", field: "created_at" },
   ];

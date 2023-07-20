@@ -58,6 +58,7 @@ import EditUser from "./components/users/useredit";
 import Events from "./components/ami/events";
 import CAAD from "./components/createcustomer/caad";
 import PROCESSFLOW from "./components/settings/process_flow";
+import UPLOADCAAD from "./components/createcustomer/uploadcaad";
 
 
 const App = () => {
@@ -188,6 +189,7 @@ const App = () => {
                   <Route path="edit_users/:id" element={<EditUser />} />
                   <Route path="createcaad/:customerSK" element={<CAAD />} />
                   <Route path="caad_process_flow" element={<PROCESSFLOW />} />
+                  <Route path="uploadcaad" element={<UPLOADCAAD />} />
 
 
 

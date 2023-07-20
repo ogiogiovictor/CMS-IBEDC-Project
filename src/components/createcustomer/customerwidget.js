@@ -1,9 +1,12 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CustomerInfoTable } from "./customerinfotable";
+import { useSelector } from "react-redux";
 import DataTable from "../datatable";
 
 const CustomerWidget = ({ customerInfo }) => {
+
+  const { userInfo } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
   const goBack = () => {
@@ -243,22 +246,27 @@ const CustomerWidget = ({ customerInfo }) => {
                                   <h5 class="mb-0">Customer Adjustment</h5>
                                 </div>
                                 <p>
-                                  {" "}
-                                  <td>
-                                     <Link to={`/createcaad/${customerInfo?.CustomerSK}`}>
-                                      <button class="btn btn-xs btn-info">
-                                        <i class="icon-user"></i>Create CAAD
-                                      </button>
-                                    </Link>
-                                  </td>
-                                     
-                                  <td>
-                                     <Link to={`/createcaad/${customerInfo?.CustomerSK}`}>
-                                      <button class="btn btn-xs btn-danger" disabled>
-                                        <i class="icon-user"></i>UPLOAD BULK CAAD
-                                      </button>
-                                    </Link>
-                                  </td>
+                                {
+                                  userInfo.role === 'admin' || userInfo.role === 'district_accountant' ? (
+                                    <>
+                                      <td>
+                                        <Link to={`/createcaad/${customerInfo?.CustomerSK}`}>
+                                          <button className="btn btn-xs btn-info">
+                                            <i className="icon-user"></i>Create CAAD 
+                                          </button>
+                                        </Link>
+                                      </td>
+                                      <td>
+                                        <Link to={`/uploadcaad`}>
+                                          <button className="btn btn-xs btn-danger">
+                                            <i className="icon-user"></i>UPLOAD BULK CAAD
+                                          </button>
+                                        </Link>
+                                      </td>
+                                    </>
+                                  ) : null
+                                }
+                                
                                 </p>
                               </div>
                             

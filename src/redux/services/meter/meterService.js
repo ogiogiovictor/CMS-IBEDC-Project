@@ -51,7 +51,17 @@ export const meterService = createApi({
           }),
 
 
+          uploadBULKCAAD: builder.mutation({
+            query: (requestData) => ({
+              url: `/${API_VERSION}/upload_bulk_caad`,
+              method: "POST",
+              body: requestData, // the data you want to send in the request body
+            }),
+          }),
+
+
+
     }),
 });
 
-export const { useGetAllMetersQuery, useAddMetersMutation, useGetEventsLoopQuery, useAddCAADMutation } = meterService;
+export const { useGetAllMetersQuery, useAddMetersMutation, useGetEventsLoopQuery, useAddCAADMutation, useUploadBULKCAADMutation } = meterService;

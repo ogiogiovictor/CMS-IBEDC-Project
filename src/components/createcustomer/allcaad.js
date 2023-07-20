@@ -40,11 +40,13 @@ const ALLCAAD = () => {
     { title: "Amount", field: "amount" },
   ];
 
+  
 
   const batchcolumn = [
     { title: "BatchID", field: "id" },
     { title: "Batch Name", field: "batch_name" },
     { title: "Business Hub", field: "business_hub" },
+    { title: "TotalCount", field: "withmanycaads_count" },
     { title: "Status", field: "batch_status" },
     { title: "Date Created", field: "created_at" },
   ];

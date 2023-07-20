@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     meter: [],
+    caad: [],
 }
 
 const meterSlice = createSlice({
@@ -13,8 +14,12 @@ const meterSlice = createSlice({
             state.meter = payload;
         },
 
+        setCAAD(state, {payload}){
+            state.caad = payload;
+        },
+
     }
 });
 
-export const { setMeter  } = meterSlice.actions;
+export const { setMeter, setCAAD  } = meterSlice.actions;
 export default meterSlice.reducer;

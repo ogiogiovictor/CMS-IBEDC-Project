@@ -60,8 +60,23 @@ export const meterService = createApi({
           }),
 
 
+          getSingleCAAD: builder.query({
+            query: ({ pageNo }) => ({
+              url: `/${API_VERSION}/allcaad?page=${pageNo}`,
+              method: "GET",
+            }),
+            pollingInterval: 1800000, // 15 minutes
+            cacheTime: 1800000, // 3 minutes
+            cacheOptions: {
+                // cache results for 5 minutes
+                ttl: 3000000,
+            },
+          }),
+
+
+
 
     }),
 });
 
-export const { useGetAllMetersQuery, useAddMetersMutation, useGetEventsLoopQuery, useAddCAADMutation, useUploadBULKCAADMutation } = meterService;
+export const { useGetAllMetersQuery, useAddMetersMutation, useGetEventsLoopQuery, useAddCAADMutation, useUploadBULKCAADMutation, useGetSingleCAADQuery } = meterService;

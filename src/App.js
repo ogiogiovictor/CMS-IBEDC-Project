@@ -59,6 +59,7 @@ import Events from "./components/ami/events";
 import CAAD from "./components/createcustomer/caad";
 import PROCESSFLOW from "./components/settings/process_flow";
 import UPLOADCAAD from "./components/createcustomer/uploadcaad";
+import ALLCAAD from "./components/createcustomer/allcaad";
 
 
 const App = () => {
@@ -190,6 +191,7 @@ const App = () => {
                   <Route path="createcaad/:customerSK" element={<CAAD />} />
                   <Route path="caad_process_flow" element={<PROCESSFLOW />} />
                   <Route path="uploadcaad" element={<UPLOADCAAD />} />
+                  <Route path="allcaad" element={<ALLCAAD />} />
 
 
 

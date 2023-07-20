@@ -14,25 +14,23 @@ const UPLOADCAAD = () => {
   const uploadCAAD = async (e) => {
     e.preventDefault();
 
-    notify("info", "Processing please wait...");
-    setIsProcessing(true);
-
     try {
+      notify("info", "Processing please wait...");
+      setIsProcessing(true);
 
-      //const formData = new FormData(e.target);
-      //const formEntry = Object.fromEntries(formData);
-      //console.log(formEntry);
-      const file = e.target.files[0];
+      const formData = new FormData(e.target);
 
-      console.log(file);
-      const formData = new FormData();
-      formData.append('file', file);
+      const result = await bulkupload(formData).unwrap();
+      console.log(result)
+      if(result.data == 200){
+        notify("success", "CAAD Upload Successful");
+      }
+      setIsProcessing(false);
+      // navigate('/caad', { replace: true });
 
-      const result =  await bulkupload(formData).unwrap();
-      console.log(result);
-
-    }catch (error) {
-      console.log(error);
+    }catch(e) {
+      console.log(e);
+      setIsProcessing(false);
     }
 
 
@@ -53,6 +51,28 @@ const UPLOADCAAD = () => {
                    <form className="forms-sample" onSubmit={uploadCAAD}  encType="multipart/form-data">
                     
                       
+                   <div className="row">
+                      <div className="col-md-6">
+                        <div className="form-group row">
+                          <label className="col-sm-4 col-form-label"> BATCH NAME</label>
+                          <div className="col-sm-8">
+                          <input type="text"  name="batch_name" className="form-control" />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="form-group row">
+                          <label className="col-sm-4 col-form-label">BUSINESS HUB</label>
+                          <div className="col-sm-8">
+                          <select   className="form-control"  name="business_hub">
+                            <option value="">Select HUB</option>
+                            <option value="DB">sERVICE cENTER 1</option>
+                          </select>
+                          </div>
+                        </div>
+                      </div>
+                   </div>
+
                     <div className="form-group">
                       <label htmlFor="surname">Upload File</label>
                       <input type="file" 
@@ -85,8 +105,8 @@ const UPLOADCAAD = () => {
                     <div className="card-body">
                       <div className="d-flex align-items-center">
                         <div className="ml-4">
-                          <h4 className="font-weight-light">Bulk Code</h4>
-                          <h3 className="font-weight-light mb-3">01</h3>
+                          <h4 className="font-weight-light">Bulk UPLOAD CODES</h4>
+                          <h3 className="font-weight-light mb-3">Template</h3>
                         </div>
                       </div>
                     </div>

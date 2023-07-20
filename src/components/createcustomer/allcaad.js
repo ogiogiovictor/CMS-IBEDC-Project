@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {  useNavigate } from 'react-router-dom';
 import { notify } from '../../utils/notify';
 import { useGetSingleCAADQuery } from '../../redux/services/meter/meterService';
-import { setCAAD } from '../../redux/services/meter/meterSlice';
+import { setCAAD, setBATCH } from '../../redux/services/meter/meterSlice';
 import PageLoader from "../spinner/loader";
 import DataTable from '../datatable';
 
@@ -11,7 +11,7 @@ const ALLCAAD = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
-  const { caad } = useSelector((state) => state.meter) || [];
+  const { caad, batch } = useSelector((state) => state.meter) || [];
   const navigate = useNavigate();
 
   const {  data, isError, error, isFetching, isSuccess, isUninitialized, refetch} = useGetSingleCAADQuery({ pageNo: currentPage });
@@ -23,6 +23,7 @@ const ALLCAAD = () => {
     if(currentPage && data){
       refetch();
      dispatch(setCAAD(data?.data?.single?.data));
+     dispatch(setBATCH(data?.data?.batch?.data));
 
     }
   }, [data, currentPage, dispatch, refetch]);
@@ -64,7 +65,7 @@ const ALLCAAD = () => {
                   <h4 className="card-title">CAAD REQUEST</h4>
                   <p className="card-description">
                   <hr/>
-                 LIST OF PENDING CAAD (SINGLE) <hr/>
+                 SINGLE REQUESTS <hr/>
                   </p>
 
                   {isFetching ? <PageLoader /> : 
@@ -92,14 +93,16 @@ const ALLCAAD = () => {
             <div className="col-md-12 grid-margin stretch-card">
               <div className="card">
                 <div className="card-body">
-                  <h4 className="card-title">CAAD REQUEST</h4>
+                  <h4 className="card-title">BATCHED REQUESTS</h4>
                   <p className="card-description">
                   <hr/>
-                 LIST OF PENDING CAAD (BATCHED) <hr/>
+                 {/* LIST OF PENDING CAAD (BATCHED) <hr/> */}
                   </p>
 
+                  {isFetching ? <PageLoader /> : 
+
                   <DataTable 
-                  data={data?.data?.batch?.data}
+                  data={batch}
                   columns={batchcolumn}
                   pagination
                   currentPage={currentPage}
@@ -108,6 +111,7 @@ const ALLCAAD = () => {
                   onPageChange={(page) => setCurrentPage(page)}
                   onActionClick={handleActionClick}
                   />
+                }
                  
                   
                 </div>

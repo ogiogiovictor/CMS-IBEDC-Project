@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     meter: [],
     caad: [],
+    batch: [],
 }
 
 const meterSlice = createSlice({
@@ -17,9 +18,12 @@ const meterSlice = createSlice({
         setCAAD(state, {payload}){
             state.caad = payload;
         },
+        setBATCH(state, {payload}){
+            state.batch = payload;
+        },
 
     }
 });
 
-export const { setMeter, setCAAD  } = meterSlice.actions;
+export const { setMeter, setCAAD, setBATCH  } = meterSlice.actions;
 export default meterSlice.reducer;

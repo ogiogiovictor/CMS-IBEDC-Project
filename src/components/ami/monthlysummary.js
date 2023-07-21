@@ -1,27 +1,26 @@
 import React,  {Fragment, useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetMytoFeedersQuery } from '../../redux/services/meter/meterService';
-import { setMYTO } from '../../redux/services/ami/amiSlice';
+import { useGetMonthlySummaryQuery } from '../../redux/services/meter/meterService';
+import { setMonthlySummary } from '../../redux/services/ami/amiSlice';
 import PageLoader from "../spinner/loader";
 import DataTable from '../datatable';
-import EventCard from './eventcards';
 import { notify } from "../../utils/notify";
 
-const AllEvents = () => {
+const MonthlySummary = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const dispatch = useDispatch();
-    const { canmyamito } = useSelector((state) => state.ami) || [];
+    const { summarymonthami } = useSelector((state) => state.ami) || [];
     const navigate = useNavigate();
 
     const { type } = useParams();
     const [updatedType, setUpdatedType] = useState(type);
     
-    const { data, isError, error, isFetching, isSuccess, isUninitialized, refetch } = useGetMytoFeedersQuery({ userQuery: updatedType, pageNo: currentPage });
+    const { data, isError, error, isFetching, isSuccess, isUninitialized, refetch } = useGetMonthlySummaryQuery({ pageNo: currentPage });
 
-    console.log(canmyamito);
-    console.log(data?.data?.data?.data);
+   // console.log(canmyamito);
+    console.log(data);
 
    
   if (error) {
@@ -34,31 +33,21 @@ const AllEvents = () => {
     useEffect(() => {
         if(currentPage && data){
         //refetch();
-       // dispatch(setMYTO(data?.data?.data?.data));
-         let newData = data?.data?.data?.data;
-         if (type) {
-          if (type === '33kV Panel' || type === 'Bus Coupler' || type === 'Incomer' || type === 'Line Breaker' || type === 'MYTO' || type === 'Spare') {
-            newData = newData.filter(eventloop => eventloop.AssetType === type);
-          }
-        }
-       
-
-       dispatch(setMYTO(newData));
-
+        dispatch(setMonthlySummary(data?.data));
+      
         }
       }, [data, currentPage, updatedType, type, dispatch, refetch]);
 
 
       const columns = [
-        { title: "Date", field: "DATE" },
+        { title: "Year", field: "Year" },
+        { title: "Month", field: "Month" },
         { title: "MSNO", field: "MSNO" },
         { title: "Descr", field: "Descr" },
         { title: "AssetType", field: "AssetType" },
-        { title: "Consumption", field: "KWH_ABS" },
-        { title: "Region", field: "Region" },
-        { title: "Business Hub", field: "BusinessHub" },
-        { title: "Begin Time", field: "BEGINTIME" },
-        { title: "End Time", field: "ENDTIME" },
+        { title: "Consumption", field: "consumption" },
+        { title: "Region", field: "region" },
+        { title: "Business Hub", field: "business_hub" },
         { title: "Transformer", field: "Transformer" },
       ];
     
@@ -84,8 +73,7 @@ const AllEvents = () => {
     return (
         <Fragment>
 
-            { isSuccess === true ? ( <EventCard  cardData={data}  onFilterStatusChange={handleEventClick}/>) : '' }
-            
+    
             
         {isFetching ? <PageLoader /> : 
 
@@ -101,7 +89,7 @@ const AllEvents = () => {
              <div className="table-responsive">
           
              <DataTable 
-                 data={canmyamito}
+                 data={summarymonthami}
                  columns={columns}
                  pagination
                  currentPage={currentPage}
@@ -126,4 +114,4 @@ const AllEvents = () => {
 
 }
 
-export default AllEvents;
+export default MonthlySummary;

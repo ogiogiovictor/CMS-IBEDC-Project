@@ -18,7 +18,7 @@ const EventCard = (props) => {
             props.cardData.data.group.map((event) => (
                 <div className="col-md-6 col-lg-3 grid-margin stretch-card"
                 style={{ cursor: "pointer" }}
-                onClick={() => handleCardClick(event.AssetType)}
+                onClick={() => handleCardClick(event.AssetType ? event.AssetType : event.Descr)}
                 >
                 <div className="card bg-dark text-white border-0">
                   <div className="card-body">

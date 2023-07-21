@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     ami: [],
     events: [],
-    myto: [],
+    canmyamito: [],
+    summarymonthami: [],
     
 }
 
@@ -21,10 +22,14 @@ const amiSlice = createSlice({
         },
 
         setMYTO(state, {payload}){
-            state.myto = payload;
+            state.canmyamito = payload;
+        },
+
+        setMonthlySummary(state, {payload}){
+            state.summarymonthami = payload;
         }
     }
 });
 
-export const { setAmi, setEvents, setMYTO  } = amiSlice.actions;
+export const { setAmi, setEvents, setMYTO, setMonthlySummary  } = amiSlice.actions;
 export default amiSlice.reducer;

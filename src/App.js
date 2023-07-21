@@ -61,6 +61,7 @@ import PROCESSFLOW from "./components/settings/process_flow";
 import UPLOADCAAD from "./components/createcustomer/uploadcaad";
 import ALLCAAD from "./components/createcustomer/allcaad";
 import AllEvents from "./components/ami/allevents";
+import MonthlySummary from "./components/ami/monthlysummary";
 
 
 const App = () => {
@@ -194,6 +195,7 @@ const App = () => {
                   <Route path="uploadcaad" element={<UPLOADCAAD />} />
                   <Route path="allcaad" element={<ALLCAAD />} />
                   <Route path="all_feeders_with_myto" element={<AllEvents/>} />
+                  <Route path="get_summary" element={<MonthlySummary />} />
 
 
 

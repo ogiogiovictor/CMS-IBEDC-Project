@@ -86,9 +86,21 @@ export const meterService = createApi({
           }),
 
 
+          getMonthlySummary: builder.query({
+            query: ({ pageNo }) => ({
+              url: `/${API_VERSION}/get_summary?page=${pageNo}`,
+              method: "GET",
+            }),
+            cacheOptions: {
+                // cache results for 5 minutes
+                ttl: 3000000,
+            },
+          }),
+
+
 
 
     }),
 });
 
-export const { useGetAllMetersQuery, useAddMetersMutation, useGetEventsLoopQuery, useAddCAADMutation, useUploadBULKCAADMutation, useGetSingleCAADQuery, useGetMytoFeedersQuery } = meterService;
+export const { useGetMonthlySummaryQuery, useGetAllMetersQuery, useAddMetersMutation, useGetEventsLoopQuery, useAddCAADMutation, useUploadBULKCAADMutation, useGetSingleCAADQuery, useGetMytoFeedersQuery } = meterService;

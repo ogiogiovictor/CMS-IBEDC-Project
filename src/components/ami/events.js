@@ -32,7 +32,7 @@ const Events = () => {
 
     useEffect(() => {
         if(currentPage && data){
-          refetch();
+          //refetch();
          // dispatch(setEvents(data?.data?.ami_data?.data));
          let newData = data?.data?.ami_data?.data;
          if (type) {

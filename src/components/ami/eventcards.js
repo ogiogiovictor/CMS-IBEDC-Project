@@ -24,7 +24,7 @@ const EventCard = (props) => {
                   <div className="card-body">
                     <div className="d-flex align-items-center">
                       <div className="ml-4">
-                        <h4 className="font-weight-light">{event.AssetType}</h4>
+                        <h4 className="font-weight-light">{event.AssetType ? event.AssetType : event.Descr}</h4>
                         <h3 className="font-weight-light mb-3">{event.total}</h3>
                       </div>
                     </div>

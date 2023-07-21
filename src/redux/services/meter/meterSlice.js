@@ -4,6 +4,7 @@ const initialState = {
     meter: [],
     caad: [],
     batch: [],
+   
 }
 
 const meterSlice = createSlice({
@@ -18,9 +19,12 @@ const meterSlice = createSlice({
         setCAAD(state, {payload}){
             state.caad = payload;
         },
+        
         setBATCH(state, {payload}){
             state.batch = payload;
         },
+
+       
 
     }
 });

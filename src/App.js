@@ -60,6 +60,7 @@ import CAAD from "./components/createcustomer/caad";
 import PROCESSFLOW from "./components/settings/process_flow";
 import UPLOADCAAD from "./components/createcustomer/uploadcaad";
 import ALLCAAD from "./components/createcustomer/allcaad";
+import AllEvents from "./components/ami/allevents";
 
 
 const App = () => {
@@ -192,6 +193,7 @@ const App = () => {
                   <Route path="caad_process_flow" element={<PROCESSFLOW />} />
                   <Route path="uploadcaad" element={<UPLOADCAAD />} />
                   <Route path="allcaad" element={<ALLCAAD />} />
+                  <Route path="all_feeders_with_myto" element={<AllEvents/>} />
 
 
 

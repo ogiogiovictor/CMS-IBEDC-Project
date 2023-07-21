@@ -157,7 +157,7 @@ const PROCESSFLOW = () => {
                    <div className="row">
                       <div className="col-md-6">
                         <div className="form-group row">
-                          <label className="col-sm-4 col-form-label">2ND APPROVAL</label>
+                          <label className="col-sm-4 col-form-label">3RD APPROVAL</label>
                           <div className="col-sm-4">
                           <select required value={values.checked_by} name="checked_by" className="form-control" onChange={onChangeHandler}>
                           <option value="">Select</option>
@@ -191,10 +191,11 @@ const PROCESSFLOW = () => {
                    </div>
 
 
+
                    <div className="row">
                       <div className="col-md-6">
                         <div className="form-group row">
-                          <label className="col-sm-4 col-form-label">3RD APPROVAL</label>
+                          <label className="col-sm-4 col-form-label">4TH APPROVAL</label>
                           <div className="col-sm-4">
                           <select required value={values.checked_by} name="checked_by" className="form-control" onChange={onChangeHandler}>
                           <option value="">Select</option>

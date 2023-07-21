@@ -1,26 +1,27 @@
 import React,  {Fragment, useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetEventsLoopQuery } from '../../redux/services/meter/meterService';
-import { setEvents } from '../../redux/services/ami/amiSlice';
+import { useGetMytoFeedersQuery } from '../../redux/services/meter/meterService';
+import { setMYTO } from '../../redux/services/ami/amiSlice';
 import PageLoader from "../spinner/loader";
 import DataTable from '../datatable';
 import EventCard from './eventcards';
 import { notify } from "../../utils/notify";
 
-const Events = () => {
+const AllEvents = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const dispatch = useDispatch();
-    const { events } = useSelector((state) => state.ami) || [];
+    const { myto } = useSelector((state) => state.ami) || [];
     const navigate = useNavigate();
 
     const { type } = useParams();
     const [updatedType, setUpdatedType] = useState(type);
     
-    const { data, isError, error, isFetching, isSuccess, isUninitialized, refetch } = useGetEventsLoopQuery({ userQuery: updatedType, pageNo: currentPage });
+    const { data, isError, error, isFetching, isSuccess, isUninitialized, refetch } = useGetMytoFeedersQuery({ userQuery: updatedType, pageNo: currentPage });
 
-    console.log(type);
+    console.log(myto);
+    console.log(data?.data?.data?.data);
 
    
   if (error) {
@@ -32,17 +33,17 @@ const Events = () => {
 
     useEffect(() => {
         if(currentPage && data){
-          refetch();
-         // dispatch(setEvents(data?.data?.ami_data?.data));
-         let newData = data?.data?.ami_data?.data;
+        refetch();
+       // dispatch(setMYTO(data?.data?.data?.data));
+         let newData = data?.data?.data?.data;
          if (type) {
-          if (type === 'DT' || type === 'Feeder' || type === 'Non-MD' || type === 'MD' || type === 'Government/Organization') {
+          if (type === '33kV Panel' || type === 'Bus Coupler' || type === 'Incomer' || type === 'Line Breaker' || type === 'MYTO' || type === 'Spare') {
             newData = newData.filter(eventloop => eventloop.AssetType === type);
           }
         }
-        console.log(updatedType)
+       
 
-        dispatch(setEvents(newData));
+       dispatch(setMYTO(newData));
 
         }
       }, [data, currentPage, updatedType, type, dispatch, refetch]);
@@ -99,12 +100,12 @@ const Events = () => {
              <div className="table-responsive">
           
              <DataTable 
-                 data={events}
+                 data={myto}
                  columns={columns}
                  pagination
                  currentPage={currentPage}
-                 totalCount={data?.data?.ami_data?.total || 1}
-                 pageSize={data?.data?.ami_data?.per_page || 1}
+                 totalCount={data?.data?.data?.total || 1}
+                 pageSize={data?.data?.data?.per_page || 1}
                  onPageChange={(page) => setCurrentPage(page)}
                  onActionClick={handleActionClick}
                 />
@@ -124,4 +125,4 @@ const Events = () => {
 
 }
 
-export default Events;
+export default AllEvents;

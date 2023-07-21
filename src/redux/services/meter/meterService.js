@@ -74,9 +74,21 @@ export const meterService = createApi({
           }),
 
 
+          getMytoFeeders: builder.query({
+            query: ({ userQuery, pageNo }) => ({
+              url: `/${API_VERSION}/all_feeders_with_myto?type=${userQuery}&page=${pageNo}`,
+              method: "GET",
+            }),
+            cacheOptions: {
+                // cache results for 5 minutes
+                ttl: 3000000,
+            },
+          }),
+
+
 
 
     }),
 });
 
-export const { useGetAllMetersQuery, useAddMetersMutation, useGetEventsLoopQuery, useAddCAADMutation, useUploadBULKCAADMutation, useGetSingleCAADQuery } = meterService;
+export const { useGetAllMetersQuery, useAddMetersMutation, useGetEventsLoopQuery, useAddCAADMutation, useUploadBULKCAADMutation, useGetSingleCAADQuery, useGetMytoFeedersQuery } = meterService;

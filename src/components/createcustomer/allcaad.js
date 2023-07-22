@@ -33,11 +33,12 @@ const ALLCAAD = () => {
     { title: "AccountNo", field: "accountNo" },
     { title: "Surname", field: "surname" },
     { title: "Lastname", field: "lastname" },
-    { title: "Service Center", field: "service_center" },
+    { title: "Business Hub", field: "business_hub" },
     { title: "Account Type", field: "accountType" },
     { title: "Trans Type", field: "transtype" },
     { title: "Effective Date", field: "effective_date" },
     { title: "Amount", field: "amount" },
+    { title: "Status", field: "status" },
   ];
 
   
@@ -53,7 +54,25 @@ const ALLCAAD = () => {
   ];
 
 
-  const handleActionClick = (event) => { 
+  const handleActionBatchClick = (caad) => { 
+    navigate(`/caadetails/${caad.bulk_unique_id}/${caad.id}`, { 
+      state: { 
+        rowData: caad, 
+        rowTitle: 'CAAD Information (Batch)',
+        rowSubTitle: caad.batch_name,
+        routeName: '/allcaad'
+       }});
+  }
+
+
+  const handleActionSingleClick = (caad) => { 
+    navigate(`/caadetails/${caad.batch_type}/${caad.id}`, { 
+      state: { 
+        rowData: caad, 
+        rowTitle: 'CAAD Information (Single)',
+        rowSubTitle: caad.batch_name,
+        routeName: '/allcaad'
+       }});
 
   }
 
@@ -81,7 +100,7 @@ const ALLCAAD = () => {
                   totalCount={data?.data?.data?.total || 1}
                   pageSize={data?.data?.data?.per_page || 1}
                   onPageChange={(page) => setCurrentPage(page)}
-                  onActionClick={handleActionClick}
+                  onActionClick={handleActionSingleClick}
                   />
 
                   }
@@ -112,7 +131,7 @@ const ALLCAAD = () => {
                   totalCount={data?.data?.data?.total || 1}
                   pageSize={data?.data?.data?.per_page || 1}
                   onPageChange={(page) => setCurrentPage(page)}
-                  onActionClick={handleActionClick}
+                  onActionClick={handleActionBatchClick}
                   />
                 }
                  

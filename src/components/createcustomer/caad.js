@@ -1,66 +1,192 @@
 import React, { useState, useEffect  } from 'react';
+import {  useNavigate } from 'react-router-dom';
 import numberToWords from 'number-to-words';
 import { notify } from '../../utils/notify';
-
-
-import { useAddCAADMutation } from '../../redux/services/meter/meterService';
-
+import { usePushCAADMutation } from '../../redux/services/meter/meterService';
+import {  useGetResourceListQuery } from '../../redux/services/user/userService';
 
 const CAAD = () => {
 
     const [isProcessing, setIsProcessing] = useState(false);
     const [number, setNumber] = useState('');
     const [words, setWords] = useState('');
-    const [selectedType, setSelectedType] = useState("");
-    const [uploadProgress, setUploadProgress] = useState(0);
+
+    const navigate = useNavigate();
+
+    const [selectedRegion, setSelectedRegion] = useState("");
+    const [selectedBizHub, setSelectedBizHub] = useState("");
+    const [selectedServiceCenter, setSelectedServiceCenter] = useState("");
+
+    const { data: getResource } = useGetResourceListQuery();
+
+    const onChangeRegion = (event) => {
+      setSelectedRegion(event.target.value);
+      setSelectedBizHub("");
+      setSelectedServiceCenter("");
+    };
+  
+    const onChangeBizHub = (event) => {
+      setSelectedBizHub(event.target.value);
+      setSelectedServiceCenter("");
+    };
+  
+    const onChangeServiceCenter = (event) => {
+      setSelectedServiceCenter(event.target.value);
+    };
+
+
+
+     // Get distinct values of 'name' property from the array
+  const iregion = [...new Set(getResource?.data?.service_unit?.map(item => item.Region?.toUpperCase()))];
+  const biz_hub = [...new Set(getResource?.data?.service_unit?.map(item => item.Biz_Hub))];
+  const service_center = [...new Set(getResource?.data?.service_unit?.map(item => item.Name))];
+
+
+  const filteredBizHubs = selectedRegion
+  ? biz_hub.filter((item) => getResource?.data?.service_unit.find( (unit) => unit.Biz_Hub === item && unit.Region?.toUpperCase() === selectedRegion
+  )) : biz_hub;
+
+
+  const filteredServiceCenters = selectedBizHub
+    ? service_center.filter((item) => getResource?.data?.service_unit.find((unit) =>
+              unit.Name === item &&
+              unit.Biz_Hub === selectedBizHub &&
+              unit.Region?.toUpperCase() === selectedRegion
+    )): service_center;
+
+
+
+  
+    const region = (
+      <div className="form-group row">
+          <label className="col-sm-4 col-form-label">REGION</label>
+              <div className="col-sm-8">
+              <select name="region" className="form-control" value={selectedRegion} onChange={onChangeRegion}>
+                    <option value="">Select Region</option>
+                    {iregion.map((item, index) => (
+                    <option key={index} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                  </select>
+                  <small>Region Cannot be empty</small>
+                </div>
+      </div>
+    );
+  
+  
+    const businessHub = (
+      <div className="form-group row">
+          <label className="col-sm-4 col-form-label">BUSINESS HUB</label>
+              <div className="col-sm-8">
+              <select name="business_hub" className="form-control" value={selectedBizHub} onChange={onChangeBizHub} disabled={!selectedRegion}>
+              <option value="">Select</option>
+              {filteredBizHubs.map((item, index) => (
+                <option key={index} value={item}>
+                  {item}
+                </option>
+                ))}
+              </select>
+        <small>Business Hub Cannot be empty</small>
+          </div>
+      </div>
+    );
+  
+  
+    const serviceCenter = (
+      <div className="form-group row">
+      <label className="col-sm-4 col-form-label">BUSINESS HUB</label>
+          <div className="col-sm-8">
+          <select name="service_center" className="form-control" value={selectedServiceCenter} onChange={onChangeServiceCenter} disabled={!selectedBizHub}>
+          <option value="">Select</option>
+          {filteredServiceCenters.map((item, index) => (
+            <option key={index} value={item}>
+              {item}
+            </option>
+          ))}
+            </select>
+            <small>Service Center Cannot be empty</small>
+          </div>
+      </div>
+
+    );
+  
+    
+
 
 
     const handleInputChange = (e) => {
         const inputValue = e.target.value;
         setNumber(inputValue);
         setWords(numberToWords.toWords(inputValue));
-      };
-
-    const onSelectChangeHandler = (e) => {
-        const selectedValue = e.target.value;
-        setSelectedType(selectedValue);
-      }
+    };
 
 
-    const [ uploadCAAD ] = useAddCAADMutation();
 
-    const handleOnSubmit = async (e) => {
+
+    const ALLOWED_FILE_TYPES = ["application/pdf", "image/png", "text/csv", "application/vnd.ms-excel", "image/jpeg", 
+     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"];
+
+    const [ addCAADProcess ] = usePushCAADMutation();
+
+    const submitCAAD = async (e) => {
       e.preventDefault();
+     
+      try {
 
-      
+        setIsProcessing(true);
 
-      notify("info", "Processing please wait...");
-      setIsProcessing(true);
-      
-      try{
-        
         const formData = new FormData(e.target);
 
-      // Append each file to the formData object with a unique key
-      if (formData.get('file_upload') !== null) {
-        const fileUploads = formData.getAll('file_upload'); // Get all the files in an array
-        for (let i = 0; i < fileUploads.length; i++) {
-          formData.append(`file_upload[${i}]`, fileUploads[i]);
+        const { accountNo, phoneNo, surname, lastname, service_center, accountType, transaction_type, effective_date, amount  } = Object.fromEntries(formData);
+
+              // Check if any of the required fields are empty
+        if (!accountNo || !phoneNo || !surname || !lastname || !service_center || !accountType || !transaction_type || !effective_date || !amount) {
+          notify("error", "Please fill in all required fields.");
+          return; // Exit the function if any required fields are empty
         }
-      }
+
+       
+         // Validate and append each file to the formData object with a unique key
+          if (formData.getAll('file_upload') !== null) {
+            const fileUploads = formData.getAll('file_upload');
+            for (let i = 0; i < fileUploads.length; i++) {
+              const file = fileUploads[i];
+              if (ALLOWED_FILE_TYPES.includes(file.type)) {
+                formData.append(`file_upload[${i}]`, file);
+              } else {
+                notify("error", `File ${file.name} has an unsupported type and will not be uploaded.`);
+                console.log(`File ${file.name} has an unsupported type and will not be uploaded.`);
+                return;
+              }
+            }
+          }
+         
+      // Append each file to the formData object with a unique key
+        //  if (formData.getAll('file_upload') !== null) {
+        //   const fileUploads = formData.getAll('file_upload'); // Get all the files in an array
+        //   for (let i = 0; i < fileUploads.length; i++) {
+        //     formData.append(`file_upload[${i}]`, fileUploads[i]);
+        //   }
+        // }
 
       const formEntry = Object.fromEntries(formData);
+      const result =  await addCAADProcess(formData).unwrap();
+      if(result){
+        notify("success", "CAAD Created Successfully");
+        //Redirect
+        navigate('/allcaad', { replace: true });
+      }
+      
 
-      console.log(formEntry);
-
-      const result =  await uploadCAAD(formEntry).unwrap();
-
-      }catch(e){
-
+      } catch (e) {
         setIsProcessing(false);
+        navigate('/allcaad', { replace: true });
+        console.log(e);
       }
 
     }
+    
 
    
   
@@ -78,7 +204,7 @@ const CAAD = () => {
                   </p>
 
                  
-                   <form className="forms-sample" onSubmit={handleOnSubmit} encType="multipart/form-data">
+                   <form className="forms-sample" onSubmit={submitCAAD} encType="multipart/form-data">
                     
                   
                    <div className="row">
@@ -131,17 +257,20 @@ const CAAD = () => {
                         </div>
                       </div>
                       <div className="col-md-6">
-                        <div className="form-group row">
-                          <label className="col-sm-4 col-form-label">SERVICE CENTER</label>
-                          <div className="col-sm-8">
-                          <select   className="form-control"  name="service_center">
-                            <option value="">Select Type</option>
-                            <option value="DB">sERVICE cENTER 1</option>
-                          </select>
-                          </div>
-                        </div>
+                         { region }
                       </div>
                    </div>
+
+
+                   <div className="row">
+                      <div className="col-md-6">
+                        { businessHub }
+                      </div>
+                      <div className="col-md-6">
+                       { serviceCenter }
+                      </div>
+                   </div>
+
 
 
 
@@ -293,7 +422,7 @@ const CAAD = () => {
 
                    
                     <button type="submit" className="btn btn-primary mr-2">
-                    {/* {isProcessing ? 'Processing...' : 'Save'} */} Save
+                    {isProcessing ? 'Processing...' : 'Save'} 
                     </button>
                   
                   </form> 

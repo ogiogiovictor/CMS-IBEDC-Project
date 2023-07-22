@@ -42,7 +42,7 @@ export const meterService = createApi({
 
 
 
-          addCAAD: builder.mutation({
+          pushCAAD: builder.mutation({
             query: (requestData) => ({
               url: `/${API_VERSION}/process_caad_request`,
               method: "POST",
@@ -103,4 +103,4 @@ export const meterService = createApi({
     }),
 });
 
-export const { useGetMonthlySummaryQuery, useGetAllMetersQuery, useAddMetersMutation, useGetEventsLoopQuery, useAddCAADMutation, useUploadBULKCAADMutation, useGetSingleCAADQuery, useGetMytoFeedersQuery } = meterService;
+export const { useGetMonthlySummaryQuery, useGetAllMetersQuery, useAddMetersMutation, useGetEventsLoopQuery, usePushCAADMutation, useUploadBULKCAADMutation, useGetSingleCAADQuery, useGetMytoFeedersQuery } = meterService;

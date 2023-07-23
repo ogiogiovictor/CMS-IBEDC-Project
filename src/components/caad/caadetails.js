@@ -4,7 +4,7 @@ import DataTable from '../datatable';
 import { useSelector } from 'react-redux';
 import { useApproveCAADMutation, useRejectCAADMutation } from '../../redux/services/caad/caadService';
 import { notify } from '../../utils/notify';
-import { datePicker } from '../../redux/helpers';
+import { datePicker, checkStatus, formatNumbers } from '../../redux/helpers';
 
 const CAADETAILS = () => {
 
@@ -39,7 +39,7 @@ const CAADETAILS = () => {
         { title: "Trans Type", field: "transtype" },
         { title: "Effective Date", field: "effective_date" },
         { title: "Amount", field: "amount" },
-        { title: "Status", field: "status" },
+        //{ title: "Status", field: "status" },
       ];
 
 
@@ -53,6 +53,7 @@ const CAADETAILS = () => {
       const ApprovalButtons = () => {
 
         const handleApproval = async (id, status, role, batch_type) => {
+           
             try {
                 const idata = {
                     id: id,
@@ -64,6 +65,7 @@ const CAADETAILS = () => {
                 const result =  await approvelCAAD(idata).unwrap();
                 if(result?.data){
                     notify("success", result.message);
+                    //navigate('/allcaad', { replace: true });
                 }
 
             } catch(error){
@@ -88,6 +90,7 @@ const CAADETAILS = () => {
                 const result =  await rejectCAAD(idatajected).unwrap();
                 if(result?.data){
                     notify("success", result.message);
+                    navigate('/allcaad', { replace: true });
                 }
 
             } catch(error){
@@ -111,6 +114,7 @@ const CAADETAILS = () => {
               </div>
             );
          }
+         
         }
       
         return null; // If no buttons need to be shown, return null
@@ -120,12 +124,52 @@ const CAADETAILS = () => {
 
        //Batch Approval
        const BatchApproval = () => {
-        const handleBatchApproval = () => {
-          // Handle approval logic here
+        const handleBatchApproval = async (id, status, role, batch_type, batch_id) => {
+            try {
+                const idata = {
+                    id: id,
+                    status: status,
+                    role: role,
+                    batch_type: batch_type,
+                    batch_id: batch_id
+                }
+
+                const result =  await approvelCAAD(idata).unwrap();
+                if(result?.data){
+                    notify("success", result.message);
+                    navigate('/allcaad', { replace: true });
+                }
+
+            } catch(error){
+                if(error?.data?.success === false){
+                    notify("error", error.data.data);
+                }
+                console.log(error.data)
+            }
         };
       
-        const handleBatchRejection = () => {
-          // Handle rejection logic here
+        const handleBatchRejection = async (id, status, role, batch_type, batch_id) => {
+            try {
+                const idatajected = {
+                    id: id,
+                    status: status,
+                    role: role,
+                    batch_type: batch_type,
+                    batch_id: batch_id
+                }
+
+                const result =  await rejectCAAD(idatajected).unwrap();
+                if(result?.data){
+                    notify("success", result.message);
+                    navigate('/allcaad', { replace: true });
+                }
+
+            } catch(error){
+                if(error?.data?.success === false){
+                    notify("error", error.data.data);
+                }
+                console.log(error.data)
+            }
         };
       
         if (rowData.bulk_unique_id) {
@@ -135,8 +179,8 @@ const CAADETAILS = () => {
           ) {
             return (
               <div>
-                <button onClick={handleBatchApproval} className="btn btn-info btn-sm">Approve Batch</button>&nbsp;&nbsp;&nbsp;
-                <button onClick={handleBatchRejection} className="btn btn-danger btn-sm">Reject Batch</button>
+                <button onClick={() => handleBatchApproval(rowData.id, rowData.bulk_unique_id, rowData.batch_status, userInfo.role, 'batched')} className="btn btn-info btn-sm">Approve Batch</button>&nbsp;&nbsp;&nbsp;
+                <button onClick={() => handleBatchRejection(rowData.id, rowData.bulk_unique_id, rowData.batch_status, userInfo.role, 'batched')} className="btn btn-danger btn-sm">Reject Batch</button>
               </div>
             );
          }
@@ -144,6 +188,8 @@ const CAADETAILS = () => {
       
         return null; // If no buttons need to be shown, return null
       };
+
+
 
 
 
@@ -175,20 +221,6 @@ const CAADETAILS = () => {
                         {rowData.batch_type === 'single' && <ApprovalButtons />}
 
                         {rowData.bulk_unique_id  && <BatchApproval />}
-                            {/* {
-                                 rowData.batch_type == 'single' ? (
-                                    <div>
-                                    <button onClick={handleGoBack} className="btn btn-info btn-sm">Approve</button>&nbsp;&nbsp;&nbsp;
-                                    <button onClick={handleGoBack} className="btn btn-danger btn-sm">Reject</button>
-                                    {role.name}
-                                    </div>
-                                 ) : (
-                                    <div>
-                                    <button onClick={handleGoBack} className="btn btn-success btn-sm">Approve Batch</button>&nbsp;&nbsp;&nbsp;
-                                    <button onClick={handleGoBack} className="btn btn-danger btn-sm">Reject Batch</button>
-                                    </div>
-                                 )
-                            } */}
                            
                         </div>
                      </div>
@@ -270,13 +302,20 @@ const CAADETAILS = () => {
 
                                         <tr>
                                             <td colSpan={2}>
-                                                <strong>Amount:</strong> {rowData.amount}
+                                                <strong>Amount:</strong> {formatNumbers(rowData.amount)}
                                             </td>
                                             <td colSpan={2}>
                                                 <strong>Remart:</strong> {rowData.remarks}
                                             </td>
-                                           
                                         </tr>
+
+
+                                        <tr>
+                                            <td colSpan={4}>
+                                                <strong>Status:</strong><button className="btn btn-secondary btn-sm">{checkStatus(rowData.status)}</button> 
+                                            </td>
+                                        </tr>
+
 
 
                                         <hr/>
@@ -287,7 +326,7 @@ const CAADETAILS = () => {
                                         <table style={{ border: '1px solid #000', borderCollapse: 'collapse' }}>
                                             <tr>
                                                 <th style={{ border: '1px solid #000', padding: '8px' }}>ID</th>
-                                                <th style={{ border: '1px solid #000', padding: '8px' }}>Approved By</th>
+                                                <th style={{ border: '1px solid #000', padding: '8px' }}>Name</th>
                                                 <th style={{ border: '1px solid #000', padding: '8px' }}>Comments</th>
                                                 <th style={{ border: '1px solid #000', padding: '8px' }}>Date</th>
                                             </tr>
@@ -369,7 +408,7 @@ const CAADETAILS = () => {
                                                     <br/>
                                                     <div>
                                                         <p class="mb-1"><span class="h4 mb-0 mr-2">Batch Status </span></p>
-                                                        <p class="mb-0 text-muted font-weight-light">{  rowData.batch_status} </p>                        
+                                                        <p class="mb-0 text-muted font-weight-light"><button className="btn btn-secondary btn-sm"> {checkStatus(rowData.batch_status)}</button> </p>                        
                                                     </div>
                                                 </div>
                                                 <hr/>

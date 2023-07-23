@@ -7,6 +7,7 @@ import { setCAAD, setBATCH } from '../../redux/services/meter/meterSlice';
 import PageLoader from "../spinner/loader";
 import DataTable from '../datatable';
 
+
 const ALLCAAD = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,7 +39,7 @@ const ALLCAAD = () => {
     { title: "Trans Type", field: "transtype" },
     { title: "Effective Date", field: "effective_date" },
     { title: "Amount", field: "amount" },
-    { title: "Status", field: "status" },
+   // { title: "Status", field: "status" },
   ];
 
   
@@ -49,7 +50,7 @@ const ALLCAAD = () => {
     { title: "Business Hub", field: "business_hub" },
     { title: "TotalCount", field: "withmanycaads_count" },
     { title: "Comments", field: "withmayncomments_count" },
-    { title: "Status", field: "batch_status" },
+   // { title: "Status", field: "batch_status" },
     { title: "Date Created", field: "created_at" },
   ];
 
@@ -84,7 +85,7 @@ const ALLCAAD = () => {
             <div className="col-md-12 grid-margin stretch-card">
               <div className="card">
                 <div className="card-body">
-                  <h4 className="card-title">CAAD REQUEST</h4>
+                  <h4 className="card-title">CAAD REQUEST FOR APPROVAL</h4>
                   <p className="card-description">
                   <hr/>
                  SINGLE REQUESTS <hr/>

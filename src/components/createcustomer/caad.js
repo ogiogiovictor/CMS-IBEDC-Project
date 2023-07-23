@@ -95,7 +95,7 @@ const CAAD = () => {
   
     const serviceCenter = (
       <div className="form-group row">
-      <label className="col-sm-4 col-form-label">BUSINESS HUB</label>
+      <label className="col-sm-4 col-form-label">SERVICE CENTER</label>
           <div className="col-sm-8">
           <select name="service_center" className="form-control" value={selectedServiceCenter} onChange={onChangeServiceCenter} disabled={!selectedBizHub}>
           <option value="">Select</option>

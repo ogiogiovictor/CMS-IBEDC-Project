@@ -22,6 +22,8 @@ import { userService } from "./services/user/userService";
 import userSlice from "./services/user/userSlice";
 import { meterService } from "./services/meter/meterService";
 import meterSlice from "./services/meter/meterSlice";
+import { caadService } from "./services/caad/caadService";
+import caadSlice from "./services/caad/caadSlice";
 
 
 
@@ -38,6 +40,7 @@ const store = configureStore({
         ami: amiSlice,
         user: userSlice,
         meter: meterSlice,
+        caad: caadSlice,
         [authApi.reducerPath]: authApi.reducer,
         [customerService.reducerPath]: customerService.reducer,
         [billService.reducerPath]: billService.reducer,
@@ -49,6 +52,8 @@ const store = configureStore({
         [amiService.reducerPath]: amiService.reducer,
         [userService.reducerPath]: userService.reducer,
         [meterService.reducerPath]: meterService.reducer,
+        [caadService.reducerPath]: caadService.reducer,
+        
     },
     middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -63,6 +68,7 @@ const store = configureStore({
         amiService.middleware,
         userService.middleware,
         meterService.middleware,
+        caadService.middleware,
         ),
 });
   

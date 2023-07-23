@@ -1,28 +1,61 @@
 import React, { useState, useEffect  } from 'react';
 import {  useNavigate } from 'react-router-dom';
 import { notify } from '../../utils/notify';
-
 import { useUploadBULKCAADMutation } from '../../redux/services/meter/meterService';
+import {  useGetResourceListQuery } from '../../redux/services/user/userService';
 
 const UPLOADCAAD = () => {
   const [isProcessing, setIsProcessing] = useState(false);
 
 
+  const [selectedRegion, setSelectedRegion] = useState("");
+  const [selectedBizHub, setSelectedBizHub] = useState("");
+
+  const { data: getResource } = useGetResourceListQuery();
+
+  const onChangeRegion = (event) => {
+    setSelectedRegion(event.target.value);
+    setSelectedBizHub("");
+  };
+
+  const onChangeBizHub = (event) => {
+    setSelectedBizHub(event.target.value);
+  };
+
+
+    // Get distinct values of 'name' property from the array
+    const iregion = [...new Set(getResource?.data?.service_unit?.map(item => item.Region?.toUpperCase()))];
+    const biz_hub = [...new Set(getResource?.data?.service_unit?.map(item => item.Biz_Hub))];
+
+    const filteredBizHubs = selectedRegion
+    ? biz_hub.filter((item) => getResource?.data?.service_unit.find( (unit) => unit.Biz_Hub === item && unit.Region?.toUpperCase() === selectedRegion
+    )) : biz_hub;
+
+
+
   const [ bulkupload ] = useUploadBULKCAADMutation();
-
-
+  
   const uploadCAAD = async (e) => {
     e.preventDefault();
 
     try {
+    
+      const formData = new FormData(e.target);
+      const { region, business_hub, batch_name } = Object.fromEntries(formData);;
+
+      if(!region || !business_hub || !batch_name){
+        notify("error", "All fields are required.");
+        setIsProcessing(false);
+        return;
+      }
+
       notify("info", "Processing please wait...");
       setIsProcessing(true);
 
-      const formData = new FormData(e.target);
-
       const result = await bulkupload(formData).unwrap();
+      
       console.log(result)
-      if(result.data == 200){
+      if(result.data){
         notify("success", "CAAD Upload Successful");
       }
       setIsProcessing(false);
@@ -35,6 +68,45 @@ const UPLOADCAAD = () => {
 
 
   }
+
+
+  
+  const region = (
+    <div className="form-group row">
+        <label className="col-sm-4 col-form-label">REGION</label>
+            <div className="col-sm-8">
+            <select name="region" className="form-control" value={selectedRegion} onChange={onChangeRegion}>
+                  <option value="">Select Region</option>
+                  {iregion.map((item, index) => (
+                  <option key={index} value={item}>
+                    {item}
+                  </option>
+                ))}
+                </select>
+                <small>Region Cannot be empty</small>
+              </div>
+    </div>
+  );
+
+
+  const businessHub = (
+    <div className="form-group row">
+        <label className="col-sm-4 col-form-label">BUSINESS HUB</label>
+            <div className="col-sm-8">
+            <select name="business_hub" className="form-control" value={selectedBizHub} onChange={onChangeBizHub} disabled={!selectedRegion}>
+            <option value="">Select</option>
+            {filteredBizHubs.map((item, index) => (
+              <option key={index} value={item}>
+                {item}
+              </option>
+              ))}
+            </select>
+      <small>Business Hub Cannot be empty</small>
+        </div>
+    </div>
+  );
+
+
 
     return (
         <div className="row">
@@ -61,28 +133,32 @@ const UPLOADCAAD = () => {
                         </div>
                       </div>
                       <div className="col-md-6">
+                      { region }
+                      </div>
+                   </div>
+
+
+                   <div className="row">
+                      <div className="col-md-6">
+                        { businessHub }
+                      </div>
+                      <div className="col-md-6">
                         <div className="form-group row">
-                          <label className="col-sm-4 col-form-label">BUSINESS HUB</label>
+                          <label className="col-sm-4 col-form-label">UPLOAD DOCUMENT</label>
                           <div className="col-sm-8">
-                          <select   className="form-control"  name="business_hub">
-                            <option value="">Select HUB</option>
-                            <option value="DB">sERVICE cENTER 1</option>
-                          </select>
+                          <input type="file" 
+                            className="form-control" 
+                            name="file" 
+                            multiple
+                            required
+                            />
+                            <span className="bg bg-red">Allowed File Type (csv, xslx)</span>
                           </div>
                         </div>
                       </div>
                    </div>
 
-                    <div className="form-group">
-                      <label htmlFor="surname">Upload File</label>
-                      <input type="file" 
-                      className="form-control" 
-                      name="file" 
-                      multiple
-                       required
-                      />
-                      <small>TICKET ID Cannot be empty</small>
-                    </div>
+                  
                     
 
                    
@@ -105,8 +181,8 @@ const UPLOADCAAD = () => {
                     <div className="card-body">
                       <div className="d-flex align-items-center">
                         <div className="ml-4">
-                          <h4 className="font-weight-light">Bulk UPLOAD CODES</h4>
-                          <h3 className="font-weight-light mb-3">Template</h3>
+                          <h4 className="font-weight-light">BULK UPLOAD CODES</h4>
+                          <h3 className="font-weight-light mb-3">&nbsp;</h3>
                         </div>
                       </div>
                     </div>

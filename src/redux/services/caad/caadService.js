@@ -20,6 +20,20 @@ const API_VERSION = `${process.env.REACT_APP_API_VERSION}`;
             },
           }),
 
+
+          getmyCAAD: builder.query({
+            query: ({ pageNo }) => ({
+              url: `/${API_VERSION}/caads?page=${pageNo}`,
+              method: "GET",
+            }),
+            pollingInterval: 1800000, // 15 minutes
+            cacheTime: 1800000, // 3 minutes
+            cacheOptions: {
+                // cache results for 5 minutes
+                ttl: 3000000,
+            },
+          }),
+
           approveCAAD: builder.mutation({
             query: (requestData) => ({
               url: `/${API_VERSION}/caad_approval_request`,
@@ -40,4 +54,4 @@ const API_VERSION = `${process.env.REACT_APP_API_VERSION}`;
 });
 
 
-export const { useGetAllCAADQuery, useApproveCAADMutation, useRejectCAADMutation } = caadService;
+export const { useGetAllCAADQuery, useApproveCAADMutation, useRejectCAADMutation, useGetmyCAADQuery } = caadService;

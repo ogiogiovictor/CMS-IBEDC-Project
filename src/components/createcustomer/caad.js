@@ -175,13 +175,13 @@ const CAAD = () => {
       if(result){
         notify("success", "CAAD Created Successfully");
         //Redirect
-        navigate('/allcaad', { replace: true });
+        navigate('/caads', { replace: true });
       }
       
 
       } catch (e) {
         setIsProcessing(false);
-        navigate('/allcaad', { replace: true });
+        navigate('/caads', { replace: true });
         console.log(e);
       }
 

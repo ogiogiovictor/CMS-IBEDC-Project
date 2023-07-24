@@ -63,6 +63,7 @@ import ALLCAAD from "./components/createcustomer/allcaad";
 import AllEvents from "./components/ami/allevents";
 import MonthlySummary from "./components/ami/monthlysummary";
 import CAADETAILS from "./components/caad/caadetails";
+import MYCAAD from "./components/caad/mycaad";
 
 
 const App = () => {
@@ -199,6 +200,7 @@ const App = () => {
                   <Route path="get_summary" element={<MonthlySummary />} />
 
                    <Route path="/caadetails/:batchid/:id" element={<CAADETAILS />} /> 
+                   <Route path="caads" element={<MYCAAD/>} />
 
 
 

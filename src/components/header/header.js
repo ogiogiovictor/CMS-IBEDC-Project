@@ -1,7 +1,6 @@
 import React, { useEffect, Fragment } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from 'react-router-dom';
 import { useGetUserDetailsQuery } from "../../redux/services/auth/authService";
 //import { useGetLogOutMutation } from "../../redux/services/user/userService";
 import { logout, setCredentials, logoutAndDeleteTokens } from "../../redux/auth/authSlice";
@@ -131,48 +130,25 @@ const Header = () => {
                   </div>
                 </div>
               <ul className="navbar-nav navbar-nav-right mr-0">
-                {/* <li className="nav-item dropdown">
+                <li className="nav-item dropdown">
                   <a
                     className="nav-link dropdown-toggle"
                     id="notificationDropdown"
                     href="#"
                     data-toggle="dropdown"
                   >
-                    <i className="icon-bell"></i>
+                    <i className="icon-settings"></i>
                   </a>
                   <div
                     className="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
                     aria-labelledby="notificationDropdown"
                   >
-                    <a className="dropdown-item py-3">
-                      <p className="mb-0 font-weight-medium float-left">
-                        You have 4 new notifications
-                      </p>
-                      <span className="badge badge-pill badge-inverse-info float-right">
-                        View all
-                      </span>
-                    </a>
+                   
                     <div className="dropdown-divider"></div>
-                    <a className="dropdown-item preview-item">
-                      <div className="preview-thumbnail">
-                        <div className="preview-icon bg-inverse-success">
-                          <i className="icon-exclamation mx-0"></i>
-                        </div>
-                      </div>
-                      <div className="preview-item-content">
-                        <h6 className="preview-subject font-weight-normal text-dark mb-1">
-                          Application Error
-                        </h6>
-                        <p className="font-weight-light small-text mb-0">
-                          Just now
-                        </p>
-                      </div>
-                    </a>
-                    <div className="dropdown-divider"></div>
-                    <a className="dropdown-item preview-item">
+                    <a href="/change_password" className="dropdown-item preview-item">
                       <div className="preview-thumbnail">
                         <div className="preview-icon bg-inverse-warning">
-                          <i className="icon-bubble mx-0"></i>
+                          <i className="icon-settings mx-0"></i>
                         </div>
                       </div>
                       <div className="preview-item-content">
@@ -180,39 +156,19 @@ const Header = () => {
                           Settings
                         </h6>
                         <p className="font-weight-light small-text mb-0">
-                          Private message
+                          Change Password
                         </p>
                       </div>
                     </a>
                     <div className="dropdown-divider"></div>
-                    <a className="dropdown-item preview-item">
-                      <div className="preview-thumbnail">
-                        <div className="preview-icon bg-inverse-info">
-                          <i className="icon-user-following mx-0"></i>
-                        </div>
-                      </div>
-                      <div className="preview-item-content">
-                        <h6 className="preview-subject font-weight-normal text-dark mb-1">
-                          New user registration
-                        </h6>
-                        <p className="font-weight-light small-text mb-0">
-                          2 days ago
-                        </p>
-                      </div>
-                    </a>
                   </div>
-                </li> */}
+                </li>
                 <li className="nav-item">
-                  {/* <NavLink
-                    className="nav-link"
-                    onClick={() => dispatch(logout())}
-                  >
-                    <i className="icon-logout" title="Logout"></i>
-                  </NavLink> */}
 
                   <NavLink
                     className="nav-link"
-                    onClick={handleLogout}>
+                    onClick={() => dispatch(logout())}
+                  >
                     <i className="icon-logout" title="Logout"></i>
                   </NavLink>
                 </li>

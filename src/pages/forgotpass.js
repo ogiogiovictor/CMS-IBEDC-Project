@@ -2,10 +2,11 @@ import React, { Fragment, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { userLogin } from "../../redux/auth/authActions";
-import PageLoader from "../../components/spinner/loader";
+import PageLoader from "../components/spinner/loader";
+//import { useForgotPasswordMutation } from "../redux/services/user/userService";
+import axios from "axios";
 
-const Login = () => {
+const ForgotPassword = () => {
   const { loading, userToken } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
@@ -21,8 +22,29 @@ const Login = () => {
     navigateToDashboard();
   }, [navigateToDashboard]);
 
-  const submitForm = (data) => {
-    dispatch(userLogin(data));
+ // const [ forgotPassword] = useForgotPasswordMutation();
+
+  const submitForm = async (data) => {
+
+    try{
+
+        const email = data.email;
+
+        const idata = {
+            email: email,
+        }
+
+    //use axios to post data to the backend
+    const response = await axios.post("http://localhost:8000/api/forgot-password", idata);
+    console.log(response.data.message);
+
+       // const response = await forgotPassword(idata).unwrap();
+       // console.log(response.message);
+
+    } catch (e){
+        console.log(e);
+    }
+    
   };
   return userToken ? (
     <PageLoader />
@@ -38,8 +60,8 @@ const Login = () => {
               <div className="col-12 col-md-8 h-100 bg-white">
                 <div className="auto-form-wrapper d-flex align-items-center justify-content-center flex-column">
                   <form onSubmit={handleSubmit(submitForm)}>
-                    <h3 className="mr-auto">Hello! let's get started</h3>
-                    <p className="mb-5 mr-auto">Enter your details below.</p>
+                    <h3 className="mr-auto">FORGOT PASSWORD</h3>
+                    <p className="mb-5 mr-auto">Enter your email below.</p>
                     {/* <p> {error && <Error>{error}</Error>}</p> */}
                     <div className="form-group">
                       <div className="input-group">
@@ -57,31 +79,16 @@ const Login = () => {
                         />
                       </div>
                     </div>
-                    <div className="form-group">
-                      <div className="input-group">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">
-                            <i className="icon-lock"></i>
-                          </span>
-                        </div>
-                        <input
-                          type="password"
-                          className="form-control"
-                          placeholder="Password"
-                          {...register("password")}
-                          required
-                        />
-                      </div>
-                    </div>
+                   
                     <div className="form-group">
                       <button
                         type="submit"
                         className="btn btn-primary submit-btn"
                         disabled={loading}
                       >
-                        {loading ? "Loading..." : "Login"}
+                        {loading ? "Loading..." : "Reset"}
                       </button>&nbsp;&nbsp;&nbsp;&nbsp;
-                      <a href="/forgot_password" style={{ color: "black" }} className="mr-5 text-gray">Forgot Password </a>
+                      <a href="/login" style={{ color: "black" }} className="mr-5 text-gray">Click Here To Login </a>
                      
                     </div>
                     <div className="wrapper mt-5 text-gray">
@@ -100,4 +107,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgotPassword;

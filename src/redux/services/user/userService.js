@@ -88,6 +88,32 @@ export const userService = createApi({
   }),
 
 
+    changePassword: builder.mutation({
+      query: (requestData) => ({
+        url: `/${API_VERSION}/change_password`,
+        method: "POST",
+        body: requestData,
+      }),
+    }),
+      onError: (error) => {
+        throw new Error(error)
+        //console.error(error);
+      },
+
+
+      forgotPassword: builder.mutation({
+        query: (requestData) => ({
+          url: `/${API_VERSION}/forgot-password`,
+          method: "POST",
+          body: requestData,
+        }),
+      }),
+        onError: (error) => {
+          throw new Error(error)
+          //console.error(error);
+        },
+
+
 
 
 
@@ -98,4 +124,4 @@ export const userService = createApi({
 });
 
 export const { useGetResourceListQuery, useGetAllUserQuery, useRegisterUserMutation, useGetRoleQuery, useGetAccessListQuery,
-useGetControListQuery, useAssignedMenuMutation, useGetLogOutMutation, useGetCaadFlowQuery } = userService;
+useGetControListQuery, useAssignedMenuMutation, useGetLogOutMutation, useGetCaadFlowQuery, useChangePasswordMutation, useForgotPasswordMutation } = userService;

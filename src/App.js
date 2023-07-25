@@ -64,6 +64,8 @@ import AllEvents from "./components/ami/allevents";
 import MonthlySummary from "./components/ami/monthlysummary";
 import CAADETAILS from "./components/caad/caadetails";
 import MYCAAD from "./components/caad/mycaad";
+import ChangePassword from "./components/settings/changepassword";
+import ForgotPassword from "./pages/forgotpass";
 
 
 const App = () => {
@@ -73,6 +75,7 @@ const App = () => {
         <Routes>
           <Route element={<LoginLayout />}>
             <Route path="/" element={<Login />} />
+            <Route path="/forgot_password" element={<ForgotPassword />} />
           </Route>
 
           <Route
@@ -201,6 +204,8 @@ const App = () => {
 
                    <Route path="/caadetails/:batchid/:id" element={<CAADETAILS />} /> 
                    <Route path="caads" element={<MYCAAD/>} />
+
+                   <Route path="/change_password" element={<ChangePassword />} />
 
 
 

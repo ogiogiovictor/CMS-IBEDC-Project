@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { useLocation, useNavigate, Link  } from "react-router-dom";
+import { useLocation, useNavigate, Link   } from "react-router-dom";
 import DataTable from '../datatable';
 import { useSelector } from 'react-redux';
 import { useApproveCAADMutation, useRejectCAADMutation } from '../../redux/services/caad/caadService';
@@ -16,6 +16,7 @@ const CAADETAILS = () => {
     const rowSubTitle = location.state.rowSubTitle;
     const routeName = location.state.routeName;
     const navigate = useNavigate();
+  
 
 
     const handleGoBack = () => {
@@ -101,6 +102,43 @@ const CAADETAILS = () => {
             }
         };
 
+        const handleEditForm = (id, status, role, batch_type, auth_id, createdby_id, rowData) => {
+            /* else if(auth_id != createdby_id){
+                notify("error", "You cannot edit this request because you are not the one who created the request");
+            }
+            */
+
+            if(status != 10){
+                notify("error", "You cannot edit this request");
+            }else {
+
+                navigate(`/edit-form/${id}`, {
+                    state: {
+                      erowData: rowData,
+                      euserInfo: id,
+                      // Pass any other data you need here
+                    },
+                  });
+
+            }
+
+
+        }
+
+        // if (rowData.batch_type === 'single' &&  (userInfo.role === 'district_accountant' && rowData.status === '10') && (rowData.district_accountant == userInfo.id) ) { 
+        //     return(
+        //     <button onClick={() => handleRejection(rowData.id, rowData.status, userInfo.role, rowData.batch_type)} className="btn btn-primary btn-sm">Edit</button>
+        //     );
+        // }
+
+
+       // To be removed
+        if (rowData.batch_type === 'single') { 
+            return (
+                <button onClick={() => handleEditForm(rowData.id, rowData.status, userInfo.role, rowData.batch_type, userInfo.id, rowData.district_accountant, rowData)} className="btn btn-primary btn-sm">Edit Remove</button> 
+            )
+           
+        }
       
         if (rowData.batch_type === 'single') {
           if (userInfo.role === 'admin' || (userInfo.role === 'district_accountant' && rowData.status === '0') || (userInfo.role === 'businesshub_manager' && rowData.status === '1')
@@ -217,7 +255,9 @@ const CAADETAILS = () => {
                      </ul>
 
                      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                       
                         <div>
+                           
                         {rowData.batch_type === 'single' && <ApprovalButtons />}
 
                         {rowData.bulk_unique_id  && <BatchApproval />}

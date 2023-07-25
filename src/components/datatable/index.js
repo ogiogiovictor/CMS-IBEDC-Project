@@ -38,6 +38,7 @@ const DataTable = ({
   };
 
   const handleEditClick = (item) => {
+    console.log(item)
     onEditClick(item);
   };
 

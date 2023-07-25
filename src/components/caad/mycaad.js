@@ -41,7 +41,7 @@ const MYCAAD = () => {
     { title: "Trans Type", field: "transtype" },
     { title: "Effective Date", field: "effective_date" },
     { title: "Amount", field: "amount" },
-   // { title: "Status", field: "status" },
+    { title: "Status", field: "status" },
   ];
 
   
@@ -80,6 +80,8 @@ const MYCAAD = () => {
   }
 
 
+
+
     return (
         <div className="row">
 
@@ -100,10 +102,11 @@ const MYCAAD = () => {
                   columns={columns}
                   pagination
                   currentPage={currentPage}
-                  totalCount={data?.data?.data?.total || 1}
-                  pageSize={data?.data?.data?.per_page || 1}
+                  totalCount={data?.data?.single?.total || 1}
+                  pageSize={data?.data?.single?.per_page || 1}
                   onPageChange={(page) => setCurrentPage(page)}
                   onActionClick={handleActionSingleClick}
+                 
                   />
 
                   }

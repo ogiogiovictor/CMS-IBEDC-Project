@@ -87,8 +87,8 @@ export const meterService = createApi({
 
 
           getMonthlySummary: builder.query({
-            query: ({ pageNo }) => ({
-              url: `/${API_VERSION}/get_ami_summary?page=${pageNo}`,
+            query: ({ userQuery, pageNo }) => ({
+              url: `/${API_VERSION}/get_ami_summary?type=${userQuery}&page=${pageNo}`,
               method: "GET",
             }),
             cacheOptions: {

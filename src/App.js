@@ -64,6 +64,7 @@ import AllEvents from "./components/ami/allevents";
 import MonthlySummary from "./components/ami/monthlysummary";
 import CAADETAILS from "./components/caad/caadetails";
 import MYCAAD from "./components/caad/mycaad";
+import EDITCAAD from "./components/caad/editcaad";
 
 
 const App = () => {
@@ -201,6 +202,7 @@ const App = () => {
 
                    <Route path="/caadetails/:batchid/:id" element={<CAADETAILS />} /> 
                    <Route path="caads" element={<MYCAAD/>} />
+                   <Route path="/edit-form/:id" element={<EDITCAAD />} />
 
 
 

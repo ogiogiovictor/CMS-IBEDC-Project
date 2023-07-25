@@ -93,7 +93,7 @@ const AllEvents = () => {
        <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">
          <div className="card">
            <div className="card-body">
-             <h4 className="card-title">All Events  </h4>
+             <h4 className="card-title">All FEEDER EVENTS  </h4>
              <div class="form-group d-flex">
                           <input type="text" class="form-control" placeholder="Search event(s)..." />
                           <button type="submit" class="btn btn-primary ml-3">Search</button>

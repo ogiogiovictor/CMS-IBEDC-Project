@@ -50,8 +50,19 @@ const API_VERSION = `${process.env.REACT_APP_API_VERSION}`;
             }),
           }),
 
+
+          pushCAAD: builder.mutation({
+            query: (requestData) => ({
+              url: `/${API_VERSION}/process_caad_request`,
+              method: "POST",
+              body: requestData, // the data you want to send in the request body
+            }),
+          }),
+
+
+
     }),
 });
 
 
-export const { useGetAllCAADQuery, useApproveCAADMutation, useRejectCAADMutation, useGetmyCAADQuery } = caadService;
+export const { useGetAllCAADQuery, usePushCAADMutation, useApproveCAADMutation, useRejectCAADMutation, useGetmyCAADQuery } = caadService;

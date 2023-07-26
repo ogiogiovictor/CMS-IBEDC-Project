@@ -2,7 +2,7 @@ import React, { useState, useEffect  } from 'react';
 import {  useNavigate } from 'react-router-dom';
 import numberToWords from 'number-to-words';
 import { notify } from '../../utils/notify';
-import { usePushCAADMutation } from '../../redux/services/meter/meterService';
+import { usePushCAADMutation } from '../../redux/services/caad/caadService';
 import {  useGetResourceListQuery } from '../../redux/services/user/userService';
 
 const CAAD = () => {
@@ -143,6 +143,7 @@ const CAAD = () => {
               // Check if any of the required fields are empty
         if (!accountNo || !phoneNo || !surname || !lastname || !service_center || !accountType || !transaction_type || !effective_date || !amount) {
           notify("error", "Please fill in all required fields.");
+          setIsProcessing(false);
           return; // Exit the function if any required fields are empty
         }
 
@@ -156,19 +157,13 @@ const CAAD = () => {
                 formData.append(`file_upload[${i}]`, file);
               } else {
                 notify("error", `File ${file.name} has an unsupported type and will not be uploaded.`);
+                setIsProcessing(false);
                 console.log(`File ${file.name} has an unsupported type and will not be uploaded.`);
                 return;
               }
             }
           }
-         
-      // Append each file to the formData object with a unique key
-        //  if (formData.getAll('file_upload') !== null) {
-        //   const fileUploads = formData.getAll('file_upload'); // Get all the files in an array
-        //   for (let i = 0; i < fileUploads.length; i++) {
-        //     formData.append(`file_upload[${i}]`, fileUploads[i]);
-        //   }
-        // }
+        
 
       const formEntry = Object.fromEntries(formData);
       const result =  await addCAADProcess(formData).unwrap();
@@ -181,8 +176,10 @@ const CAAD = () => {
 
       } catch (e) {
         setIsProcessing(false);
-        navigate('/caads', { replace: true });
-        console.log(e);
+        if(e?.data?.data?.file_upload){
+          notify("error", e?.data?.data?.file_upload[1]);
+        }
+        console.log(e?.data);
       }
 
     }

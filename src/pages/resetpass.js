@@ -1,16 +1,22 @@
-import React, { Fragment, useEffect, useCallback } from "react";
+import React, { Fragment, useEffect, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PageLoader from "../components/spinner/loader";
 import axios from "axios";
 import { notify } from "../utils/notify";
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
+
   const { loading, userToken } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
+
+  const { token } = useParams();
+  // State to handle token existence check
+  const [isTokenValid, setTokenValid] = useState(false);
+  const [isEmail, setIsEmail ] = useState('');
 
   const navigateToDashboard = useCallback(() => {
     if (userToken) {
@@ -22,16 +28,52 @@ const ForgotPassword = () => {
     navigateToDashboard();
   }, [navigateToDashboard]);
 
- // const [ forgotPassword] = useForgotPasswordMutation();
+
+  // useEffect to check if the token exists in the API
+  useEffect(() => {
+    // Define a function to check the token in your API
+    const checkTokenValidity = async () => {
+      try {
+        // Replace 'your-api-endpoint' with the actual API endpoint to check the token
+        const response = await fetch(`http://localhost:8000/api/check-password/${token}`);
+
+        if (response.ok) {
+          // Token exists and is valid
+          setTokenValid(true);
+          const responseData = await response.json();
+          setIsEmail(responseData?.data?.email);
+
+        } else {
+          // Token doesn't exist or is invalid
+          setTokenValid(false);
+          notify("error", "Invalid Token");
+         // navigate("/forgot_password");
+        }
+      } catch (error) {
+        console.error('Error checking token:', error);
+        notify("error", "Invalid Token! Something Went Wrong");
+        // Handle any error that occurs during the API call
+      }
+    };
+
+    // Call the function to check the token when the component mounts
+    checkTokenValidity();
+  }, [token]); // useEffect will re-run whenever 'token' changes
+
+
 
   const submitForm = async (data) => {
 
     try{
 
         const email = data.email;
+        const password = data.password;
+        const confpassword = data.confpassword;
 
         const idata = {
             email: email,
+            password: password,
+            confpassword: confpassword
         }
 
     //use axios to post data to the backend
@@ -62,8 +104,8 @@ const ForgotPassword = () => {
               <div className="col-12 col-md-8 h-100 bg-white">
                 <div className="auto-form-wrapper d-flex align-items-center justify-content-center flex-column">
                   <form onSubmit={handleSubmit(submitForm)}>
-                    <h3 className="mr-auto">FORGOT PASSWORD</h3>
-                    <p className="mb-5 mr-auto">Enter your email below.</p>
+                    <h3 className="mr-auto">RESET PASSWORD</h3>
+                    <p className="mb-5 mr-auto">Enter your email below. { token } </p>
                     {/* <p> {error && <Error>{error}</Error>}</p> */}
                     <div className="form-group">
                       <div className="input-group">
@@ -76,7 +118,43 @@ const ForgotPassword = () => {
                           type="text"
                           className="form-control"
                           placeholder="E-mail"
+                          value={isEmail}
                           {...register("email")}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <div className="input-group">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">
+                            <i className="icon-user"></i>
+                          </span>
+                        </div>
+                        <input
+                          type="password"
+                          className="form-control"
+                          placeholder="Enter Password"
+                          {...register("password")}
+                          required
+                        />
+                      </div>
+                    </div>
+
+
+                    <div className="form-group">
+                      <div className="input-group">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">
+                            <i className="icon-user"></i>
+                          </span>
+                        </div>
+                        <input
+                          type="password"
+                          className="form-control"
+                          placeholder="Confirm Password"
+                          {...register("confpassword")}
                           required
                         />
                       </div>
@@ -89,8 +167,7 @@ const ForgotPassword = () => {
                         disabled={loading}
                       >
                         {loading ? "Loading..." : "Reset"}
-                      </button>&nbsp;&nbsp;&nbsp;&nbsp;
-                      <a href="/login" style={{ color: "black" }} className="mr-5 text-gray">Click Here To Login </a>
+                      </button>
                      
                     </div>
                     <div className="wrapper mt-5 text-gray">
@@ -109,4 +186,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ResetPassword;

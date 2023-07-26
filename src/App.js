@@ -67,6 +67,7 @@ import MYCAAD from "./components/caad/mycaad";
 import ChangePassword from "./components/settings/changepassword";
 import ForgotPassword from "./pages/forgotpass";
 import EDITCAAD from "./components/caad/editcaad";
+import ResetPassword from "./pages/resetpass";
 
 
 const App = () => {
@@ -77,6 +78,7 @@ const App = () => {
           <Route element={<LoginLayout />}>
             <Route path="/" element={<Login />} />
             <Route path="/forgot_password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
           </Route>
 
           <Route

@@ -17,9 +17,14 @@ const MYCAAD = () => {
 
   const {  data, isError, error, isFetching, isSuccess, isUninitialized, refetch} = useGetmyCAADQuery({ pageNo: currentPage });
   
-  //console.log(data?.data?.single?.data);
+/*
   console.log(mycaad);
   console.log(data?.data?.single?.data);
+  */
+
+  if (isError) {
+    notify("error", error?.data?.data || "An error occurred");
+  }
 
   
   useEffect(() => {

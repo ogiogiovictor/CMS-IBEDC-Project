@@ -46,7 +46,7 @@ const MYCAAD = () => {
     { title: "Trans Type", field: "transtype" },
     { title: "Effective Date", field: "effective_date" },
     { title: "Amount", field: "amount" },
-    { title: "Status", field: "status" },
+    //{ title: "Status", field: "status" },
   ];
 
   

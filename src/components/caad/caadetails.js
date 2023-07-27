@@ -103,11 +103,7 @@ const CAADETAILS = () => {
         };
 
         const handleEditForm = (id, status, role, batch_type, auth_id, createdby_id, rowData) => {
-            /* else if(auth_id != createdby_id){
-                notify("error", "You cannot edit this request because you are not the one who created the request");
-            }
-            */
-
+         
             if(status != 10){
                 notify("error", "You cannot edit this request");
             }else {
@@ -125,20 +121,23 @@ const CAADETAILS = () => {
 
         }
 
-        // if (rowData.batch_type === 'single' &&  (userInfo.role === 'district_accountant' && rowData.status === '10') && (rowData.district_accountant == userInfo.id) ) { 
-        //     return(
-        //     <button onClick={() => handleRejection(rowData.id, rowData.status, userInfo.role, rowData.batch_type)} className="btn btn-primary btn-sm">Edit</button>
-        //     );
-        // }
-
-
-       // To be removed
-        if (rowData.batch_type === 'single') { 
-            return (
-                <button onClick={() => handleEditForm(rowData.id, rowData.status, userInfo.role, rowData.batch_type, userInfo.id, rowData.district_accountant, rowData)} className="btn btn-primary btn-sm">Edit Remove</button> 
-            )
-           
+        if (rowData.batch_type === 'single' &&  (userInfo.role === 'district_accountant' && rowData.status === '10') && (rowData.district_accountant == userInfo.id) ) { 
+            return(
+            <button onClick={() => handleRejection(rowData.id, rowData.status, userInfo.role, rowData.batch_type)} className="btn btn-primary btn-sm">Edit</button>
+            );
+        }else if(userInfo.id != rowData.created_by){
+            notify("error", "You cannot edit this request because you are not the owner who created the request");
+            navigate("/caads")
         }
+
+
+    //    // To be removed
+    //     if (rowData.batch_type === 'single') { 
+    //         return (
+    //             <button onClick={() => handleEditForm(rowData.id, rowData.status, userInfo.role, rowData.batch_type, userInfo.id, rowData.district_accountant, rowData)} className="btn btn-primary btn-sm">Edit Remove</button> 
+    //         )
+           
+    //     }
       
         if (rowData.batch_type === 'single') {
           if (userInfo.role === 'admin' || (userInfo.role === 'district_accountant' && rowData.status === '0') || (userInfo.role === 'businesshub_manager' && rowData.status === '1')

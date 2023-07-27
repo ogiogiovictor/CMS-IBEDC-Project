@@ -1,6 +1,6 @@
 import React,  {useState} from 'react';
 import { notify } from '../../utils/notify';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { usePushCAADMutation  } from '../../redux/services/caad/caadService';
 import {  useGetResourceListQuery } from '../../redux/services/user/userService';
 import { useForm } from 'react-hook-form';
@@ -18,6 +18,8 @@ const EDITCAAD = () => {
     const rowData = location.state?.erowData || {};
     const userInfo = location.state?.euserInfo || {};
 
+    const navigate = useNavigate();
+
     const [selectedRegion, setSelectedRegion] = useState("");
     const [selectedBizHub, setSelectedBizHub] = useState("");
     const [selectedServiceCenter, setSelectedServiceCenter] = useState("");
@@ -31,9 +33,19 @@ const EDITCAAD = () => {
         phoneNo: rowData.phoneNo,
         surname: rowData.surname,
         lastname: rowData.lastname,
-        othername: rowData.othername
+        othername: rowData.othername,
+        transtype: rowData.transtype,
+        accountType: rowData.accountType,
+        meterno: rowData.meterno,
+        meter_reading: rowData.meter_reading,
+        transaction_type: rowData.transaction_type,
+        effective_date: rowData.effective_date,
+        amount: rowData.amount,
+        remarks: rowData.remarks
        
       });
+
+    
 
 
       const onChangeHandler = (e) => {
@@ -138,9 +150,6 @@ const EDITCAAD = () => {
     };
 
     
-   
-    const ALLOWED_FILE_TYPES = ["application/pdf", "image/png", "text/csv", "application/vnd.ms-excel", "image/jpeg", 
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"];
 
     const [ addCAAD ] = usePushCAADMutation();
 
@@ -150,46 +159,40 @@ const EDITCAAD = () => {
         try{
 
             setIsProcessing(true);
+            const idata = {
+              "accountNo" : data.accountNo,
+              "phoneNo": data.phoneNo,
+              "surname": data.surname,
+              "lastname" : data.lastname,
+              "othername" : data.othername,
+              "region" : selectedRegion,
+              "business_hub" : selectedBizHub,
+              "service_center" : selectedServiceCenter,
+              "transtype" : data.transtype,
+              "accountType": data.accountType,
+              "meterno" : data.meterno,
+              "meter_reading": data.meter_reading,
+              "transaction_type" : data.transaction_type,
+              "effective_date" : rowData.effective_date,
+              "amount" : data.amount,
+              "remarks" : data.remarks,
+              "update_id" : data.update_id
+            }
 
-            const formData = new FormData();
-            formData.append("accountNo", data.accountNo);
-            formData.append("phoneNo", data.phoneNo);
-            formData.append("surname", data.surname);
-            formData.append("lastname", data.lastname);
-            formData.append("othername", data.othername);
-            formData.append("region", selectedRegion);
-            formData.append("business_hub", selectedBizHub);
-            formData.append("service_center", selectedServiceCenter);
-            formData.append("transtype", data.transtype);
-            formData.append("accountType", data.accountType);
-            formData.append("meterno", data.meterno);
-            formData.append("meter_reading", data.meter_reading);
-            formData.append("transaction_type", data.transaction_type);
-            formData.append("effective_date", data.effective_date);
-            formData.append("amount", data.amount);
-            formData.append("remarks", data.remarks);
-            formData.append("update_id", data.update_id);
-            formData.append("file_upload", data.file_upload[0]);
-         
-            // Convert formData to a regular JavaScript object
-          const formDataObject = Object.fromEntries(formData);
 
           // Convert formDataObject to a JSON string
-          const jsonData = JSON.stringify(formDataObject);
+         // const jsonData = JSON.stringify(formDataObject);
 
-          console.log(formDataObject);
+         
 
-
-
-          const result =  await addCAAD(formData).unwrap();
-          console.log(result.data.accountNo);
-
+          const result =  await addCAAD(idata).unwrap();
+       
           setIsProcessing(false);
           if(result.data.accountNo){
             notify("success", "CAAD Created Upddated");
             setIsProcessing(false);
             //Redirect
-           // navigate('/caads', { replace: true });
+            navigate('/caads', { replace: true });
           }
 
 
@@ -197,10 +200,7 @@ const EDITCAAD = () => {
         }catch(e) {
 
             setIsProcessing(false);
-            if(e?.data?.data?.file_upload){
-              notify("error", e?.data?.data?.file_upload[0]);
-            }
-            console.log(e?.data.errors);
+          console.log(e)
 
             if (e?.data?.errors) {
               Object.keys(e?.data?.errors).forEach((field) => {
@@ -211,11 +211,8 @@ const EDITCAAD = () => {
                 });
               });
             }
-            console.log(e);
+       
 
-              // e?.data?.errors?.map((item, index) => (
-              //   notify("error", item)
-              // ));
             }
 
         
@@ -309,12 +306,12 @@ const EDITCAAD = () => {
                           <label className="col-sm-4 col-form-label"> DUE BILL</label>
                           <div className="col-sm-8">
                         
-                          <select className="form-control" name="transtype" value={rowData.transtype}>
+                          <select className="form-control" name="transtype" value={values.transtype}  {...register("transtype")} onChange={onChangeHandler}>
                             <option value="">Select Type</option>
-                            <option value="due_for_billing" {...register("due_for_billing")} selected={rowData.transtype === "due_for_billing"}>
+                            <option value="due_for_billing"  selected={values.transtype === "due_for_billing"}>
                                 DUE FOR BILLING
                             </option>
-                            <option value="due_for_payment" {...register("due_for_payment")}  selected={rowData.transtype === "due_for_payment"}>
+                            <option value="due_for_payment"  selected={values.transtype === "due_for_payment"}>
                                 DUE FOR PAYMENT
                             </option>
                         </select>
@@ -327,10 +324,10 @@ const EDITCAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">ACCOUNT TYPE</label>
                           <div className="col-sm-8">
-                          <select   className="form-control"  name="accountType" {...register("accountType")} value={rowData.accountType} >
+                          <select   className="form-control"  name="accountType" {...register("accountType")} value={values.accountType} onChange={onChangeHandler} >
                             <option value="">Select Type</option>
-                            <option value="Prepaid" selected={rowData.accountType === "Prepaid"}>Prepaid</option>
-                            <option value="Postpaid" selected={rowData.accountType === "Postpaid"}>Postpaid</option>
+                            <option value="Prepaid" selected={values.accountType === "Prepaid"}>Prepaid</option>
+                            <option value="Postpaid" selected={values.accountType === "Postpaid"}>Postpaid</option>
                           </select>
                           </div>
                         </div>
@@ -352,7 +349,7 @@ const EDITCAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">METER NO</label>
                           <div className="col-sm-8">
-                          <input type="text" name="meterno" {...register("meterno")} value={rowData.meterno}  className="form-control" placeholder="meterno"/>
+                          <input type="text" name="meterno"  {...register("meterno")} value={values.meterno} onChange={onChangeHandler} className="form-control" placeholder="meterno"/>
                           </div>
                         </div>
                       </div>
@@ -360,7 +357,7 @@ const EDITCAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">METER READING</label>
                           <div className="col-sm-8">
-                          <input type="text" name="meter_reading" {...register("meter_reading")} value={rowData.meter_reading} className="form-control" placeholder="Enter meter_reading"/>
+                          <input type="text" name="meter_reading" {...register("meter_reading")} value={values.meter_reading} onChange={onChangeHandler} className="form-control" placeholder="Enter meter_reading"/>
                           </div>
                         </div>
                       </div>
@@ -379,12 +376,12 @@ const EDITCAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">TRANSACTION TYPE</label>
                           <div className="col-sm-8">
-                          <select   className="form-control"  name="transaction_type" {...register("transaction_type")}  value={rowData.transaction_type} >
+                          <select   className="form-control"  name="transaction_type" {...register("transaction_type")}  onChange={onChangeHandler}  value={values.transaction_type} >
                             <option value="">Select Type</option>
-                            <option value="DB" selected={rowData.transaction_type === "DB"}>Debit (DB)</option>
-                            <option value="CR" selected={rowData.transaction_type === "CR"}>Credit (CR)</option>
-                            <option value="PR" selected={rowData.transaction_type === "PR"}>Payment Reversal</option>
-                            <option value="UN" selected={rowData.transaction_type === "UN"}>Uncollectables</option>
+                            <option value="DB" selected={values.transaction_type === "DB"}>Debit (DB)</option>
+                            <option value="CR" selected={values.transaction_type === "CR"}>Credit (CR)</option>
+                            <option value="PR" selected={values.transaction_type === "PR"}>Payment Reversal</option>
+                            <option value="UN" selected={values.transaction_type === "UN"}>Uncollectables</option>
                           </select>
                           </div>
                         </div>
@@ -393,7 +390,7 @@ const EDITCAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">EFFECTIVE DATE</label>
                           <div className="col-sm-8">
-                          <input type="text" disabled name="effective_date" {...register("effective_date")} value={rowData.effective_date}  className="form-control" />
+                          <input type="text" disabled name="effective_date" {...register("effective_date")} value={values.effective_date}  className="form-control" />
                           </div>
                         </div>
                       </div>
@@ -419,14 +416,16 @@ const EDITCAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-12 col-form-label">REMARKS</label>
                           <div className="col-sm-12">
-                            <textarea className="form-control" value={rowData.remarks} name="remarks" {...register("remarks")}  rows="4" placeholder="Enter remarks"></textarea>
+                            <textarea className="form-control" value={values.remarks} name="remarks" {...register("remarks")} onChange={onChangeHandler}  rows="4" placeholder="Enter remarks"></textarea>
                           </div>
                         </div>
                       </div>
-                     
+                      <input type="text" hidden name="update_id" {...register("update_id")}  value={rowData.id}/>
                    </div>
 
-                   <p className="card-description">
+                   
+
+                   {/* <p className="card-description">
                   <hr/>
                   FILE UPLOAD
                    <hr/>
@@ -446,6 +445,7 @@ const EDITCAAD = () => {
                       </div>
                       <div className="col-md-6"></div>
                    </div>
+                    */}
 
 
 

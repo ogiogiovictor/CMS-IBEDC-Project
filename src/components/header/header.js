@@ -126,7 +126,7 @@ const Header = () => {
             </div>
             <div className="navbar-menu-wrapper d-flex align-items-center justify-content-end">
                 <div className="form-group mb-0">
-                  <div className="input-group"> ({`${userInfo?.authority}`})
+                  <div className="input-group"> ({`${userInfo?.level}`.replace(/,/g, '')} - {`${userInfo?.authority}`.toUpperCase()} - {`${userInfo?.role}`.replace(/_/g, '').toUpperCase()})
                   </div>
                 </div>
               <ul className="navbar-nav navbar-nav-right mr-0">

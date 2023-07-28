@@ -188,7 +188,7 @@ const App = () => {
                   <Route path="addcustomer" element={<AddCustomer />} />
                   <Route path="viewcustomers" element={<ViewCustomers />} />
                   <Route path="customernewdetails/:id" element={<CustomerMoreDetails />} />
-                  <Route path="acl" element={<AccessControl />} />
+                  <Route path="roles/get_roles" element={<AccessControl />} />
                   <Route path="role/:id" element={<Roles />} />
                   <Route path="add_meters" element={<AddMeters />} /> 
                   <Route path="all_meters" element={<Meters />} />

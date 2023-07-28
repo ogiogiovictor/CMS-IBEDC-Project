@@ -247,7 +247,7 @@ const CustomerWidget = ({ customerInfo }) => {
                                 </div>
                                 <p>
                                 {
-                                  userInfo.role === 'admin' || userInfo.role === 'district_accountant' ? (
+                                  userInfo.role === 'admin' || userInfo.role === 'credit_control' ? (
                                     <>
                                       <td>
                                         <Link to={`/createcaad/${customerInfo?.CustomerSK}`}>

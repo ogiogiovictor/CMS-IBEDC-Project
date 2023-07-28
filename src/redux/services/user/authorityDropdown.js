@@ -7,6 +7,7 @@ const AuthorityDropdown = ({ onChange, value }) => {
       <label htmlFor="authority">Authority</label>
       <select className="form-control" name={value} onChange={onChange} value={value}>
         <option value="" selected>Select Authority</option>
+        <option value="hq">Head Office</option>
         <option value="region">Region</option>
         <option value="business_hub">Business Hub</option>
         <option value="service_center">Service Center</option>

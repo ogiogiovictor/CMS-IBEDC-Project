@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect  } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useRegisterUserMutation, useGetRoleQuery, useGetResourceListQuery } from '../../redux/services/user/userService';
 import { setRole } from '../../redux/auth/authSlice';
 import AuthorityDropdown from '../../redux/services/user/authorityDropdown';
@@ -9,18 +9,26 @@ import { notify } from '../../utils/notify';
 
 const EditUser = () => {
 
+  const location = useLocation();
+  // Access the rowData and userInfo from the location state
+  const rowData = location.state?.editrowData || {};
+
   const [isProcessing, setIsProcessing] = useState(false);
   const [values, setValues] = useState({
-    name: '',
-    email: '',
+    name: rowData.name || '',
+    email: rowData.email || '',
     password: '',
     authority: '',
     region: '',
     business_hub: '',
     service_center: '',
     role: '',
+    userstatus: rowData.status || '',
+    userstatus: rowData.status || '',
 
   });
+
+
 
   const [selectedAuthority, setSelectedAuthority] = useState('');
 
@@ -84,7 +92,8 @@ const EditUser = () => {
       service_center: selectedServiceCenter, //values.service_center,
       role: values.role,
       level: `${selectedRegion},${selectedBizHub},${selectedServiceCenter}`,
-      //level: `${values.region}, ${values.business_hub}, ${values.service_center}`,
+      user_id: rowData.id,
+      userstatus: values.userstatus
     }
 
     console.log(idata);
@@ -213,13 +222,13 @@ const EditUser = () => {
                   <h4 className="card-title">EDIT USERS</h4> 
                   <p className="card-description">
                   <hr/>
-                   EDIT SINGLE USER
+                   EDIT SINGLE USER {rowData.name}
                    <hr/>
                   </p>
 
                  
                   <form className="forms-sample" onSubmit={postUser}>
-                    
+                    <input type="text" hidden name="user_id" value={rowData.id} />
                     { values.errorMessage && <div className="alert alert-danger" role="alert"> {values.errorMessage} </div> }
                        
                      <div className="form-group">
@@ -295,12 +304,23 @@ const EditUser = () => {
                           ))}
                         </select>
                        <small>Authority Cannot be empty</small>
-                     </div>
+                    </div>
+
+
+                    <div className="form-group">
+                       <label htmlFor="role">Select Status</label>
+                        <select required  name="userstatus" className="form-control" onChange={onChangeHandler}>
+                          <option value="">Select</option>
+                          <option  value="1">Active</option>
+                          <option  value="0">Inactive</option>
+                        </select>
+                       <small>Status Cannot be empty</small>
+                    </div>
                      
  
                     
                      <button type="submit" className="btn btn-primary mr-2" disabled={isProcessing}>
-                     {/* {isProcessing ? 'Processing...' : 'Proceed'} */}
+                     {isProcessing ? 'Processing...' : 'Proceed'}
                      </button> </form> 
                   
                 </div>

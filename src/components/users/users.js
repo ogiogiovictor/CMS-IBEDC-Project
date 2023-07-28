@@ -57,7 +57,17 @@ const Users = () => {
       }
 
       const handleEditClick = (users) => {
-        navigate(`/edit_users/${users.id}`)
+        navigate(`/edit_users/${users.id}`, {
+
+          state: { 
+            editrowData: users, 
+            editrowTitle: 'Update User Information',
+            editrowSubTitle: users.name,
+            routeName: '/allusers'
+           }
+
+        })
+        
       }
 
 

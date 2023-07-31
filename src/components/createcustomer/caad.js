@@ -1,5 +1,5 @@
 import React, { useState, useEffect  } from 'react';
-import {  useNavigate } from 'react-router-dom';
+import {  useNavigate, useLocation } from 'react-router-dom';
 import numberToWords from 'number-to-words';
 import { notify } from '../../utils/notify';
 import { usePushCAADMutation } from '../../redux/services/caad/caadService';
@@ -12,6 +12,9 @@ const CAAD = () => {
     const [words, setWords] = useState('');
 
     const navigate = useNavigate();
+    const location = useLocation();
+    const customer = location.state.custData;
+
 
     const [selectedRegion, setSelectedRegion] = useState("");
     const [selectedBizHub, setSelectedBizHub] = useState("");
@@ -55,13 +58,18 @@ const CAAD = () => {
     )): service_center;
 
 
+    const [selectedFiles, setSelectedFiles] = useState([]);
+    const handleFileChange = (event) => {
+      setSelectedFiles([...event.target.files]);
+    };
+
 
   
     const region = (
       <div className="form-group row">
           <label className="col-sm-4 col-form-label">REGION</label>
               <div className="col-sm-8">
-              <select name="region" className="form-control" value={selectedRegion} onChange={onChangeRegion}>
+              <select name="region" className="form-control" value={selectedRegion} onChange={onChangeRegion} required>
                     <option value="">Select Region</option>
                     {iregion.map((item, index) => (
                     <option key={index} value={item}>
@@ -79,7 +87,7 @@ const CAAD = () => {
       <div className="form-group row">
           <label className="col-sm-4 col-form-label">BUSINESS HUB</label>
               <div className="col-sm-8">
-              <select name="business_hub" className="form-control" value={selectedBizHub} onChange={onChangeBizHub} disabled={!selectedRegion}>
+              <select name="business_hub" className="form-control" value={selectedBizHub} onChange={onChangeBizHub} disabled={!selectedRegion} required>
               <option value="">Select</option>
               {filteredBizHubs.map((item, index) => (
                 <option key={index} value={item}>
@@ -124,8 +132,8 @@ const CAAD = () => {
 
 
 
-    const ALLOWED_FILE_TYPES = ["application/pdf", "image/png", "text/csv", "application/vnd.ms-excel", "image/jpeg", 
-     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"];
+     const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 'text/csv',  "application/vnd.ms-excel", 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+
 
     const [ addCAADProcess ] = usePushCAADMutation();
 
@@ -138,31 +146,20 @@ const CAAD = () => {
 
         const formData = new FormData(e.target);
 
-        const { accountNo, phoneNo, surname, lastname, service_center, accountType, transaction_type, effective_date, amount  } = Object.fromEntries(formData);
+        const { accountNo, phoneNo, surname, lastname, region, business_hub, accountType, transaction_type, effective_date, amount  } = Object.fromEntries(formData);
 
               // Check if any of the required fields are empty
-        if (!accountNo || !phoneNo || !surname || !lastname || !service_center || !accountType || !transaction_type || !effective_date || !amount) {
-          notify("error", "Please fill in all required fields.");
+        if (!accountNo || !surname || !lastname || !region || !business_hub || !accountType || !transaction_type || !effective_date || !amount) {
+          notify("error", "The Following fields are required. AccountNo, Surname, Lastname, Region, Business Hub, AccountType, TransactionType, Effective Date, Amount and Remark.");
           setIsProcessing(false);
           return; // Exit the function if any required fields are empty
         }
 
-       
-         // Validate and append each file to the formData object with a unique key
-          if (formData.getAll('file_upload') !== null) {
-            const fileUploads = formData.getAll('file_upload');
-            for (let i = 0; i < fileUploads.length; i++) {
-              const file = fileUploads[i];
-              if (ALLOWED_FILE_TYPES.includes(file.type)) {
-                formData.append(`file_upload[${i}]`, file);
-              } else {
-                notify("error", `File ${file.name} has an unsupported type and will not be uploaded.`);
-                setIsProcessing(false);
-                console.log(`File ${file.name} has an unsupported type and will not be uploaded.`);
-                return;
-              }
-            }
-          }
+  
+        selectedFiles.forEach((file, index) => {
+          formData.append('file_upload[]', file); // Ensure the key is in the format 'file_upload[]'
+        });
+    
         
 
       const formEntry = Object.fromEntries(formData);
@@ -209,7 +206,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label"> ACCOUNT NO</label>
                           <div className="col-sm-8">
-                          <input type="text"  name="accountNo"  className="form-control" placeholder="accountno"/>
+                          <input type="text"  name="accountNo" value={customer.AccountNo}  className="form-control" placeholder="accountno"/>
                           </div>
                         </div>
                       </div>
@@ -217,7 +214,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">PHONE NO</label>
                           <div className="col-sm-8">
-                          <input type="number" name="phoneNo"   className="form-control" placeholder="phoneno"/>
+                          <input type="number" name="phoneNo" value={customer.Mobile}  className="form-control" placeholder="phoneno"/>
                           </div>
                         </div>
                       </div>
@@ -229,15 +226,15 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">SURNAME</label>
                           <div className="col-sm-8">
-                          <input type="text" name="surname"  className="form-control" placeholder="surname"/>
+                          <input type="text" name="surname" value={customer.Surname}  className="form-control" placeholder="surname"/>
                           </div>
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div className="form-group row">
-                          <label className="col-sm-4 col-form-label">LASTNAME</label>
+                          <label className="col-sm-4 col-form-label">FIRSTNAME</label>
                           <div className="col-sm-8">
-                          <input type="text" name="lastname" className="form-control" placeholder="Enter lastname"/>
+                          <input type="text" name="lastname" value={customer.Firstname} className="form-control" placeholder="Enter lastname"/>
                           </div>
                         </div>
                       </div>
@@ -276,7 +273,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label"> DUE BILL</label>
                           <div className="col-sm-8">
-                          <select   className="form-control"  name="transtype" >
+                          <select   className="form-control"  name="transtype" required >
                             <option value="">Select Type</option>
                             <option value="due_for_billing">DUE FOR BILLING</option>
                             <option value="due_for_payment">DUE FOR PAYMENT</option>
@@ -288,7 +285,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">ACCOUNT TYPE</label>
                           <div className="col-sm-8">
-                          <select   className="form-control"  name="accountType" >
+                          <select   className="form-control"  name="accountType" required>
                             <option value="">Select Type</option>
                             <option value="Prepaid">Prepaid</option>
                             <option value="Postpaid">Postpaid</option>
@@ -311,7 +308,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">METER NO</label>
                           <div className="col-sm-8">
-                          <input type="text" name="meterno"  className="form-control" placeholder="meterno"/>
+                          <input type="text" name="meterno" className="form-control" placeholder="meterno"/>
                           </div>
                         </div>
                       </div>
@@ -339,7 +336,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">TRANSACTION TYPE</label>
                           <div className="col-sm-8">
-                          <select   className="form-control"  name="transaction_type" >
+                          <select   className="form-control"  name="transaction_type" required >
                             <option value="">Select Type</option>
                             <option value="DB">Debit (DB)</option>
                             <option value="CR">Credit (CR)</option>
@@ -353,7 +350,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">EFFECTIVE DATE</label>
                           <div className="col-sm-8">
-                          <input type="date" name="effective_date"  className="form-control" placeholder="effective_date"/>
+                          <input type="date" name="effective_date" required className="form-control" placeholder="effective_date"/>
                           </div>
                         </div>
                       </div>
@@ -365,7 +362,7 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-12 col-form-label">AMOUNT</label>
                           <div className="col-sm-12">
-                          <input type="text" name="amount"  className="form-control" value={number} onChange={handleInputChange}/>
+                          <input type="text" name="amount" required step={.2} className="form-control" value={number} onChange={handleInputChange}/>
                           <span className="text-danger">{words}</span>
                           </div>
                         </div>
@@ -377,9 +374,9 @@ const CAAD = () => {
                    <div className="row">
                       <div className="col-md-12">
                         <div className="form-group row">
-                          <label className="col-sm-12 col-form-label">REMARKS</label>
+                          <label className="col-sm-12 col-form-label">REMARKS (Reason for Adjustment)</label>
                           <div className="col-sm-12">
-                            <textarea className="form-control"  name="remarks" rows="4" placeholder="Enter remarks"></textarea>
+                            <textarea className="form-control"  name="remarks" required rows="4" placeholder="Enter remarks"></textarea>
                           </div>
                         </div>
                       </div>
@@ -402,7 +399,8 @@ const CAAD = () => {
                         <div className="form-group row">
                           <label className="col-sm-4 col-form-label">UPLOAD FILE</label>
                           <div className="col-sm-8">
-                          <input type="file" name="file_upload" multiple className="form-control"/>
+                          <input type="file" name="file_upload[]" onChange={handleFileChange} multiple className="form-control" />
+                          {/* <input type="file" name="file_upload" multiple className="form-control"/> */}
                           </div>
                         </div>
                       </div>

@@ -4,6 +4,7 @@ import {  useNavigate } from 'react-router-dom';
 import { notify } from '../../utils/notify';
 import { useGetmyCAADQuery } from '../../redux/services/caad/caadService';
 import { setMyCAAD, setMyBatchCAAD } from '../../redux/services/caad/caadSlice';
+import { useSearchAssetDTMutation } from '../../redux/services/dss/dtService';
 import PageLoader from "../spinner/loader";
 import DataTable from '../datatable';
 
@@ -15,12 +16,17 @@ const MYCAAD = () => {
   const { mycaad, mycaadbatch } = useSelector((state) => state.caad) || [];
   const navigate = useNavigate();
 
+    //Everything Search State
+    const [searchQuery, setSearchQuery] = useState('');
+    const [hiddenFieldValue, setHiddenFieldValue] = useState('mycaads');
+
   const {  data, isError, error, isFetching, isSuccess, isUninitialized, refetch} = useGetmyCAADQuery({ pageNo: currentPage });
   
-/*
-  console.log(mycaad);
-  console.log(data?.data?.single?.data);
-  */
+
+
+  // console.log(mycaad);
+  // console.log(data?.data?.single?.data);
+  
 
   if (isError) {
     notify("error", error?.data?.data || "An error occurred");
@@ -38,6 +44,7 @@ const MYCAAD = () => {
 
 
   const columns = [
+    { title: "ID", field: "id" },
     { title: "AccountNo", field: "accountNo" },
     { title: "Surname", field: "surname" },
     { title: "Lastname", field: "lastname" },
@@ -46,7 +53,7 @@ const MYCAAD = () => {
     { title: "Trans Type", field: "transtype" },
     { title: "Effective Date", field: "effective_date" },
     { title: "Amount", field: "amount" },
-    //{ title: "Status", field: "status" },
+    // { title: "Status", field: "status" },
   ];
 
   
@@ -85,6 +92,42 @@ const MYCAAD = () => {
   }
 
 
+  const [postSearch ] = useSearchAssetDTMutation();
+
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+   performSearch(searchQuery);
+  }
+
+
+  const performSearch = async (searchQuery) =>  {
+    const payload = {
+      caad: searchQuery,
+      type: hiddenFieldValue
+    };
+
+    if(!payload.caad){
+      notify("error", "Please search for a CAAD..");
+      return null;
+    }
+
+    try {
+         
+      const result = await postSearch(payload).unwrap();
+      console.log(result)
+      setCurrentPage(1);
+      dispatch(setMyCAAD(result));
+
+    } catch (error) {
+      notify("error", error.data);
+      console.log(error.data);
+      // Handle any error that occurs during the search
+    }
+
+  }
+
+
 
 
     return (
@@ -94,11 +137,31 @@ const MYCAAD = () => {
             <div className="col-md-12 grid-margin stretch-card">
               <div className="card">
                 <div className="card-body">
-                  <h4 className="card-title">MY CAAD REQUESTS</h4>
-                  <p className="card-description">
-                  <hr/>
-                 SINGLE REQUESTS <hr/>
-                  </p>
+                <h4 className="card-title">MY CAAD REQUEST &nbsp;
+             <button class="btn btn-icons btn-rounded btn-secondary" onClick={() => refetch()}><span class="icon-refresh"></span></button>
+             </h4>
+
+
+             <div class="row">
+                      <div class="col-md-12">
+                          <form onSubmit={handleSearchSubmit}>
+                            <div class="form-group d-flex">
+                        
+                            <input type="text" 
+                            value={searchQuery} 
+                            onChange={(e) => setSearchQuery(e.target.value)} 
+                            name="search_caad"
+                              className="form-control" placeholder="Search CAAD..." />
+
+                              <input type="hidden"  value={hiddenFieldValue} 
+                              onChange={(e) => setHiddenFieldValue(e.target.value)}
+                              className="form-control" />
+                                <button type="submit" className="btn btn-primary ml-3">Search</button>
+                            </div>
+                          </form>
+                      </div>
+
+                  </div>
 
                   {isFetching ? <PageLoader /> : 
 
@@ -122,11 +185,11 @@ const MYCAAD = () => {
             </div>
 
 
-
-            <div className="col-md-12 grid-margin stretch-card">
+          
+            {/* <div className="col-md-12 grid-margin stretch-card">
               <div className="card">
                 <div className="card-body">
-                  {/* <h4 className="card-title">BATCHED REQUESTS</h4> */}
+                
                   <p className="card-description">
                   <hr/>
                   BATCHED REQUESTS <hr/>
@@ -149,7 +212,7 @@ const MYCAAD = () => {
                   
                 </div>
               </div>
-            </div>
+            </div> */}
 
            
 

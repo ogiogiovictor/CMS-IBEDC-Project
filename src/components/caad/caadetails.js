@@ -66,7 +66,7 @@ const CAADETAILS = () => {
                 const result =  await approvelCAAD(idata).unwrap();
                 if(result?.data){
                     notify("success", result.message);
-                    //navigate('/allcaad', { replace: true });
+                    navigate('/allcaad', { replace: true });
                 }
 
             } catch(error){
@@ -121,14 +121,16 @@ const CAADETAILS = () => {
 
         }
 
-        if (rowData.batch_type === 'single' &&  (userInfo.role === 'district_accountant' && rowData.status === '10') && (rowData.district_accountant == userInfo.id) ) { 
+        if (rowData.batch_type === 'single' &&  (userInfo.role === 'credit_control' && rowData.status === '10') && (rowData.created_by == userInfo.id) ) { 
             return(
             <button onClick={() => handleRejection(rowData.id, rowData.status, userInfo.role, rowData.batch_type)} className="btn btn-primary btn-sm">Edit</button>
             );
-        }else if(userInfo.id != rowData.created_by){
-            notify("error", "You cannot edit this request because you are not the owner who created the request");
-            navigate("/caads")
         }
+        
+        // else if(userInfo.id != rowData.created_by){
+        //     notify("error", "You cannot edit this request because you are not the owner who created the request");
+        //     navigate("/caads")
+        // }
 
 
     //    // To be removed

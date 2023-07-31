@@ -36,6 +36,18 @@ const CustomerWidget = ({ customerInfo }) => {
     window.scrollTo(0, 0);
   };
 
+  const handleCaadClick = (customerInfo) => {
+    navigate(`/createcaad/${customerInfo.CustomerSK}`, {
+      state: {
+        custData: customerInfo,
+        custDataInfo: customerInfo.CustomerSK,
+        // Pass any other data you need here
+      },
+    });
+
+    window.scrollTo(0, 0);
+  }
+
   
 
   const customePaymentsColumns = [
@@ -250,11 +262,12 @@ const CustomerWidget = ({ customerInfo }) => {
                                   userInfo.role === 'admin' || userInfo.role === 'credit_control' ? (
                                     <>
                                       <td>
-                                        <Link to={`/createcaad/${customerInfo?.CustomerSK}`}>
+                                        <button className="btn btn-xs btn-info" onClick= {() => handleCaadClick(customerInfo) }> <i className="icon-user"></i> Create CAAD </button>
+                                        {/* <Link to={`/createcaad/${customerInfo?.CustomerSK}`}>
                                           <button className="btn btn-xs btn-info">
                                             <i className="icon-user"></i>Create CAAD 
                                           </button>
-                                        </Link>
+                                        </Link> */}
                                       </td>
                                       <td>
                                         <Link to={`/uploadcaad`}>

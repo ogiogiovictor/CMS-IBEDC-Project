@@ -59,10 +59,18 @@ const API_VERSION = `${process.env.REACT_APP_API_VERSION}`;
             }),
           }),
 
+          uploadBULKCAAD: builder.mutation({
+            query: (requestData) => ({
+              url: `/${API_VERSION}/upload_bulk_caad`,
+              method: "POST",
+              body: requestData, // the data you want to send in the request body
+            }),
+          }),
+
 
 
     }),
 });
 
 
-export const { useGetAllCAADQuery, usePushCAADMutation, useApproveCAADMutation, useRejectCAADMutation, useGetmyCAADQuery } = caadService;
+export const { useGetAllCAADQuery, usePushCAADMutation, useApproveCAADMutation, useRejectCAADMutation, useGetmyCAADQuery, useUploadBULKCAADMutation } = caadService;

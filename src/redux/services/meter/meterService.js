@@ -40,16 +40,6 @@ export const meterService = createApi({
             },
           }),
 
-
-          uploadBULKCAAD: builder.mutation({
-            query: (requestData) => ({
-              url: `/${API_VERSION}/upload_bulk_caad`,
-              method: "POST",
-              body: requestData, // the data you want to send in the request body
-            }),
-          }),
-
-
           getSingleCAAD: builder.query({
             query: ({ pageNo }) => ({
               url: `/${API_VERSION}/allcaad?page=${pageNo}`,
@@ -93,4 +83,4 @@ export const meterService = createApi({
     }),
 });
 
-export const { useGetMonthlySummaryQuery, useGetAllMetersQuery, useAddMetersMutation, useGetEventsLoopQuery, useUploadBULKCAADMutation, useGetSingleCAADQuery, useGetMytoFeedersQuery } = meterService;
+export const { useGetMonthlySummaryQuery, useGetAllMetersQuery, useAddMetersMutation, useGetEventsLoopQuery, useGetSingleCAADQuery, useGetMytoFeedersQuery } = meterService;

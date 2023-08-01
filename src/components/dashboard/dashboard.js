@@ -15,7 +15,8 @@ import { logout, logoutAndDeleteTokens } from "../../redux/auth/authSlice";
 const Dashboard = () => {
 
   const navigate = useNavigate();
-
+  
+  const dispatch = useDispatch();
 
   const { data, isFetching, error } = useGetDashboardStatsQuery("dashboardStats", {
     // perform a refetch every 15mins
@@ -32,7 +33,8 @@ const Dashboard = () => {
   }
 
   const { dashboardStats } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+  
+
 
   useEffect(() => {
     if (data) {

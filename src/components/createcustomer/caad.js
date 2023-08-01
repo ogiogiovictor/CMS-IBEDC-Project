@@ -146,10 +146,10 @@ const CAAD = () => {
 
         const formData = new FormData(e.target);
 
-        const { accountNo, phoneNo, surname, lastname, region, business_hub, accountType, transaction_type, effective_date, amount  } = Object.fromEntries(formData);
+        const { accountNo, phoneNo, surname, lastname, region, business_hub, accountType, transaction_type, effective_date, amount, remarks  } = Object.fromEntries(formData);
 
               // Check if any of the required fields are empty
-        if (!accountNo || !surname || !lastname || !region || !business_hub || !accountType || !transaction_type || !effective_date || !amount) {
+        if (!accountNo || !surname || !region || !business_hub || !accountType || !transaction_type || !effective_date || !amount  || !remarks) {
           notify("error", "The Following fields are required. AccountNo, Surname, Lastname, Region, Business Hub, AccountType, TransactionType, Effective Date, Amount and Remark.");
           setIsProcessing(false);
           return; // Exit the function if any required fields are empty

@@ -31,6 +31,7 @@ const ALLCAAD = () => {
 
 
   const columns = [
+    { title: "ID", field: "id" },
     { title: "AccountNo", field: "accountNo" },
     { title: "Surname", field: "surname" },
     { title: "Lastname", field: "lastname" },

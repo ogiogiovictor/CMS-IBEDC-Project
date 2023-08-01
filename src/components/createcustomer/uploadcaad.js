@@ -1,11 +1,13 @@
 import React, { useState, useEffect  } from 'react';
-import {  useNavigate } from 'react-router-dom';
+import {  useNavigate,  } from 'react-router-dom';
 import { notify } from '../../utils/notify';
-import { useUploadBULKCAADMutation } from '../../redux/services/meter/meterService';
 import {  useGetResourceListQuery } from '../../redux/services/user/userService';
+import { useUploadBULKCAADMutation } from '../../redux/services/caad/caadService';
 
 const UPLOADCAAD = () => {
   const [isProcessing, setIsProcessing] = useState(false);
+
+  const navigate = useNavigate();
 
 
   const [selectedRegion, setSelectedRegion] = useState("");
@@ -54,12 +56,12 @@ const UPLOADCAAD = () => {
 
       const result = await bulkupload(formData).unwrap();
       
-      console.log(result)
-      if(result.data){
+      console.log(result.data)
+      if(result){
         notify("success", "CAAD Upload Successful");
       }
       setIsProcessing(false);
-      // navigate('/caad', { replace: true });
+     navigate('/caads', { replace: true });
 
     }catch(e) {
       console.log(e);

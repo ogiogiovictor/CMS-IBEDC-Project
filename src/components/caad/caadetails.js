@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useApproveCAADMutation, useRejectCAADMutation } from '../../redux/services/caad/caadService';
 import { notify } from '../../utils/notify';
 import { datePicker, checkStatus, formatNumbers } from '../../redux/helpers';
+import Popup from '../modal/popup';
 
 const CAADETAILS = () => {
 
@@ -16,6 +17,11 @@ const CAADETAILS = () => {
     const rowSubTitle = location.state.rowSubTitle;
     const routeName = location.state.routeName;
     const navigate = useNavigate();
+
+    const [isOpen, setIsOpen] = useState(false); // State for popup
+
+    const openPopup = () => {  setIsOpen(true); };
+    const closePopup = () => { setIsOpen(false); };
   
 
 
@@ -149,7 +155,10 @@ const CAADETAILS = () => {
             return (
               <div>
                 <button  onClick={() => handleApproval(rowData.id, rowData.status, userInfo.role, rowData.batch_type)} className="btn btn-info btn-sm">Approve</button>&nbsp;&nbsp;&nbsp;
-                <button onClick={() => handleRejection(rowData.id, rowData.status, userInfo.role, rowData.batch_type)} className="btn btn-danger btn-sm">Reject</button>
+                {/* <button onClick={() => handleRejection(rowData.id, rowData.status, userInfo.role, rowData.batch_type)} className="btn btn-danger btn-sm">Reject</button> */}
+                <button onClick={openPopup} className="btn btn-danger btn-sm">Reject</button>
+
+               
               </div>
             );
          }
@@ -231,6 +240,25 @@ const CAADETAILS = () => {
 
 
 
+      const customContent = (handleStartDateChange, handleEndDateChange, handleSubmit) => (
+        <div style={{ width: '100%' }}>
+          <p style={{ marginBottom: '10px', width: '100%' }}>
+            <hr /> 
+              <textarea style={{ width: '100%' }} className="form-control"></textarea>
+           
+          </p>
+      
+          <p>
+            <button className="btn btn-danger btn-xs" type="button">
+              Submit
+            </button>
+          </p>
+        </div>
+      );
+      
+
+
+
 
 
 
@@ -242,8 +270,9 @@ const CAADETAILS = () => {
             <div className="card-body">
               <h4 className="card-title">{ rowSubTitle } 
               
+              
+              <Popup isOpen={isOpen} onClose={closePopup} title="Advance Comment" content={customContent} />
              
-
               </h4>
               <Link onClick={handleGoBack} class="btn btn-info btn-xs"><i class="icon-action-undo"></i></Link>
                  <div class="profile-body">

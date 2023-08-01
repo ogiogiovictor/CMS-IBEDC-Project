@@ -84,7 +84,7 @@ const MYCAAD = () => {
     navigate(`/caadetails/${mycaad.batch_type}/${mycaad.id}`, { 
       state: { 
         rowData: mycaad, 
-        rowTitle: 'CAAD Information (Single)',
+        rowTitle: `CAAD Information (${mycaad.batch_type})`,
         rowSubTitle: mycaad.batch_name,
         routeName: '/caads'
        }});

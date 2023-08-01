@@ -245,7 +245,6 @@ const CAADETAILS = () => {
           <p style={{ marginBottom: '10px', width: '100%' }}>
             <hr /> 
               <textarea style={{ width: '100%' }} className="form-control"></textarea>
-           
           </p>
       
           <p>

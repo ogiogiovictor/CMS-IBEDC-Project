@@ -17,7 +17,11 @@ const ALLCAAD = () => {
 
   const {  data, isError, error, isFetching, isSuccess, isUninitialized, refetch} = useGetSingleCAADQuery({ pageNo: currentPage });
   
-  console.log(data?.data?.single?.data);
+
+  if(error?.data?.message == "no_access"){
+    notify("error", error.data.data)
+    //console.log(error.data.data)
+  }
 
   
   useEffect(() => {

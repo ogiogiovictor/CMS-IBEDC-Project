@@ -21,6 +21,7 @@ const Popup = ({ isOpen, onClose, title, content }) => {
     const [region, setRegion] = useState('');
     const [customersearch, setSearchCustomer] = useState(''); //useState('customer_search');
     const [download, setDownload] = useState(''); 
+
     
 
       
@@ -72,7 +73,8 @@ const Popup = ({ isOpen, onClose, title, content }) => {
     const handleDownload = (e) => {
       setDownload(e.target.value);
     }
-    
+
+  
 
     const [ postExport ] = useExportCustomersMutation();
 
@@ -87,8 +89,6 @@ const Popup = ({ isOpen, onClose, title, content }) => {
           // handle form submission here
           e.preventDefault();
           let payload = null; // Define payload variable outside the if block
-
-       
 
         try{
           notify("info", "Exporting data, please wait...", 10000);
@@ -115,6 +115,7 @@ const Popup = ({ isOpen, onClose, title, content }) => {
             }            
             
           }
+
 
           console.log(payload);
 

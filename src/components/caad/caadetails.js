@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { useApproveCAADMutation, useRejectCAADMutation } from '../../redux/services/caad/caadService';
 import { notify } from '../../utils/notify';
 import { datePicker, checkStatus, formatNumbers } from '../../redux/helpers';
-import Popup from '../modal/popup';
 
 const CAADETAILS = () => {
 
@@ -17,12 +16,8 @@ const CAADETAILS = () => {
     const rowSubTitle = location.state.rowSubTitle;
     const routeName = location.state.routeName;
     const navigate = useNavigate();
-
-    const [isOpen, setIsOpen] = useState(false); // State for popup
-
-    const openPopup = () => {  setIsOpen(true); };
-    const closePopup = () => { setIsOpen(false); };
   
+    const [showForm, setShowForm] = useState(false);
 
 
     const handleGoBack = () => {
@@ -84,34 +79,14 @@ const CAADETAILS = () => {
         };
 
 
-      
-        const handleRejection = async (id, status, role, batch_type) => {
-            try {
-                const idatajected = {
-                    id: id,
-                    status: status,
-                    role: role,
-                    batch_type: batch_type
-                }
-
-                const result =  await rejectCAAD(idatajected).unwrap();
-                if(result?.data){
-                    notify("success", result.message);
-                    navigate('/allcaad', { replace: true });
-                }
-
-            } catch(error){
-                if(error?.data?.success === false){
-                    notify("error", error.data.data);
-                }
-                console.log(error.data)
-            }
-        };
-
         const handleEditForm = (id, status, role, batch_type, auth_id, createdby_id, rowData) => {
          
             if(status != 10){
                 notify("error", "You cannot edit this request");
+                return;
+            } else if(createdby_id != id) {
+                notify("error", "You cannot edit this request");
+                return;
             }else {
 
                 navigate(`/edit-form/${id}`, {
@@ -129,34 +104,22 @@ const CAADETAILS = () => {
 
         if (rowData.batch_type === 'single' &&  (userInfo.role === 'credit_control' && rowData.status === '10') && (rowData.created_by == userInfo.id) ) { 
             return(
-            <button onClick={() => handleRejection(rowData.id, rowData.status, userInfo.role, rowData.batch_type)} className="btn btn-primary btn-sm">Edit</button>
+            <button onClick={() => handleEditForm(rowData.id, rowData.status, userInfo.role, rowData.batch_type)} className="btn btn-primary btn-sm">Edit</button>
             );
         }
         
-        // else if(userInfo.id != rowData.created_by){
-        //     notify("error", "You cannot edit this request because you are not the owner who created the request");
-        //     navigate("/caads")
-        // }
-
-
-    //    // To be removed
-    //     if (rowData.batch_type === 'single') { 
-    //         return (
-    //             <button onClick={() => handleEditForm(rowData.id, rowData.status, userInfo.role, rowData.batch_type, userInfo.id, rowData.district_accountant, rowData)} className="btn btn-primary btn-sm">Edit Remove</button> 
-    //         )
-           
-    //     }
       
         if (rowData.batch_type === 'single') {
           if (userInfo.role === 'admin' || (userInfo.role === 'district_accountant' && rowData.status === '0') || (userInfo.role === 'businesshub_manager' && rowData.status === '1')
-          || (userInfo.role === 'auditor' && rowData.status === '2')  || (userInfo.role === 'regional_manager' && rowData.status === '3')
+          || (userInfo.role === 'audit' && rowData.status === '2')  || (userInfo.role === 'regional_manager' && rowData.status === '3')
           || (userInfo.role === 'hcs' && rowData.status === '4')  || (userInfo.role === 'cco' && rowData.status === '5')  || (userInfo.role === 'md' && rowData.status === '6')
+          || (userInfo.role === 'billing' && rowData.status === '7')
           ) {
             return (
               <div>
                 <button  onClick={() => handleApproval(rowData.id, rowData.status, userInfo.role, rowData.batch_type)} className="btn btn-info btn-sm">Approve</button>&nbsp;&nbsp;&nbsp;
                 {/* <button onClick={() => handleRejection(rowData.id, rowData.status, userInfo.role, rowData.batch_type)} className="btn btn-danger btn-sm">Reject</button> */}
-                <button onClick={openPopup} className="btn btn-danger btn-sm">Reject</button>
+                <button className="btn btn-danger btn-sm" onClick={toggleFormVisibility}> {showForm ? 'Hide Comment' : 'Reject'} </button>
 
                
               </div>
@@ -238,25 +201,52 @@ const CAADETAILS = () => {
       };
 
 
+      const [values, setValues] = useState({
+        add_comment: '',
+        user_status: rowData.status,
+        user_role: userInfo.role,
+        request_id: rowData.id,
+        batch_type: rowData.batch_type
+
+    });
+
+    const onChangeHandler = (e) => {
+        setValues({...values, [e.target.name]: e.target.value})
+      }
+  
+    const handleRejection = async (e) => { // id, status, role, batch_type
+        e.preventDefault();
+        try{
+
+            const payload = {
+                id: values.request_id,
+                status: rowData.status,
+                role: userInfo.role,
+                batch_type: values.batch_type
+            }
+
+            console.log(payload)
+            const result =  await rejectCAAD(payload).unwrap();
+            if(result?.data){
+                notify("success", result.message);
+                navigate('/allcaad', { replace: true });
+            }
+
+        }catch(error){
+             if(error?.data?.success === false){
+                 notify("error", error.data.data);
+            }
+             console.log(error.data)
+         }
+
+    };
 
 
-      const customContent = (handleStartDateChange, handleEndDateChange, handleSubmit) => (
-        <div style={{ width: '100%' }}>
-          <p style={{ marginBottom: '10px', width: '100%' }}>
-            <hr /> 
-              <textarea style={{ width: '100%' }} className="form-control"></textarea>
-          </p>
-      
-          <p>
-            <button className="btn btn-danger btn-xs" type="button">
-              Submit
-            </button>
-          </p>
-        </div>
-      );
-      
 
-
+      const toggleFormVisibility = () => {
+        setShowForm(!showForm);
+      };
+    
 
 
 
@@ -269,8 +259,6 @@ const CAADETAILS = () => {
             <div className="card-body">
               <h4 className="card-title">{ rowSubTitle } 
               
-              
-              <Popup isOpen={isOpen} onClose={closePopup} title="Advance Comment" content={customContent} />
              
               </h4>
               <Link onClick={handleGoBack} class="btn btn-info btn-xs"><i class="icon-action-undo"></i></Link>
@@ -302,6 +290,25 @@ const CAADETAILS = () => {
                          <div class="tab-content tab-body" id="profile-log-switch">
  
                            <div class="tab-pane fade show active pr-3" id="user-profile-info" role="tabpanel" aria-labelledby="user-profile-info-tab">
+
+                        {/* <button onClick={() => handleRejection(rowData.id, rowData.status, userInfo.role, rowData.batch_type)} className="btn btn-danger btn-sm">Reject</button> */}
+                           {showForm && (
+                           <form class="form-sample" onSubmit={handleRejection}>
+                           <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Add Comment </label>
+                                    <div class="col-sm-8"> 
+                                      <input type="text"  class="form-control" name="add_comment"  onChange={onChangeHandler} />
+                                      <input type="hidden"  class="form-control" name="user_status" value={rowData.status}/>
+                                      <input type="hidden"  class="form-control" name="user_role"  value={userInfo.role} />
+                                      <input type="hidden"  class="form-control" name="request_id"  value={rowData.id} />
+                                      <input type="hidden"  class="form-control" name="batch_type"  value={rowData.batch_type} />
+                                    </div>
+                                    <div class="col-sm-1"> <button type="submit" className="btn btn-sm btn-primary">Submit</button></div>
+                                </div>
+                            </div>
+                          </form>
+                           )}
                          
                            
                             {
@@ -423,7 +430,7 @@ const CAADETAILS = () => {
                                                <table class="table-bordered table-primary">
                                                     <tr>
                                                         <td>
-                                                        <a href={`http://localhost:8000/storage/customercaad/${file.file_name}`} target="_blank" rel="noopener noreferrer">
+                                                        <a href={`https://cms.ibedc.com/storage/customercaad/${file.file_name}`} target="_blank" rel="noopener noreferrer">
                                                             <strong>File Name:</strong> {file.file_name}
                                                         </a>
                                                         </td>

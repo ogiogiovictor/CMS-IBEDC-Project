@@ -8,6 +8,7 @@ import PageLoader from "../spinner/loader";
 import DataTable from '../datatable';
 import EventCard from './eventcards';
 import { notify } from "../../utils/notify";
+import { CSVLink } from 'react-csv';
 
 const MonthlySummary = () => {
 
@@ -123,7 +124,9 @@ const MonthlySummary = () => {
        <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">
          <div className="card">
            <div className="card-body">
-             <h4 className="card-title">Events Summary { new Date().getFullYear() } - {  new Date().getMonth() + 1 } </h4>
+             <h4 className="card-title">Events Summary { new Date().getFullYear() } - {  new Date().getMonth() + 1 } 
+             <CSVLink data={summarymonthami} filename={"data.csv"}> <button className="btn btn-xs btn-primary">Export to CSV</button></CSVLink>
+             </h4>
              <form onSubmit={handleSearchSubmit}>
                 <div class="form-group d-flex">
                           <input type="text" 

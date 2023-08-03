@@ -6,6 +6,7 @@ import { useGetSingleCAADQuery } from '../../redux/services/meter/meterService';
 import { setCAAD, setBATCH } from '../../redux/services/meter/meterSlice';
 import PageLoader from "../spinner/loader";
 import DataTable from '../datatable';
+import { CSVLink } from 'react-csv';
 
 
 const ALLCAAD = () => {
@@ -83,6 +84,8 @@ const ALLCAAD = () => {
   }
 
 
+
+
     return (
         <div className="row">
 
@@ -94,6 +97,7 @@ const ALLCAAD = () => {
                   <p className="card-description">
                   <hr/>
                  SINGLE REQUESTS <hr/>
+                 <CSVLink data={caad} filename={"data.csv"}> <button className="btn btn-xs btn-primary">Export to CSV</button></CSVLink>
                   </p>
 
                   {isFetching ? <PageLoader /> : 

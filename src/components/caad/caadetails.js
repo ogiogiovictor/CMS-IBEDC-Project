@@ -113,7 +113,7 @@ const CAADETAILS = () => {
           if (userInfo.role === 'admin' || (userInfo.role === 'district_accountant' && rowData.status === '0') || (userInfo.role === 'businesshub_manager' && rowData.status === '1')
           || (userInfo.role === 'audit' && rowData.status === '2')  || (userInfo.role === 'regional_manager' && rowData.status === '3')
           || (userInfo.role === 'hcs' && rowData.status === '4')  || (userInfo.role === 'cco' && rowData.status === '5')  || (userInfo.role === 'md' && rowData.status === '6')
-          || (userInfo.role === 'billing' && rowData.status === '7')
+          || (userInfo.role === 'billing' && rowData.status === '7')  || (userInfo.role === 'billing' && rowData.status === '9')
           ) {
             return (
               <div>
@@ -430,7 +430,7 @@ const CAADETAILS = () => {
                                                <table class="table-bordered table-primary">
                                                     <tr>
                                                         <td>
-                                                        <a href={`https://cms.ibedc.com/storage/customercaad/${file.file_name}`} target="_blank" rel="noopener noreferrer">
+                                                        <a href={`https://apiengine.ibedc.com:7443/storage/customercaad/${file.file_name}`} target="_blank" rel="noopener noreferrer">
                                                             <strong>File Name:</strong> {file.file_name}
                                                         </a>
                                                         </td>

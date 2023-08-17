@@ -9,10 +9,12 @@ import DataTable from "../datatable";
 import DynamicData from '../layout/dynamicData';
 import Popup from '../modal/popup';
 
+
 const Transformer = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const { dss, dssData } = useSelector((state) => state.dss) || [];
+  const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const [selectedObject, setSelectedObject] = useState(null);
@@ -189,7 +191,14 @@ const Transformer = () => {
       </div>
     );
 
-   
+
+ const addAssets = () => {
+          (
+            <Link to="/add_transfomer" class="btn btn-danger btn-fw">
+            <i className="icon-cloud-upload"></i>Add Transformer
+            </Link>
+          )
+        }
 
     return (
 
@@ -209,9 +218,10 @@ const Transformer = () => {
                   <h4 className="card-title">All Distribution Sub Stations &nbsp;&nbsp;
                   <button className="btn btn-icons btn-rounded btn-secondary" onClick={() => refetch()}><span className="icon-refresh"></span></button>
                   &nbsp;&nbsp;
-                  <Link to="/add_transfomer" class="btn btn-danger btn-fw">
-                  <i className="icon-cloud-upload"></i>Add Transformer
-                  </Link>
+                  
+                    {userInfo.role === 'technical_engineer' || userInfo.role === 'admin' && <addAssets />}
+                  
+                 
                   &nbsp;&nbsp;
                   {/* <Link to="/transformer_map" class="btn btn-primary btn-fw">
                   <i class="icon-cloud-upload"></i>View Map

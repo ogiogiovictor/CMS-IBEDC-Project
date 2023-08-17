@@ -16,6 +16,7 @@ const Feeder = () => {
   const { feeder, feederData } = useSelector((state) => state.feeder) || [];
   const dispatch = useDispatch();
   const [selectedObject, setSelectedObject] = useState(null);
+  const { userInfo } = useSelector((state) => state.auth);
 
   const [isOpen, setIsOpen] = useState(false); // State for popup
 
@@ -128,6 +129,27 @@ const Feeder = () => {
     </div>
   );
 
+
+
+  const FeederAddButton = () => {
+    (
+      <div>
+
+<Link to="/add_feeder" class="btn btn-info btn-fw">
+             <i class="icon-cloud-upload"></i>Add 11KV Feeder 
+             </Link>
+            &nbsp;  &nbsp; 
+             <Link to="/add_thirty_feeder" class="btn btn-danger btn-fw">
+             <i class="icon-cloud-upload"></i>Add 33KV Feeder
+             </Link>
+      </div>
+       
+    )
+  }
+
+
+
+
     return (
         <Fragment>
             <FeederCard feeder={feeder} />
@@ -144,13 +166,7 @@ const Feeder = () => {
              &nbsp;&nbsp;
              <button class="btn btn-icons btn-rounded btn-secondary" onClick={() => refetch()}><span class="icon-refresh"></span></button>
              &nbsp;&nbsp;
-             <Link to="/add_feeder" class="btn btn-info btn-fw">
-             <i class="icon-cloud-upload"></i>Add 11KV Feeder
-             </Link>
-             &nbsp;&nbsp;
-             <Link to="/add_thirty_feeder" class="btn btn-danger btn-fw">
-             <i class="icon-cloud-upload"></i>Add 33KV Feeder
-             </Link>
+             {userInfo.role === 'technical_engineer' || userInfo.role === 'admin' && <FeederAddButton />}
              </h4>
 
 

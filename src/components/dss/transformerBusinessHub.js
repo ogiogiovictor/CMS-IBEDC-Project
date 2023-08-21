@@ -46,10 +46,10 @@ const DTBusinessHub = () => {
    
     const columns = [
       { title: "Business Hub", field: "hub_name" },
-      { title: "Number of Dts", field: "asset_count" },
-      { title: "Number of Customers", field: "customers" },
-      { title: "Prepaid Customers", field: "prepaid_customers" },
-      { title: "Postpaid Customers", field: "postpaid_customers" },
+      { title: "Total Dts", field: "asset_count" },
+      { title: "Total Customers", field: "customers" },
+      { title: "Prepaid", field: "prepaid_customers" },
+      { title: "Postpaid", field: "postpaid_customers" },
       { title: "Postpaid Payment", field: "postpaid_payments" },
       { title: "Prepaid Payment", field: "prepaid_payments_previous" },
       { title: "Amount Billed", field: "bills" },

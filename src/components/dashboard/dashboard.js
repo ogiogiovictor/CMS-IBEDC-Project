@@ -24,13 +24,13 @@ const Dashboard = () => {
   });
 
 
-  console.log(error);
-  if(error){
-    notify('Error', error);
-    dispatch(logout());
-    navigate(`/errorpage`);
+  // console.log(error);
+  // if(error){
+  //   notify('Error', error);
+  //   dispatch(logout());
+  //   navigate(`/errorpage`);
 
-  }
+  // }
 
   const { dashboardStats } = useSelector((state) => state.auth);
   

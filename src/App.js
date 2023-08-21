@@ -68,6 +68,8 @@ import ChangePassword from "./components/settings/changepassword";
 import ForgotPassword from "./pages/forgotpass";
 import EDITCAAD from "./components/caad/editcaad";
 import ResetPassword from "./pages/resetpass";
+import TransformerBHubInfo from "./components/dss/transformerbhubinfo";
+import CustomerInDT from "./components/dss/customersindt";
 
 
 const App = () => {
@@ -193,7 +195,7 @@ const App = () => {
                   <Route path="add_meters" element={<AddMeters />} /> 
                   <Route path="all_meters" element={<Meters />} />
                   <Route path="customer_region/:region" element={<CustomerByRegion/>} />
-                  <Route path="dt_billing_efficiency" element={<BillingEfficiency />} />
+                  {/* <Route path="dt_billing_efficiency" element={<BillingEfficiency />} /> */}
                   <Route path="non_sts_customers" element={<NstsCustomers />} />
                   <Route path="dt_by_business_hub" element={<DTBusinessHub />} />
                   <Route path="my_approvals" element={<MyApprovals />} /> 
@@ -210,6 +212,9 @@ const App = () => {
                    <Route path="/edit-form/:id" element={<EDITCAAD />} />
 
                    <Route path="/change_password" element={<ChangePassword />} />
+
+                   <Route path="/transformer_business_hub_info/:hubName" element={<TransformerBHubInfo />} />
+                  <Route path="customers_in_dts/:hubName/:dssID" element={<CustomerInDT />} />
 
 
 

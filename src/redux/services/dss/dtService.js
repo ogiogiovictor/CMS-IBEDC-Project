@@ -73,6 +73,32 @@ export const dtService = createApi({
           }),
         }),
 
+        getDTbyInBhubs: builder.query({
+          query: ({ hubName, pageNo }) => ({
+           // url: `/${API_VERSION}/dts_in_business_hub?hubName=${userQuery}&page=${pageNo}`,
+            url: `/${API_VERSION}/dts_in_business_hub/${hubName}`,
+            method: "GET",
+          }),
+          pollingInterval: 900000, // 15 minutes
+          cacheOptions: {
+            // cache results for 5 minutes
+            ttl: 3000000,
+          },
+        }),
+
+
+        getCustomersinDTByBusinessHub: builder.query({
+          query: ({ hubName, dssID, pageNo }) => ({
+            url: `/${API_VERSION}/dts_in_business_hub/${hubName}/${dssID}`,
+            method: "GET",
+          }),
+          pollingInterval: 900000, // 15 minutes
+          cacheOptions: {
+            // cache results for 5 minutes
+            ttl: 3000000,
+          },
+        }),
+
 
         
 
@@ -80,5 +106,5 @@ export const dtService = createApi({
 });
 
 
-export const {  useGetdtbybusinessHubQuery,   useGetBillingEfficencyQuery, useGetAllDistributionQuery, useGetDSSInfoQuery, useSearchAssetDTMutation, 
+export const {  useGetdtbybusinessHubQuery,  useGetDTbyInBhubsQuery, useGetCustomersinDTByBusinessHubQuery, useGetBillingEfficencyQuery, useGetAllDistributionQuery, useGetDSSInfoQuery, useSearchAssetDTMutation, 
   useExportAssetDTMutation, useAddAssetsMutation } = dtService;

@@ -678,9 +678,9 @@ const AddCustomer = () => {
 
 
                    
-                    <button type="submit" className="btn btn-primary mr-2">
+                    {/* <button type="submit" className="btn btn-primary mr-2">
                     {isProcessing ? 'Processing...' : 'Submit'}
-                    </button>
+                    </button> */}
 
 
                   </form> 

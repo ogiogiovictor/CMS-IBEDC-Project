@@ -9,7 +9,7 @@ const API_VERSION = `${process.env.REACT_APP_API_VERSION}`;
     endpoints: (builder) => ({
         getAllBills: builder.query({
             query: ({ pageNo }) => ({
-              url: `/${API_VERSION}/getbills`,
+              url: `/${API_VERSION}/bills`,
               method: "GET",
             }),
             pollingInterval: 900000, // 15 minutes

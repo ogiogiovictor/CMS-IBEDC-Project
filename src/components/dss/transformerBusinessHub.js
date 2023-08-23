@@ -7,6 +7,7 @@ import PageLoader from "../spinner/loader";
 import DataTable from "../datatable";
 import DynamicData from '../layout/dynamicData';
 import Popup from '../modal/popup';
+import { CSVLink } from 'react-csv';
 
 const DTBusinessHub = () => {
 
@@ -34,22 +35,31 @@ const DTBusinessHub = () => {
 
     const handleActionClick = (data) => {
       setSelectedObject(data);
-      navigate(`/details/${data.Assetid}`, { 
+     /* navigate(`/details/${data.Assetid}`, { 
         state: { 
           rowData: data, 
           rowTitle: 'Awailable DT in Business Hubs',
           rowSubTitle: data.DSS_11KV_415V_Name,
           routeName: '/dt_by_business_hub'
          } });
+         */
+
+         navigate(`/transformer_business_hub_info/${data.hub_name}`, { 
+          state: { 
+            rowData: data, 
+            rowTitle: 'Awailable DT in Business Hubs',
+            rowSubTitle: data.hub_name,
+            routeName: '/dt_by_business_hub'
+           } });
     };
 
    
     const columns = [
       { title: "Business Hub", field: "hub_name" },
-      { title: "Number of Dts", field: "asset_count" },
-      { title: "Number of Customers", field: "customers" },
-      { title: "Prepaid Customers", field: "prepaid_customers" },
-      { title: "Postpaid Customers", field: "postpaid_customers" },
+      { title: "Total Dts", field: "asset_count" },
+      { title: "Total Customers", field: "customers" },
+      { title: "Prepaid", field: "prepaid_customers" },
+      { title: "Postpaid", field: "postpaid_customers" },
       { title: "Postpaid Payment", field: "postpaid_payments" },
       { title: "Prepaid Payment", field: "prepaid_payments_previous" },
       { title: "Amount Billed", field: "bills" },
@@ -74,6 +84,7 @@ const DTBusinessHub = () => {
               <div className="card">
                 <div className="card-body">
                   <h4 className="card-title">DT By Business Hub &nbsp;&nbsp;
+                  <CSVLink data={data?.data} filename={"DTSUMMARY.csv"}> <button className="btn btn-xs btn-primary">Export to CSV</button></CSVLink>&nbsp;&nbsp;
                   <button className="btn btn-icons btn-rounded btn-secondary" onClick={() => refetch()}><span className="icon-refresh"></span></button>
                   &nbsp;&nbsp;</h4>
                   <hr/>

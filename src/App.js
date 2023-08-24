@@ -70,6 +70,7 @@ import EDITCAAD from "./components/caad/editcaad";
 import ResetPassword from "./pages/resetpass";
 import TransformerBHubInfo from "./components/dss/transformerbhubinfo";
 import CustomerInDT from "./components/dss/customersindt";
+import NEWCRMD from "./components/createcustomer/newcrms";
 
 
 const App = () => {
@@ -215,6 +216,8 @@ const App = () => {
 
                    <Route path="/transformer_business_hub_info/:hubName" element={<TransformerBHubInfo />} />
                   <Route path="customers_in_dts/:hubName/:dssID" element={<CustomerInDT />} />
+
+                  <Route path="/new_crmd" element={<NEWCRMD />} />
 
 
 

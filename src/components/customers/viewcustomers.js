@@ -1,6 +1,7 @@
 import React, {Fragment, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {  useGetNewCustomersQuery, useGetCRMDCustomerQuery } from "../../redux/services/customer/customerService";
+import { useGetNewlyCapturedCustomerQuery } from '../../redux/services/crmd/crmdservice';
 import { notify } from '../../utils/notify';
 import PageLoader from "../spinner/loader";
 import DataTable from '../datatable';
@@ -9,7 +10,9 @@ import DataTable from '../datatable';
 const ViewCustomers = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  //const { data, isFetching, refetch, isUninitialized, isError } = useGetNewCustomersQuery();
+  
+  const { data: capturedCustomers, isFetching: newlyisFetchingCustomers, refetch: getRefresh, isUninitialized: 
+    newlyUninitializedCustomers, isError: newlyIsError } = useGetNewlyCapturedCustomerQuery({  pageNo: currentPage });
 
   const { data: newCustomersData, isFetching: isNewCustomersFetching, 
     refetch: refetchNewCustomers, isUninitialized: isNewCustomersUninitialized, 
@@ -17,7 +20,8 @@ const ViewCustomers = () => {
   
   const { data: crmData } = useGetCRMDCustomerQuery({  pageNo: currentPage });
 
-  console.log(crmData);
+  console.log("We are checking for mssql Dcoument\n")
+  console.log(capturedCustomers);
 
   if(crmData){
   //if(crmData.message){
@@ -70,6 +74,16 @@ const ViewCustomers = () => {
     window.scrollTo(0, 0);
   }
 
+  const handleViewClick = (customer) => {
+    navigate(`/details/${customer.id}`, { 
+      state: { 
+        rowData: customer, 
+        rowTitle: 'Customer Information',
+        rowSubTitle: customer.Old_FullName,
+        routeName: '/viewcustomers'
+       } });
+       window.scrollTo(0, 0);
+  }
 
     return (
 
@@ -83,7 +97,7 @@ const ViewCustomers = () => {
        <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">
          <div className="card">
            <div className="card-body">
-             <h4 className="card-title">Newly Captured (customers)</h4>
+             <h4 className="card-title">Pending CRMD - (Customer Record Management System)</h4>
             <hr/>
              {/* <div class="form-group d-flex">
                           <input type="text" class="form-control" placeholder="Search Bills(s)..." />
@@ -91,7 +105,7 @@ const ViewCustomers = () => {
              </div> */}
              <div className="table-responsive">
 
-             <DataTable 
+             {/* <DataTable 
                  data={newCustomersData?.data}
                  columns={columns}
                  pagination
@@ -114,37 +128,39 @@ const ViewCustomers = () => {
                  pageSize={1}
                  onPageChange={(page) => setCurrentPage(1)}
                  onActionClick={handleCustomerClick}
-                />
+                /> */}
               
-             {/* <table className="table">
+              <table className="table">
                   <thead>
                     <tr>
-                      <th>Firstname</th>
-                      <th>Surname</th>
-                      <th>Customer Type</th>
-                      <th>Region</th>
-                      <th>Business Hub</th>
+                      <th>ID</th>
+                      <th>AccountNo</th>
+                      <th>MeterNo</th>
+                      <th>Customer Name</th>
+                      <th>Customer New Name</th>
+                      <th>Account Type</th>
                       <th>Status</th>
                       <th>Captured By</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {data && data?.data.map(customer => (
+                    {capturedCustomers && capturedCustomers?.data.map(customer => (
                       <tr key={customer._id}>
-                        <td>{customer.firstname}</td>
-                        <td>{customer.surname}</td>
-                        <td>{customer.customer_type}</td>
-                        <td>{customer.region}</td>
-                        <td>{customer.business_hub}</td>
+                        <td>{customer.id}</td>
+                        <td>{customer.AccountNo}</td>
+                        <td>{customer.MeterNo}</td>
+                        <td>{customer.Old_FullName}</td>
+                        <td>{customer.new_surname} {customer.new_firstname}</td>
+                        <td>{customer.AcountType}</td>
                         <td>
-                        <label className={customer?.status == 'pending' ? "badge badge-info" : "badge badge-success" }>
-                            {customer?.status}
+                        <label className={customer?.approval_type == '0' ? "badge badge-info" : "badge badge-success" }>
+                            {customer?.approval_type}
                             </label>
                         </td>
-                        <td>{customer.captured_by_name}</td>
+                        <td>{customer.userid}</td>
                         <td>
-                        <button className="btn btn-xs btn-outline-primary">
+                        <button className="btn btn-xs btn-outline-primary" onClick={() => handleViewClick(customer)}>
                             <i class="icon-user"></i>
                             View
                           </button>&nbsp;
@@ -152,7 +168,7 @@ const ViewCustomers = () => {
                       </tr>
                     ))}
                   </tbody>
-                </table> */}
+                </table> 
 
              </div>
            </div>

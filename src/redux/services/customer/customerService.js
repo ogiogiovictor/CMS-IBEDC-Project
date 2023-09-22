@@ -156,8 +156,6 @@ export const customerService = createApi({
       }),
     }),
 
-
-
   }),
 
  

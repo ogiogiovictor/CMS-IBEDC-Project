@@ -24,6 +24,7 @@ import { meterService } from "./services/meter/meterService";
 import meterSlice from "./services/meter/meterSlice";
 import { caadService } from "./services/caad/caadService";
 import caadSlice from "./services/caad/caadSlice";
+import { crmdService } from "./services/crmd/crmdservice";
 
 
 
@@ -53,6 +54,7 @@ const store = configureStore({
         [userService.reducerPath]: userService.reducer,
         [meterService.reducerPath]: meterService.reducer,
         [caadService.reducerPath]: caadService.reducer,
+        [crmdService.reducerPath]: crmdService.reducer,
         
     },
     middleware: (getDefaultMiddleware) =>
@@ -69,6 +71,7 @@ const store = configureStore({
         userService.middleware,
         meterService.middleware,
         caadService.middleware,
+        crmdService.middleware,
         ),
 });
   

@@ -67,10 +67,12 @@ const API_VERSION = `${process.env.REACT_APP_API_VERSION}`;
             }),
           }),
 
+         
+
 
 
     }),
 });
 
 
-export const { useGetAllCAADQuery, usePushCAADMutation, useApproveCAADMutation, useRejectCAADMutation, useGetmyCAADQuery, useUploadBULKCAADMutation } = caadService;
+export const { useGetAllCAADQuery, usePushCAADMutation, useApproveCAADMutation, useRejectCAADMutation, useGetmyCAADQuery, useUploadBULKCAADMutation,  } = caadService;

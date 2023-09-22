@@ -6,6 +6,7 @@ import { useGetDashboardStatsQuery } from "../../redux/services/auth/authService
 import { useSearchAssetDTMutation } from "../../redux/services/dss/dtService";
 import { setDashboardStats } from "../../redux/auth/authSlice";
 import { notify  } from '../../utils/notify';
+import SHOWCRMFORM from './showcrmdform';
 
 const NEWCRMD = () => {
   const { data, isFetching } = useGetDashboardStatsQuery("dashboardStats", {});
@@ -22,7 +23,7 @@ const NEWCRMD = () => {
     }
   }, [data, dispatch]);
 
-  console.log(dashboardStats?.customer_by_region)
+  console.log(data?.data);
 
 
   const [values, setValues] = useState({
@@ -46,6 +47,7 @@ const NEWCRMD = () => {
 
 
     //Searching...
+    const [customerData, setCustomerData] = useState(undefined);
     const [postSearch ] = useSearchAssetDTMutation();
 
   const postCustomer = async (e) => {
@@ -64,10 +66,12 @@ const NEWCRMD = () => {
       }
 
       try {
-
+        setIsProcessing(true);
         const result = await postSearch(idata).unwrap();
          if(result.data){
-          notify("success", "Ticket Successfully Found" || "Process Completed Successfully");
+          setCustomerData(result.data);
+          notify("success", "Customer Successful Found" || "Process Completed Successfully");
+          setIsProcessing(false);
          }else{
           setIsProcessing(false); // Enable the button back
           setValues({...values, errorMessage: 'No Customer was Found. Please try again'});
@@ -150,6 +154,15 @@ const NEWCRMD = () => {
                     {isProcessing ? 'Processing...' : 'Proceed'}
                     </button>
                   </form> 
+
+
+
+                  <div>
+                    <hr/><br/>
+                  {
+                   customerData !== undefined ? <SHOWCRMFORM data={customerData[0]} /> : null
+                  }
+                  </div>
                   
                 </div>
               </div>

@@ -33,8 +33,18 @@ export const paymentService = createApi({
             },
           }),
 
+          //GET PENDING CRMD CUSTOMERS DETAILS
+        getBillPaymentSummary: builder.query({
+          query: () => ({
+            url: `/${API_VERSION}/bill_payment_summary`,
+            method: "GET",
+          }),
+          pollingInterval: 900000, // 15 minutes
+        }),
+
+
     }),
 
 });
 
-export const { useGetAllPaymentQuery, useGetPaymentInfoQuery } = paymentService;
+export const { useGetAllPaymentQuery, useGetPaymentInfoQuery, useGetBillPaymentSummaryQuery } = paymentService;

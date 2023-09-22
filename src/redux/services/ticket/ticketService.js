@@ -21,6 +21,7 @@ export const ticketService = createApi({
             // Alternatively, you can throw an error to be caught by a higher-level error boundary
             // throw new Error("An error occurred while fetching tickets.");
           },
+          
        
 
           }),

@@ -8,6 +8,7 @@ import { setCrmd } from "../../redux/customer/customerSlice";
 import { datePicker } from '../../redux/helpers';
 import { notify } from '../../utils/notify';
 import DataTable from '../datatable';
+import { useGetPendingApprovalQuery } from '../../redux/services/crmd/crmdservice';
 
 
 
@@ -25,15 +26,22 @@ const PendingCustomer = () => {
 
     const { data: newCustomersData } = useGetNewCustomersQuery();
 
-    console.log(newCustomersData?.data);
+    const { data: CustomerPending, isFetching: nowIsFetching} = useGetPendingApprovalQuery({  pageNo: currentPage });
+
+    console.log(CustomerPending);
 
     const { crmd } =  useSelector((state) => state.customer) || [];
  
 
-    const handleButtonClick = async (_id) => {
-      const filteredData = crmd?.filter((customer) => customer._id === _id);
-      navigate(`/customernewdetails/${_id}`, { state: { data: filteredData } });
-      window.scrollTo(0, 0);
+    const handleButtonClick = async (customer) => {
+      navigate(`/details/${customer.id}`, { 
+        state: { 
+          rowData: customer, 
+          rowTitle: 'Customer Information',
+          rowSubTitle: customer.Old_FullName,
+          routeName: '/crmdetails'
+         } });
+         window.scrollTo(0, 0);
     }
 
 
@@ -75,6 +83,39 @@ const PendingCustomer = () => {
       { title: "Captured By", field: "captured_by_name" },
     
     ];
+
+
+
+    const newolumns = [
+      { title: "ID", field: "id" },
+      { title: "Date", field: "created_at" },
+      { title: "AccountNo", field: "AccountNo" },
+      { title: "Type", field: "AcountType" },
+      { title: "Name", field: "Old_FullName" },
+      { title: "Region", field: "region" },
+      { title: "Bhub", field: "hub" },
+      { title: "Status", field: "approval_type" },
+      
+    
+    ];
+
+    const handleHandlectionClick = (customer) => {
+
+      navigate(`/details/${customer.id}`, { 
+        state: { 
+          rowData: customer, 
+          rowTitle: 'Customer Information',
+          rowSubTitle: customer.Old_FullName,
+          routeName: '/crmdetails'
+         } });
+         window.scrollTo(0, 0);
+
+
+      // const filteredData = newCustomersData?.data.filter((customer) => customer._id === _id);
+      // navigate(`/customernewdetails/${_id}`, { state: { data: filteredData } });
+      
+    };
+
 
     const handleActionClick = ({_id}) => {
       const filteredData = newCustomersData?.data.filter((customer) => customer._id === _id);
@@ -171,14 +212,14 @@ const PendingCustomer = () => {
        <div className="col-md-12 grid-margin grid-margin-md-0 stretch-card">
          <div className="card">
            <div className="card-body">
-             <h4 className="card-title">Pending CRMD (customers) &nbsp;
+             {/* <h4 className="card-title">Pending CRMD (customers) &nbsp;
               <Link class="btn btn-xs btn-primary" to="/my_approvals">My Approvals</Link>
-             </h4>
-           
+             </h4> */}
+{/*            
              <div class="form-group d-flex"></div>
-             <hr/>
+             <hr/> */}
              <div className="table-responsive">
-               <table className="table">
+               {/* <table className="table">
                  <thead>
                    <tr>
                      <th>Customer Name</th>
@@ -238,10 +279,10 @@ const PendingCustomer = () => {
                     </tr>
                  ))}
                  </tbody>
-               </table>
+               </table> */}
 
 
-              <br/><hr/>
+              {/* <br/><hr/>
               <h4 className="card-title">Newly Created (customers) &nbsp;&nbsp;</h4>
               <input type="text" class="form-control" placeholder="" disabled />
               <DataTable 
@@ -257,7 +298,26 @@ const PendingCustomer = () => {
                  onVerifyClick={handleButtonVerify}
                  Approve
                  onApproveClick={handleButtonApprove}
+                /> */}
+
+
+
+
+              <br/><hr/>
+              <h4 className="card-title">Pending Review/Approval(CRMD) &nbsp;&nbsp;</h4>
+              <input type="text" class="form-control" placeholder="" disabled />
+              <DataTable 
+                 data={CustomerPending?.data}
+                 columns={newolumns}
+                 pagination
+                 currentPage={currentPage}
+                 totalCount={1}
+                 pageSize={1}
+                 onPageChange={(page) => setCurrentPage(1)}
+                 onActionClick={handleHandlectionClick}
                 />
+
+
 
              </div>
            </div>

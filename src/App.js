@@ -71,6 +71,7 @@ import ResetPassword from "./pages/resetpass";
 import TransformerBHubInfo from "./components/dss/transformerbhubinfo";
 import CustomerInDT from "./components/dss/customersindt";
 import NEWCRMD from "./components/createcustomer/newcrms";
+import MonthlyBillPaymentSummary from "./components/customers/monthlysummary";
 
 
 const App = () => {
@@ -218,6 +219,8 @@ const App = () => {
                   <Route path="customers_in_dts/:hubName/:dssID" element={<CustomerInDT />} />
 
                   <Route path="/new_crmd" element={<NEWCRMD />} />
+
+                  <Route path="/bill_payment_summary" element={<MonthlyBillPaymentSummary />} />
 
 
 

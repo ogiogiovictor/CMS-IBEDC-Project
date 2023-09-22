@@ -92,15 +92,41 @@ const Payments = () => {
       setSearchLoading(false);
     }
 
-   
+  }
+
+  const [sYear, setYear] = useState('');
+  const [sMonth, setMonth] = useState('');
 
 
+  const handleRestSubmit = (e) => {
+    e.preventDefault();
+    getPayment(sYear, sMonth);
+  }
+
+  const getPayment = async (sYear, sMonth) =>  {
+    console.log(sYear)
+    console.log(sMonth)
   }
 
 
 
 
+
+
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: currentYear - 2013 + 1 }, (_, index) => 2013 + index);
+  const months = [
+    'Select Month',
+    'January', 'February', 'March', 'April',
+    'May', 'June', 'July', 'August',
+    'September', 'October', 'November', 'December'
+  ];
+
+
+ 
     return (
+
+      
         <Fragment>
             <PaymentCard payCard={payment} />
 
@@ -115,7 +141,33 @@ const Payments = () => {
              <h4 className="card-title">Prepaid Payment
              &nbsp;&nbsp;
              <button class="btn btn-icons btn-rounded btn-secondary" onClick={() => refetch()}><span class="icon-refresh"></span></button>
+           
+              {/* <form  onSubmit={handleRestSubmit}>
+                <div className="row justify-content-end">
+                    <div className="col-md-2">
+                        <select className="form-control"  onChange={(e) => setYear(e.target.value)} >
+                          <option>Select Year</option>
+                          {years.map((year) => (
+                            <option key={year} value={year}>
+                              {year}
+                            </option>
+                          ))}
+                        </select>
+                    </div>
+                    <div className="col-md-2">
+                      <select className="form-control" onChange={(e) => setMonth(e.target.value)}>
+                        {months.map((month, index) => (
+                          <option key={index} value={month}>
+                            {month}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <button class="btn btn-secondary">Send</button>
+                </div>
+              </form> */}
              </h4>
+
 
              <div class="row">
               <div class="col-md-12">

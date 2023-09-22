@@ -38,19 +38,7 @@ const BillCard = ({cardData}) => {
           </div>
         </div>
         
-        <div className="col-md-6 col-lg-3 grid-margin stretch-card">
-          <div className="card bg-danger text-white border-0">
-            <div className="card-body">
-              <div className="d-flex align-items-center">
-                {/* <i className="icon-screen-desktop icon-lg"></i> */}
-                <div className="ml-4">
-                  <h4 className="font-weight-light">Top 100 Highest Billed Customers</h4>
-                  <h3 className="font-weight-light mb-3">{ highestBilledCustomers }</h3>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      
 
         {/* <div className="col-md-6 col-lg-3 grid-margin stretch-card">
           <div className="card bg-danger text-white border-0">

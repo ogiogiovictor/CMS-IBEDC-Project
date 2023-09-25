@@ -72,6 +72,7 @@ import TransformerBHubInfo from "./components/dss/transformerbhubinfo";
 import CustomerInDT from "./components/dss/customersindt";
 import NEWCRMD from "./components/createcustomer/newcrms";
 import MonthlyBillPaymentSummary from "./components/customers/monthlysummary";
+import EDITCUSTOMERSCRMD from "./components/createcustomer/editcustomers";
 
 
 const App = () => {
@@ -221,6 +222,8 @@ const App = () => {
                   <Route path="/new_crmd" element={<NEWCRMD />} />
 
                   <Route path="/bill_payment_summary" element={<MonthlyBillPaymentSummary />} />
+
+                  <Route path="edit_customers_crmd/:id" element={<EDITCUSTOMERSCRMD />} />
 
 
 

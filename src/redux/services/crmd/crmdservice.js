@@ -44,6 +44,24 @@ export const crmdService = createApi({
           }),
 
 
+          approvePendingCRMD: builder.mutation({
+            query: (requestData) => ({
+              url: `/${API_VERSION}/process_crmd_transaction`,
+              method: "POST",
+              body: requestData, // the data you want to send in the request body
+            }),
+          }),
+
+
+          rejectedPendingCRMD: builder.mutation({
+            query: (requestData) => ({
+              url: `/${API_VERSION}/reject_crmd_transaction`,
+              method: "POST",
+              body: requestData, // the data you want to send in the request body
+            }),
+          }),
+
+
 
 
     }) // End of endpint
@@ -51,4 +69,4 @@ export const crmdService = createApi({
 }); // end 
 
 
-export const { useGetNewlyCapturedCustomerQuery, useGetPendingApprovalQuery, usePushCRMDCustomerMutation  } = crmdService;
+export const { useGetNewlyCapturedCustomerQuery, useGetPendingApprovalQuery, usePushCRMDCustomerMutation, useRejectedPendingCRMDMutation, useApprovePendingCRMDMutation  } = crmdService;

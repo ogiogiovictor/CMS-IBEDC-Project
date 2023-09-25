@@ -57,8 +57,6 @@ const ViewCustomers = () => {
     { title: "Status", field: "status" },
   ];
 
-  
-  
 
   const handleActionClick = ({_id}) => {
     //navigate(`/customernewdetails/${_id}`);
@@ -84,6 +82,18 @@ const ViewCustomers = () => {
        } });
        window.scrollTo(0, 0);
   }
+
+  const handleEditClick = (customer) => {
+    navigate(`/edit_customers_crmd/${customer.id}`, {
+      state: { 
+        rowData: customer, 
+        rowTitle: 'Edit Customer Information',
+        rowSubTitle: customer.Old_FullName,
+        routeName: '/edit_customers_crmd'+ customer.id
+       } });
+       window.scrollTo(0, 0);
+    }
+  
 
     return (
 
@@ -146,7 +156,7 @@ const ViewCustomers = () => {
                   </thead>
                   <tbody>
                     {capturedCustomers && capturedCustomers?.data.map(customer => (
-                      <tr key={customer._id}>
+                      <tr key={customer.id}>
                         <td>{customer.id}</td>
                         <td>{customer.AccountNo}</td>
                         <td>{customer.MeterNo}</td>
@@ -164,6 +174,15 @@ const ViewCustomers = () => {
                             <i class="icon-user"></i>
                             View
                           </button>&nbsp;
+
+                          {
+                            customer?.approval_type == "Rejected"  ? 
+                            (<button className="btn btn-xs btn-outline-danger" onClick={() => handleEditClick(customer)}>
+                             <i class="icon-user"></i> Edit
+                          </button>) : ''
+                          }
+
+                         
                         </td>
                       </tr>
                     ))}

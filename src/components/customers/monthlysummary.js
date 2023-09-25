@@ -44,6 +44,8 @@ const MonthlyBillPaymentSummary = () => {
     { title: "Total Collection", field: "totalCollection" },
   ];
 
+  
+
   return (
     <>
      
@@ -52,7 +54,7 @@ const MonthlyBillPaymentSummary = () => {
           <div className="card">
             <div className="card-body">
               <h4 className="card-title"> Monthly Collection / Billing </h4>
-              <CSVLink data={data?.data} filename={"payment_billing_collection.csv"}> <button className="btn btn-xs btn-primary">Export Report</button></CSVLink>
+              {/* <CSVLink data={data?.data} filename={"payment_billing_collection.csv"}> <button className="btn btn-xs btn-primary">Export Report</button></CSVLink> */}
              
               {/* <div class="row">
 
